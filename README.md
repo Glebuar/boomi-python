@@ -34,8 +34,8 @@ boomi.deployments.deploy("DEV_ENV", pkg["packageId"])
 pip install boomi
 
 # or live editable clone
-git clone https://github.com/your-org/boomi-sdk.git
-cd boomi-sdk
+git clone git@github.com:Glebuar/boomi-python.git
+cd boomi-python
 pip install -e .
 ```
 
@@ -114,4 +114,4 @@ mkdocs serve
 
 ## License
 
-MIT © 2025 Gleb Bochkarev
+MIT © 2025 Gleb Bochkarov
