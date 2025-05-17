@@ -1,0 +1,19 @@
+[build-system]
+requires      = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name            = "boomi"
+version         = "1.0.0"
+description     = "Unofficial Boomi Platform API SDK"
+authors         = [{ name = "Gleb Bochkarov", email = "glebuar@gmail.com" }]
+readme          = "README.md"
+requires-python = ">=3.9"
+dependencies    = [
+  "requests>=2.32",
+  "pydantic>=2.7,<3.0",
+  "xmltodict>=0.13",
+]
+
+[project.urls]
+Homepage = "https://github.com/Glebuar/boomi-python"

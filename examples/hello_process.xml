@@ -1,0 +1,37 @@
+<Component xmlns="http://api.platform.boomi.com/"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           name="Hello API Process"
+           type="process">
+  <description>Simple Hello World process with a Message shape created via API.</description>
+  <object>
+    <process xmlns="" allowSimultaneous="false" enableUserLog="false" processLogOnErrorOnly="false" purgeDataImmediately="false" updateRunDates="true" workload="general">
+      <shapes>
+        <shape image="start" name="shape1_start" shapetype="start" userlabel="Start" x="100.0" y="100.0">
+          <configuration>
+            <noaction/>
+          </configuration>
+          <dragpoints>
+            <dragpoint name="shape1_start.dragpoint1" toShape="shape2_message" x="200.0" y="126.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="message_icon" name="shape2_message" shapetype="message" userlabel="Message - Hello World" x="250.0" y="100.0">
+          <configuration>
+            <message combined="false">
+              <msgTxt>Hello World</msgTxt>
+              <msgParameters/>
+            </message>
+          </configuration>
+          <dragpoints>
+            <dragpoint name="shape2_message.dragpoint1" toShape="shape3_stop" x="350.0" y="126.0"/>
+          </dragpoints>
+        </shape>
+        <shape image="stop_icon" name="shape3_stop" shapetype="stop" userlabel="Stop" x="400.0" y="100.0">
+          <configuration>
+            <stop continue="true"/>
+          </configuration>
+          <dragpoints/>
+        </shape>
+      </shapes>
+    </process>
+  </object>
+</Component>
