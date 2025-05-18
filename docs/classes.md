@@ -93,7 +93,12 @@ Manages process runs and logs.
 ```python
 class Runs:
     def list(self, body: dict)
+    def list_more(self, token: str)
+    def summary(self, body: dict)
+    def connectors(self, body: dict)
+    def artifacts(self, exec_id: str) -> str
     def log(self, exec_id: str) -> str  # Returns log URL
+    def atom_log(self, body: dict) -> str
 ```
 
 ### Schedules
@@ -164,6 +169,39 @@ class Deployment(BaseModel):
     package_version: Optional[str] = Field(None, alias="packageVersion")
     status: Optional[str] = None
 ```
+
+### ExecutionSummaryRecord
+Represents a summary of a process run.
+
+```python
+class ExecutionSummaryRecord(BaseModel):
+    process_id: str = Field(..., alias="processID")
+    process_name: str = Field(..., alias="processName")
+    status: Optional[str] = None
+```
+
+### ExecutionConnector
+Details about a connector step within an execution.
+
+```python
+class ExecutionConnector(BaseModel):
+    id: str
+    execution_id: str = Field(..., alias="executionId")
+    connector_type: Optional[str] = Field(None, alias="connectorType")
+    success_count: Optional[int] = Field(None, alias="successCount")
+```
+
+### GenericConnectorRecord
+Represents a tracked document in a run.
+
+```python
+class GenericConnectorRecord(BaseModel):
+    id: str
+    execution_id: str = Field(..., alias="executionId")
+    status: Optional[str] = None
+    error_message: Optional[str] = Field(None, alias="errorMessage")
+```
+
 
 ## Exception Classes
 
