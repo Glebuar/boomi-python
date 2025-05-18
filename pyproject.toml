@@ -13,6 +13,7 @@ dependencies    = [
   "requests>=2.32",
   "pydantic>=2.7,<3.0",
   "xmltodict>=0.13",
+  "pytest>=7",
 ]
 
 [project.urls]
