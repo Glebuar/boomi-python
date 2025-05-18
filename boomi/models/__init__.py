@@ -1,6 +1,7 @@
 from .component import Component
 from .execution import (
     ExecutionRecord,
+    ExecuteProcessResponse,
     ExecutionSummaryRecord,
     ExecutionConnector,
     GenericConnectorRecord,
@@ -15,6 +16,7 @@ from .deployment import Deployment
 __all__ = [
     "Component",
     "ExecutionRecord",
+    "ExecuteProcessResponse",
     "ExecutionSummaryRecord",
     "ExecutionConnector",
     "GenericConnectorRecord",
