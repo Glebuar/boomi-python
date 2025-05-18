@@ -6,6 +6,7 @@ class Deployments:
         self._http = http
 
     def deploy(self, env_id: str, pkg_id: str, notes: str = "") -> Deployment:
+        """Deploy a package to an environment."""
         payload = {"environmentId": env_id, "packageId": pkg_id, "notes": notes}
         resp = self._http.post("/DeployedPackage", json=payload)
         data = resp.json()

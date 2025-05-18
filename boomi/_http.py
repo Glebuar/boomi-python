@@ -104,7 +104,10 @@ class _HTTP:
 
     def delete(self, path: str, **kw):
         kw.setdefault("headers", self.h_json)
-        return self._request("DELETE", path, **kw)
+        resp = self._request("DELETE", path, **kw)
+        if resp.status_code == 204:
+            return True
+        return self.as_dict(resp)
 
     # ------------------------------------------------------------------ #
     # transparent pagination for /query + /queryMore

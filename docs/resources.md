@@ -134,6 +134,8 @@ environments = client.environments.list()
 ```python
 # List execution records
 runs = client.runs.list(body={"query": {...}})
+# Fetch all pages at once
+all_runs = list(client.runs.list_all(body={"query": {...}}))
 ```
 
 ### More Runs Results
@@ -155,6 +157,8 @@ summary = client.runs.summary(body={"query": {...}})
 ```python
 # Query execution connectors as model objects
 connectors = client.runs.connectors(body={"query": {...}})
+# raw JSON
+raw = client.runs.connectors(body={"query": {...}}, parse=False)
 ```
 
 ### Download Artifacts
