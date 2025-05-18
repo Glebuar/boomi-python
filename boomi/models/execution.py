@@ -4,7 +4,7 @@ from typing import Optional
 class ExecutionRecord(BaseModel):
     id: str = Field(..., alias="executionId")
     status: str
-    started_at: str
+    execution_time: str = Field(..., alias="executionTime")
 
 # The response returned by ``/ExecuteProcess`` mirrors ``ExecutionRecord``.
 class ExecuteProcessResponse(ExecutionRecord):
