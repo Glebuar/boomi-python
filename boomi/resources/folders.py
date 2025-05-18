@@ -1,11 +1,12 @@
 from .._http import _HTTP
 from ..models.folder import Folder
+from typing import Optional
 
 class Folders:
     def __init__(self, http: _HTTP):
         self._ = http
 
-    def create(self, name: str, parent: str | None = None) -> Folder:
+    def create(self, name: str, parent: Optional[str] = None) -> Folder:
         payload = {"name": name, **({"parentId": parent} if parent else {})}
         resp = self._.post("/Folder", json=payload)
         data = resp.json()
