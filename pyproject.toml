@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name            = "boomi"
-version         = "1.0.2"
+version         = "1.0.3"
 description     = "Unofficial Boomi Platform API SDK"
 authors         = [{ name = "Gleb Bochkarov", email = "glebuar@gmail.com" }]
 readme          = "README.md"
