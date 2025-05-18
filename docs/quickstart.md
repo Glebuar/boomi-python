@@ -22,7 +22,7 @@ xml_file = Path("path/to/component.xml")
 component = client.components.create(xml_file)
 
 # Get component details
-component_details = client.components.get(component_id=component.id)
+component_details = client.components.get(cid=component.id)
 ```
 
 ## Authentication
@@ -70,13 +70,13 @@ xml_file = Path("path/to/component.xml")
 component = client.components.create(xml_file)
 
 # Get component details
-component_details = client.components.get(component_id=component.id)
+component_details = client.components.get(cid=component.id)
 
 # Update component
-client.components.update(component_id=component.id, xml="<Component>...</Component>")
+client.components.update(cid=component.id, xml="<Component>...</Component>")
 
 # Delete component
-client.components.delete(component_id=component.id)
+client.components.delete(cid=component.id)
 ```
 
 ### Working with Packages
@@ -111,10 +111,10 @@ folder = client.folders.create(
 )
 
 # Get folder details
-folder_details = client.folders.get(folder_id=folder.id)
+folder_details = client.folders.get(fid=folder.id)
 
 # Delete folder
-client.folders.delete(folder_id=folder.id)
+client.folders.delete(fid=folder.id)
 ```
 
 ### Executing Processes
@@ -129,7 +129,7 @@ execution = client.execute.run({
 })
 
 # Get execution logs
-log_url = client.runs.log(execution_id=execution.id)
+log_url = client.runs.log(exec_id=execution.id)
 ```
 
 ## Error Handling
@@ -154,3 +154,4 @@ except BoomiError as e:
 - Check out the [Client Configuration](client.md) for advanced setup options
 - Review the [Resources](resources.md) documentation for detailed API information
 - See [Examples](examples.md) for more complex use cases 
+

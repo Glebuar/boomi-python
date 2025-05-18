@@ -133,7 +133,7 @@ execution = client.execute.run({
 client.execute.cancel(exec_id=execution.id)
 
 # Get execution logs
-log_url = client.runs.log(execution_id=execution.id)
+log_url = client.runs.log(exec_id=execution.id)
 ```
 
 ### Working with Schedules
@@ -156,16 +156,16 @@ result = client.schedules.bulk(ids=["schedule-1", "schedule-2"])
 
 ```python
 # Create a runtime release
-release = client.runtime_release.create(body={...})
+release = client.runtime.create(body={...})
 
 # Get release details
-release = client.runtime_release.get(cid="release-123")
+release = client.runtime.get(cid="release-123")
 
 # Update release
-release = client.runtime_release.update(cid="release-123", body={...})
+release = client.runtime.update(cid="release-123", body={...})
 
 # Delete release
-client.runtime_release.delete(cid="release-123")
+client.runtime.delete(cid="release-123")
 ```
 
 ### Working with Extensions
@@ -219,3 +219,4 @@ def batch_create_components(xml_files):
 - Review the [Resources](resources.md) documentation for detailed API information
 - Check out the [Error Handling](errors.md) guide for error management
 - See the [Client Configuration](client.md) for advanced setup options 
+

@@ -140,7 +140,7 @@ runs = client.runs.list(body={"query": {...}})
 
 ```python
 # Get execution logs
-log_url = client.runs.log(execution_id="exec-123")
+log_url = client.runs.log(exec_id="exec-123")
 ```
 
 ## Execute Resource
@@ -200,28 +200,28 @@ result = client.schedules.bulk(ids=["schedule-1", "schedule-2"])
 
 ```python
 # Create a runtime release
-release = client.runtime_release.create(body={...})
+release = client.runtime.create(body={...})
 ```
 
 ### Get Release
 
 ```python
 # Get release details
-release = client.runtime_release.get(cid="release-123")
+release = client.runtime.get(cid="release-123")
 ```
 
 ### Update Release
 
 ```python
 # Update a release
-release = client.runtime_release.update(cid="release-123", body={...})
+release = client.runtime.update(cid="release-123", body={...})
 ```
 
 ### Delete Release
 
 ```python
 # Delete a release
-client.runtime_release.delete(cid="release-123")
+client.runtime.delete(cid="release-123")
 ```
 
 ## Extensions Resource
@@ -259,3 +259,4 @@ summary = client.extensions.query_conn_field_summary(body={"query": {...}})
 - Check out the [Examples](examples.md) for more complex use cases
 - Review the [Error Handling](errors.md) guide for error management
 - See the [Client Configuration](client.md) for advanced setup options 
+
