@@ -2,9 +2,19 @@ from .._http import _HTTP
 
 class RuntimeRelease:
     _P = "/RuntimeReleaseSchedule"
+
     def __init__(self, http: _HTTP):
-        self._ = http
-    create = lambda s, body: s._.post(s._P, json=body).json()
-    get    = lambda s, cid: s._.get(f"{s._P}/{cid}").json()
-    update = lambda s, cid, body: s._.post(f"{s._P}/{cid}", json=body).json()
-    delete = lambda s, cid: s._.delete(f"{s._P}/{cid}")
+        self._http = http
+
+    def create(self, body):
+        return self._http.post(self._P, json=body).json()
+
+    def get(self, cid):
+        return self._http.get(f"{self._P}/{cid}").json()
+
+    def update(self, cid, body):
+        return self._http.post(f"{self._P}/{cid}", json=body).json()
+
+    def delete(self, cid):
+        self._http.delete(f"{self._P}/{cid}")
+        return True
