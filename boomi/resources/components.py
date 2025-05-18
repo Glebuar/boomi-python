@@ -28,7 +28,7 @@ class Components:
         r = self._http.get(f"/Component/{cid}", headers=_HDR_XML)
         return Component.model_validate(self._attrs(r.content))
 
-    update = lambda self, cid, xml: self._http.put(
+    update = lambda self, cid, xml: self._http.post(
         f"/Component/{cid}", data=xml.encode(), headers=_HDR_XML
     )
     delete = lambda self, cid: self._http.delete(f"/Component/{cid}")
