@@ -70,3 +70,19 @@ def test_paginate(monkeypatch):
 
     results = list(http.paginate(first))
     assert results == [1, 2]
+
+
+def test_delete(monkeypatch):
+    http = _HTTP("https://api", ("u", "p"))
+
+    def fake_request(method, url, auth=None, timeout=None, **kw):
+        return make_response(status=204)
+
+    monkeypatch.setattr(requests, "request", fake_request)
+    assert http.delete("/x") is True
+
+    def fake_request_json(method, url, auth=None, timeout=None, **kw):
+        return make_response(status=200, content=b'{"ok": true}')
+
+    monkeypatch.setattr(requests, "request", fake_request_json)
+    assert http.delete("/y") == {"ok": True}

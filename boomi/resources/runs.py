@@ -1,4 +1,5 @@
 from .._http import _HTTP
+from ..utils import paginate_query
 from ..models import (
     ExecutionRecord,
     ExecutionSummaryRecord,
@@ -10,11 +11,18 @@ from ..models import (
     Event,
 )
 
+_GENERIC_PARSER = (
+    GenericConnectorRecord.model_validate
+    if hasattr(GenericConnectorRecord, "model_validate")
+    else GenericConnectorRecord.parse_obj
+)
+
 class Runs:
     def __init__(self, http: _HTTP):
         self._http = http
 
     def list(self, body: dict, *, parse: bool = True):
+        """Query execution records."""
         data = self._http.post("/ExecutionRecord/query", json=body).json()
         if not parse:
             return data
@@ -23,6 +31,7 @@ class Runs:
         return [ExecutionRecord.parse_obj(r) for r in data.get("result", [])]
 
     def list_more(self, token: str, *, parse: bool = True):
+        """Continue a record query using ``queryToken``."""
         data = self._http.post(
             "/ExecutionRecord/queryMore", json={"queryToken": token}
         ).json()
@@ -33,6 +42,7 @@ class Runs:
         return [ExecutionRecord.parse_obj(r) for r in data.get("result", [])]
 
     def summary(self, body: dict, *, parse: bool = True):
+        """Query execution summary records."""
         data = self._http.post(
             "/ExecutionSummaryRecord/query", json=body
         ).json()
@@ -42,7 +52,24 @@ class Runs:
             return [ExecutionSummaryRecord.model_validate(r) for r in data.get("result", [])]
         return [ExecutionSummaryRecord.parse_obj(r) for r in data.get("result", [])]
 
+    def list_all(self, body: dict, *, parse: bool = True):
+        """Yield all execution records for ``body`` handling pagination."""
+        def first_call(payload: dict):
+            return self._http.post("/ExecutionRecord/query", json=payload).json()
+
+        def more_call(tok: str):
+            return self._http.post("/ExecutionRecord/queryMore", json={"queryToken": tok}).json()
+
+        parser = (
+            ExecutionRecord.model_validate
+            if hasattr(ExecutionRecord, "model_validate")
+            else ExecutionRecord.parse_obj
+        )
+
+        yield from paginate_query(first_call, more_call, body, parse_item=parser, parse=parse)
+
     def summary_more(self, token: str, *, parse: bool = True):
+        """Continue a summary query using ``queryToken``."""
         data = self._http.post(
             "/ExecutionSummaryRecord/queryMore", json={"queryToken": token}
         ).json()
@@ -52,7 +79,24 @@ class Runs:
             return [ExecutionSummaryRecord.model_validate(r) for r in data.get("result", [])]
         return [ExecutionSummaryRecord.parse_obj(r) for r in data.get("result", [])]
 
+    def summary_all(self, body: dict, *, parse: bool = True):
+        """Yield all execution summary records for ``body`` handling pagination."""
+        def first_call(payload: dict):
+            return self._http.post("/ExecutionSummaryRecord/query", json=payload).json()
+
+        def more_call(tok: str):
+            return self._http.post("/ExecutionSummaryRecord/queryMore", json={"queryToken": tok}).json()
+
+        parser = (
+            ExecutionSummaryRecord.model_validate
+            if hasattr(ExecutionSummaryRecord, "model_validate")
+            else ExecutionSummaryRecord.parse_obj
+        )
+
+        yield from paginate_query(first_call, more_call, body, parse_item=parser, parse=parse)
+
     def connectors(self, body: dict, *, parse: bool = True):
+        """Query execution connector records."""
         data = self._http.post("/ExecutionConnector/query", json=body).json()
         if not parse:
             return data
@@ -61,6 +105,7 @@ class Runs:
         return [ExecutionConnector.parse_obj(r) for r in data.get("result", [])]
 
     def connectors_more(self, token: str, *, parse: bool = True):
+        """Fetch additional connector results via ``queryToken``."""
         data = self._http.post(
             "/ExecutionConnector/queryMore", json={"queryToken": token}
         ).json()
@@ -71,6 +116,7 @@ class Runs:
         return [ExecutionConnector.parse_obj(r) for r in data.get("result", [])]
 
     def count_account(self, body: dict, *, parse: bool = True):
+        """Query execution counts aggregated by account."""
         data = self._http.post("/ExecutionCountAccount/query", json=body).json()
         if not parse:
             return data
@@ -89,6 +135,7 @@ class Runs:
         return [ExecutionCountAccount.parse_obj(r) for r in data.get("result", [])]
 
     def count_group(self, body: dict, *, parse: bool = True):
+        """Query execution counts aggregated by account group."""
         data = self._http.post(
             "/ExecutionCountAccountGroup/query", json=body
         ).json()
@@ -109,6 +156,7 @@ class Runs:
         return [ExecutionCountAccountGroup.parse_obj(r) for r in data.get("result", [])]
 
     def artifacts(self, exec_id: str) -> str:
+        """Return the download URL for execution artifacts."""
         return (
             self._http.post("/ExecutionArtifacts", json={"executionId": exec_id})
             .json()
@@ -123,7 +171,7 @@ class Runs:
         if not parse:
             return data
         if hasattr(GenericConnectorRecord, "model_validate"):
-            return GenericConnectorRecord.model_validate(data)
+            return _GENERIC_PARSER(data)
         return GenericConnectorRecord.parse_obj(data)
 
     def docs(self, body: dict, *, parse: bool = True):
@@ -131,7 +179,7 @@ class Runs:
         if not parse:
             return data
         if hasattr(GenericConnectorRecord, "model_validate"):
-            return [GenericConnectorRecord.model_validate(r) for r in data.get("result", [])]
+            return [_GENERIC_PARSER(r) for r in data.get("result", [])]
         return [GenericConnectorRecord.parse_obj(r) for r in data.get("result", [])]
 
     def docs_more(self, token: str, *, parse: bool = True):
@@ -141,82 +189,155 @@ class Runs:
         if not parse:
             return data
         if hasattr(GenericConnectorRecord, "model_validate"):
-            return [GenericConnectorRecord.model_validate(r) for r in data.get("result", [])]
+            return [_GENERIC_PARSER(r) for r in data.get("result", [])]
         return [GenericConnectorRecord.parse_obj(r) for r in data.get("result", [])]
 
-    def as2_records(self, body: dict):
-        return self._http.post("/AS2ConnectorRecord/query", json=body).json()
+    def as2_records(self, body: dict, *, parse: bool = True):
+        """Query AS2 connector records."""
+        data = self._http.post("/AS2ConnectorRecord/query", json=body).json()
+        if not parse:
+            return data
+        return [_GENERIC_PARSER(r) for r in data.get("result", [])]
 
-    def as2_records_more(self, token: str):
-        return self._http.post(
+    def as2_records_more(self, token: str, *, parse: bool = True):
+        """Get additional AS2 connector records."""
+        data = self._http.post(
             "/AS2ConnectorRecord/queryMore", json={"queryToken": token}
         ).json()
+        if not parse:
+            return data
+        return [_GENERIC_PARSER(r) for r in data.get("result", [])]
 
-    def edicustom_records(self, body: dict):
-        return self._http.post("/EdiCustomConnectorRecord/query", json=body).json()
+    def edicustom_records(self, body: dict, *, parse: bool = True):
+        """Query EDI Custom connector records."""
+        data = self._http.post("/EdiCustomConnectorRecord/query", json=body).json()
+        if not parse:
+            return data
+        return [_GENERIC_PARSER(r) for r in data.get("result", [])]
 
-    def edicustom_records_more(self, token: str):
-        return self._http.post(
+    def edicustom_records_more(self, token: str, *, parse: bool = True):
+        """Get additional EDI Custom connector records."""
+        data = self._http.post(
             "/EdiCustomConnectorRecord/queryMore", json={"queryToken": token}
         ).json()
+        if not parse:
+            return data
+        return [_GENERIC_PARSER(r) for r in data.get("result", [])]
 
-    def edifact_records(self, body: dict):
-        return self._http.post("/EDIFACTConnectorRecord/query", json=body).json()
+    def edifact_records(self, body: dict, *, parse: bool = True):
+        """Query EDIFACT connector records."""
+        data = self._http.post("/EDIFACTConnectorRecord/query", json=body).json()
+        if not parse:
+            return data
+        return [_GENERIC_PARSER(r) for r in data.get("result", [])]
 
-    def edifact_records_more(self, token: str):
-        return self._http.post(
+    def edifact_records_more(self, token: str, *, parse: bool = True):
+        """Get additional EDIFACT connector records."""
+        data = self._http.post(
             "/EDIFACTConnectorRecord/queryMore", json={"queryToken": token}
         ).json()
+        if not parse:
+            return data
+        return [_GENERIC_PARSER(r) for r in data.get("result", [])]
 
-    def hl7_records(self, body: dict):
-        return self._http.post("/HL7ConnectorRecord/query", json=body).json()
+    def hl7_records(self, body: dict, *, parse: bool = True):
+        """Query HL7 connector records."""
+        data = self._http.post("/HL7ConnectorRecord/query", json=body).json()
+        if not parse:
+            return data
+        return [_GENERIC_PARSER(r) for r in data.get("result", [])]
 
-    def hl7_records_more(self, token: str):
-        return self._http.post(
+    def hl7_records_more(self, token: str, *, parse: bool = True):
+        """Get additional HL7 connector records."""
+        data = self._http.post(
             "/HL7ConnectorRecord/queryMore", json={"queryToken": token}
         ).json()
+        if not parse:
+            return data
+        return [_GENERIC_PARSER(r) for r in data.get("result", [])]
 
-    def odette_records(self, body: dict):
-        return self._http.post("/ODETTEConnectorRecord/query", json=body).json()
+    def odette_records(self, body: dict, *, parse: bool = True):
+        """Query ODETTE connector records."""
+        data = self._http.post("/ODETTEConnectorRecord/query", json=body).json()
+        if not parse:
+            return data
+        return [_GENERIC_PARSER(r) for r in data.get("result", [])]
 
-    def odette_records_more(self, token: str):
-        return self._http.post(
+    def odette_records_more(self, token: str, *, parse: bool = True):
+        """Get additional ODETTE connector records."""
+        data = self._http.post(
             "/ODETTEConnectorRecord/queryMore", json={"queryToken": token}
         ).json()
+        if not parse:
+            return data
+        return [_GENERIC_PARSER(r) for r in data.get("result", [])]
 
-    def oftp2_records(self, body: dict):
-        return self._http.post("/OFTP2ConnectorRecord/query", json=body).json()
+    def oftp2_records(self, body: dict, *, parse: bool = True):
+        """Query OFTP2 connector records."""
+        data = self._http.post("/OFTP2ConnectorRecord/query", json=body).json()
+        if not parse:
+            return data
+        return [_GENERIC_PARSER(r) for r in data.get("result", [])]
 
-    def oftp2_records_more(self, token: str):
-        return self._http.post(
+    def oftp2_records_more(self, token: str, *, parse: bool = True):
+        """Get additional OFTP2 connector records."""
+        data = self._http.post(
             "/OFTP2ConnectorRecord/queryMore", json={"queryToken": token}
         ).json()
+        if not parse:
+            return data
+        return [_GENERIC_PARSER(r) for r in data.get("result", [])]
 
-    def rosetta_records(self, body: dict):
-        return self._http.post("/RosettaNetConnectorRecord/query", json=body).json()
+    def rosetta_records(self, body: dict, *, parse: bool = True):
+        """Query RosettaNet connector records."""
+        data = self._http.post("/RosettaNetConnectorRecord/query", json=body).json()
+        if not parse:
+            return data
+        return [_GENERIC_PARSER(r) for r in data.get("result", [])]
 
-    def rosetta_records_more(self, token: str):
-        return self._http.post(
+    def rosetta_records_more(self, token: str, *, parse: bool = True):
+        """Get additional RosettaNet connector records."""
+        data = self._http.post(
             "/RosettaNetConnectorRecord/queryMore", json={"queryToken": token}
         ).json()
+        if not parse:
+            return data
+        return [_GENERIC_PARSER(r) for r in data.get("result", [])]
 
-    def tradacoms_records(self, body: dict):
-        return self._http.post("/TradacomsConnectorRecord/query", json=body).json()
+    def tradacoms_records(self, body: dict, *, parse: bool = True):
+        """Query Tradacoms connector records."""
+        data = self._http.post("/TradacomsConnectorRecord/query", json=body).json()
+        if not parse:
+            return data
+        return [_GENERIC_PARSER(r) for r in data.get("result", [])]
 
-    def tradacoms_records_more(self, token: str):
-        return self._http.post(
+    def tradacoms_records_more(self, token: str, *, parse: bool = True):
+        """Get additional Tradacoms connector records."""
+        data = self._http.post(
             "/TradacomsConnectorRecord/queryMore", json={"queryToken": token}
         ).json()
+        if not parse:
+            return data
+        return [_GENERIC_PARSER(r) for r in data.get("result", [])]
 
-    def x12_records(self, body: dict):
-        return self._http.post("/X12ConnectorRecord/query", json=body).json()
+    def x12_records(self, body: dict, *, parse: bool = True):
+        """Query X12 connector records."""
+        data = self._http.post("/X12ConnectorRecord/query", json=body).json()
+        if not parse:
+            return data
+        return [_GENERIC_PARSER(r) for r in data.get("result", [])]
 
-    def x12_records_more(self, token: str):
-        return self._http.post(
+    def x12_records_more(self, token: str, *, parse: bool = True):
+        """Get additional X12 connector records."""
+        data = self._http.post(
             "/X12ConnectorRecord/queryMore", json={"queryToken": token}
         ).json()
+        if not parse:
+            return data
+        return [_GENERIC_PARSER(r) for r in data.get("result", [])]
 
     def log(self, exec_id: str) -> str:
+        """Return the execution log download URL."""
         return (
             self._http.post(
                 "/ProcessLog", json={"executionId": exec_id, "logLevel": "ALL"}
@@ -233,6 +354,7 @@ class Runs:
         return resp.text
 
     def atom_log(self, body: dict) -> str:
+        """Return Atom log download URL."""
         return self._http.post("/AtomLog", json=body).json().get("url")
 
     def as2_artifacts(self, body: dict) -> str:
@@ -242,18 +364,21 @@ class Runs:
         return self._http.post("/AtomWorkerLog", json=body).json().get("url")
 
     def audit(self, aid: str, *, parse: bool = True):
+        """Retrieve a single audit log entry."""
         data = self._http.get(f"/AuditLog/{aid}").json()
         if not parse:
             return data
         return AuditLog.model_validate(data)
 
     def audit_query(self, body: dict, *, parse: bool = True):
+        """Query audit logs."""
         data = self._http.post("/AuditLog/query", json=body).json()
         if not parse:
             return data
         return [AuditLog.model_validate(r) for r in data.get("result", [])]
 
     def audit_query_more(self, token: str, *, parse: bool = True):
+        """Fetch additional audit log results."""
         data = self._http.post(
             "/AuditLog/queryMore", json={"queryToken": token}
         ).json()
@@ -262,12 +387,14 @@ class Runs:
         return [AuditLog.model_validate(r) for r in data.get("result", [])]
 
     def events(self, body: dict, *, parse: bool = True):
+        """Query event logs."""
         data = self._http.post("/Event/query", json=body).json()
         if not parse:
             return data
         return [Event.model_validate(r) for r in data.get("result", [])]
 
     def events_more(self, token: str, *, parse: bool = True):
+        """Fetch additional event log entries."""
         data = self._http.post(
             "/Event/queryMore", json={"queryToken": token}
         ).json()

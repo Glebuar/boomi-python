@@ -92,10 +92,18 @@ Manages process runs and logs.
 
 ```python
 class Runs:
-    def list(self, body: dict)
-    def list_more(self, token: str)
-    def summary(self, body: dict)
-    def connectors(self, body: dict)
+    def list(self, body: dict, parse: bool = True)
+    def list_more(self, token: str, parse: bool = True)
+    def list_all(self, body: dict, parse: bool = True)
+    def summary(self, body: dict, parse: bool = True)
+    def summary_more(self, token: str, parse: bool = True)
+    def summary_all(self, body: dict, parse: bool = True)
+    def connectors(self, body: dict, parse: bool = True)
+    def connectors_more(self, token: str, parse: bool = True)
+    def count_account(self, body: dict, parse: bool = True)
+    def count_group(self, body: dict, parse: bool = True)
+    def as2_records(self, body: dict, parse: bool = True)
+    def hl7_records(self, body: dict, parse: bool = True)
     def artifacts(self, exec_id: str) -> str
     def log(self, exec_id: str) -> str  # Returns log URL
     def atom_log(self, body: dict) -> str

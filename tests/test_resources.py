@@ -5,7 +5,12 @@ from boomi.models.folder import Folder
 from boomi.models.deployment import Deployment
 from boomi.resources.execute import Execute
 from boomi.resources.runs import Runs
-from boomi.models import ExecuteProcessResponse, ExecutionRecord, ExecutionSummaryRecord
+from boomi.models import (
+    ExecuteProcessResponse,
+    ExecutionRecord,
+    ExecutionSummaryRecord,
+    GenericConnectorRecord,
+)
 
 class DummyResp:
     def __init__(self, data):
@@ -124,6 +129,57 @@ def test_connectors_parse(monkeypatch):
     assert len(items) == 1 and items[0].id == "c1"
     raw = runs.connectors({}, parse=False)
     assert raw["result"][0]["id"] == "c1"
+
+
+def test_connectors_more(monkeypatch):
+    http = _HTTP("base", ("u", "p"))
+
+    def fake_post(path, json=None):
+        assert path == "/ExecutionConnector/queryMore"
+        return DummyResp({"result": [{"id": "c2", "executionId": "e"}]})
+
+    monkeypatch.setattr(http, "post", fake_post)
+    runs = Runs(http)
+    items = runs.connectors_more("tok")
+    assert len(items) == 1 and items[0].id == "c2"
+
+
+def test_count_account_group(monkeypatch):
+    http = _HTTP("base", ("u", "p"))
+
+    def fake_post(path, json=None):
+        if path.endswith("Account/query"):
+            return DummyResp({"result": [{"accountId": "A"}]})
+        else:
+            return DummyResp({"result": [{"accountId": "B"}]})
+
+    monkeypatch.setattr(http, "post", fake_post)
+    runs = Runs(http)
+    acc = runs.count_account({})
+    grp = runs.count_group({})
+    assert acc[0].account_id == "A"
+    assert grp[0].account_id == "B"
+
+
+def test_special_connector_records(monkeypatch):
+    http = _HTTP("base", ("u", "p"))
+
+    def fake_post(path, json=None):
+        return DummyResp({"result": [{"id": "r1", "executionId": "e"}]})
+
+    monkeypatch.setattr(http, "post", fake_post)
+    runs = Runs(http)
+    items = runs.as2_records({})
+    assert isinstance(items[0], GenericConnectorRecord)
+    raw = runs.hl7_records({}, parse=False)
+    assert raw["result"][0]["id"] == "r1"
+
+
+def test_artifacts(monkeypatch):
+    http = _HTTP("base", ("u", "p"))
+    monkeypatch.setattr(http, "post", lambda path, json=None: DummyResp({"url": "http://a"}))
+    runs = Runs(http)
+    assert runs.artifacts("e1") == "http://a"
 
 
 def test_log_url(monkeypatch):

@@ -16,6 +16,7 @@ class Components:
 
     # public
     def create(self, xml: Union[str, Path, BinaryIO]) -> Component:
+        """Create a component from XML content."""
         xml_bytes = (
             xml.encode() if isinstance(xml, str)
             else xml.read_bytes() if isinstance(xml, Path)
@@ -25,10 +26,12 @@ class Components:
         return Component.model_validate(self._attrs(r.content))
 
     def get(self, cid: str) -> Component:
+        """Retrieve component details by id."""
         r = self._http.get(f"/Component/{cid}", headers=_HDR_XML)
         return Component.model_validate(self._attrs(r.content))
 
     def update(self, cid: str, xml: Union[str, Path, BinaryIO]) -> Component:
+        """Update a component with new XML content."""
         xml_bytes = (
             xml.encode() if isinstance(xml, str)
             else xml.read_bytes() if isinstance(xml, Path)
@@ -38,5 +41,6 @@ class Components:
         return Component.model_validate(self._attrs(r.content))
 
     def delete(self, cid: str) -> bool:
+        """Delete a component."""
         self._http.delete(f"/Component/{cid}")
         return True
