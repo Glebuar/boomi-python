@@ -6,7 +6,7 @@ from os import getenv as _ge
 
 from .client import Boomi
 from .exceptions import BoomiError, AuthenticationError, RateLimitError, ApiError  # noqa: F401
-from .models import * 
+from .models import *  # noqa: F403
 
 __all__ = [
     "Boomi",

@@ -1,6 +1,5 @@
 """High‑level root object that groups all resource managers."""
 from __future__ import annotations
-from typing import Optional
 
 from ._http import _HTTP
 from .resources.components import Components

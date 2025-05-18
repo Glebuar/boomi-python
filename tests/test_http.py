@@ -1,10 +1,9 @@
-import json
 from unittest.mock import patch
 import pytest
 import requests
 
 from boomi._http import _HTTP
-from boomi.exceptions import AuthenticationError, RateLimitError
+from boomi.exceptions import AuthenticationError
 
 
 def make_response(status=200, content=b"{}"):
