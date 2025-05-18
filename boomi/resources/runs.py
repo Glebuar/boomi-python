@@ -1,20 +1,47 @@
 from .._http import _HTTP
+from ..models import ExecutionRecord, ExecutionSummaryRecord
 
 class Runs:
     def __init__(self, http: _HTTP):
         self._ = http
 
-    list = lambda s, body: s._.post("/ExecutionRecord/query", json=body).json()
-    list_more = lambda s, token: s._.post(
-        "/ExecutionRecord/queryMore", json={"queryToken": token}
-    ).json()
+    def list(self, body: dict, *, parse: bool = True):
+        data = self._.post("/ExecutionRecord/query", json=body).json()
+        if not parse:
+            return data
+        if hasattr(ExecutionRecord, "model_validate"):
+            return [ExecutionRecord.model_validate(r) for r in data.get("result", [])]
+        return [ExecutionRecord.parse_obj(r) for r in data.get("result", [])]
 
-    summary = lambda s, body: s._.post(
-        "/ExecutionSummaryRecord/query", json=body
-    ).json()
-    summary_more = lambda s, token: s._.post(
-        "/ExecutionSummaryRecord/queryMore", json={"queryToken": token}
-    ).json()
+    def list_more(self, token: str, *, parse: bool = True):
+        data = self._.post(
+            "/ExecutionRecord/queryMore", json={"queryToken": token}
+        ).json()
+        if not parse:
+            return data
+        if hasattr(ExecutionRecord, "model_validate"):
+            return [ExecutionRecord.model_validate(r) for r in data.get("result", [])]
+        return [ExecutionRecord.parse_obj(r) for r in data.get("result", [])]
+
+    def summary(self, body: dict, *, parse: bool = True):
+        data = self._.post(
+            "/ExecutionSummaryRecord/query", json=body
+        ).json()
+        if not parse:
+            return data
+        if hasattr(ExecutionSummaryRecord, "model_validate"):
+            return [ExecutionSummaryRecord.model_validate(r) for r in data.get("result", [])]
+        return [ExecutionSummaryRecord.parse_obj(r) for r in data.get("result", [])]
+
+    def summary_more(self, token: str, *, parse: bool = True):
+        data = self._.post(
+            "/ExecutionSummaryRecord/queryMore", json={"queryToken": token}
+        ).json()
+        if not parse:
+            return data
+        if hasattr(ExecutionSummaryRecord, "model_validate"):
+            return [ExecutionSummaryRecord.model_validate(r) for r in data.get("result", [])]
+        return [ExecutionSummaryRecord.parse_obj(r) for r in data.get("result", [])]
 
     connectors = lambda s, body: s._.post(
         "/ExecutionConnector/query", json=body

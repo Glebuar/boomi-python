@@ -6,6 +6,10 @@ class ExecutionRecord(BaseModel):
     status: str
     started_at: str
 
+# The response returned by ``/ExecuteProcess`` mirrors ``ExecutionRecord``.
+class ExecuteProcessResponse(ExecutionRecord):
+    pass
+
 class ExecutionSummaryRecord(BaseModel):
     process_id: str = Field(..., alias="processID")
     process_name: str = Field(..., alias="processName")

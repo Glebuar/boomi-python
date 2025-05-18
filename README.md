@@ -69,7 +69,7 @@ boomi.deployments.deploy(environment_id="DEV_ENV", package_id=pkg["packageId"])
 
 # 3 — trigger run and grab log
 run = boomi.execute.run({"atomId": "DEV_ATOM", "processId": proc.id})
-log = boomi.runs.log(run["executionId"])
+log = boomi.runs.log(run.id)
 print(log[:500])
 ```
 

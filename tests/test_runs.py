@@ -11,11 +11,13 @@ class DummyResp:
 def test_runs_summary(monkeypatch):
     http = _HTTP("base", ("u", "p"))
     calls = []
+
     def fake_post(path, json=None):
         calls.append((path, json))
         return DummyResp({"ok": True})
+
     monkeypatch.setattr(http, "post", fake_post)
     runs = Runs(http)
-    result = runs.summary({"q": 1})
+    result = runs.summary({"q": 1}, parse=False)
     assert result == {"ok": True}
     assert calls[0][0] == "/ExecutionSummaryRecord/query"
