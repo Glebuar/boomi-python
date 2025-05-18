@@ -39,7 +39,7 @@ except AuthenticationError as e:
 from boomi.exceptions import ApiError
 
 try:
-    component = client.components.get(component_id="non-existent")
+    component = client.components.get(cid="non-existent")
 except ApiError as e:
     print(f"API error occurred: {e}")
 ```
@@ -66,7 +66,7 @@ def make_request_with_retry():
 
 ```python
 try:
-    result = client.components.get(component_id="123")
+    result = client.components.get(cid="123")
 except BoomiError as e:
     # Handle all Boomi-related errors
     logger.error(f"Boomi error: {e}")
@@ -83,7 +83,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 try:
-    component = client.components.get(component_id="123")
+    component = client.components.get(cid="123")
 except BoomiError as e:
     logger.error(f"Error accessing component: {e}", exc_info=True)
     # Handle error appropriately
@@ -94,3 +94,4 @@ except BoomiError as e:
 - Review the [Client Configuration](client.md) for timeout and retry settings
 - Check out the [Examples](examples.md) for error handling patterns
 - See [Resources](resources.md) for API-specific error details 
+
