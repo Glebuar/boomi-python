@@ -106,6 +106,10 @@ class _HTTP:
         kw.setdefault("headers", self.h_json)
         return self._request("DELETE", path, **kw)
 
+    def put(self, path: str, **kw):
+        kw.setdefault("headers", self.h_json)
+        return self._request("PUT", path, **kw)
+
     # ------------------------------------------------------------------ #
     # transparent pagination for /query + /queryMore
     # ------------------------------------------------------------------ #
