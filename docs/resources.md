@@ -153,7 +153,7 @@ summary = client.runs.summary(body={"query": {...}})
 ### Connector Details
 
 ```python
-# Query execution connectors
+# Query execution connectors as model objects
 connectors = client.runs.connectors(body={"query": {...}})
 ```
 
@@ -169,6 +169,7 @@ url = client.runs.artifacts(exec_id="exec-123")
 ```python
 # Get execution logs
 log_url = client.runs.log(exec_id="exec-123")
+# log_url is a download link. Use get_log_content() to fetch the text
 ```
 
 ### Atom Log

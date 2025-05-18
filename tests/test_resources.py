@@ -82,3 +82,59 @@ def test_runs_summary_parses(monkeypatch):
     runs = Runs(http)
     items = runs.summary({"q": 1})
     assert len(items) == 1 and isinstance(items[0], ExecutionSummaryRecord)
+
+
+def test_runs_list_more(monkeypatch):
+    http = _HTTP("base", ("u", "p"))
+
+    def fake_post(path, json=None):
+        assert path == "/ExecutionRecord/queryMore"
+        return DummyResp({"result": [{"executionId": "e2", "status": "OK", "executionTime": "t2"}]})
+
+    monkeypatch.setattr(http, "post", fake_post)
+
+    runs = Runs(http)
+    items = runs.list_more("tok")
+    assert len(items) == 1 and items[0].id == "e2"
+
+
+def test_runs_summary_more(monkeypatch):
+    http = _HTTP("base", ("u", "p"))
+
+    def fake_post(path, json=None):
+        assert path == "/ExecutionSummaryRecord/queryMore"
+        return DummyResp({"result": [{"processID": "p2", "processName": "P"}]})
+
+    monkeypatch.setattr(http, "post", fake_post)
+    runs = Runs(http)
+    items = runs.summary_more("tok")
+    assert len(items) == 1 and items[0].process_id == "p2"
+
+
+def test_connectors_parse(monkeypatch):
+    http = _HTTP("base", ("u", "p"))
+
+    def fake_post(path, json=None):
+        assert path == "/ExecutionConnector/query"
+        return DummyResp({"result": [{"id": "c1", "executionId": "e"}]})
+
+    monkeypatch.setattr(http, "post", fake_post)
+    runs = Runs(http)
+    items = runs.connectors({})
+    assert len(items) == 1 and items[0].id == "c1"
+    raw = runs.connectors({}, parse=False)
+    assert raw["result"][0]["id"] == "c1"
+
+
+def test_log_url(monkeypatch):
+    http = _HTTP("base", ("u", "p"))
+    monkeypatch.setattr(http, "post", lambda path, json=None: DummyResp({"url": "http://x"}))
+    runs = Runs(http)
+    assert runs.log("e1") == "http://x"
+
+
+def test_execute_cancel(monkeypatch):
+    http = _HTTP("base", ("u", "p"))
+    monkeypatch.setattr(http, "get", lambda path: DummyResp({}))
+    execute = Execute(http)
+    assert execute.cancel("e1") is True

@@ -2,5 +2,7 @@ from .._http import _HTTP
 
 class Atoms:
     def __init__(self, http: _HTTP):
-        self._ = http
-    list = lambda s: s._.get("/Atom").json()
+        self._http = http
+
+    def list(self):
+        return self._http.get("/Atom").json()

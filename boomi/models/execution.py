@@ -3,8 +3,30 @@ from typing import Optional
 
 class ExecutionRecord(BaseModel):
     id: str = Field(..., alias="executionId")
-    status: str
-    execution_time: str = Field(..., alias="executionTime")
+    status: Optional[str] = None
+    execution_time: Optional[str] = Field(None, alias="executionTime")
+    process_id: Optional[str] = Field(None, alias="processId")
+    process_name: Optional[str] = Field(None, alias="processName")
+    atom_id: Optional[str] = Field(None, alias="atomId")
+    atom_name: Optional[str] = Field(None, alias="atomName")
+    account: Optional[str] = None
+    message: Optional[str] = None
+    report_key: Optional[str] = Field(None, alias="reportKey")
+    recorded_date: Optional[str] = Field(None, alias="recordedDate")
+    execution_type: Optional[str] = Field(None, alias="executionType")
+    execution_duration: Optional[int] = Field(None, alias="executionDuration")
+    inbound_document_count: Optional[int] = Field(None, alias="inboundDocumentCount")
+    outbound_document_count: Optional[int] = Field(None, alias="outboundDocumentCount")
+    inbound_document_size: Optional[int] = Field(None, alias="inboundDocumentSize")
+    outbound_document_size: Optional[int] = Field(None, alias="outboundDocumentSize")
+    inbound_error_document_count: Optional[int] = Field(
+        None, alias="inboundErrorDocumentCount"
+    )
+    launcher_id: Optional[str] = Field(None, alias="launcherID")
+    node_id: Optional[str] = Field(None, alias="nodeId")
+    original_execution_id: Optional[str] = Field(None, alias="originalExecutionId")
+    parent_execution_id: Optional[str] = Field(None, alias="parentExecutionId")
+    top_level_execution_id: Optional[str] = Field(None, alias="topLevelExecutionId")
 
 # The response returned by ``/ExecuteProcess`` mirrors ``ExecutionRecord``.
 class ExecuteProcessResponse(ExecutionRecord):
