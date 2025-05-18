@@ -136,11 +136,46 @@ environments = client.environments.list()
 runs = client.runs.list(body={"query": {...}})
 ```
 
+### More Runs Results
+
+```python
+# Get additional execution records
+more = client.runs.list_more(token="TOKEN")
+```
+
+### Summary Records
+
+```python
+# Query summary records
+summary = client.runs.summary(body={"query": {...}})
+```
+
+### Connector Details
+
+```python
+# Query execution connectors
+connectors = client.runs.connectors(body={"query": {...}})
+```
+
+### Download Artifacts
+
+```python
+# Get download URL for execution artifacts
+url = client.runs.artifacts(exec_id="exec-123")
+```
+
 ### Get Logs
 
 ```python
 # Get execution logs
 log_url = client.runs.log(exec_id="exec-123")
+```
+
+### Atom Log
+
+```python
+# Download atom log
+atom_url = client.runs.atom_log({"atomId": "123", "logDate": "2024-01-01"})
 ```
 
 ## Execute Resource
