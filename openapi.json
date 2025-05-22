@@ -61041,7 +61041,6 @@
             ]
           }
         },
-        "required": [],
         "xml": {
           "name": "BulkRequest",
           "namespace": "http://api.platform.boomi.com/"
@@ -61094,7 +61093,6 @@
             }
           }
         },
-        "required": [],
         "xml": {
           "name": "BulkResult",
           "namespace": "http://api.platform.boomi.com/"
@@ -61194,7 +61192,6 @@
             }
           }
         },
-        "required": [],
         "xml": {
           "name": "QueryResult",
           "namespace": "http://api.platform.boomi.com/"
@@ -61386,7 +61383,6 @@
             }
           }
         },
-        "required": []
       },
       "SharedCommunicationChannelComponent": {
         "type": "object",
@@ -61529,7 +61525,6 @@
             }
           }
         },
-        "required": [],
         "xml": {
           "name": "BulkResult",
           "namespace": "http://api.platform.boomi.com/"
@@ -61629,7 +61624,6 @@
             }
           }
         },
-        "required": [],
         "xml": {
           "name": "QueryResult",
           "namespace": "http://api.platform.boomi.com/"
@@ -61738,7 +61732,6 @@
             "example": "test integration pack"
           }
         },
-        "required": []
       },
       "AccountGroupIntegrationPackBulkRequest": {
         "type": "object",
@@ -61765,7 +61758,6 @@
             ]
           }
         },
-        "required": [],
         "xml": {
           "name": "BulkRequest",
           "namespace": "http://api.platform.boomi.com/"
@@ -61820,7 +61812,6 @@
             }
           }
         },
-        "required": [],
         "xml": {
           "name": "BulkResult",
           "namespace": "http://api.platform.boomi.com/"
@@ -61841,7 +61832,6 @@
           },
           "status": {
             "type": "string",
-            "enum": [],
             "example": ""
           },
           "metadata": {
@@ -61860,7 +61850,6 @@
             }
           }
         },
-        "required": [],
         "oneOf": [
           {
             "$ref": "#/components/schemas/AccountGroupIntegrationPackSimpleExpression"
@@ -61954,7 +61943,6 @@
             }
           }
         },
-        "required": [],
         "xml": {
           "name": "QueryResult",
           "namespace": "http://api.platform.boomi.com/"
@@ -62037,7 +62025,6 @@
             }
           }
         },
-        "required": []
       },
       "PublisherIntegrationPack": {
         "type": "object",
@@ -62121,7 +62108,6 @@
             ]
           }
         },
-        "required": [],
         "xml": {
           "name": "BulkRequest",
           "namespace": "http://api.platform.boomi.com/"
@@ -62174,7 +62160,6 @@
             }
           }
         },
-        "required": [],
         "xml": {
           "name": "BulkResult",
           "namespace": "http://api.platform.boomi.com/"
@@ -62193,7 +62178,6 @@
           },
           "status": {
             "type": "string",
-            "enum": [],
             "example": ""
           },
           "metadata": {
@@ -62212,7 +62196,6 @@
             }
           }
         },
-        "required": [],
         "oneOf": [
           {
             "$ref": "#/components/schemas/PublisherIntegrationPackSimpleExpression"
@@ -62306,7 +62289,6 @@
             }
           }
         },
-        "required": [],
         "xml": {
           "name": "QueryResult",
           "namespace": "http://api.platform.boomi.com/"
@@ -62423,7 +62405,6 @@
             "example": "1.1"
           }
         },
-        "required": []
       },
       "PublisherPackagedComponents": {
         "type": "object",
@@ -62438,7 +62419,6 @@
             }
           }
         },
-        "required": []
       },
       "ReleaseIntegrationPack": {
         "type": "object",
@@ -62510,7 +62490,6 @@
             "example": "release-11031691-dc62-4280-a3b2-dcf7f3521f8a"
           }
         },
-        "required": []
       },
       "ReleaseIntegrationPackStatus": {
         "type": "object",
@@ -62625,7 +62604,6 @@
             ]
           }
         },
-        "required": [],
         "xml": {
           "name": "BulkRequest",
           "namespace": "http://api.platform.boomi.com/"
@@ -62678,7 +62656,6 @@
             }
           }
         },
-        "required": [],
         "xml": {
           "name": "BulkResult",
           "namespace": "http://api.platform.boomi.com/"
@@ -62712,7 +62689,6 @@
             "example": "2.0"
           }
         },
-        "required": []
       },
       "ReleasePackagedComponents": {
         "type": "object",
@@ -62785,7 +62761,6 @@
             }
           }
         },
-        "required": []
       },
       "RuntimeRestartRequest": {
         "type": "object",
@@ -62805,7 +62780,6 @@
             "example": "3456789a-bcde-f012-3456-789abcdef012"
           }
         },
-        "required": []
       },
       "SecretsManagerRefreshRequest": {
         "type": "object",
