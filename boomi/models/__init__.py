@@ -9,9 +9,17 @@ from .execution import (
     ExecutionCountAccountGroup,
     AuditLog,
     Event,
+    CancelExecutionRequest,
+    ProcessProperty,
+    ProcessProperties,
+    DynamicProcessProperty,
+    DynamicProcessProperties,
+    ExecutionRequestModel,
+    ExecutionResponse,
 )
 from .folder import Folder
 from .deployment import Deployment
+from .extensions import EnvironmentExtensionsData, EnvironmentExtensionsResponse
 
 __all__ = [
     "Component",
@@ -26,4 +34,13 @@ __all__ = [
     "Event",
     "Folder",
     "Deployment",
+    "CancelExecutionRequest",
+    "ProcessProperty",
+    "ProcessProperties",
+    "DynamicProcessProperty",
+    "DynamicProcessProperties",
+    "ExecutionRequestModel",
+    "ExecutionResponse",
+    "EnvironmentExtensionsData",
+    "EnvironmentExtensionsResponse",
 ]
