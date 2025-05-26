@@ -38,9 +38,26 @@ with open("component.xml", "rb") as f:
 
 ### Get Component
 
+Retrieves component details by its ID. The API is expected to return JSON, which is then validated into a `Component` model instance.
+
+**Signature:**
 ```python
-# Get component details
-component = client.components.get(cid="comp-123")
+get(self, cid: str) -> Component
+```
+
+**Parameters:**
+- `cid` (str): The ID of the component to retrieve.
+
+**Returns:**
+- A `Component` object populated with the component's details (including new fields like `description` and `version`).
+
+**Example:**
+```python
+component_details = client.components.get(cid="comp-123")
+print(component_details.name)
+# Access new fields if available
+# print(component_details.version)
+# print(component_details.description)
 ```
 
 ### Update Component
@@ -113,9 +130,51 @@ deployment = client.deployments.deploy(
 
 ### List Atoms
 
+Lists Atoms. This method can perform a simple GET request to list all atoms or a POST-based query if a `query_payload` is provided to filter results.
+
+**Signature:**
 ```python
-# List all atoms
-atoms = client.atoms.list()
+list(self, query_payload: Optional[dict] = None) -> List[dict]
+```
+
+**Parameters:**
+- `query_payload` (Optional[dict]): A dictionary representing the query filter for a POST request to `/Atom/query`. If `None` or omitted, a `GET /Atom` request is made.
+
+**Returns:**
+- List of Atom details as dictionaries.
+
+**Behavior:**
+- If `query_payload` is `None`: Makes a `GET /Atom` request.
+- If `query_payload` is provided: Makes a `POST /Atom/query` request with the payload.
+
+**Example:**
+```python
+# Get all atoms
+all_atoms = client.atoms.list()
+
+# Query for specific atoms (example payload structure)
+query = {'QueryFilter': {'expression': {'operator': 'and', 'nestedExpression': [
+    {'argument': ['MyAtomName'], 'operator': 'EQUALS', 'property': 'name'}
+]}}}
+filtered_atoms = client.atoms.list(query_payload=query)
+```
+
+### Post Atom Disable
+
+Disables an Atom by making a POST request to /atom/{atomId}/disable.
+
+**Signature:**
+```python
+post_atom_disable(self, atomid_val: str, payload: dict) -> dict
+```
+
+### Post Atom Query
+
+Queries Atoms using a POST request to /atom/query with the given payload.
+
+**Signature:**
+```python
+post_atom_query(self, query_payload: dict) -> List[dict]
 ```
 
 ## Environment Resource
@@ -294,9 +353,41 @@ extensions = client.extensions.query(body={"query": {...}})
 summary = client.extensions.query_conn_field_summary(body={"query": {...}})
 ```
 
+
+## Account Resource
+
+### Get Account Details
+
+Retrieves details for a specific account.
+
+**Signature:**
+```python
+get_account_details(self, account_id: str) -> dict
+```
+
+**Parameters:**
+- `account_id` (str): The ID of the resource.
+
+**Returns:**
+- dict
+
+### Get Account List
+
+Retrieves a list of accounts, optionally filtered by a query payload.
+
+**Signature:**
+```python
+get_account_list(self, query_payload: dict = None) -> dict
+```
+
+**Parameters:**
+- `query_payload` (dict = None): The data payload for the request.
+
+**Returns:**
+- dict
+
 ## Next Steps
 
 - Check out the [Examples](examples.md) for more complex use cases
 - Review the [Error Handling](errors.md) guide for error management
-- See the [Client Configuration](client.md) for advanced setup options 
-
+- See the [Client Configuration](client.md) for advanced setup options
