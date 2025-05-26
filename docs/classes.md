@@ -175,7 +175,6 @@ class Component(BaseModel):
     folder_id: Optional[str] = Field(None, alias="folderId")
     description: str
     version: int
-
 ```
 
 ### Deployment
