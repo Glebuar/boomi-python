@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "encrypted": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "key": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "value": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

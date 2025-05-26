@@ -1,0 +1,67 @@
+{
+  "get": {
+    "tags": [
+      "GenericConnectorRecord"
+    ],
+    "summary": "Retrieves an instance of a GenericConnectorRecord object",
+    "description": "Allows you to view document metadata for exactly one document based on the provided id.",
+    "operationId": "GetGenericConnectorRecord",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ID of the GenericConnectorRecord. You obtain this ID from querying the GenericConnectorRecord object."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/GenericConnectorRecord.json"
+            },
+            "example": {
+              "@type": "GenericConnectorRecord",
+              "id": "A0BCD0EFIj5kLmNO2P4QRS1tUlvwx1yZDlkNWMwZC01N2MzL...",
+              "executionConnectorId": "RVhFQ19DT05OZmFsc2U6U2VuZDp0cmFkaW5ncGFydG5l...",
+              "executionId": "execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01",
+              "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+              "dateProcessed": "2021-02-23T16:44:50Z",
+              "actionType": "Get",
+              "connectorType": "http",
+              "connectionName": "Runtime API Endpoint: https://boomi.com/api/rest/v1/account123/Atom",
+              "operationName": "Get",
+              "connectionId": "1a2c34f5-fbf6-789b-01ea-234a56e7b890",
+              "operationId": "567b89e1-c234-5678-abff-9f01aee2345a",
+              "documentIndex": 0,
+              "incrementalDocumentIndex": 3,
+              "status": "SUCCESS",
+              "startShape": false,
+              "retryable": false,
+              "size": 133
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/GenericConnectorRecord.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:GenericConnectorRecord xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" \n    id=\"A0BCD0EFIj5kLmNO2P4QRS1tUlvwx1yZDlkNWMwZC01N2MzL...\" \n    executionConnectorId=\"RVhFQ19DT05OZmFsc2U6U2VuZDp0cmFkaW5ncGFydG5l...\" \n    executionId=\"execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01\" \n    atomId=\"3456789a-bcde-f012-3456-789abcdef012\" \n    dateProcessed=\"2021-02-23T16:44:50Z\" \n    actionType=\"Get\" connectorType=\"http\" \n    connectionName=\"Runtime API Endpoint: https://boomi.com/api/rest/v1/account123/Atom\" \n    operationName=\"Get\" \n    connectionId=\"1a2c34f5-fbf6-789b-01ea-234a56e7b890\" \n    operationId=\"567b89e1-c234-5678-abff-9f01aee2345a\" \n    documentIndex=\"0\" \n    incrementalDocumentIndex=\"3\" \n    status=\"SUCCESS\" \n    startShape=\"false\" \n    retryable=\"false\" \n    size=\"133\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

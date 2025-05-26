@@ -1,0 +1,68 @@
+{
+  "post": {
+    "tags": [
+      "PackagedComponent"
+    ],
+    "summary": "Creates a PackagedComponent object",
+    "description": "- You can use the CREATE operation to perform two different actions. For example, you can create a new packaged component from a specific component ID, or you can restore a deleted packaged component. Both actions use the same object endpoint. However, the information required in the request body differs.\n  -  **To create a new packaged component**, you must include a component ID in the request body. You create a packaged component for the specified componentId. Optionally, you can specify a packageVersion value and notes about the package version.\n     >**Note:** You cannot add package versions and notes after creating the packaged component. However, if not specified, automatically assigns a numerical version number to your new packaged component.\n  -  **To restore or recover a deleted packaged component**, you must specify the packageId, componentId, and packageVersion. You can query the Packaged Component object for a list of deleted packaged components. \n - Specify a `branchName` to create a packaged component on a particular branch. If `branchName` is not provided, the default working branch is used.",
+    "operationId": "CreatePackagedComponent",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/PackagedComponent.json"
+          },
+          "example": {
+            "componentId": "66d665d1-3ec7-479c-9e24-8df3fa728cf8",
+            "packageVersion": "1.2",
+            "notes": "Package for deployment"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/PackagedComponent.json"
+          },
+          "example": "<bns:PackagedComponent xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <bns:componentId>66d665d1-3ec7-479c-9e24-8df3fa728cf8</bns:componentId>\n    <bns:packageId>357f7a90-7708-45f9-9f28-a83bc74d49a6</bns:packageId>\n    <bns:packageVersion>1.2</bns:packageVersion>\n    <bns:notes></bns:notes>\n    <bns:shareable></bns:shareable>\n    </bns:PackagedComponent>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PackagedComponent.json"
+            },
+            "example": {
+              "@type": "PackagedComponent",
+              "packageId": "357f7a90-7708-45f9-9f28-a83bc74d49a6",
+              "packageVersion": "1.3",
+              "componentId": "66d665d1-3ec7-479c-9e24-8df3fa728cf8",
+              "componentVersion": "2.0",
+              "componentType": "process",
+              "createdDate": "2017-11-01T18:40:55Z",
+              "createdBy": "user@boomi.com",
+              "shareable": true
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/PackagedComponent.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:PackagedComponent xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\">\n        <bns:packageId>357f7a90-7708-45f9-9f28-a83bc74d49a6</bns:packageId>\n        <bns:packageVersion>1.2</bns:packageVersion>\n        <bns:componentId>66d665d1-3ec7-479c-9e24-8df3fa728cf8</bns:componentId>\n        <bns:componentVersion>6</bns:componentVersion>\n        <bns:componentType>process</bns:componentType>\n        <bns:createdDate>2021-01-20T18:52:13Z</bns:createdDate>\n        <bns:createdBy>user@boomi.com</bns:createdBy>\n        <bns:deleted>false</bns:deleted>\n        <bns:shareable>false</bns:shareable>\n    </bns:PackagedComponent>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

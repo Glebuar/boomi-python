@@ -1,0 +1,143 @@
+{
+  "post": {
+    "tags": [
+      "ComponentEnvironmentAttachment"
+    ],
+    "summary": "Creates a ComponentEnvironmentAttachment object",
+    "description": "Attaches a component with a specific ID to the environment with a specific ID.",
+    "operationId": "CreateComponentEnvironmentAttachment",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentEnvironmentAttachment.json"
+          },
+          "example": {
+            "folderFullPath": "Boomi/Admin",
+            "version": "1",
+            "name": "Process A",
+            "type": "process",
+            "createdDate": "2023-07-05T14:06:28Z",
+            "createdBy": "adminboomi.com",
+            "modifiedDate": "2023-07-05T14:06:28Z",
+            "modifiedBy": "adminboomi.com",
+            "deleted": "false",
+            "currentVersion": "true",
+            "folderName": "Admin",
+            "folderId": "RjozMDk2OQ",
+            "encryptedValues": null,
+            "description": null,
+            "object": {
+              "process": {
+                "xmlns": "",
+                "allowSimultaneous": "false",
+                "enableUserLog": "false",
+                "processLogOnErrorOnly": "false",
+                "purgeDataImmediately": "false",
+                "updateRunDates": "true",
+                "workload": "general",
+                "shapes": {
+                  "shape": [
+                    {
+                      "image": "start",
+                      "name": "shape1",
+                      "shapetype": "start",
+                      "userlabel": "",
+                      "x": "96.0",
+                      "y": "94.0",
+                      "configuration": {
+                        "noaction": null
+                      },
+                      "dragpoints": {
+                        "dragpoint": {
+                          "name": "shape1.dragpoint1",
+                          "toShape": "shape2",
+                          "x": "240.0",
+                          "y": "120.0"
+                        }
+                      }
+                    },
+                    {
+                      "image": "map_icon",
+                      "name": "shape2",
+                      "shapetype": "map",
+                      "userlabel": "",
+                      "x": "256.0",
+                      "y": "112.0",
+                      "configuration": {
+                        "map": null
+                      },
+                      "dragpoints": {
+                        "dragpoint": {
+                          "name": "shape2.dragpoint1",
+                          "toShape": "shape3",
+                          "x": "368.0",
+                          "y": "120.0"
+                        }
+                      }
+                    },
+                    {
+                      "image": "stop_icon",
+                      "name": "shape3",
+                      "shapetype": "stop",
+                      "userlabel": "",
+                      "x": "384.0",
+                      "y": "112.0",
+                      "configuration": {
+                        "stop": {
+                          "continue": "true"
+                        }
+                      },
+                      "dragpoints": null
+                    }
+                  ]
+                }
+              }
+            },
+            "processOverrides": null
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentEnvironmentAttachment.json"
+          },
+          "example": "<bns:ComponentEnvironmentAttachment environmentId=\"456789ab-cdef-0123-4567-89abcdef0123\" \n         componentId=\"56789abc-def0-1234-5678-9abcdef01234\" xmlns:bns=\"http://api.platform.boomi.com/\" \n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentEnvironmentAttachment.json"
+            },
+            "example": {
+              "@type": "ComponentEnvironmentAttachment",
+              "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg",
+              "componentId": "56789abc-def0-1234-5678-9abcdef01234",
+              "componentType": "process",
+              "environmentId": "456789ab-cdef-0123-4567-89abcdef0123"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentEnvironmentAttachment.json"
+            },
+            "example": "<bns:ComponentEnvironmentAttachment environmentId=\"456789ab-cdef-0123-4567-89abcdef0123\" \n         componentId=\"56789abc-def0-1234-5678-9abcdef01234\"\n         componentType=\"process\"\n         id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\"\n         xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

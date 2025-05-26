@@ -1,0 +1,54 @@
+{
+  "get": {
+    "tags": [
+      "AccountCloudAttachmentProperties"
+    ],
+    "summary": "Retrieves an AccountCloudAttachmentProperties object by identifier",
+    "description": "Use the GET operation to return and view a full list of Account Cloud attachment properties and their current values. This action is equivalent to viewing the [Attachment quotas](https://help.boomi.com/docs/Atomsphere/Integration/Integration%20management/r-atm-Attachment_Quotas_tab_4fbc3fff-7aaf-4bbd-a2dc-25d0edb5189c) tab (Manage > Cloud Management) in the user interface. \n >**Note:** The Cloud and attachments to which you are calling must be online. Cloud owners and users that own the Cloud attachments can use this operation.",
+    "operationId": "AsyncGetAccountCloudAttachmentProperties",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AsyncOperationTokenResult.json"
+            },
+            "example": {
+              "@type": "AsyncOperationTokenResult",
+              "asyncToken": {
+                "@type": "AsyncToken",
+                "token": "AccountCloudAttachmentProperties-1f23456f-a78f-91cc-012e-3e4dec5b67d8"
+              },
+              "responseStatusCode": 202
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AsyncOperationTokenResult.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n  <bns:AccountCloudAttachmentProperties xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \n  xmlns:bns=\"http://api.platform.boomi.com/\" statusCode=\"200\" \n  sessionId=\"AccountCloudAttachmentProperties-1f23456f-a78f-91cc-012e-3e4dec5b67d8\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

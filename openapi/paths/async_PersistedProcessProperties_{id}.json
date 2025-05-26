@@ -1,0 +1,52 @@
+{
+  "get": {
+    "tags": [
+      "atom"
+    ],
+    "summary": "Retrieves a PersistedProcessProperties object by identifier",
+    "description": "The GET operation returns the current state of the Persisted Process properties names and values for the specified Runtime. \n The initial GET operation returns a token for the specified Runtime.",
+    "operationId": "AsyncGetPersistedProcessProperties",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AsyncOperationTokenResult.json"
+            },
+            "example": {
+              "AsyncOperationTokenResult": {
+                "responseStatusCode": "202",
+                "token": "PersistedProcessProperties-0c34dccd-01da-4078-ace2-69897e421583"
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AsyncOperationTokenResult.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:AsyncOperationTokenResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n        xmlns:bns=\"http://api.platform.boomi.com/\" responseStatusCode=\"202\" \n        token=\"PersistedProcessProperties-0c34dccd-01da-4078-ace2-69897e421583\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

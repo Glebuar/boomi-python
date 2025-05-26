@@ -1,0 +1,131 @@
+{
+  "post": {
+    "tags": [
+      "TradingPartnerComponent"
+    ],
+    "summary": "Queries for a TradingPartnerComponent object(s)",
+    "description": "The QUERY operation returns each Trading Partner component that meets the specified filtering criteria. \n\n - The name field in a QUERY filter represents the object’s componentName field. \n - Only the LIKE operator is allowed with a name filter. Likewise, you can only use the EQUALS operator with a classification, standard, identifier filter, or a communication method filter (as2, disk, ftp, http, mllp, sftp). Filtering on a communication method field requests Trading Partner components by defining the communication method. \n - If the QUERY request includes multiple filters, you can connect the filters with a logical AND operator. The QUERY request does not support the logical OR operator. \n - The QUERY results omit the folderName field. \n\n For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryTradingPartnerComponent",
+    "requestBody": {
+      "description": " Possible properties include: name, classification, standard, identifier, as2, disk, ftp, mllp, sftp, http, oftp",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/TradingPartnerComponentQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "x12"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "standard"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "x12"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "standard"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/TradingPartnerComponentQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n  <QueryFilter>\n    <expression xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\" \n       operator=\"EQUALS\" property=\"standard\">\n       <argument>x12</argument>\n    </expression>\n  </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"standard\">\n      <argument>x12</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/TradingPartnerComponentQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "queryToken": "/2mZdfERiaxo8QzovFbelpbegzlMWTSWIyfFgEV3XoCHCYhO2HTumRKXjc53lCChRwOiuKD6sXyixAbOsPa82okh",
+              "result": [
+                {
+                  "@type": "TradingPartnerComponent",
+                  "PartnerCommunicationTypes": [
+                    "ftp"
+                  ],
+                  "classification": "tradingpartner",
+                  "standard": "x12",
+                  "identifier": "BEST-WH",
+                  "componentName": "Best Wholesaling",
+                  "componentId": "12345678-9abc-def0-1234-56789abcdef0",
+                  "folderId": 11356
+                },
+                {
+                  "@type": "TradingPartnerComponent",
+                  "PartnerCommunicationTypes": [
+                    "ftp"
+                  ],
+                  "classification": "mycompany",
+                  "standard": "x12",
+                  "identifier": "MY-X12",
+                  "componentName": "MyCompany-X12",
+                  "componentId": "fedcba09-8765-4321-fedc-ba0987654321",
+                  "folderId": 13340
+                }
+              ],
+              "numberOfResults": 2
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/TradingPartnerComponentQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"2\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n   <bns:queryToken>/2mZdfERiaxo8QzovFbelpbegzlMWTSWIyfFgEV3XoCHCYhO2HTumRKXjc53lCChRwOiuKD6sXyixAbOsPa82okh/</bns:queryToken>\n   <bns:result xsi:type=\"TradingPartnerComponent\" classification=\"tradingpartner\" standard=\"x12\" identifier=\"BEST-WH\" componentName=\"Best Wholesaling\" componentId=\"12345678-9abc-def0-1234-56789abcdef0\" folderId=\"11356\">\n      <bns:PartnerCommunicationTypes>ftp</bns:PartnerCommunicationTypes>\n    </bns:result>\n   <bns:result xsi:type=\"TradingPartnerComponent\" classification=\"mycompany\" standard=\"x12\" identifier=\"MY-X12\" componentName=\"MyCompany-x12\" componentId=\"fedcba09-8765-4321-fedc-ba0987654321\" folderId=\"13340\">\n      <bns:PartnerCommunicationTypes>ftp</bns:PartnerCommunicationTypes>\n    </bns:result>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

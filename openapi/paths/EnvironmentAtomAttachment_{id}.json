@@ -1,0 +1,34 @@
+{
+  "delete": {
+    "tags": [
+      "EnvironmentAtomAttachment"
+    ],
+    "summary": "Deletes an EnvironmentAtomAttachment object",
+    "description": "Detaches a Runtime from an environment where the attachment is specified by the conceptual Environment Atom Attachment object ID. This ID is returned by the CREATE operation that originated the attachment and can also be obtained from a QUERY operation. If you successfully detach the Runtime from the environment, the response is  `<true/>`.",
+    "operationId": "DeleteEnvironmentAtomAttachment",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The object’s conceptual ID, which is synthesized from the Runtime and environment IDs."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

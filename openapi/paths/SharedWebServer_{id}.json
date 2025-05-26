@@ -1,0 +1,312 @@
+{
+  "get": {
+    "tags": [
+      "SharedWebServer"
+    ],
+    "summary": "Retrieves an instance of a SharedWebServer object",
+    "description": "Retrieves the details of a Shared Web Server configuration for this atom/cloud ID by its unique ID. The response can be in either XML or JSON format based on your request.",
+    "operationId": "GetSharedWebServer",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/SharedWebServer.json"
+            },
+            "example": {
+              "@type": "SharedWebServer",
+              "atomId": "ea19beb4-3f9f-407e-b019-ac508c0aa73b",
+              "generalSettings": {
+                "@type": "SharedWebServerGeneral",
+                "apiType": "ADVANCED",
+                "authentication": {
+                  "@type": "SharedWebServerAuthentication",
+                  "authType": "CUSTOM",
+                  "loginModuleClassName": "as",
+                  "cacheAuthorizationCredentials": false,
+                  "loginModuleOptions": {
+                    "@type": "SharedWebServerLoginModuleConfiguration"
+                  },
+                  "cacheAuthenticationTimeout": 0
+                },
+                "overrideUrl": false,
+                "baseUrl": "http://dd:9090",
+                "examineForwardHeaders": false,
+                "externalHost": "dd",
+                "internalHost": "",
+                "listenerPorts": {
+                  "@type": "ListenerPortConfiguration",
+                  "port": [
+                    {
+                      "@type": "SharedWebServerPort",
+                      "enablePort": true,
+                      "port": 9090,
+                      "ssl": false,
+                      "authType": "CUSTOM",
+                      "externalPort": 0,
+                      "externalSSL": false,
+                      "defaultPort": true,
+                      "baseUrlForRequest": "http://dd:9090"
+                    },
+                    {
+                      "@type": "SharedWebServerPort",
+                      "enablePort": true,
+                      "port": 9091,
+                      "ssl": false,
+                      "authType": "BASIC",
+                      "externalPort": 10,
+                      "externalSSL": false,
+                      "defaultPort": false,
+                      "baseUrlForRequest": "http://dd:10"
+                    }
+                  ]
+                },
+                "maxNumberOfThreads": 250,
+                "protectedHeaders": {
+                  "@type": "SharedWebServerProtectedHeaders"
+                },
+                "sslCertificate": ""
+              },
+              "userManagement": {
+                "@type": "SharedWebServerUserManagement",
+                "enableAPIMInternalRoles": false,
+                "users": [
+                  {
+                    "@type": "SharedWebServerUser",
+                    "roleAssociations": [],
+                    "username": "boomi-internal",
+                    "usingIPFilters": false,
+                    "usingComponentFilters": false
+                  }
+                ]
+              },
+              "corsConfiguration": {
+                "@type": "SharedWebServerCors",
+                "origins": [
+                  {
+                    "@type": "SharedWebServerCORSOrigin",
+                    "allowRequestHeaders": [],
+                    "allowResponseHeaders": [],
+                    "allowMethods": [],
+                    "EnableHTTPRequestHandling": false,
+                    "EnableHTTPSRequestHandling": false,
+                    "allowCredentials": false,
+                    "domain": "domain",
+                    "cacheTimeout": 53
+                  }
+                ]
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/SharedWebServer.json"
+            },
+            "example": "<SharedWebServer>\n  <atomId>ea19beb4-3f9f-407e-b019-ac508c0aa73b</atomId>\n  <generalSettings>\n    <apiType>ADVANCED</apiType>\n    <authentication>\n      <authType>CUSTOM</authType>\n      <loginModuleClassName>as</loginModuleClassName>\n      <cacheAuthorizationCredentials>false</cacheAuthorizationCredentials>\n      <loginModuleOptions/>\n      <cacheAuthenticationTimeout>0</cacheAuthenticationTimeout>\n    </authentication>\n    <overrideUrl>false</overrideUrl>\n    <baseUrl>http://dd:9090</baseUrl>\n    <examineForwardHeaders>false</examineForwardHeaders>\n    <externalHost>dd</externalHost>\n    <internalHost></internalHost>\n    <listenerPorts>\n      <port>\n        <enablePort>true</enablePort>\n        <port>9090</port>\n        <ssl>false</ssl>\n        <authType>CUSTOM</authType>\n        <externalPort>0</externalPort>\n        <externalSSL>false</externalSSL>\n        <defaultPort>true</defaultPort>\n        <baseUrlForRequest>http://dd:9090</baseUrlForRequest>\n      </port>\n      <port>\n        <enablePort>true</enablePort>\n        <port>9091</port>\n        <ssl>false</ssl>\n        <authType>BASIC</authType>\n        <externalPort>10</externalPort>\n        <externalSSL>false</externalSSL>\n        <defaultPort>false</defaultPort>\n        <baseUrlForRequest>http://dd:10</baseUrlForRequest>\n      </port>\n    </listenerPorts>\n    <maxNumberOfThreads>250</maxNumberOfThreads>\n    <protectedHeaders/>\n    <sslCertificate></sslCertificate>\n  </generalSettings>\n  <userManagement>\n    <enableAPIMInternalRoles>false</enableAPIMInternalRoles>\n    <users>\n      <username>boomi-internal</username>\n      <roleAssociations/>\n      <usingIPFilters>false</usingIPFilters>\n      <usingComponentFilters>false</usingComponentFilters>\n    </users>\n  </userManagement>\n  <corsConfiguration>\n    <origins>\n      <domain>domain</domain>\n      <allowRequestHeaders/>\n      <allowResponseHeaders/>\n      <allowMethods/>\n      <EnableHTTPRequestHandling>false</EnableHTTPRequestHandling>\n      <EnableHTTPSRequestHandling>false</EnableHTTPSRequestHandling>\n      <allowCredentials>false</allowCredentials>\n      <cacheTimeout>53</cacheTimeout>\n    </origins>\n  </corsConfiguration>\n</SharedWebServer>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "SharedWebServer"
+    ],
+    "summary": "Modifies or updates a SharedWebServer object",
+    "description": "Updates a Shared Web Server object based on the supplied Runtime ID.",
+    "operationId": "UpdateSharedWebServer",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/SharedWebServer.json"
+          },
+          "example": {
+            "@type": "SharedWebServer",
+            "atomId": "8f4c9283-695e-4c9b-963e-b66805832f68",
+            "generalSettings": {
+              "@type": "SharedWebServerGeneral",
+              "apiType": "INTERMEDIATE",
+              "authentication": {
+                "@type": "SharedWebServerAuthentication",
+                "authType": "BASIC",
+                "cacheAuthorizationCredentials": false
+              },
+              "overrideUrl": false,
+              "baseUrl": "http://cloudAtmSWS:9090",
+              "examineForwardHeaders": false,
+              "externalHost": "",
+              "internalHost": "",
+              "listenerPorts": {
+                "@type": "ListenerPortConfiguration",
+                "port": [
+                  {
+                    "@type": "SharedWebServerPort",
+                    "enablePort": true,
+                    "port": 8080,
+                    "ssl": true,
+                    "authType": "CLIENT_CERT",
+                    "externalPort": 0,
+                    "externalSSL": false,
+                    "defaultPort": false
+                  },
+                  {
+                    "@type": "SharedWebServerPort",
+                    "enablePort": true,
+                    "port": 9090,
+                    "ssl": false,
+                    "authType": "BASIC",
+                    "externalPort": 0,
+                    "externalSSL": false,
+                    "defaultPort": false
+                  }
+                ]
+              },
+              "maxNumberOfThreads": 250,
+              "protectedHeaders": {
+                "@type": "SharedWebServerProtectedHeaders"
+              },
+              "sslCertificate": ""
+            },
+            "userManagement": {
+              "@type": "SharedWebServerUserManagement",
+              "enableAPIMInternalRoles": false,
+              "users": [
+                {
+                  "@type": "SharedWebServerUser",
+                  "roleAssociations": [],
+                  "username": "boomi-internal",
+                  "usingIPFilters": false,
+                  "usingComponentFilters": false
+                }
+              ]
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/SharedWebServer.json"
+          },
+          "example": " <SharedWebServer>\n  <atomId>8f4c9283-695e-4c9b-963e-b66805832f68</atomId>\n  <generalSettings>\n    <apiType>INTERMEDIATE</apiType>\n    <authentication>\n      <authType>BASIC</authType>\n      <cacheAuthorizationCredentials>false</cacheAuthorizationCredentials>\n    </authentication>\n    <overrideUrl>false</overrideUrl>\n    <baseUrl>http://cloudAtmSWS:9090</baseUrl>\n    <examineForwardHeaders>false</examineForwardHeaders>\n    <externalHost></externalHost>\n    <internalHost></internalHost>\n    <listenerPorts>\n      <port>\n        <enablePort>true</enablePort>\n        <port>8080</port>\n        <ssl>true</ssl>\n        <authType>CLIENT_CERT</authType>\n        <externalPort>0</externalPort>\n        <externalSSL>false</externalSSL>\n        <defaultPort>false</defaultPort>\n      </port>\n      <port>\n        <enablePort>true</enablePort>\n        <port>9090</port>\n        <ssl>false</ssl>\n        <authType>BASIC</authType>\n        <externalPort>0</externalPort>\n        <externalSSL>false</externalSSL>\n        <defaultPort>false</defaultPort>\n      </port>\n    </listenerPorts>\n    <maxNumberOfThreads>250</maxNumberOfThreads>\n    <protectedHeaders/>\n    <sslCertificate></sslCertificate>\n  </generalSettings>\n</SharedWebServer>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/SharedWebServer.json"
+            },
+            "example": {
+              "@type": "SharedWebServer",
+              "atomId": "8f4c9283-695e-4c9b-963e-b66805832f68",
+              "generalSettings": {
+                "@type": "SharedWebServerGeneral",
+                "apiType": "INTERMEDIATE",
+                "authentication": {
+                  "@type": "SharedWebServerAuthentication",
+                  "authType": "BASIC",
+                  "cacheAuthorizationCredentials": false
+                },
+                "overrideUrl": false,
+                "baseUrl": "http://cloudAtmSWS:9090",
+                "examineForwardHeaders": false,
+                "externalHost": "",
+                "internalHost": "",
+                "listenerPorts": {
+                  "@type": "ListenerPortConfiguration",
+                  "port": [
+                    {
+                      "@type": "SharedWebServerPort",
+                      "enablePort": true,
+                      "port": 8080,
+                      "ssl": true,
+                      "authType": "CLIENT_CERT",
+                      "externalPort": 0,
+                      "externalSSL": false,
+                      "defaultPort": false
+                    },
+                    {
+                      "@type": "SharedWebServerPort",
+                      "enablePort": true,
+                      "port": 9090,
+                      "ssl": false,
+                      "authType": "BASIC",
+                      "externalPort": 0,
+                      "externalSSL": false,
+                      "defaultPort": false
+                    }
+                  ]
+                },
+                "maxNumberOfThreads": 250,
+                "protectedHeaders": {
+                  "@type": "SharedWebServerProtectedHeaders"
+                },
+                "sslCertificate": ""
+              },
+              "userManagement": {
+                "@type": "SharedWebServerUserManagement",
+                "enableAPIMInternalRoles": false,
+                "users": [
+                  {
+                    "@type": "SharedWebServerUser",
+                    "roleAssociations": [],
+                    "username": "boomi-internal",
+                    "usingIPFilters": false,
+                    "usingComponentFilters": false
+                  }
+                ]
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/SharedWebServer.json"
+            },
+            "example": "<SharedWebServer>\n  <atomId>8f4c9283-695e-4c9b-963e-b66805832f68</atomId>\n  <generalSettings>\n    <apiType>INTERMEDIATE</apiType>\n    <authentication>\n      <authType>BASIC</authType>\n      <cacheAuthorizationCredentials>false</cacheAuthorizationCredentials>\n    </authentication>\n    <overrideUrl>false</overrideUrl>\n    <baseUrl>http://cloudAtmSWS:9090</baseUrl>\n    <examineForwardHeaders>false</examineForwardHeaders>\n    <externalHost></externalHost>\n    <internalHost></internalHost>\n    <listenerPorts>\n      <port>\n        <enablePort>true</enablePort>\n        <port>8080</port>\n        <ssl>true</ssl>\n        <authType>CLIENT_CERT</authType>\n        <externalPort>0</externalPort>\n        <externalSSL>false</externalSSL>\n        <defaultPort>false</defaultPort>\n      </port>\n      <port>\n        <enablePort>true</enablePort>\n        <port>9090</port>\n        <ssl>false</ssl>\n        <authType>BASIC</authType>\n        <externalPort>0</externalPort>\n        <externalSSL>false</externalSSL>\n        <defaultPort>false</defaultPort>\n      </port>\n    </listenerPorts>\n    <maxNumberOfThreads>250</maxNumberOfThreads>\n    <protectedHeaders/>\n    <sslCertificate></sslCertificate>\n  </generalSettings>\n  </SharedWebServer>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

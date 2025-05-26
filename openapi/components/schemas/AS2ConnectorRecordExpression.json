@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./AS2ConnectorRecordSimpleExpression.json"
+    },
+    {
+      "$ref": "./AS2ConnectorRecordGroupingExpression.json"
+    }
+  ]
+}

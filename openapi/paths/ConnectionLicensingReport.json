@@ -1,0 +1,96 @@
+{
+  "post": {
+    "tags": [
+      "ConnectionLicensingReport"
+    ],
+    "summary": "Creates a ConnectionLicensingReport object",
+    "description": "Returns the Connection Licensing URL in the response to view or download the deployed connection details. To download connection licensing data for a given connector class: \n\n a. Send a POST and request body to `https://api.boomi.com/api/rest/v1/<accountId>/ConnectionLicensingReport` \n\n where accountId is the ID of the authenticating account for the request. \n\n Populate the request body with or without the available filters for the report that you want to download. \n\n b. Next, send a GET request using the URL returned in the POST response. The GET does not require a request body, and returns the deployed connection details. \n\n >**Note:** Do not pass any filters in the CREATE payload. This will not help get the Test & Production connections deployed details for all the connector classes. To get the Test and Production deployed connection details you have to pass ONLY the structure in the CREATE request, without any filters.\n\n - To apply multiple filters, add the Operator to the payload. Refer to the provided code samples for guidance.\n\n - The argument values for the *property* filters in the CREATE payload should be:\n\n  - componentId - Must be a valid componentId value. If an invalid value is passed, the report or the GET response will be blank or will have zero records.\n\n  - environmentId - Must be valid environmentId value. If an invalid value is passed, the report or the GET response will be blank or will have zero records.\n\n  - containerId - Must be a valid atomId or moleculeId. If an invalid value is passed, the report or the GET response will be blank or will have zero records.\n\n  - connectorClass - Must be valid connectorClass. Values must be either Standard, Small Business, Trading Partner, or Enterprise.",
+    "operationId": "CreateConnectionLicensingReport",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ConnectionLicensingReport.json"
+          },
+          "example": {
+            "@type": "ConnectionLicensingReport",
+            "QueryFilter": {
+              "expression": {
+                "operator": "and",
+                "nestedExpression": [
+                  {
+                    "operator": "EQUALS",
+                    "property": "componentId",
+                    "argument": [
+                      "453f8d58-fd81-4389-9150-7e7258efdc2c"
+                    ]
+                  },
+                  {
+                    "operator": "EQUALS",
+                    "property": "environmentId",
+                    "argument": [
+                      "891eb24b-a107-4e0f-a37a-d49b1bb1b491"
+                    ]
+                  },
+                  {
+                    "operator": "EQUALS",
+                    "property": "containerId",
+                    "argument": [
+                      "59e17d96-77a7-4a03-99bc-97fef80ff5cc"
+                    ]
+                  },
+                  {
+                    "operator": "EQUALS",
+                    "property": "connectorClass",
+                    "argument": [
+                      "small business"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ConnectionLicensingReport.json"
+          },
+          "example": "<ConnectionLicensingReport xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n    <expression operator=\"and\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n    <nestedExpression operator=\"EQUALS\" property=\"componentId\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n    <argument>453f8d58-fd81-4389-9150-7e7258efdc2c</argument>\n    </nestedExpression>\n    <nestedExpression operator=\"EQUALS\" property=\"environmentId\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n    <argument>891eb24b-a107-4e0f-a37a-d49b1bb1b491</argument>\n    </nestedExpression>\n    <nestedExpression operator=\"EQUALS\" property=\"containerId\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n    <argument>59e17d96-77a7-4a03-99bc-97fef80ff5cc</argument>\n    </nestedExpression>\n    <nestedExpression operator=\"EQUALS\" property=\"connectorClass\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n    <argument>small business</argument>\n    </nestedExpression>\n    </expression>\n    </QueryFilter>\n    </ConnectionLicensingReport>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ConnectionLicensingDownload.json"
+            },
+            "example": {
+              "@type": "ConnectionLicensingDownload",
+              "url": "https://qa.boomi.com/account/Admin-123/api/download/ConnectionLicensing-e0e1d98b-2c25-4948-aa07-6ee181547695",
+              "message": "Connection licensing report generation has started.",
+              "statusCode": "202"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ConnectionLicensingDownload.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:ConnectionLicensingDownload xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" url=\"https://qa.boomi.com/account/Admin-123/api/download/ConnectionLicensing-e0e1d98b-2c25-4948-aa07-6ee181547695\" message=\"Connection licensing report generation has started.\" statusCode=\"202\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

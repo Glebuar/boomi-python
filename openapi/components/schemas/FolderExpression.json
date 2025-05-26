@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./FolderSimpleExpression.json"
+    },
+    {
+      "$ref": "./FolderGroupingExpression.json"
+    }
+  ]
+}

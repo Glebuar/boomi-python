@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "compositeDelimiter": {
+      "$ref": "./EdiDelimiter.json"
+    },
+    "elementDelimiter": {
+      "$ref": "./EdiDelimiter.json"
+    },
+    "filterAcknowledgements": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "segmentTerminator": {
+      "$ref": "./EdiSegmentTerminator.json"
+    },
+    "useReconciliationMessage": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

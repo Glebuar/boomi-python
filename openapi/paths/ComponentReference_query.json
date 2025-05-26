@@ -1,0 +1,118 @@
+{
+  "post": {
+    "tags": [
+      "ComponentReference"
+    ],
+    "summary": "Queries for a ComponentReference object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).\n\n- You can use the QUERY operation to return the latest version(s) of a primary component(s) that references a given secondary component ID, or all the secondary components that the given primary component ID references.\n\n>**Note:** When querying either primary or secondary component references, the API object returns the immediate reference (one level). It does not recursively trace through nested references like the **Show Where Used** feature does in the user interface. \n\n For example, take a process that references a Map component where it references two Profile components. If you query by `parentComponentId=<process>`, the API returns a result for the Map component but not the profiles. To get the profiles, you need to perform a second call to query references for the Map component.\n\n- You can filter the query operation in one of two ways:\n\n  - To find all the secondary components referenced by a given primary component, you must provide both the parentComponentId and the parentVersion values. You can optionally use the type filter in your query.\n\n  - To find all the primary components that reference a given secondary component, you must provide the componentId value. You can optionally include the type filter in your query.\n\n- To see more information about a component ID returned in the response, like the component's type or name, you can query that same ID using the [Component Metadata object](/api/platformapi#tag/ComponentMetadata).\n\n #### Understanding references to deleted components \n\n Filtering or querying by `componentId` only returns the component's current version. If you delete the current component revision, it does not return results.\n\nWhen filtering by `parentComponentId` or `parentVersion`, it saves references to other components for a given version of the primary component. If you delete the given primary component version, it does not return results. Note that it is possible to return a reference to a deleted secondary component if you do not remove the reference in the user interface (appears in red).",
+    "operationId": "QueryComponentReference",
+    "requestBody": {
+      "description": " Possible properties include: parentComponentId, parentVersion, componentId, type",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentReferenceQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "456789a-bcde-f0123-4567-89abcdef012"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "componentId"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "456789a-bcde-f0123-4567-89abcdef012"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "componentId"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentReferenceQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n<QueryFilter>\n<expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n<nestedExpression operator=\"EQUALS\" property=\"parentComponentId\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n<argument>123456a-bcde-f4567-8901-23abcdef456</argument>\n</nestedExpression>\n<nestedExpression operator=\"EQUALS\" property=\"parentVersion\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n<argument>7</argument>\n</nestedExpression>\n</expression>\n</QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"parentComponentId\">\n      <argument>123456a-bcde-f4567-8901-23abcdef456</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentReferenceQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "ComponentReference",
+                  "references": [
+                    {
+                      "@type": "references",
+                      "parentComponentId": "123456a-bcde-f4567-8901-23abcdef456",
+                      "parentVersion": 2,
+                      "componentId": "456789a-bcde-f0123-4567-89abcdef012",
+                      "type": "DEPENDENT"
+                    }
+                  ]
+                }
+              ],
+              "numberOfResults": 1
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentReferenceQueryResponse.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:QueryResult\n    \txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    \txmlns:bns=\"http://api.platform.boomi.com/\" numberOfResults=\"2\">\n    \t<bns:result xsi:type=\"ComponentReference\">\n    \t\t<bns:references parentComponentId=\"123456a-bcde-f4567-8901-23abcdef456\" parentVersion=\"7\" componentId=\"456789a-bcde-f0123-4567-89abcdef012\" type=\"DEPENDENT\"/>\n    \t</bns:result>\n    \t<bns:result xsi:type=\"ComponentReference\">\n    \t\t<bns:references parentComponentId=\"123456a-bcde-f4567-8901-23abcdef456\" parentVersion=\"7\" componentId=\"3d76c573-1234-75e3-b921-8b2fab48f0c9\" type=\"DEPENDENT\"/>\n    \t</bns:result>\n    </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

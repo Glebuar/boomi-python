@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "default": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "key": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

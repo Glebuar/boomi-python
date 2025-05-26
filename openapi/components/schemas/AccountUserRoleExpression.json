@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./AccountUserRoleSimpleExpression.json"
+    },
+    {
+      "$ref": "./AccountUserRoleGroupingExpression.json"
+    }
+  ]
+}

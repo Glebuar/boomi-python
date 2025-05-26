@@ -1,0 +1,101 @@
+{
+  "post": {
+    "tags": [
+      "Role"
+    ],
+    "summary": "Creates a Role object",
+    "description": "Creates a Role object based on the supplied values.",
+    "operationId": "CreateRole",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/Role.json"
+          },
+          "example": {
+            "Description": "my role",
+            "Privileges": {
+              "Privilege": [
+                {
+                  "name": "VIEW_RESULT"
+                },
+                {
+                  "name": "EMBED"
+                },
+                {
+                  "name": "EXECUTE"
+                },
+                {
+                  "name": "ATOM_MANAGEMENT"
+                }
+              ]
+            },
+            "accountId": "accountid-12345",
+            "name": "JsonRole"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/Role.json"
+          },
+          "example": "<bns:Role xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" name=\"myRole\" accountId=\"accountId-12345\" >\n        <bns:Description>This is a custom role added</bns:Description>\n        <bns:Privileges>\n            <bns:Privilege name=\"API\"/>\n                <bns:Privilege name=\"EXECUTE\"/>\n                <bns:Privilege name=\"BUILD\"/>\n        </bns:Privileges>\n    </bns:Role>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Role.json"
+            },
+            "example": {
+              "@type": "Role",
+              "Description": "Live and direct via API!",
+              "Privileges": {
+                "@type": "Privileges",
+                "Privilege": [
+                  {
+                    "@type": "",
+                    "name": "EMBED"
+                  },
+                  {
+                    "@type": "",
+                    "name": "EXECUTE"
+                  },
+                  {
+                    "@type": "",
+                    "name": "ATOM_MANAGEMENT"
+                  },
+                  {
+                    "@type": "",
+                    "name": "VIEW_RESULT"
+                  }
+                ]
+              },
+              "id": "f3fb5e19-fc47-442e-a978-c47db961ecfb",
+              "accountId": "account-12345",
+              "name": "JsonRole"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Role.json"
+            },
+            "example": "<bns:Role xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" name=\"myRole\" accountId=\"accountId-12345\" id=\"794f61e2-b483-40cd-81f9-de0f835fee1d\">\n        <bns:Description>This is a custom role added </bns:Description>\n        <bns:Privileges>\n            <bns:Privilege name=\"BUILD\"/>\n            <bns:Privilege name=\"API\"/>\n            <bns:Privilege name=\"EXECUTE\"/>\n        </bns:Privileges>\n    </bns:Role>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

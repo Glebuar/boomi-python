@@ -1,0 +1,243 @@
+{
+  "get": {
+    "tags": [
+      "Component"
+    ],
+    "summary": "Retrieves an instance of a Component object",
+    "description": "- When using the GET operation by componentId, it returns the latest component if you do not provide the version. \n - When you provide the version in the format of `<componentId>` ~ `<version>`, it returns the specific version of the component. \n - The GET operation only accepts mediaType `application/xml` for the API response. \n - The limit is 5 requests for the BULK GET operation. All other API objects have a limit of 100 BULK GET requests. \n - If you want information for a component on a specific branch, include the branchId in the GET request:   `https://api.boomi.com/api/rest/v1/{accountId}/Component/{componentId}~{branchId}`",
+    "operationId": "GetComponent",
+    "parameters": [
+      {
+        "name": "componentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ID of the component. The component ID is available on the Revision History dialog, which you can access from the Build page in the service. This must be omitted for the CREATE operation but it is required for the UPDATE operation."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Component.json"
+            },
+            "example": {
+              "Component": {
+                "folderFullPath": "Platform APIs/Tests/Platform API Connector/AS2 Connector Record",
+                "componentId": "456789a-bcde-f0123-4567-89abcdef012",
+                "version": "1",
+                "name": "Receiver Encryption Public Certificate_2017",
+                "type": "certificate",
+                "createdDate": "2018-05-31T15:12:30Z",
+                "createdBy": "userboomi.com",
+                "modifiedDate": "2018-05-31T15:12:30Z",
+                "modifiedBy": "userboomi.com",
+                "deleted": "false",
+                "currentVersion": "true",
+                "folderName": "Originator",
+                "folderId": "RjoxNjMxNTA",
+                "copiedFromComponentId": "123456a-bcde-f4567-8901-23abcdef456",
+                "copiedFromComponentVersion": "1",
+                "encryptedValues": {
+                  "encryptedValue": {
+                    "path": "//CertificateModel/CertificateData/text()",
+                    "isSet": "true"
+                  }
+                },
+                "description": null,
+                "object": {
+                  "CertificateModel": {
+                    "MD5Fingerprint": "88:44:1A:90:C7:40:DF:A4:2F:95:70:F9:88:7A:76:54",
+                    "SHA1Fingerprint": "4B:2F:1E:A7:3C:DA:AD:F8:F2:86:38:98:25:3E:09:B4:86:5B:11:A9",
+                    "serialNumber": "01",
+                    "signatureAlgorithm": "SHA512withRSA",
+                    "version": "3",
+                    "Type": "public",
+                    "IssuedTo": {
+                      "commonName": "receiver",
+                      "country": "usa",
+                      "fullName": "CN=receiver,OU=boomi,O=dell,L=chesterbrook,ST=pa,C=usa",
+                      "organization": "dell",
+                      "organizationalUnit": "boomi"
+                    },
+                    "Issuer": {
+                      "commonName": "receiver",
+                      "country": "usa",
+                      "fullName": "CN=receiver,OU=boomi,O=dell,L=chesterbrook,ST=pa,C=usa",
+                      "organization": "dell",
+                      "organizationalUnit": "boomi"
+                    },
+                    "Validity": {
+                      "expireDate": "2024-03-12T16:46:57.000Z",
+                      "issueDate": "2017-09-20T16:46:57.000Z"
+                    },
+                    "CertificateData": "12dac3f45bbaf67d89101234a3e1e567f889fcf10abaee1234ed5fab678910e123dec456789f10ddc234cc009b56d7890e1a2e345edd6c78ea9a10b234ea"
+                  }
+                }
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Component.json"
+            },
+            "example": "<bns:Component folderFullPath=\"Platform APIs/Tests/Platform API Connector/AS2 Connector Record\" componentId=\"456789a-bcde-f0123-4567-89abcdef012\" version=\"1\" name=\"Receiver Encryption Public Certificate_2017\" type=\"certificate\" createdDate=\"2018-05-31T15:12:30Z\" createdBy=\"user@boomi.com\" modifiedDate=\"2018-05-31T15:12:30Z\" modifiedBy=\"user@boomi.com\" deleted=\"false\" currentVersion=\"true\" folderName=\"Originator\" folderId=\"RjoxNjMxNTA\" copiedFromComponentId=\"123456a-bcde-f4567-8901-23abcdef456\" copiedFromComponentVersion=\"1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\">\n   <bns:encryptedValues>\n      <bns:encryptedValue path=\"//CertificateModel/CertificateData/text()\" isSet=\"true\"/>\n   </bns:encryptedValues>\n   <bns:description/>\n   <bns:object>\n      <CertificateModel MD5Fingerprint=\"88:44:1A:90:C7:40:DF:A4:2F:95:70:F9:88:7A:76:54\" SHA1Fingerprint=\"4B:2F:1E:A7:3C:DA:AD:F8:F2:86:38:98:25:3E:09:B4:86:5B:11:A9\" serialNumber=\"01\" signatureAlgorithm=\"SHA512withRSA\" version=\"3\">\n         <Type>public</Type>\n         <IssuedTo commonName=\"receiver\" country=\"usa\" fullName=\"CN=receiver,OU=boomi,O=dell,L=chesterbrook,ST=pa,C=usa\" organization=\"dell\" organizationalUnit=\"boomi\"/>\n         <Issuer commonName=\"receiver\" country=\"usa\" fullName=\"CN=receiver,OU=boomi,O=dell,L=chesterbrook,ST=pa,C=usa\" organization=\"dell\" organizationalUnit=\"boomi\"/>\n         <Validity expireDate=\"2024-03-12T16:46:57.000Z\" issueDate=\"2017-09-20T16:46:57.000Z\"/>\n         <CertificateData>12dac3f45bbaf67d89101234a3e1e567f889fcf10abaee1234ed5fab678910e123dec456789f10ddc234cc009b56d7890e1a2e345edd6c78ea9a10b234ea</CertificateData>\n      </CertificateModel>\n   </bns:object>\n</bns:Component>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "Component"
+    ],
+    "summary": "Modifies or updates a Component object",
+    "description": "- Full updates only. No partial updates. If part of the object’s configuration is omitted, the component will be updated without that configuration. \n   - The only exception is for encrypted fields such as passwords. Omitting an encrypted field from the update request will NOT impact the saved value. \n - Requests without material changes to configuration will be rejected to prevent unnecessary revisions. \n - Request will not be processed in case if the payload has invalid attributes and tags under the `<object>` section. \n - For the saved process property components, modifications to the data type are not permitted. \n - Include the `branchId` in the request body to specify the branch on which you want to update the component. \n - >**Note:** To create or update a component, you must supply a valid component XML format for the given type.",
+    "operationId": "UpdateComponent",
+    "parameters": [
+      {
+        "name": "componentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ID of the component. The component ID is available on the Revision History dialog, which you can access from the Build page in the service. This must be omitted for the CREATE operation but it is required for the UPDATE operation."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/Component.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:Component\n\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n\txmlns:bns=\"http://api.platform.boomi.com/\" folderFullPath=\"Boomi/Admin\" componentId=\"bb302dbb-2e30-41a8-9e59-035f491e6da6\" version=\"1\" name=\"New Process Update\" type=\"process\" createdDate=\"2023-07-05T15:43:18Z\" createdBy=\"admin@boomi.com\" modifiedDate=\"2023-07-05T15:43:18Z\" modifiedBy=\"admin@boomi.com\" deleted=\"false\" currentVersion=\"true\" folderName=\"Admin\" folderId=\"RjozMDk2OQ\">\n\t<bns:encryptedValues/>\n\t<bns:object>\n\t\t<process\n\t\t\txmlns=\"\" allowSimultaneous=\"false\" enableUserLog=\"false\" processLogOnErrorOnly=\"false\" purgeDataImmediately=\"false\" updateRunDates=\"true\" workload=\"general\">\n\t\t\t<shapes>\n\t\t\t\t<shape image=\"start\" name=\"shape1\" shapetype=\"start\" userlabel=\"\" x=\"96.0\" y=\"94.0\">\n\t\t\t\t\t<configuration>\n\t\t\t\t\t\t<noaction/>\n\t\t\t\t\t</configuration>\n\t\t\t\t\t<dragpoints>\n\t\t\t\t\t\t<dragpoint name=\"shape1.dragpoint1\" toShape=\"shape2\" x=\"240.0\" y=\"120.0\"/>\n\t\t\t\t\t</dragpoints>\n\t\t\t\t</shape>\n\t\t\t\t<shape image=\"map_icon\" name=\"shape2\" shapetype=\"map\" userlabel=\"\" x=\"256.0\" y=\"112.0\">\n\t\t\t\t\t<configuration>\n\t\t\t\t\t\t<map/>\n\t\t\t\t\t</configuration>\n\t\t\t\t\t<dragpoints>\n\t\t\t\t\t\t<dragpoint name=\"shape2.dragpoint1\" toShape=\"shape3\" x=\"368.0\" y=\"120.0\"/>\n\t\t\t\t\t</dragpoints>\n\t\t\t\t</shape>\n\t\t\t\t<shape image=\"stop_icon\" name=\"shape3\" shapetype=\"stop\" userlabel=\"\" x=\"384.0\" y=\"112.0\">\n\t\t\t\t\t<configuration>\n\t\t\t\t\t\t<stop continue=\"true\"/>\n\t\t\t\t\t</configuration>\n\t\t\t\t\t<dragpoints/>\n\t\t\t\t</shape>\n\t\t\t</shapes>\n\t\t</process>\n\t</bns:object>\n\t<bns:processOverrides/>\n</bns:Component>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Component.json"
+            },
+            "example": {
+              "@type": "Component",
+              "folderFullPath": "Boomi/Admin",
+              "componentId": "bb302dbb-2e30-41a8-9e59-035f491e6da6",
+              "version": "2",
+              "name": "New Process Update",
+              "type": "process",
+              "createdDate": "2023-07-05T15:43:18Z",
+              "createdBy": "adminboomi.com",
+              "modifiedDate": "2023-07-05T15:47:26Z",
+              "modifiedBy": "adminboomi.com",
+              "deleted": "false",
+              "currentVersion": "true",
+              "folderName": "Admin",
+              "folderId": "RjozMDk2OQ",
+              "encryptedValues": null,
+              "object": {
+                "process": {
+                  "xmlns": "",
+                  "allowSimultaneous": "false",
+                  "enableUserLog": "false",
+                  "processLogOnErrorOnly": "false",
+                  "purgeDataImmediately": "false",
+                  "updateRunDates": "true",
+                  "workload": "general",
+                  "shapes": {
+                    "shape": [
+                      {
+                        "image": "start",
+                        "name": "shape1",
+                        "shapetype": "start",
+                        "userlabel": "",
+                        "x": "96.0",
+                        "y": "94.0",
+                        "configuration": {
+                          "noaction": null
+                        },
+                        "dragpoints": {
+                          "dragpoint": {
+                            "name": "shape1.dragpoint1",
+                            "toShape": "shape2",
+                            "x": "240.0",
+                            "y": "120.0"
+                          }
+                        }
+                      },
+                      {
+                        "image": "map_icon",
+                        "name": "shape2",
+                        "shapetype": "map",
+                        "userlabel": "",
+                        "x": "256.0",
+                        "y": "112.0",
+                        "configuration": {
+                          "map": null
+                        },
+                        "dragpoints": {
+                          "dragpoint": {
+                            "name": "shape2.dragpoint1",
+                            "toShape": "shape3",
+                            "x": "368.0",
+                            "y": "120.0"
+                          }
+                        }
+                      },
+                      {
+                        "image": "stop_icon",
+                        "name": "shape3",
+                        "shapetype": "stop",
+                        "userlabel": "",
+                        "x": "384.0",
+                        "y": "112.0",
+                        "configuration": {
+                          "stop": {
+                            "continue": "true"
+                          }
+                        },
+                        "dragpoints": null
+                      }
+                    ]
+                  }
+                }
+              },
+              "processOverrides": null
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Component.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:Component\n\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n\txmlns:bns=\"http://api.platform.boomi.com/\" folderFullPath=\"Boomi/Admin\" componentId=\"bb302dbb-2e30-41a8-9e59-035f491e6da6\" version=\"2\" name=\"New Process Update\" type=\"process\" createdDate=\"2023-07-05T15:43:18Z\" createdBy=\"admin@boomi.com\" modifiedDate=\"2023-07-05T15:47:26Z\" modifiedBy=\"admin@boomi.com\" deleted=\"false\" currentVersion=\"true\" folderName=\"Admin\" folderId=\"RjozMDk2OQ\">\n\t<bns:encryptedValues/>\n\t<bns:object>\n\t\t<process\n\t\t\txmlns=\"\" allowSimultaneous=\"false\" enableUserLog=\"false\" processLogOnErrorOnly=\"false\" purgeDataImmediately=\"false\" updateRunDates=\"true\" workload=\"general\">\n\t\t\t<shapes>\n\t\t\t\t<shape image=\"start\" name=\"shape1\" shapetype=\"start\" userlabel=\"\" x=\"96.0\" y=\"94.0\">\n\t\t\t\t\t<configuration>\n\t\t\t\t\t\t<noaction/>\n\t\t\t\t\t</configuration>\n\t\t\t\t\t<dragpoints>\n\t\t\t\t\t\t<dragpoint name=\"shape1.dragpoint1\" toShape=\"shape2\" x=\"240.0\" y=\"120.0\"/>\n\t\t\t\t\t</dragpoints>\n\t\t\t\t</shape>\n\t\t\t\t<shape image=\"map_icon\" name=\"shape2\" shapetype=\"map\" userlabel=\"\" x=\"256.0\" y=\"112.0\">\n\t\t\t\t\t<configuration>\n\t\t\t\t\t\t<map/>\n\t\t\t\t\t</configuration>\n\t\t\t\t\t<dragpoints>\n\t\t\t\t\t\t<dragpoint name=\"shape2.dragpoint1\" toShape=\"shape3\" x=\"368.0\" y=\"120.0\"/>\n\t\t\t\t\t</dragpoints>\n\t\t\t\t</shape>\n\t\t\t\t<shape image=\"stop_icon\" name=\"shape3\" shapetype=\"stop\" userlabel=\"\" x=\"384.0\" y=\"112.0\">\n\t\t\t\t\t<configuration>\n\t\t\t\t\t\t<stop continue=\"true\"/>\n\t\t\t\t\t</configuration>\n\t\t\t\t\t<dragpoints/>\n\t\t\t\t</shape>\n\t\t\t</shapes>\n\t\t</process>\n\t</bns:object>\n\t<bns:processOverrides/>\n</bns:Component>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "post": {
+    "tags": [
+      "ComponentMetadata"
+    ],
+    "summary": "Queries for a ComponentMetadata object(s)",
+    "description": "- By default, QUERY results include previous revisions including deleted versions. Use query filters to exclude previous and deleted versions if desired. For more examples of querying components, see Component Metadata API example requests mentioned above in the API description. \n - The `version` field must be accompanied by the `componentId` field. You can query all other fields. \n - The `copiedFromComponentId` field must accompany the `copiedFromComponentVersion` field. \n\n For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryComponentMetadata",
+    "requestBody": {
+      "description": " Possible properties include: accountId, componentId, version, name, type, subType, createdDate, createdBy, modifiedDate, modifiedBy, deleted, currentVersion, folderName, folderId, copiedFromComponentId, copiedFromComponentVersion, branchName, branchId",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentMetadataQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "000b7e59-8dd6-4219-9be6-8d31512f0b66"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "componentId"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "000b7e59-8dd6-4219-9be6-8d31512f0b66"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "componentId"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentMetadataQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n<QueryFilter>\n<expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n<nestedExpression operator=\"EQUALS\" property=\"componentId\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n<argument>456789a-bcde-f0123-4567-89abcdef012</argument>\n</nestedExpression>\n</expression>\n</QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"componentId\">\n      <argument>456789a-bcde-f0123-4567-89abcdef012</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentMetadataQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "ComponentMetadata",
+                  "componentId": "000b7e59-8dd6-4219-9be6-8d31512f0b66",
+                  "version": 1,
+                  "name": "TP API CREATE Response",
+                  "type": "profile.xml",
+                  "createdDate": "2017-09-19T16:36:10Z",
+                  "createdBy": "johndeer@boomi.com",
+                  "modifiedDate": "2017-09-19T16:36:10Z",
+                  "modifiedBy": "janedoe@boomi.com",
+                  "deleted": false,
+                  "currentVersion": false,
+                  "folderName": "TEST-16471",
+                  "folderId": "PloxRzM5OTk",
+                  "copiedFromComponentId": "123456a-bcde-f4567-8901-23abcdef456",
+                  "copiedFromComponentVersion": 1
+                }
+              ],
+              "numberOfResults": 1
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentMetadataQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"3\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.boomi.com/\">\n       <bns:result xsi:type=\"ComponentMetadata\" componentId=\"456789a-bcde-f0123-4567-89abcdef012\" version=\"1\" name=\"TP API CREATE Response\" type=\"profile.xml\" createdDate=\"2017-09-19T16:36:10Z\" createdBy=\"johndear@boomi.com\" modifiedDate=\"2017-09-19T16:36:10Z\" modifiedBy=\"janedoe@boomi.com\" deleted=\"false\" currentVersion=\"false\" folderName=\"TEST-1234\" folderId=\"PloxRzM5OTk\" copiedFromComponentId=\"123456a-bcde-f4567-8901-23abcdef456\" copiedFromComponentVersion=\"1\"/>\n       <bns:result xsi:type=\"ComponentMetadata\" componentId=\"456789a-bcde-f0123-4567-89abcdef012\" version=\"2\" name=\"TP API GET Response\" type=\"profile.xml\" createdDate=\"2017-09-19T16:36:10Z\" createdBy=\"johndear@boomi.com\" modifiedDate=\"2017-09-19T19:33:54Z\" modifiedBy=\"janedoe@boomi.com\" deleted=\"false\" currentVersion=\"false\" folderName=\"TEST-1234\" folderId=\"RTalKr6GSw\"/>\n       <bns:result xsi:type=\"ComponentMetadata\" componentId=\"456789a-bcde-f0123-4567-89abcdef012\" version=\"3\" name=\"TP API CREATE Response\" type=\"profile.xml\" createdDate=\"2017-09-19T16:36:10Z\" createdBy=\"johndear@boomi.com\" modifiedDate=\"2017-09-19T21:19:47Z\" modifiedBy=\"janedoe@boomi.com\" deleted=\"false\" currentVersion=\"true\" folderName=\"TEST-1234\" folderId=\"KwpxQwC3EBc\"/>\n    </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

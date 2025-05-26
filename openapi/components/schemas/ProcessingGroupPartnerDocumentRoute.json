@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "documentType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "processId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

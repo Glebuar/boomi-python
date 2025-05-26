@@ -1,0 +1,29 @@
+{
+  "required": [
+    "CrossReferenceRows"
+  ],
+  "type": "object",
+  "properties": {
+    "CrossReferenceRows": {
+      "$ref": "./CrossReferenceRows.json"
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "overrideValues": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

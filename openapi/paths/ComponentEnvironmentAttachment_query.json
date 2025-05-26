@@ -1,0 +1,151 @@
+{
+  "post": {
+    "tags": [
+      "ComponentEnvironmentAttachment"
+    ],
+    "summary": "Queries for a ComponentEnvironmentAttachment object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryComponentEnvironmentAttachment",
+    "requestBody": {
+      "description": " Possible properties include: environmentId, componentId, componentType",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentEnvironmentAttachmentQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "e96b6e8a-7835-40c3-9db2-37095f2e3949"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "environmentId"
+                      },
+                      {
+                        "argument": [
+                          "20f3a063-e534-4e74-bc29-c2fbca583903"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "componentId"
+                      },
+                      {
+                        "argument": [
+                          "webservice"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "componentType"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "and",
+                        "nestedExpression": [
+                          {
+                            "argument": [
+                              "e96b6e8a-7835-40c3-9db2-37095f2e3949"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "environmentId"
+                          },
+                          {
+                            "argument": [
+                              "20f3a063-e534-4e74-bc29-c2fbca583903"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "componentId"
+                          },
+                          {
+                            "argument": [
+                              "webservice"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "componentType"
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentEnvironmentAttachmentQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n<QueryFilter>\n<expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n<nestedExpression operator=\"EQUALS\" property=\"environmentId\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n<argument>e96b6e8a-7835-40c3-9db2-37095f2e3949</argument>\n</nestedExpression>\n<nestedExpression operator=\"EQUALS\" property=\"componentType\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n<argument>process</argument>\n</nestedExpression>\n</expression>\n</QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"environmentId\">\n      <argument>e96b6e8a-7835-40c3-9db2-37095f2e3949</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentEnvironmentAttachmentQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "ComponentEnvironmentAttachment",
+                  "id": "QVRUQUNIX0NPTVBPTkVOVF9FTlYyMGYzYTA2My1lNTM0LTRlNzQtYmMyOS1jMmZiY2E1ODM5MDM6ZTk2YjZlOGEtNzgzNS00MGMzLTlkYjItMzcwOTVmMmUzOTQ5",
+                  "componentId": "20f3a063-e534-4e74-bc29-c2fbca583903",
+                  "environmentId": "e96b6e8a-7835-40c3-9db2-37095f2e3949",
+                  "componentType": "webservice"
+                }
+              ],
+              "numberOfResults": 1
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentEnvironmentAttachmentQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"5\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n        <bns:result environmentId=\"e96b6e8a-7835-40c3-9db2-37095f2e3949\" componentId=\"36641acb-4038-44dd-8b74-ea2e13d9795b\" componentType=\"process\"        id=\"QVRUQUNIX0NPTVBPTkVOVDM2NjQxYWNiLTQwMzgtNDRkZC04Yjc0LWVhMmUxM2Q5Nzk1YjplNGQzYTc3OC1lZTUwLTRjYzYtODliMC01OGJkOWU0YjAzNzk\" xsi:type=\"ComponentAtomAttachment\"/>\n        <bns:result environmentId=\"e96b6e8a-7835-40c3-9db2-37095f2e3949\" componentId=\"f46f9286-8606-4704-a561-c669ec12dd1e\" componentType=\"process\"        id=\"QVRUQUNIX0NPTVBPTkVOVGY0NmY5Mjg2LTg2MDYtNDcwNC1hNTYxLWM2NjllYzEyZGQxZTplNGQzYTc3OC1lZTUwLTRjYzYtODliMC01OGJkOWU0YjAzNzk\" xsi:type=\"ComponentAtomAttachment\"/>\n        <bns:result environmentId=\"e96b6e8a-7835-40c3-9db2-37095f2e3949\" componentId=\"6fd54e7e-3da4-4cba-8aaf-669c04092d7c\" componentType=\"process\"        id=\"QVRUQUNIX0NPTVBPTkVOVDZmZDU0ZTdlLTNkYTQtNGNiYS04YWFmLTY2OWMwNDA5MmQ3YzplNGQzYTc3OC1lZTUwLTRjYzYtODliMC01OGJkOWU0YjAzNzk\" xsi:type=\"ComponentAtomAttachment\"/>\n        <bns:result environmentId=\"e96b6e8a-7835-40c3-9db2-37095f2e3949\" componentId=\"25f808ca-97e0-4f86-bcf2-c5a5f95db00b\" componentType=\"process\"        id=\"QVRUQUNIX0NPTVBPTkVOVDI1ZjgwOGNhLTk3ZTAtNGY4Ni1iY2YyLWM1YTVmOTVkYjAwYjplNGQzYTc3OC1lZTUwLTRjYzYtODliMC01OGJkOWU0YjAzNzk\" xsi:type=\"ComponentAtomAttachment\"/>\n        <bns:result environmentId=\"e96b6e8a-7835-40c3-9db2-37095f2e3949\" componentId=\"a1ba1bfa-3d79-4f81-9f4f-6d460d38f82a\" componentType=\"process\"      id=\"QVRUQUNIX0NPTVBPTkVOVGExYmExYmZhLTNkNzktNGY4MS05ZjRmLTZkNDYwZDM4ZjgyYTplNGQzYTc3OC1lZTUwLTRjYzYtODliMC01OGJkOWU0YjAzNzk\" xsi:type=\"ComponentAtomAttachment\"/>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

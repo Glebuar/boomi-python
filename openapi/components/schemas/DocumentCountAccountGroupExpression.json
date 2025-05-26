@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./DocumentCountAccountGroupSimpleExpression.json"
+    },
+    {
+      "$ref": "./DocumentCountAccountGroupGroupingExpression.json"
+    }
+  ]
+}

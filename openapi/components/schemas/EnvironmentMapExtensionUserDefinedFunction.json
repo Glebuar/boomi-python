@@ -1,0 +1,88 @@
+{
+  "required": [
+    "Inputs",
+    "Mappings",
+    "Outputs",
+    "Steps"
+  ],
+  "type": "object",
+  "properties": {
+    "Inputs": {
+      "$ref": "./MapExtensionsInputs.json"
+    },
+    "Mappings": {
+      "$ref": "./MapExtensionsFunctionMappings.json"
+    },
+    "Outputs": {
+      "$ref": "./MapExtensionsOutputs.json"
+    },
+    "Steps": {
+      "$ref": "./MapExtensionsFunctionSteps.json"
+    },
+    "createdBy": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The user ID of the user who created the user-defined function."
+    },
+    "createdDate": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "attribute": true
+      },
+      "description": "Timestamp of the creation of the user-defined function."
+    },
+    "deleted": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      },
+      "description": "This variable indicates the deleted status of the user defined function component. If the value is true, it indicates the deletion of the referenced user-defined function. A false value indicates that the referenced user-defined function is not deleted and is available for use."
+    },
+    "description": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "Optional. Additional details about the user-defined function component."
+    },
+    "environmentMapExtensionId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of an environment map extension. **Important:** This and other Environment Map Extension API objects require the client to know the ID of the environment map extension. In the user-defined function interface, click **Copy EME ID** to easily copy this ID for use in your API requests, or query the [Environment Map Extensions Summary object](/api/platformapi#tag/EnvironmentMapExtensionsSummary)."
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "Required. Represents the unique, system-generated ID of the extended user-defined function."
+    },
+    "modifiedBy": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The user ID of the user who last updated the user-defined function."
+    },
+    "modifiedDate": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "attribute": true
+      },
+      "description": "Timestamp of when the user-defined function was last updated."
+    },
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "Required. Represents the name of the user-defined function component."
+    }
+  }
+}

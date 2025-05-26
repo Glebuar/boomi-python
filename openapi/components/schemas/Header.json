@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "headerFieldName": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "targetPropertyName": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

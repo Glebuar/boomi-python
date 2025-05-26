@@ -1,0 +1,180 @@
+{
+  "post": {
+    "tags": [
+      "ProcessSchedules"
+    ],
+    "summary": "Queries for a ProcessSchedules object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryProcessSchedules",
+    "requestBody": {
+      "description": " Possible properties include: processId, atomId",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ProcessSchedulesQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "3456789a-bcde-f0123-4567-89abcdef012"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "atomId"
+                      },
+                      {
+                        "argument": [
+                          "789abcde-f012-3456-789a-bcdef0123456"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "processId"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "and",
+                        "nestedExpression": [
+                          {
+                            "argument": [
+                              "3456789a-bcde-f0123-4567-89abcdef012"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "atomId"
+                          },
+                          {
+                            "argument": [
+                              "789abcde-f012-3456-789a-bcdef0123456"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "processId"
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ProcessSchedulesQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n        <expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n            <nestedExpression operator=\"EQUALS\" property=\"atomId\" xsi:type=\"SimpleExpression\">\n                <argument>3456789a-bcde-f0123-4567-89abcdef012</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"EQUALS\" property=\"processId\" xsi:type=\"SimpleExpression\">\n                <argument>789abcde-f012-3456-789a-bcdef0123456</argument>\n            </nestedExpression>\n        </expression>\n    </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"atomId\">\n      <argument>3456789a-bcde-f0123-4567-89abcdef012</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ProcessSchedulesQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 1,
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "ProcessSchedules",
+                  "Schedule": [
+                    {
+                      "@type": "Schedule",
+                      "minutes": "0-59/15",
+                      "hours": "8-18",
+                      "daysOfWeek": "2,3,4,5,6",
+                      "daysOfMonth": "*",
+                      "months": "*",
+                      "years": "*"
+                    },
+                    {
+                      "@type": "Schedule",
+                      "minutes": "0-59/15",
+                      "hours": "19-23",
+                      "daysOfWeek": "1",
+                      "daysOfMonth": "*",
+                      "months": "*",
+                      "years": "*"
+                    }
+                  ],
+                  "Retry": {
+                    "@type": "ScheduleRetry",
+                    "Schedule": [
+                      {
+                        "@type": "Schedule",
+                        "minutes": "0-10/5",
+                        "hours": "19-23",
+                        "daysOfWeek": "7",
+                        "daysOfMonth": "*",
+                        "months": "*",
+                        "years": "*"
+                      },
+                      {
+                        "@type": "Schedule",
+                        "minutes": "0-59/20",
+                        "hours": "8-18",
+                        "daysOfWeek": "2,3,4,5,6",
+                        "daysOfMonth": "*",
+                        "months": "*",
+                        "years": "*"
+                      }
+                    ],
+                    "maxRetry": 2
+                  },
+                  "processId": "789abcde-f012-3456-789a-bcdef0123456",
+                  "atomId": "3456789a-bcde-f0123-4567-89abcdef012",
+                  "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg"
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ProcessSchedulesQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"1\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n       <bns:result xsi:type=\"ProcessSchedules\" id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\" \n         atomId=\"3456789a-bcde-f0123-4567-89abcdef012\" processId=\"789abcde-f012-3456-789a-bcdef0123456\"> \n          <bns:Schedule years=\"*\" months=\"*\" daysOfMonth=\"*\" daysOfWeek=\"2,3,4,5,6\" hours=\"8-18\" minutes=\"0-59/15\"/>\n          <bns:Schedule years=\"*\" months=\"*\" daysOfMonth=\"*\" daysOfWeek=\"1\" hours=\"19-23\" minutes=\"0-59/15\"/>\n          <bns:Retry maxRetry=\"5\">\n             <bns:Schedule years=\"*\" months=\"*\" daysOfMonth=\"*\" daysOfWeek=\"7\" hours=\"19-23\" minutes=\"0-10/5\"/>\n             <bns:Schedule years=\"*\" months=\"*\" daysOfMonth=\"*\" daysOfWeek=\"2,3,4,5,6\" hours=\"8-18\" minutes=\"0-59/20\"/>\n          </bns:Retry>\n       </bns:result>\n    </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

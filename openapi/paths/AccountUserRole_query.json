@@ -1,0 +1,124 @@
+{
+  "post": {
+    "tags": [
+      "AccountUserRole"
+    ],
+    "summary": "Queries for an AccountUserRole object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryAccountUserRole",
+    "requestBody": {
+      "description": " Possible properties include: accountId, userId, roleId",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AccountUserRoleQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "user123@company.biz"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "userId"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "user123@company.biz"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "userId"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AccountUserRoleQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n       <QueryFilter>\n          <expression operator=\"EQUALS\" property=\"userId\"\n            xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n             <argument>user123@company.biz</argument>\n          </expression>\n       </QueryFilter>\n    </QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"userId\">\n      <argument>user123@company.biz</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountUserRoleQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 2,
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "AccountUserRole",
+                  "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg",
+                  "accountId": "account-123456",
+                  "userId": "user123@company.biz",
+                  "roleId": "01234567-89ab-cdef-0123-456789abcdef",
+                  "firstName": "John",
+                  "lastName": "Doe"
+                },
+                {
+                  "@type": "AccountUserRole",
+                  "id": "gAb0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1H",
+                  "accountId": "account-123456",
+                  "userId": "user123@company.biz",
+                  "roleId": "fedcba98-7654-3210-fedc-ba9876543210",
+                  "firstName": "Jane",
+                  "lastName": "Doe"
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountUserRoleQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"2\" xmlns:bns=\"http://api.platform.boomi.com/\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n        <bns:result xsi:type=\"AccountUserRole\" roleId=\"01234567-89ab-cdef-0123-456789abcdef\"\n        userId=\"user123@company.biz\" accountId=\"account-123456\" id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\" firstName=\"John\" lastName=\"Doe\"/>\n        <bns:result xsi:type=\"AccountUserRole\" roleId=\"fedcba98-7654-3210-fedc-ba9876543210\"\n        userId=\"user123@company.biz\" accountId=\"account-123456\" id=\"gAb0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1H\" firstName=\"Jane\" lastName=\"Doe\"/>\n    </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

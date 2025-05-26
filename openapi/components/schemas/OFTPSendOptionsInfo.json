@@ -1,0 +1,35 @@
+{
+  "required": [
+    "defaultPartnerSettings"
+  ],
+  "type": "object",
+  "properties": {
+    "cd": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "defaultPartnerSettings": {
+      "$ref": "./DefaultOFTPPartnerSendSettings.json"
+    },
+    "operation": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "sfiddesc": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "sfiddsn": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

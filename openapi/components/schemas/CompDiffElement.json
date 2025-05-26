@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "CompDiffAttribute": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./CompDiffAttribute.json"
+      }
+    },
+    "ignored": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The tag name of the element that you want to target for the comparative diff results."
+    },
+    "ordered": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "parent": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The parent element for the element that you want to configure for the comparative diff results."
+    }
+  }
+}

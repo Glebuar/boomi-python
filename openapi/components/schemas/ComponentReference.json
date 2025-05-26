@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "references": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./References.json"
+      },
+      "example": [
+        {
+          "parentComponentId": "123456a-bcde-f4567-8901-23abcdef456",
+          "parentVersion": "7",
+          "componentId": "456789a-bcde-f0123-4567-89abcdef012",
+          "type": "DEPENDENT"
+        },
+        {
+          "parentComponentId": "9876a543-21ab-0e98-7a65-4d32bf109f87"
+        }
+      ]
+    }
+  }
+}

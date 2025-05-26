@@ -1,0 +1,220 @@
+{
+  "post": {
+    "tags": [
+      "ComponentDiffRequest"
+    ],
+    "summary": "Creates a ComponentDiffRequest object",
+    "description": "Contains a diff visualization option to help understand the differences between component versions. For more information, refer to the Postman article [Visualize request responses using Postman Visualizer](https://learning.postman.com/docs/sending-requests/response-data/visualizer/).",
+    "operationId": "CreateComponentDiffRequest",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentDiffRequest.json"
+          },
+          "example": {
+            "folderFullPath": "Boomi/Admin",
+            "version": "1",
+            "name": "Process A",
+            "type": "process",
+            "createdDate": "2023-07-05T14:06:28Z",
+            "createdBy": "adminboomi.com",
+            "modifiedDate": "2023-07-05T14:06:28Z",
+            "modifiedBy": "adminboomi.com",
+            "deleted": "false",
+            "currentVersion": "true",
+            "folderName": "Admin",
+            "folderId": "RjozMDk2OQ",
+            "encryptedValues": null,
+            "description": null,
+            "object": {
+              "process": {
+                "xmlns": "",
+                "allowSimultaneous": "false",
+                "enableUserLog": "false",
+                "processLogOnErrorOnly": "false",
+                "purgeDataImmediately": "false",
+                "updateRunDates": "true",
+                "workload": "general",
+                "shapes": {
+                  "shape": [
+                    {
+                      "image": "start",
+                      "name": "shape1",
+                      "shapetype": "start",
+                      "userlabel": "",
+                      "x": "96.0",
+                      "y": "94.0",
+                      "configuration": {
+                        "noaction": null
+                      },
+                      "dragpoints": {
+                        "dragpoint": {
+                          "name": "shape1.dragpoint1",
+                          "toShape": "shape2",
+                          "x": "240.0",
+                          "y": "120.0"
+                        }
+                      }
+                    },
+                    {
+                      "image": "map_icon",
+                      "name": "shape2",
+                      "shapetype": "map",
+                      "userlabel": "",
+                      "x": "256.0",
+                      "y": "112.0",
+                      "configuration": {
+                        "map": null
+                      },
+                      "dragpoints": {
+                        "dragpoint": {
+                          "name": "shape2.dragpoint1",
+                          "toShape": "shape3",
+                          "x": "368.0",
+                          "y": "120.0"
+                        }
+                      }
+                    },
+                    {
+                      "image": "stop_icon",
+                      "name": "shape3",
+                      "shapetype": "stop",
+                      "userlabel": "",
+                      "x": "384.0",
+                      "y": "112.0",
+                      "configuration": {
+                        "stop": {
+                          "continue": "true"
+                        }
+                      },
+                      "dragpoints": null
+                    }
+                  ]
+                }
+              }
+            },
+            "processOverrides": null
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentDiffRequest.json"
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentDiffResponseCreate.json"
+            },
+            "example": {
+              "@type": "Component",
+              "folderFullPath": "Boomi/Admin",
+              "componentId": "bb302dbb-2e30-41a8-9e59-035f491e6da6",
+              "version": "1",
+              "name": "Process A",
+              "type": "process",
+              "createdDate": "2023-07-05T15:43:18Z",
+              "createdBy": "adminboomi.com",
+              "modifiedDate": "2023-07-05T15:43:18Z",
+              "modifiedBy": "adminboomi.com",
+              "deleted": "false",
+              "currentVersion": "true",
+              "folderName": "Admin",
+              "folderId": "RjozMDk2OQ",
+              "encryptedValues": null,
+              "object": {
+                "process": {
+                  "xmlns": "",
+                  "allowSimultaneous": "false",
+                  "enableUserLog": "false",
+                  "processLogOnErrorOnly": "false",
+                  "purgeDataImmediately": "false",
+                  "updateRunDates": "true",
+                  "workload": "general",
+                  "shapes": {
+                    "shape": [
+                      {
+                        "image": "start",
+                        "name": "shape1",
+                        "shapetype": "start",
+                        "userlabel": "",
+                        "x": "96.0",
+                        "y": "94.0",
+                        "configuration": {
+                          "noaction": null
+                        },
+                        "dragpoints": {
+                          "dragpoint": {
+                            "name": "shape1.dragpoint1",
+                            "toShape": "shape2",
+                            "x": "240.0",
+                            "y": "120.0"
+                          }
+                        }
+                      },
+                      {
+                        "image": "map_icon",
+                        "name": "shape2",
+                        "shapetype": "map",
+                        "userlabel": "",
+                        "x": "256.0",
+                        "y": "112.0",
+                        "configuration": {
+                          "map": null
+                        },
+                        "dragpoints": {
+                          "dragpoint": {
+                            "name": "shape2.dragpoint1",
+                            "toShape": "shape3",
+                            "x": "368.0",
+                            "y": "120.0"
+                          }
+                        }
+                      },
+                      {
+                        "image": "stop_icon",
+                        "name": "shape3",
+                        "shapetype": "stop",
+                        "userlabel": "",
+                        "x": "384.0",
+                        "y": "112.0",
+                        "configuration": {
+                          "stop": {
+                            "continue": "true"
+                          }
+                        },
+                        "dragpoints": null
+                      }
+                    ]
+                  }
+                }
+              },
+              "processOverrides": null
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentDiffResponseCreate.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:ComponentDiffResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" message=\"Diffed Versions 1 and 3 of Component: Salesforce to NetSuite (Type = process, ID = a28620b7-67e8-4ca4-b598-3863fd3b3a90)\">\n  <bns:GenericDiff>\n    <bns:addition total=\"1\">\n      <bns:change type=\"element\" changedParticleName=\"shape\">\n        <bns:elementKey elementName=\"shape\">\n          <bns:key-part attribute=\"name\" value=\"shape5\"/>\n        </bns:elementKey>\n        <bns:newValue xpath=\"/Component[1]/object[1]/process[1]/shapes[1]/shape[5]\">&lt;shape image=\"documentproperties_icon\" name=\"shape5\" shapetype=\"documentproperties\" userlabel=\"\" x=\"640.0\" y=\"192.0\"&gt;&lt;configuration&gt;&lt;documentproperties/&gt;&lt;/configuration&gt;&lt;dragpoints&gt;&lt;dragpoint name=\"shape5.dragpoint1\" toShape=\"shape4\" x=\"640.0\" y=\"72.0\"/&gt;&lt;/dragpoints&gt;&lt;/shape&gt;</bns:newValue>\n      </bns:change>\n    </bns:addition>\n    <bns:modification total=\"1\">\n      <bns:change type=\"attribute\" changedParticleName=\"toShape\">\n        <bns:elementKey elementName=\"dragpoint\"/>\n        <bns:newValue xpath=\"/Component[1]/object[1]/process[1]/shapes[1]/shape[3]/dragpoints[1]/dragpoint[1]/@toShape\">shape5</bns:newValue>\n        <bns:oldValue xpath=\"/Component[1]/object[1]/process[1]/shapes[1]/shape[3]/dragpoints[1]/dragpoint[1]/@toShape\">shape4</bns:oldValue>\n      </bns:change>\n    </bns:modification>\n  </bns:GenericDiff>\n</bns:ComponentDiffResponse>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

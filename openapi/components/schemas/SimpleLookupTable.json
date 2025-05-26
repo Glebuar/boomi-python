@@ -1,0 +1,11 @@
+{
+  "required": [
+    "Rows"
+  ],
+  "type": "object",
+  "properties": {
+    "Rows": {
+      "$ref": "./SimpleLookupTableRows.json"
+    }
+  }
+}

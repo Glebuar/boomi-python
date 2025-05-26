@@ -1,0 +1,60 @@
+{
+  "get": {
+    "tags": [
+      "AtomStartupProperties"
+    ],
+    "summary": "Retrieves an instance of an AtomStartupProperties object",
+    "description": "Retrieves the startup properties for the Runtime, Runtime cluster, or Runtime cloud with the specified ID.",
+    "operationId": "GetAtomStartupProperties",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID for the Runtime, Runtime cluster, or Runtime cloud. (This API is not applicable for runtimes attached to clouds)"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AtomStartupProperties.json"
+            },
+            "example": {
+              "@type": "Atom",
+              "id": "3456789a-bcde-f012-3456-789abcdef012",
+              "name": "My Local Atom",
+              "status": "OFFLINE",
+              "type": "ATOM",
+              "hostName": "WN7X64-11A2BB3",
+              "dateInstalled": "2016-02-05T14:49:21Z",
+              "currentVersion": "17.08.0.0",
+              "purgeHistoryDays": 18,
+              "purgeImmediate": false,
+              "forceRestartTime": 9
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AtomStartupProperties.json"
+            },
+            "example": "<bns:AtomStartupProperties id=\"3456789a-bcde-f012-3456-789abcdef012\" \n    xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <bns:Property value=\"2014-02-05T00:20:16Z\" name=\"lastRestartTime\"/>\n    <bns:Property value=\"true\" name=\"unlimitedCrypto\"/>\n    <bns:Property value=\"amd64\" name=\"osArch\"/>\n    <bns:Property value=\"3.11.0-12-generic\" name=\"osVersion\"/>\n    <bns:Property value=\"Java HotSpot(TM) 64-Bit Server VM\" name=\"javaVMName\"/>\n    <bns:Property value=\"UTF-8\" name=\"fileEncoding\"/>\n    <bns:Property value=\"477233152\" name=\"maxMemory\"/>\n    <bns:Property value=\"8777\" name=\"sslProxyPort\"/>\n    <bns:Property value=\"385110880256\" name=\"atomFreeDiskSpace\"/>\n    <bns:Property value=\"8777\" name=\"proxyPort\"/>\n    <bns:Property value=\"localhost\" name=\"proxyHost\"/>\n    <bns:Property value=\"387596926976\" name=\"tempFreeDiskSpace\"/>\n    <bns:Property value=\"/usr/lib/jvm/java-8-oracle/jre\" name=\"javaHome\"/>\n    <bns:Property value=\"localhost\" name=\"sslProxyHost\"/>\n    <bns:Property value=\"8579248128\" name=\"systemTotalMemory\"/>\n    <bns:Property value=\"/home/user/boomi_atomSphere/atom-MyLocalAtom\" name=\"atomHome\"/>\n    <bns:Property value=\"4\" name=\"systemCpuCount\"/>\n    <bns:Property value=\"-b13\" name=\"javaVersion\"/>\n    <bns:Property value=\"64\" name=\"atomArch\"/>\n    <bns:Property value=\"Linux\" name=\"osName\"/>\n    <bns:Property value=\"false\" name=\"proxyPassSet\"/>\n    <bns:Property value=\"AWS\" name=\"infrastructureProvider\"/>\n    <bns:Property value=\"4096\" name=\"maxOpenFiles\"/>\n</bns:AtomStartupProperties>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

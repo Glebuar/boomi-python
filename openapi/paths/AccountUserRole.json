@@ -1,0 +1,67 @@
+{
+  "post": {
+    "tags": [
+      "AccountUserRole"
+    ],
+    "summary": "Creates an AccountUserRole object",
+    "description": "Adds a user to an account. If you provide a user ID (email address) that does not exist, the system creates the user and adds them to the account. \n\n When creating a new user, the API request does not require the firstName and lastName fields. If you do not provide those fields, it assigns the default firstName or lastName values automatically. If you include the firstName and lastName fields in a CREATE request for a user name that exists, the request ignores those fields.",
+    "operationId": "CreateAccountUserRole",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AccountUserRole.json"
+          },
+          "example": {
+            "accountId": "account-123456",
+            "userId": "user123@company.biz",
+            "roleId": "01234567-89ab-cdef-0123-456789abcdef",
+            "firstName": "John",
+            "lastName": "Doe"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AccountUserRole.json"
+          },
+          "example": "<bns:AccountUserRole userId=\"user123@company.biz\" accountId=\"account-123456\" roleId=\"01234567-89ab-cdef-0123-456789abcdef\" firstName=\"John\" lastName=\"Doe\"\n    xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountUserRole.json"
+            },
+            "example": {
+              "@type": "AccountUserRole",
+              "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg",
+              "accountId": "account-123456",
+              "userId": "user123@company.biz",
+              "roleId": "01234567-89ab-cdef-0123-456789abcdef",
+              "lastName": "Doe"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountUserRole.json"
+            },
+            "example": "<bns:AccountUserRole roleId=\"01234567-89ab-cdef-0123-456789abcdef\"\n    userId=\"user123@company.biz\" accountId=\"account-123456\"\n    id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\" firstName=\"John\" lastName=\"Doe\"\n    xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

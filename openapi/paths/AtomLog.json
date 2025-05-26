@@ -1,0 +1,62 @@
+{
+  "post": {
+    "tags": [
+      "AtomLog"
+    ],
+    "summary": "Creates an AtomLog object",
+    "description": "You can use the Download Atom Log operation to request and download Runtime logs.",
+    "operationId": "CreateAtomLog",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AtomLog.json"
+          },
+          "example": {
+            "cloudId": "23456789-abcd-ef01-2345-6789abcdef01",
+            "name": "Cloud Atom"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AtomLog.json"
+          },
+          "example": "<AtomLog xmlns=\"http://api.platform.boomi.com/\" atomId=\"3456789a-bcde-f012-3456-789abcdef012\" \n   logDate=\"2016-02-05\" includeBin=\"true\"/>\n"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/LogDownload.json"
+            },
+            "example": {
+              "@type": "LogDownload",
+              "url": "http://localhost:8081/account/account-123456/api/download/AtomLog-89abcdef-0123-4567-89ab-cdef01234567",
+              "message": "Beginning download.",
+              "statusCode": 202
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/LogDownload.json"
+            },
+            "example": "<bns:LogDownload statusCode=\"202\" message=\"Beginning download.\" \n             url=\"http://localhost:8081/account/account-123456/api/download/AtomLog-89abcdef-0123-4567-89ab-cdef01234567\"\n     xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>\n"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "request": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./BulkId.json"
+      }
+    },
+    "type": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "GET",
+        "DELETE",
+        "UPDATE",
+        "CREATE"
+      ]
+    }
+  },
+  "required": [],
+  "xml": {
+    "name": "BulkRequest",
+    "namespace": "http://api.platform.boomi.com/"
+  }
+}

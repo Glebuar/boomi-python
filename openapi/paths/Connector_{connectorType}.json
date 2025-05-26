@@ -1,0 +1,52 @@
+{
+  "get": {
+    "tags": [
+      "Connector"
+    ],
+    "summary": "Retrieves an instance of a Connector object",
+    "description": "You can only perform the GET operation by `type` and not by `name`. \n\n Send an HTTP GET where `accountId` is the ID of the authenticating account for the request and `connectorType` is the name of the connector subtype you are attempting to GET.\n\nFor example, sending an HTTP GET to `https://api.boomi.com/api/rest/v1/accountId/Connector/database` returns `Database` type connectors available on the account.",
+    "operationId": "GetConnector",
+    "parameters": [
+      {
+        "name": "connectorType",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The internal and unique identifier for connector type, such as `http`, `ftp`, `greatplains`. The [Component Metadata object](/api/platformapi#tag/ComponentMetadata) refers to this field as *subType*."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Connector.json"
+            },
+            "example": {
+              "@type": "Connector",
+              "type": "database",
+              "name": "Database"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Connector.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:Connector xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" type=\"database\" name=\"Database\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

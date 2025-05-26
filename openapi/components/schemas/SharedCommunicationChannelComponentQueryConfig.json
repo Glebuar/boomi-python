@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "QueryFilter": {
+      "required": [
+        "expression"
+      ],
+      "type": "object",
+      "properties": {
+        "expression": {
+          "$ref": "./SharedCommunicationChannelComponentExpression.json"
+        }
+      },
+      "xml": {
+        "name": "QueryFilter",
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    }
+  },
+  "required": [
+    "QueryFilter"
+  ],
+  "xml": {
+    "name": "QueryConfig",
+    "namespace": "http://api.platform.boomi.com/"
+  }
+}

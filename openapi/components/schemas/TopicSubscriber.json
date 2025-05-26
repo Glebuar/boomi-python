@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "SubscriberName": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "deadLettersCount": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "messageCount": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

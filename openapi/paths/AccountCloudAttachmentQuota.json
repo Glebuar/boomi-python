@@ -1,0 +1,62 @@
+{
+  "post": {
+    "tags": [
+      "AccountCloudAttachmentQuota"
+    ],
+    "summary": "Creates an AccountCloudAttachmentQuota object",
+    "description": "- Use the CREATE operation to create a new Cloud quota and determine the maximum number of Runtime attachments that you can create on the account.\n - You can use the CREATE or UPDATE operations interchangeably to edit a Cloud quota value. Both operations can act as an update after creating the quota.\n - CREATE and UPDATE use the same REST endpoint, as seen in the next section of sample code REST calls. When calling the endpoint for an account that has a quota set, the endpoint acts as an update and modifies the existing value, as explained in the previous item. When calling the endpoint for an account that does not already have a quota set, the endpoint creates a new quota.\n - You cannot set the Cloud quota less than the number of attachments that currently exist on the account, unless you are setting the value to -1 for unlimited. Attempting to do so returns an error.\n - The CREATE operation returns an id value that you can use in a GET operation to retrieve the existing quota for a specific account's Cloud ID.",
+    "operationId": "CreateAccountCloudAttachmentQuota",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AccountCloudAttachmentQuota.json"
+          },
+          "example": {
+            "name": "Test Account",
+            "expirationDate": "2016-02-13T05:00:00Z"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AccountCloudAttachmentQuota.json"
+          },
+          "example": "<bns:AccountCloudAttachmentQuota xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\"\n  accountId=\"account-123456\"\n  cloudId=\"23456789-abcd-ef01-2345-6789abcdef01\"\n  maxAtomAttachment=\"5\"/>\n"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountCloudAttachmentQuota.json"
+            },
+            "example": {
+              "id": "b0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1HgA",
+              "accountId": "account-123456",
+              "cloudId": "23456789-abcd-ef01-2345-6789abcdef01",
+              "maxAtomAttachment": "8"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountCloudAttachmentQuota.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:AccountCloudAttachmentQuota xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\"\n  id=\"b0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1HgA\"\n  accountId=\"account-123456\" cloudId=\"23456789-abcd-ef01-2345-6789abcdef01\" \n  maxAtomAttachment=\"5\" />"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "post": {
+    "tags": [
+      "TradingPartnerComponent"
+    ],
+    "summary": "Retrieves multiple TradingPartnerComponent objects by identifier",
+    "description": "The bulk GET operation returns multiple Trading Partner Component objects based on the supplied IDs, to a maximum of 100.",
+    "operationId": "BulkTradingPartnerComponent",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/TradingPartnerComponentBulkRequest.json"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/TradingPartnerComponentBulkRequest.json"
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/TradingPartnerComponentBulkResponse.json"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/TradingPartnerComponentBulkResponse.json"
+            }
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

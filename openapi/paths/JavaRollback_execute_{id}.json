@@ -1,0 +1,70 @@
+{
+  "post": {
+    "tags": [
+      "JavaRollback"
+    ],
+    "summary": "Executes an action on a JavaRollback object",
+    "description": "Returns a Runtime, Runtime cluster, Runtime cloud, Authentication Broker, or Gateway to use the previous version of Java with an EXECUTE operation. \n\n - After performing the EXECUTE operation, you can determine the success of returning to an earlier version when the **Update to use <new Java version>.<minor_version>** link displays on the following pages, indicating that a more recent version is available for upgrade:\n\n  - For Runtimes, Runtime clusters, and Runtime clouds — the **Runtime Information** panel (**Manage** > **Runtime Management** of the user interface).\n\n  - For Brokers — the **Broker Information** panel (**Configure Server** > **Authentication** of the user interface).\n\n  - For API Gateways — the **Gateway Information** panel (**Configure Server** > **Gateways** of the user interface).\n\n  To verify a successful rollback on a Runtime using the user interface, you can also navigate to **Runtime Management** > **Startup Properties** and reference the Java version number listed in the **Java Home** field.\n\n- The container must be online to use the Rollback Java operation.\n\n >**Important:** Only the node that runs upgrades (typically the head node) restarts automatically to run the updated Java version for Runtimes, Runtime clusters, and Runtime clouds. You must restart all other cluster nodes to successfully return to a previous version of Java. \n > To successfully return to a previous version of Java for API Management Gateways and Authentication Brokers, you must restart all Gateways and Brokers.",
+    "operationId": "ExecuteJavaRollback",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The unique ID assigned by the system to the container.\n\n1. Use the Runtime ID for Runtimes, Runtime clusters, and Runtime clouds found in the user interface by navigating to **Manage** > **Runtime Management** and viewing the Runtime Information panel for a selected container.\n\n2. Use the Gateway ID found in the user interface by navigating to **Configure Server** > **Gateways** > `<gatewayName>` > Gateway Information panel.\n\n3. Use the Broker ID found in the user interface by navigating to **Configure Server** > **Authentication** > `<brokerName>` > Broker Information panel."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/JavaRollback.json"
+          },
+          "example": {
+            "atomId": "3456789a-bcde-f012-3456-789abcdef012"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/JavaRollback.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<api:JavaRollback xmlns:api=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" atomId=\"3456789a-bcde-f012-3456-789abcdef012\">\n</api:JavaRollback>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/JavaRollback.json"
+            },
+            "example": {
+              "@type": "JavaRollback",
+              "atomId": "3456789a-bcde-f012-3456-789abcdef012"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/JavaRollback.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:JavaRollback xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" atomId=\"3456789a-bcde-f012-3456-789abcdef012\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

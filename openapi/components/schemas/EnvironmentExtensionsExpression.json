@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./EnvironmentExtensionsSimpleExpression.json"
+    },
+    {
+      "$ref": "./EnvironmentExtensionsGroupingExpression.json"
+    }
+  ]
+}

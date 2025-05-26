@@ -1,0 +1,70 @@
+{
+  "post": {
+    "tags": [
+      "TradingPartnerProcessingGroup"
+    ],
+    "summary": "Queries for a TradingPartnerProcessingGroup object(s)",
+    "description": "The QUERY operation returns all of the authenticating account’s processing group components. The operation does not return full component representations; it returns, for each result, the component’s name, ID, and folder ID. \n\n For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryTradingPartnerProcessingGroup",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/TradingPartnerProcessingGroupQueryConfig.json"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/TradingPartnerProcessingGroupQueryConfig.json"
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/TradingPartnerProcessingGroupQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "queryToken": "/2mZdfERiaxo8QzovFbelpbegzlMWTSWIyfFgEV3XoCHCYhO2HTumRKXjc53lCChRwOiuKD6sXyixAbOsPa82okh",
+              "result": [
+                {
+                  "@type": "TradingPartnerProcessingGroup",
+                  "componentName": "East Coast partners",
+                  "componentId": "3456789a-bcde-f012-34-56789abcdef012",
+                  "folderId": 11669
+                },
+                {
+                  "@type": "TradingPartnerProcessingGroup",
+                  "componentName": "European partners",
+                  "componentId": "210fedcb-a987-6543-210f-edcba9876543",
+                  "folderId": 11670
+                }
+              ],
+              "numberOfResults": 102
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/TradingPartnerProcessingGroupQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"102\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n       <bns:queryToken>EXAMPLE_QUERY_TOKEN</bns:queryToken>\n       <bns:result xsi:type=\"TradingPartnerProcessingGroup\" folderId=\"11669\" componentId=\"3456789a-bcde-f012-34-56789abcdef012\" componentName=\"East Coast partners\"/>\n       .\n       .\n       .\n       <bns:result xsi:type=\"TradingPartnerProcessingGroup\" folderId=\"11670\" componentId=\"210fedcb-a987-6543-210f-edcba9876543\" componentName=\"European partners\"/>\n    </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "get": {
+    "tags": [
+      "Environment"
+    ],
+    "summary": "Retrieves an instance of an Environment object",
+    "description": "Retrieves the properties of the environment with a specified ID.",
+    "operationId": "GetEnvironment",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID assigned by the system to the environment."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Environment.json"
+            },
+            "example": {
+              "@type": "Environment",
+              "id": "456789ab-cdef-0123-4567-89abcdef0123",
+              "name": "My Production Environment",
+              "classification": "PROD"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Environment.json"
+            },
+            "example": "<bns:Environment xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \n        classification=\"PROD\" name=\"My Production Environment\" id=\"456789ab-cdef-0123-4567-89abcdef0123\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "Environment"
+    ],
+    "summary": "Modifies or updates an Environment object",
+    "description": "Updates the Environment object having the specified ID. You can edit the name field only.",
+    "operationId": "UpdateEnvironment",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID assigned by the system to the environment."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/Environment.json"
+          },
+          "example": {
+            "id": "456789ab-cdef-0123-4567-89abcdef0123",
+            "name": "Our Production Environment",
+            "classification": "PROD"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/Environment.json"
+          },
+          "example": "<bns:Environment id=\"456789ab-cdef-0123-4567-89abcdef0123\" classification=\"PROD\" name=\"Our Production Environment\" \n         xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Environment.json"
+            },
+            "example": {
+              "@type": "Environment",
+              "id": "456789ab-cdef-0123-4567-89abcdef0123",
+              "name": "Our Production Environment",
+              "classification": "PROD"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Environment.json"
+            },
+            "example": "<bns:Environment xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" classification=\"PROD\" name=\"Our Production Environment\" id=\"456789ab-cdef-0123-4567-89abcdef0123\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "Environment"
+    ],
+    "summary": "Deletes an Environment object",
+    "description": "Deletes the Environment object with a specified ID. It is not possible to delete an environment that has attached Runtimes or integration packs.",
+    "operationId": "DeleteEnvironment",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID assigned by the system to the environment."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

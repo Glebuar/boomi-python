@@ -1,0 +1,82 @@
+{
+  "post": {
+    "tags": [
+      "OFTP2ConnectorRecord"
+    ],
+    "summary": "Queries for an OFTP2ConnectorRecord object",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).\n\nTo filter by a custom field, use the format `customFields/fieldName` as the filter property, where `fieldName` is the element name of the custom field in the OFTP2 Connector Record structure. To get a list of the available custom fields, see [Custom Tracked Field](/api/platformapi#tag/CustomTrackedField) object. \n\n  \n\n The STARTS_WITH operator accepts only values that do not include spaces. \n\n Sorting of the QUERY results are by the dateProcessed field value, from the oldest to the newest.",
+    "operationId": "QueryOFTP2ConnectorRecord",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/OFTP2ConnectorRecordQueryConfig.json"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/OFTP2ConnectorRecordQueryConfig.json"
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/OFTP2ConnectorRecordQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "queryToken": "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",
+              "result": [
+                {
+                  "@type": "OFTP2ConnectorRecord",
+                  "sfiddsn": "SHARED",
+                  "sfiddate": "2023-06-07",
+                  "sfidtime": "10:06:46.2389",
+                  "sfiddest": "O0166SHAREDSERVER",
+                  "ssidcode": "O01BOOMI",
+                  "status": "success",
+                  "account": "boomi-internal",
+                  "executionId": "execution-003c07c1-969f-4331-96d3-d7af1ca6e1f7-2023.06.07",
+                  "atomId": "92c4bf82-af93-4607-83d8-10a6c7fc7169",
+                  "dateProcessed": "2023-06-07T14:09:40Z",
+                  "id": "connector-1ccb87c7-13f7-41f2-be3b-93778837f641",
+                  "actionType": "Listen",
+                  "connectorType": "oftpserver",
+                  "connectorName": "oftpserver Connector",
+                  "operationName": "OFTP Server Connector Operation",
+                  "documentIndex": 1,
+                  "successful": true,
+                  "size": [
+                    "Long",
+                    6
+                  ]
+                }
+              ],
+              "numberOfResults": 1
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/OFTP2ConnectorRecordQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"1\" xmlns:bns=\"http://api.platform.boomi.bom/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <bns:queryToken>bf6Pu/HXJI2Ws5cOHPMJUVYdtOql</bns:queryToken>\n    <bns:result xsi:type=\"OFTP2ConnectorRecord\">\n        <bns:sfiddsn>SHARED</bns:sfiddsn>\n        <bns:sfiddate>2023-06-07</bns:sfiddate>\n        <bns:sfidtime>10:06:46.2389</bns:sfidtime>\n        <bns:sifddest>O0166SHAREDSERVER</bns:sifddest>\n        <bns:ssidcode>O01BOOMI</bns:ssidcode>\n        <bns:status>success</bns:status>\n        <bns:account>boomi-internal</bns:account>\n        <bns:executionId>execution-003c07c1-969f-4331-96d3-d7af1ca6e1f7-2023.06.07</bns:executionId>\n        <bns:atomId>92c4bf82-af93-4607-83d8-10a6c7fc7169</bns:atomId>\n        <bns:dateProcessed>2023-06-07T14:09:40Z</bns:dateProcessed>\n        <bns:id>connector-1ccb87c7-13f7-41f2-be3b-93778837f641</bns:id>\n        <bns:actionType>Listen</bns:actionType>\n        <bns:connectorType>oftpserver</bns:connectorType>\n        <bns:connectorName>oftpserver Connector</bns:connectorName>\n        <bns:operationName>OFTP Server Connector Operation</bns:operationName>\n        <bns:documentIndex>1</bns:documentIndex>\n        <bns:successful>true</bns:successful>\n        <bns:size>6</bns:size>\n    </bns:result>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

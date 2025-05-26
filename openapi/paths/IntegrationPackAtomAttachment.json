@@ -1,0 +1,62 @@
+{
+  "post": {
+    "tags": [
+      "IntegrationPackAtomAttachment"
+    ],
+    "summary": "Creates an IntegrationPackAtomAttachment object",
+    "description": "Attaches an integration pack instance having the specified ID to the Runtime having the specified ID.",
+    "operationId": "CreateIntegrationPackAtomAttachment",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/IntegrationPackAtomAttachment.json"
+          },
+          "example": {
+            "integrationPackInstanceId": "76543210FEDCBA9876543210FEDCBA98",
+            "atomId": "3456789a-bcde-f012-3456-789abcdef012"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/IntegrationPackAtomAttachment.json"
+          },
+          "example": "<bns:IntegrationPackAtomAttachment atomId=\"3456789a-bcde-f012-3456-789abcdef012\" \n      integrationPackInstanceId=\"76543210FEDCBA9876543210FEDCBA98\" xmlns:bns=\"http://api.platform.boomi.com/\" \n      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/IntegrationPackAtomAttachment.json"
+            },
+            "example": {
+              "@type": "IntegrationPackAtomAttachment",
+              "integrationPackInstanceId": "76543210FEDCBA9876543210FEDCBA98",
+              "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+              "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/IntegrationPackAtomAttachment.json"
+            },
+            "example": "<bns:IntegrationPackAtomAttachment id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\"\n      atomId=\"3456789a-bcde-f012-3456-789abcdef012\" integrationPackInstanceId=\"76543210FEDCBA9876543210FEDCBA98\" \n      xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

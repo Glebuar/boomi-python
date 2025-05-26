@@ -1,0 +1,6 @@
+{
+  "description": "Informative header describing a warning that appeared due to your API call",
+  "schema": {
+    "type": "string"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "post": {
+    "tags": [
+      "SharedCommunicationChannelComponent"
+    ],
+    "summary": "Retrieves additional results for a SharedCommunicationChannelComponent query.",
+    "description": "To learn about using `queryMore`, refer to [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryMoreSharedCommunicationChannelComponent",
+    "requestBody": {
+      "content": {
+        "text/plain": {
+          "schema": {
+            "type": "string"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/SharedCommunicationChannelComponentQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 3,
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "SharedCommunicationChannelComponent",
+                  "componentName": "New Communication Channel",
+                  "communicationType": "as2",
+                  "componentId": "0cfe0d5a-0d33-48f8-825a-1d67667e0cd5",
+                  "folderId": "894"
+                },
+                {
+                  "@type": "SharedCommunicationChannelComponent",
+                  "componentName": "TestOfficeapi",
+                  "communicationType": "as2",
+                  "componentId": "1cbd3256-308c-4a9d-a70b-dd8b911bc72b",
+                  "folderId": "894"
+                },
+                {
+                  "@type": "SharedCommunicationChannelComponent",
+                  "componentName": "Shared AS2 API",
+                  "communicationType": "as2",
+                  "componentId": "24bdabb3-bf20-4138-9324-6270972b8472",
+                  "folderId": "921"
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/SharedCommunicationChannelComponentQueryResponse.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:QueryResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" numberOfResults=\"3\">\n<bns:result xsi:type=\"bns:SharedCommunicationChannelComponent\" componentName=\"New Communication Channel\" communicationType=\"as2\" componentId=\"0cfe0d5a-0d33-48f8-825a-1d67667e0cd5\" folderId=\"894\"/>\n<bns:result xsi:type=\"bns:SharedCommunicationChannelComponent\" componentName=\"TestOfficeapi\" communicationType=\"as2\" componentId=\"1cbd3256-308c-4a9d-a70b-dd8b911bc72b\" folderId=\"894\"/>\n<bns:result xsi:type=\"bns:SharedCommunicationChannelComponent\" componentName=\"Shared AS2 API\" communicationType=\"as2\" componentId=\"24bdabb3-bf20-4138-9324-6270972b8472\" folderId=\"921\"/>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

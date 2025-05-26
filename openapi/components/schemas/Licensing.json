@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "description": "Indicates the number of connections used and purchased in each of the connector type and production/test classifications. The classifications include standard, smallBusiness, enterprise, and tradingPartner.",
+  "properties": {
+    "enterprise": {
+      "$ref": "./License.json"
+    },
+    "enterpriseTest": {
+      "$ref": "./License.json"
+    },
+    "smallBusiness": {
+      "$ref": "./License.json"
+    },
+    "smallBusinessTest": {
+      "$ref": "./License.json"
+    },
+    "standard": {
+      "$ref": "./License.json"
+    },
+    "standardTest": {
+      "$ref": "./License.json"
+    },
+    "tradingPartner": {
+      "$ref": "./License.json"
+    },
+    "tradingPartnerTest": {
+      "$ref": "./License.json"
+    }
+  }
+}

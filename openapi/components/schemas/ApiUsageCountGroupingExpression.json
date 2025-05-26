@@ -1,0 +1,31 @@
+{
+  "required": [
+    "operator"
+  ],
+  "type": "object",
+  "properties": {
+    "nestedExpression": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./ApiUsageCountExpression.json"
+      }
+    },
+    "operator": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "and",
+        "or"
+      ]
+    }
+  },
+  "xml": {
+    "name": "GroupingExpression",
+    "namespace": "http://api.platform.boomi.com/"
+  }
+}

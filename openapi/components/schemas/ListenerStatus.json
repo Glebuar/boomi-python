@@ -1,0 +1,33 @@
+{
+  "required": [
+    "listenerId",
+    "status"
+  ],
+  "type": "object",
+  "properties": {
+    "connectorType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The internal and unique identifier for connector type, which resembles the connector type names presented on the **Build** tab of the user interface.",
+      "example": "wss"
+    },
+    "listenerId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The Component ID for the listener process.",
+      "example": "ea56da44-ea7d-4c80-9866-30556474938e"
+    },
+    "status": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The status of the listener as `listening`, `paused`, or `errored`.",
+      "example": "listening"
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "get": {
+    "tags": [
+      "ListQueues"
+    ],
+    "summary": "Retrieves a ListQueues object by identifier",
+    "description": "After receiving a 200 status code response, send a second GET request where {accountId} is the ID of the account authenticating the request and sessionId is the ID provided in the initial response.",
+    "operationId": "AsyncTokenListQueues",
+    "parameters": [
+      {
+        "name": "token",
+        "in": "path",
+        "description": "Takes in the token from a previous call to return a result.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ListQueuesAsyncResponse.json"
+            },
+            "example": {
+              "AsyncOperationResult": {
+                "numberOfResults": "3",
+                "responseStatusCode": "200",
+                "result": [
+                  {
+                    "xsi_type": "QueueRecord",
+                    "queueName": "Queue1",
+                    "queueType": "Point-to-Point",
+                    "messagesCount": "150",
+                    "deadLettersCount": "0"
+                  },
+                  {
+                    "xsi_type": "QueueRecord",
+                    "queueName": "Queue2",
+                    "queueType": "Publish/Subscribe",
+                    "messagesCount": "18",
+                    "deadLettersCount": "2",
+                    "topicSubscribers": [
+                      {
+                        "SubscriberName": "123fb43d-a5c6-7890-123d-a4c56789ece0",
+                        "messageCount": "9",
+                        "deadLettersCount": "1"
+                      },
+                      {
+                        "SubscriberName": "e4d567d3-cd89-0aae-b123-6848dcf975f0",
+                        "messageCount": "9",
+                        "deadLettersCount": "1"
+                      }
+                    ]
+                  },
+                  {
+                    "xsi_type": "QueueRecord",
+                    "queueName": "Queue3",
+                    "queueType": "Point-to-Point",
+                    "messagesCount": "150",
+                    "deadLettersCount": "0"
+                  }
+                ]
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ListQueuesAsyncResponse.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:AsyncOperationResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" numberOfResults=\"3\" responseStatusCode=\"200\">\n    <bns:result xsi:type=\"QueueRecord\" queueName=\"Queue1\" queueType=\"Point-to-Point\" messagesCount=\"150\" deadLettersCount=\"0\"/>\n    <bns:result xsi:type=\"QueueRecord\" queueName=\"Queue2\" queueType=\"Publish/Subscribe\" messagesCount=\"18\" deadLettersCount=\"2\">\n        <bns:topicSubscribers SubscriberName=\"123fb43d-a5c6-7890-123d-a4c56789ece0\" messageCount=\"9\" deadLettersCount=\"1\"/>\n        <bns:topicSubscribers SubscriberName=\"e4d567d3-cd89-0aae-b123-6848dcf975f0\" messageCount=\"9\" deadLettersCount=\"1\"/>\n    </bns:result>\n    <bns:result xsi:type=\"QueueRecord\" queueName=\"Queue3\" queueType=\"Point-to-Point\" messagesCount=\"150\" deadLettersCount=\"0\"/>\n</bns:AsyncOperationResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

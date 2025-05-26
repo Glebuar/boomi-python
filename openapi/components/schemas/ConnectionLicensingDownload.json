@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "URL to view or download the deployed connection details.",
+      "example": "https://api.boomi.com/account/Admin-123/api/download/ConnectionLicensing-e0e1d98b-2c25-4948-aa07-6ee181547695"
+    },
+    "message": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "",
+      "example": "Connection licensing report generation has started."
+    },
+    "statusCode": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "",
+      "example": "202"
+    }
+  }
+}

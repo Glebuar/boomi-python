@@ -1,0 +1,107 @@
+{
+  "post": {
+    "tags": [
+      "Folder"
+    ],
+    "summary": "Retrieves multiple Folder objects by identifier",
+    "description": "To learn more about `bulk`, refer to [Bulk GET operations](#section/Introduction/Bulk-GET-operations).",
+    "operationId": "BulkFolder",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/FolderBulkRequest.json"
+          },
+          "example": {
+            "BulkRequest": {
+              "type": "GET",
+              "request": [
+                {
+                  "xsi_type": "BulkId",
+                  "id": "folderId123"
+                },
+                {
+                  "xsi_type": "BulkId",
+                  "id": "folderId456"
+                },
+                {
+                  "xsi_type": "BulkId",
+                  "id": "folderId789"
+                }
+              ]
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/FolderBulkRequest.json"
+          },
+          "example": "<api:BulkRequest\n    \txmlns:api=\"http://api.boomi.com/\"\n    \txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" type=\"GET\">\n    \t<api:request xsi:type=\"BulkId\" id=\"folderId123\"/>\n    \t<api:request xsi:type=\"BulkId\" id=\"folderId456\"/>\n    \t<api:request xsi:type=\"BulkId\" id=\"folderId789\"/>\n    </api:BulkRequest>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/FolderBulkResponse.json"
+            },
+            "example": {
+              "BulkResult": {
+                "response": [
+                  {
+                    "statusCode": "200",
+                    "Result": {
+                      "xsi_type": "Folder",
+                      "id": "folderId123",
+                      "name": "Folder-Name",
+                      "fullPath": "Platform API/Folder/Tests/Folder-Name",
+                      "deleted": "false"
+                    }
+                  },
+                  {
+                    "statusCode": "200",
+                    "Result": {
+                      "xsi_type": "Folder",
+                      "id": "folderId456",
+                      "name": "Folder-Name",
+                      "fullPath": "Platform API/Folder/Tests/Folder-Name",
+                      "deleted": "false"
+                    }
+                  },
+                  {
+                    "statusCode": "200",
+                    "Result": {
+                      "xsi_type": "Folder",
+                      "id": "folderId789",
+                      "name": "Folder-Name",
+                      "fullPath": "Platform API/Folder/Tests/Folder-Name",
+                      "deleted": "false"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/FolderBulkResponse.json"
+            },
+            "example": "<bns:BulkResult\n\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n\txmlns:bns=\"http://api.boomi.com/\">\n\t<bns:response statusCode=\"200\">\n\t\t<bns:Result xsi:type=\"Folder\" id=\"folderId123\" name=\"Folder-Name\" fullPath=\"Platform API/Folder/Tests/Folder-Name\" deleted=\"false\"/>\n\t</bns:response>\n\t<bns:response statusCode=\"200\">\n\t\t<bns:Result xsi:type=\"Folder\" id=\"folderId456\" name=\"Folder-Name\" fullPath=\"Platform API/Folder/Tests/Folder-Name\" deleted=\"false\"/>\n\t</bns:response>\n\t<bns:response statusCode=\"200\">\n\t\t<bns:Result xsi:type=\"Folder\" id=\"folderId789\" name=\"Folder-Name\" fullPath=\"Platform API/Folder/Tests/Folder-Name\" deleted=\"false\"/>\n\t</bns:response>\n</bns:BulkResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

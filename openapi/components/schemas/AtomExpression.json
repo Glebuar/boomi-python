@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./AtomSimpleExpression.json"
+    },
+    {
+      "$ref": "./AtomGroupingExpression.json"
+    }
+  ]
+}

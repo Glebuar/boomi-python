@@ -1,0 +1,74 @@
+{
+  "post": {
+    "tags": [
+      "ComponentMetadata"
+    ],
+    "summary": "Creates a ComponentMetadata object",
+    "description": "The ability to create a new component is not supported at this time. Although, you can create a deleted component, but you cannot create a new component. You will receive an error if you do not specify the deleted component ID in the create request.",
+    "operationId": "CreateComponentMetadata",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentMetadata.json"
+          },
+          "example": {
+            "componentId": "ae9e0ac0-fbdf-486a-8b27-6702c82dbba0"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentMetadata.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:ComponentMetadata xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" componentId=\"ae9e0ac0-fbdf-486a-8b27-6702c82dbba0\" />\n"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentMetadata.json"
+            },
+            "example": {
+              "@type": "ComponentMetadata",
+              "componentId": "ae9e0ac0-fbdf-486a-8b27-6702c82dbba0",
+              "version": "15",
+              "name": "Process2",
+              "type": "process",
+              "createdDate": "2023-02-08T18:50:46Z",
+              "createdBy": "userboomi.com",
+              "modifiedDate": "2023-02-08T19:15:44Z",
+              "modifiedBy": "userboomi.com",
+              "deleted": "false",
+              "currentVersion": "true",
+              "folderName": "Folder123",
+              "folderId": "RjoxMDU2NTMx",
+              "copiedFromComponentId": "123456a-bcde-f4567-8901-23abcdef456",
+              "copiedFromComponentVersion": "6",
+              "branchName": "main",
+              "branchId": "QjoxNDMxNg"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentMetadata.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:ComponentMetadata xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" componentId=\"ae9e0ac0-fbdf-486a-8b27-6702c82dbba0\" version=\"15\" name=\"Process2\" type=\"process\" createdDate=\"2023-02-08T18:50:46Z\" createdBy=\"user@boomi.com\" modifiedDate=\"2023-02-08T19:15:44Z\" modifiedBy=\"user@boomi.com\" deleted=\"false\" currentVersion=\"true\" folderName=\"Folder123\" folderId=\"RjoxMDU2NTMx\"/>\n"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

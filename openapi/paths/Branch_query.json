@@ -1,0 +1,114 @@
+{
+  "post": {
+    "tags": [
+      "Branch"
+    ],
+    "summary": "Queries for a Branch object(s)",
+    "description": "You must first retrieve the ID of your main branch, using the name of your current branch. If you haven't created any branches, your current branch will be `main`. \n\n When you query a branch, it might be in one of the following states:\n - `CREATING`: The branch is being created \n - `NORMAL`: The branch is ready to use \n - `DELETING`: The branch is being deleted. \n\n For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryBranch",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/BranchQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "EQUALS",
+                    "property": "name",
+                    "argument": [
+                      "branchname"
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "EQUALS",
+                        "property": "name",
+                        "argument": [
+                          "branchname"
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/BranchQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n      <expression operator=\"EQUALS\" property=\"name\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n        <argument>branchname</argument> \n      </expression>\n    </QueryFilter>\n  </QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"name\">\n      <argument>branchname</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/BranchQueryResponse.json"
+            },
+            "example": {
+              "QueryResult": {
+                "numberOfResults": "1",
+                "result": {
+                  "xsi_type": "Branch",
+                  "id": "branchId",
+                  "name": "branchname",
+                  "createdBy": "userboomi.com",
+                  "createdDate": "2023-09-12T18:14:39Z",
+                  "ready": "true",
+                  "deleted": "false",
+                  "stage": "NORMAL"
+                }
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/BranchQueryResponse.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><bns:QueryResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" numberOfResults=\"1\">\t\t\t\t\t\t\n    <bns:result xsi:type=\"Branch\" id=\"branchId\" name=\"branchname\" createdBy=\"user@boomi.com\" createdDate=\"2023-09-12T18:14:39Z\" ready=\"true\" deleted=\"false\" stage=\"NORMAL\"/>\n  </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

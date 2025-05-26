@@ -1,0 +1,114 @@
+{
+  "post": {
+    "tags": [
+      "AccountGroup"
+    ],
+    "summary": "Queries for an AccountGroup object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryAccountGroup",
+    "requestBody": {
+      "description": " Possible properties include: id, accountId, name, defaultGroup, autoSubscribeAlertLevel",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AccountGroupQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "Admins"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "name"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "Admins"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "name"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AccountGroupQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n      <expression operator=\"EQUALS\" property=\"name\"\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n          <argument>Admins</argument>\n      </expression>\n    </QueryFilter>\n  </QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"name\">\n      <argument>Admins</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroupQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 1,
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "AccountGroup",
+                  "id": "fedcba98-7654-3210-fedc-ba9876543210",
+                  "accountId": "account-123456",
+                  "name": "Admins",
+                  "autoSubscribeAlertLevel": "none",
+                  "defaultGroup": false
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroupQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"1\" xmlns:bns=\"http://api.platform.boomi.com/\"\n  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n      <bns:result xsi:type=\"AccountGroup\" defaultGroup=\"false\"\n      autoSubscribeAlertLevel=\"none\" name=\"Admins\"\n      accountId=\"account-123456\" id=\"fedcba98-7654-3210-fedc-ba9876543210\"/>\n  </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "CommunicationSetting": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "default",
+        "custom",
+        "component"
+      ]
+    },
+    "SFTPGetOptions": {
+      "$ref": "./SFTPGetOptions.json"
+    },
+    "SFTPSendOptions": {
+      "$ref": "./SFTPSendOptions.json"
+    },
+    "SFTPSettings": {
+      "$ref": "./SFTPSettings.json"
+    },
+    "SharedCommunicationChannel": {
+      "$ref": "./SharedCommunicationChannel.json"
+    }
+  }
+}

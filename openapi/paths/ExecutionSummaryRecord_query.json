@@ -1,0 +1,177 @@
+{
+  "post": {
+    "tags": [
+      "ExecutionSummaryRecord"
+    ],
+    "summary": "Queries for an ExecutionSummaryRecord object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryExecutionSummaryRecord",
+    "requestBody": {
+      "description": "Possible properties include: processId, timeBlock, atomId, status, reportKey, launcherId",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ExecutionSummaryRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "789abcde-f012-3456-789a-bcdef0123456"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "processId"
+                      },
+                      {
+                        "argument": [
+                          "2016-05-01T00:00:00Z",
+                          "2016-08-31T23:59:59Z"
+                        ],
+                        "operator": "BETWEEN",
+                        "property": "timeBlock"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "and",
+                        "nestedExpression": [
+                          {
+                            "argument": [
+                              "789abcde-f012-3456-789a-bcdef0123456"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "processId"
+                          },
+                          {
+                            "argument": [
+                              "2016-05-01T00:00:00Z",
+                              "2016-08-31T23:59:59Z"
+                            ],
+                            "operator": "BETWEEN",
+                            "property": "timeBlock"
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ExecutionSummaryRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n        <expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n            <nestedExpression operator=\"EQUALS\" property=\"processId\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>789abcde-f012-3456-789a-bcdef0123456</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"BETWEEN\" property=\"timeBlock\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>2016-05-01T00:00:00Z</argument>\n                <argument>2016-08-31T23:59:59Z</argument>\n            </nestedExpression>\n        </expression>\n    </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"processId\">\n      <argument>789abcde-f012-3456-789a-bcdef0123456</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ExecutionSummaryRecordQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 100,
+              "queryToken": "EXAMPLE_QUERY_TOKEN",
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "inboundDocSize": 222,
+                  "outboundDocCount": 0,
+                  "elapsedVarSum": 0,
+                  "processID": "789abcde-f012-3456-789a-bcdef0123456",
+                  "reportKey": "userXYZ",
+                  "status": "COMPLETE",
+                  "inboundDocCount": 1,
+                  "atomID": "3456789a-bcde-f0123-4567-89abcdef012",
+                  "outboundDocSize": 0,
+                  "launchElapsedTime": 30216,
+                  "maxElapsedTime": 32460,
+                  "executionCount": 1,
+                  "elapsedTime": 32460,
+                  "@type": "ExecutionSummaryRecord",
+                  "atomName": "Desktop Atom",
+                  "returnDocSize": 222,
+                  "timeBlock": "2016-05-14T15:57:00Z",
+                  "processName": "Initial Load Accounts",
+                  "accountID": "account-123456",
+                  "returnDocCount": 1
+                },
+                {
+                  "inboundDocSize": 368,
+                  "outboundDocCount": 0,
+                  "elapsedVarSum": 4.5,
+                  "processID": "789abcde-f012-3456-789a-bcdef0123456",
+                  "reportKey": "userXYZ",
+                  "status": "COMPLETE",
+                  "inboundDocCount": 2,
+                  "atomID": "3456789a-bcde-f0123-4567-89abcdef012",
+                  "outboundDocSize": 0,
+                  "launchElapsedTime": 98,
+                  "maxElapsedTime": 60286,
+                  "executionCount": 2,
+                  "elapsedTime": 120569,
+                  "@type": "ExecutionSummaryRecord",
+                  "atomName": "Desktop Atom",
+                  "returnDocSize": 0,
+                  "timeBlock": "2016-08-28T19:00:00Z",
+                  "processName": "Initial Load Accounts",
+                  "accountID": "account-123456",
+                  "returnDocCount": 0
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ExecutionSummaryRecordQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"100\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <bns:queryToken>EXAMPLE_QUERY_TOKEN</bns:queryToken>\n    <bns:result xsi:type=\"ExecutionSummaryRecord\" elapsedVarSum=\"0.0\"\n       maxElapsedTime=\"32460\" executionCount=\"1\" returnDocSize=\"222\"\n       returnDocCount=\"1\" outboundDocSize=\"0\" outboundDocCount=\"0\"\n       inboundDocSize=\"222\" inboundDocCount=\"1\" launchElapsedTime=\"30216\"\n       elapsedTime=\"32460\" processName=\"Initial Load Accounts\" atomName=\"Desktop Atom\"\n       status=\"COMPLETE\" atomID=\"3456789a-bcde-f0123-4567-89abcdef012\"\n       timeBlock=\"2016-05-14T15:57:00Z\" processID=\"789abcde-f012-3456-789a-bcdef0123456\"\n       accountID=\"account-123456\" reportKey=\"userXYZ\"/>\n    ...\n    <bns:result xsi:type=\"ExecutionSummaryRecord\" elapsedVarSum=\"4.5\"\n       maxElapsedTime=\"60286\" executionCount=\"2\" returnDocSize=\"0\"\n       returnDocCount=\"0\" outboundDocSize=\"0\" outboundDocCount=\"0\"\n       inboundDocSize=\"368\" inboundDocCount=\"2\" launchElapsedTime=\"98\"\n       elapsedTime=\"120569\" processName=\"Initial Load Accounts\" atomName=\"Desktop Atom\"\n       status=\"COMPLETE\" atomID=\"3456789a-bcde-f0123-4567-89abcdef012\"\n       timeBlock=\"2016-08-28T19:00:00Z\" processID=\"789abcde-f012-3456-789a-bcdef0123456\"\n       accountID=\"account-123456\" reportKey=\"userXYZ\"/>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

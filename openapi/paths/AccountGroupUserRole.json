@@ -1,0 +1,67 @@
+{
+  "post": {
+    "tags": [
+      "AccountGroupUserRole"
+    ],
+    "summary": "Creates an AccountGroupUserRole object",
+    "description": "Adds a user to an account group.",
+    "operationId": "CreateAccountGroupUserRole",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AccountGroupUserRole.json"
+          },
+          "example": {
+            "accountId": "*accountId*",
+            "name": "TestGroup",
+            "autoSubscribeAlertLevel": "none",
+            "defaultGroup": false
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AccountGroupUserRole.json"
+          },
+          "example": "<AccountGroupUserRole xmlns=\"http://api.platform.boomi.com/\" userId=\"user123@company.biz\" accountGroupId='fedcba98-7654-3210-fedc-ba9876543c210' roleId='01234567-89ab-cdef-0123-456789abcdef' firstName=\"John\" lastName=\"Doe\" notifyUser = 'true'>\n  </AccountGroupUserRole>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroupUserRole.json"
+            },
+            "example": {
+              "@type": "AccountGroupUserRole",
+              "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg",
+              "accountGroupId": "fedcba98-7654-3210-fedc-ba9876543c210",
+              "userId": "user123@company.biz",
+              "roleId": "01234567-89ab-cdef-0123-456789abcdef",
+              "firstName": "John",
+              "lastName": "Doe"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroupUserRole.json"
+            },
+            "example": "<bns:AccountGroupUserRole roleId=\"01234567-89ab-cdef-0123-456789abcdef\"\n  userId=\"user123@company.biz\" accountGroupId=\"fedcba98-7654-3210-fedc-ba9876543c210\"\n  id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\" firstName=\"John\" lastName=\"Doe\"\n  xmlns:bns=\"http://api.platform.boomi.com/\" />"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

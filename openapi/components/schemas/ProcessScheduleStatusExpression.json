@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./ProcessScheduleStatusSimpleExpression.json"
+    },
+    {
+      "$ref": "./ProcessScheduleStatusGroupingExpression.json"
+    }
+  ]
+}

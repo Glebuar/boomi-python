@@ -1,0 +1,180 @@
+{
+  "post": {
+    "tags": [
+      "HL7ConnectorRecord"
+    ],
+    "summary": "Queries for a HL7ConnectorRecord object(s)",
+    "description": "To filter by a customField, use the format `customFields.fieldName` as the filter property where `fieldName` is the element name of the custom field in the HL7 Connector Record structure. To get a list of the available custom fields, refer to [CustomTrackedField object](#tag/CustomTrackedField). \n\n The STARTS_WITH operator accepts values that do not include spaces. \n\n For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryHL7ConnectorRecord",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/HL7ConnectorRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "execution-01234567-89ab-cdef-0123-456789abcdef-2019.09.14"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "executionId"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "execution-01234567-89ab-cdef-0123-456789abcdef-2019.09.14"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "executionId"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/HL7ConnectorRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n  <QueryFilter>\n    <expression operator=\"EQUALS\" property=\"executionId\"\n      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n      <argument>execution-01234567-89ab-cdef-0123-456789abcdef-2019.09.14</argument>\n    </expression>\n  </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"executionId\">\n      <argument>execution-01234567-89ab-cdef-0123-456789abcdef-2019.09.14</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/HL7ConnectorRecordQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 100,
+              "queryToken": "EXAMPLE_QUERY_TOKEN",
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "HL7ConnectorRecord",
+                  "acceptAckStatus": "Commit Error",
+                  "acceptAckReport": "Acknowledgment Report for Interchange Control Number 000139776&#xD;  \n Date: 190914&#xD; \n Time: 1031&#xD; \n Acknowledgment Status: Accepted with Errors&#xD; \n Note: Invalid Interchange Receiver ID",
+                  "ackStatus": "Application Error",
+                  "ackReport": "Group Control #: 139776&#xD; Acknowledgement Status: A",
+                  "senderApplicationId": "mcapp33382",
+                  "senderFacilityId": "mcf33382",
+                  "receiverApplicationId": "tpapp33382",
+                  "receiverFacilityId": "tpf33382",
+                  "messageControlId": "1018015",
+                  "messageType": "ADT_A01",
+                  "version": "v27",
+                  "isValidMessage": "false",
+                  "account": "account-123456",
+                  "executionId": "execution-01234567-89ab-cdef-0123-456789abcdef-2019.09.14",
+                  "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+                  "dateProcessed": "2019-09-14T06:24:12Z",
+                  "id": "connector-abcdef01-2345-6789-abcd-ef0123456789",
+                  "actionType": "Listen",
+                  "connectorType": "hl7",
+                  "connectorName": "Start",
+                  "operationName": "Sample HL7 Listen Operation",
+                  "documentIndex": 0,
+                  "successful": true,
+                  "size": [
+                    "Long",
+                    3138
+                  ],
+                  "customFields": [
+                    {
+                      "customNumber": 13,
+                      "customDate": "2019-09-14T10:53:59-0400",
+                      "customCharacter": "sample"
+                    }
+                  ]
+                },
+                {
+                  "@type": "HL7ConnectorRecord",
+                  "acceptAckStatus": "Commit Accept",
+                  "acceptAckReport": "Success",
+                  "ackStatus": "Application Accept",
+                  "ackReport": "Group Control #: 139776&#xD; Acknowledgement Status: A",
+                  "senderApplicationId": "mcapp33382",
+                  "senderFacilityId": "mcf33382",
+                  "receiverApplicationId": "tpapp33382",
+                  "receiverFacilityId": "tpf33382",
+                  "messageControlId": "1018016",
+                  "messageType": "ADT_A01",
+                  "version": "v27",
+                  "isValidMessage": "true",
+                  "account": "account-123456",
+                  "executionId": "execution-01234567-89ab-cdef-0123-456789abcdef-2019.09.14",
+                  "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+                  "dateProcessed": "2019-09-14T06:25:02Z",
+                  "id": "connector-bcdef012-3456-789a-bcde-f0123456789a",
+                  "actionType": "Listen",
+                  "connectorType": "hl7",
+                  "connectorName": "Start",
+                  "operationName": "Sample HL7 Listen Operation",
+                  "documentIndex": 49,
+                  "successful": true,
+                  "size": [
+                    "Long",
+                    2781
+                  ],
+                  "customFields": [
+                    {
+                      "customNumber": 55,
+                      "customDate": "2019-09-14T10:57:14-0400",
+                      "customCharacter": "sample"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/HL7ConnectorRecordQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"100\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n   <bns:queryToken>EXAMPLE_QUERY_TOKEN</bns:queryToken>\n   <bns:result xsi:type=\"HL7ConnectorRecord\">\n      <bns:account>account-123456</bns:account>\n      <bns:executionId>execution-01234567-89ab-cdef-0123-456789abcdef-2019.09.14</bns:executionId>\n      <bns:atomId>3456789a-bcde-f012-3456-789abcdef012</bns:atomId>\n      <bns:dateProcessed>2019-09-14T06:24:12Z</bns:dateProcessed>\n      <bns:id>connector-abcdef01-2345-6789-abcd-ef0123456789</bns:id>\n      <bns:actionType>Listen</bns:actionType>\n      <bns:connectorType>hl7</bns:connectorType>\n      <bns:connectorName>Start</bns:connectorName>\n      <bns:operationName>Sample HL7 Listen Operation</bns:operationName>\n      <bns:documentIndex>0</bns:documentIndex>\n      <bns:successful>true</bns:successful>\n      <bns:size>3138</bns:size>\n      <bns:customFields>\n         <bns:customNumber>13</bns:customNumber>\n         <bns:customDate>2019-09-14T10:53:59-0400</bns:customDate>\n         <bns:customCharacter>sample</bns:customCharacter>\n      </bns:customFields>        \n      <bns:acceptAckStatus>Commit Error</bns:acceptAckStatus>\n      <bns:acceptAckReport>Acknowledgment Report for Interchange Control Number 000139776&#xD;  \n         Date: 190914&#xD;\n         Time: 1031&#xD;\n         Acknowledgment Status: Accepted with Errors&#xD;\n         Note: Invalid Interchange Receiver ID</bns:acceptAckReport>\n      <bns:ackStatus>Application Error</bns:ackStatus>\n      <bns:ackReport>Group Control #: 139776&#xD; Acknowledgement Status: A</bns:ackReport>\n      <bns:senderApplicationId>mcapp33382</bns:senderApplicationId>\n      <bns:senderFacilityId>mcf33382</bns:senderFacilityId>\n      <bns:receiverApplicationId>tpapp33382</bns:receiverApplicationId>\n      <bns:receiverFacilityId>tpf33382</bns:receiverFacilityId>\n      <bns:messageControlId>1018015</bns:messageControlId>\n      <bns:messageType>ADT_A01</bns:messageType>\n      <bns:version>v27</bns:version>\n      <bns:isValidMessage>false</bns:isValidMessage>   \n   </bns:result>\n   <bns:result xsi:type=\"HL7ConnectorRecord\">\n      <bns:account>account-123456</bns:account>\n      <bns:executionId>execution-01234567-89ab-cdef-0123-456789abcdef-2019.09.14</bns:executionId>\n      <bns:atomId>3456789a-bcde-f012-3456-789abcdef012</bns:atomId>\n      <bns:dateProcessed>2019-09-14T06:25:02Z</bns:dateProcessed>\n      <bns:id>connector-bcdef012-3456-789a-bcde-f0123456789a</bns:id>\n      <bns:actionType>Listen</bns:actionType>\n      <bns:connectorType>hl7</bns:connectorType>\n      <bns:connectorName>Start</bns:connectorName>\n      <bns:operationName>Sample HL7 Listen Operation</bns:operationName>\n      <bns:documentIndex>49</bns:documentIndex>\n      <bns:successful>true</bns:successful>\n      <bns:size>2781</bns:size>\n      <bns:customFields>\n         <bns:customNumber>55</bns:customNumber>\n         <bns:customDate>2019-09-14T10:57:14-0400</bns:customDate>\n         <bns:customCharacter>sample</bns:customCharacter>\n      </bns:customFields>\n      <bns:acceptAckStatus>Commit Accept</bns:acceptAckStatus>\n      <bns:acceptAckReport>Success</bns:acceptAckReport>\n      <bns:ackStatus>Application Accept</bns:ackStatus>\n      <bns:ackReport>Group Control #: 139776&#xD; Acknowledgement Status: A</bns:ackReport>\n      <bns:senderApplicationId>mcapp33382</bns:senderApplicationId>\n      <bns:senderFacilityId>mcf33382</bns:senderFacilityId>\n      <bns:receiverApplicationId>tpapp33382</bns:receiverApplicationId>\n      <bns:receiverFacilityId>tpf33382</bns:receiverFacilityId>\n      <bns:messageControlId>1018016</bns:messageControlId>\n      <bns:messageType>ADT_A01</bns:messageType>\n      <bns:version>v27</bns:version>\n      <bns:isValidMessage>true</bns:isValidMessage>   \n   </bns:result>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

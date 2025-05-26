@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./X12ConnectorRecordSimpleExpression.json"
+    },
+    {
+      "$ref": "./X12ConnectorRecordGroupingExpression.json"
+    }
+  ]
+}

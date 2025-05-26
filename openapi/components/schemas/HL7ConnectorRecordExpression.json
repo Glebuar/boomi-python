@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./HL7ConnectorRecordSimpleExpression.json"
+    },
+    {
+      "$ref": "./HL7ConnectorRecordGroupingExpression.json"
+    }
+  ]
+}

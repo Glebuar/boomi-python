@@ -1,0 +1,65 @@
+{
+  "required": [
+    "elementDelimiter",
+    "segmentTerminator"
+  ],
+  "type": "object",
+  "properties": {
+    "acknowledgementoption": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "donotackitem",
+        "ackfuncitem",
+        "acktranitem"
+      ]
+    },
+    "elementDelimiter": {
+      "$ref": "./EdiDelimiter.json"
+    },
+    "envelopeoption": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "groupall",
+        "groupfg",
+        "groupst"
+      ]
+    },
+    "filteracknowledgements": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "outboundInterchangeValidation": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "outboundValidationOption": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "filterError",
+        "failAll"
+      ]
+    },
+    "rejectDuplicateInterchange": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "segmentTerminator": {
+      "$ref": "./EdiSegmentTerminator.json"
+    }
+  }
+}

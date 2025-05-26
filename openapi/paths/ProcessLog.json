@@ -1,0 +1,62 @@
+{
+  "post": {
+    "tags": [
+      "ProcessLog"
+    ],
+    "summary": "Creates a ProcessLog object",
+    "description": "Download process run logs.",
+    "operationId": "CreateProcessLog",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ProcessLog.json"
+          },
+          "example": {
+            "executionId": "execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01",
+            "logLevel": "ALL"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ProcessLog.json"
+          },
+          "example": "<ProcessLog xmlns=\"http://api.platform.boomi.com/\" executionId=\"execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01\" logLevel=\"ALL\"/>\n"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/LogDownload.json"
+            },
+            "example": {
+              "@type": "LogDownload",
+              "url": "http://localhost:8081/account/account-123456/api/download/ProcessLog-89abcdef-0123-4567-89ab-cdef01234567",
+              "message": "Beginning download.",
+              "statusCode": 202
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/LogDownload.json"
+            },
+            "example": "<bns:LogDownload statusCode=\"202\" message=\"Beginning download.\" \n             url=\"http://localhost:8081/account/account-123456/api/download/ProcessLog-89abcdef-0123-4567-89ab-cdef01234567\"\n     xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>\n"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

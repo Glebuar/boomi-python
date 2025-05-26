@@ -1,0 +1,52 @@
+{
+  "get": {
+    "tags": [
+      "ListQueues"
+    ],
+    "summary": "Retrieves a ListQueues object by identifier",
+    "description": "To retrieve a list of message queues, Send an HTTP GET where accountId is the account that you are authenticating with and containerId is the ID of the Runtime, Runtime cluster, or Runtime cloud which owns the message queue that you want to retrieve. \n >**Note:** You can find the Account ID for an account by navigating to Settings > Account Information and Setup in the user interface. Additionally, you can find the container ID by navigating to Manage > Runtime Management and viewing the Runtime ID value on the Runtime Information panel for a selected Runtime, Runtime cluster, or Runtime cloud.",
+    "operationId": "AsyncGetListQueues",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AsyncOperationTokenResult.json"
+            },
+            "example": {
+              "QueueMessageResponse": {
+                "sessionId": "QueueList-5678f901-23e4-567d-8b9e-01b234cc5678",
+                "message": "Request submitted to query queue messages"
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AsyncOperationTokenResult.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:QueueMessageResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" sessionId=\"QueueList-5678f901-23e4-567d-8b9e-01b234cc5678\" message=\"Request submitted to query queue messages\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

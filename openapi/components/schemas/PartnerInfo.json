@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "CustomPartnerInfo": {
+      "$ref": "./CustomPartnerInfo.json"
+    },
+    "EdifactPartnerInfo": {
+      "$ref": "./EdifactPartnerInfo.json"
+    },
+    "HL7PartnerInfo": {
+      "$ref": "./HL7PartnerInfo.json"
+    },
+    "OdettePartnerInfo": {
+      "$ref": "./OdettePartnerInfo.json"
+    },
+    "RosettaNetPartnerInfo": {
+      "$ref": "./RosettaNetPartnerInfo.json"
+    },
+    "TradacomsPartnerInfo": {
+      "$ref": "./TradacomsPartnerInfo.json"
+    },
+    "X12PartnerInfo": {
+      "$ref": "./X12PartnerInfo.json"
+    }
+  }
+}

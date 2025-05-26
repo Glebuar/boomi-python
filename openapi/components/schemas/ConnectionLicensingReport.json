@@ -1,0 +1,11 @@
+{
+  "required": [
+    "QueryFilter"
+  ],
+  "type": "object",
+  "properties": {
+    "QueryFilter": {
+      "$ref": "./QueryFilter.json"
+    }
+  }
+}

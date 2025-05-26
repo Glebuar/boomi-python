@@ -1,0 +1,179 @@
+{
+  "get": {
+    "tags": [
+      "Folder"
+    ],
+    "summary": "Retrieves an instance of a Folder object",
+    "description": "Retrieves the folder with the particular ID.",
+    "operationId": "GetFolder",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Required. Read only. The Boomi-generated, unique identifier of the folder."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Folder.json"
+            },
+            "example": {
+              "@type": "Folder",
+              "id": "folderId123",
+              "name": "Folder-Name",
+              "fullPath": "Platform API/Folder/Tests/Folder-Name",
+              "deleted": false
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Folder.json"
+            },
+            "example": "<bns:Folder id=\"folderId123\" name=\"Folder-Name\" fullPath=\"Platform API/Folder/Tests/Folder-Name\" deleted=\"false\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.boomi.com/\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "Folder"
+    ],
+    "summary": "Modifies or updates a Folder object",
+    "description": "You can update by changing the name of the folder and following the same considerations for the CREATE parameters.",
+    "operationId": "UpdateFolder",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Required. Read only. The Boomi-generated, unique identifier of the folder."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/Folder.json"
+          },
+          "example": {
+            "@type": "Folder",
+            "PermittedRoles": {
+              "@type": "PermittedRoles",
+              "RoleReference": [
+                {
+                  "id": "fcb6e2d0-0ca8-11e2-a477-1231381987a5"
+                }
+              ]
+            },
+            "id": "RjoxMDU2NTM5",
+            "name": "Folder456"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/Folder.json"
+          },
+          "example": "<bns:Folder xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" id=\"RjoxMDU2NTM5\" parentname = \"Folder456\">\n</bns:Folder>\n"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Folder.json"
+            },
+            "example": {
+              "@type": "Folder",
+              "PermittedRoles": {
+                "@type": "PermittedRoles",
+                "RoleReference": [
+                  {
+                    "@type": "RoleReference",
+                    "id": "fcb6e2d0-0ca8-11e2-a477-1231381987a5",
+                    "name": "Standard User"
+                  }
+                ]
+              },
+              "id": "RjoxMDU2NTM5",
+              "name": "Folder456",
+              "fullPath": "User/Folder456",
+              "deleted": false,
+              "parentId": "Rjo5NTk0OTc",
+              "parentName": "User"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Folder.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:Folder xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" id=\"RjoxMDU2NTM5\" name=\"Folder123\" fullPath=\"User/Folder123\" deleted=\"false\" parentId=\"Rjo5NTk0OTc\" parentName=\"User\">\n<bns:PermittedRoles>\n<bns:RoleReference id=\"fcb6dd44-0ca8-11e2-a477-1231381987a5\" name=\"Administrator\"/>\n</bns:PermittedRoles>\n</bns:Folder>\n"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "Folder"
+    ],
+    "summary": "Deletes a Folder object",
+    "description": "- Deleting a folder will delete the folder and its contents including all components and sub-folders. \n - The root folder cannot be deleted. \n - Folders containing actively deployed processes or other deployable components cannot be deleted. \n >**Note:** You can restore a deleted folder by requesting a CREATE operation and specifying the ID of the deleted folder.",
+    "operationId": "DeleteFolder",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Required. Read only. The Boomi-generated, unique identifier of the folder."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "Atom": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./CloudAtom.json"
+      },
+      "example": [
+        {
+          "atomId": "3456789a-bcde-f0123-4567-89abcdef012"
+        },
+        {
+          "atomId": "cdef0123-4567-89ab-cdef-0123456789ab"
+        }
+      ]
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "A unique ID assigned by the system to the Runtime cloud.",
+      "example": "23456789-abcd-ef01-2345-6789abcdef01"
+    },
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The name of the Runtime cloud.",
+      "example": "MyCompany Cloud"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "post": {
+    "tags": [
+      "AccountGroupIntegrationPack"
+    ],
+    "summary": "Retrieves additional results for an AccountGroupIntegrationPack query",
+    "description": "To learn about using `queryMore`, refer to [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryMoreAccountGroupIntegrationPack",
+    "requestBody": {
+      "content": {
+        "text/plain": {
+          "schema": {
+            "type": "string"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroupIntegrationPackQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "AccountGroupIntegrationPack",
+                  "accountGroupId": "cd17f866-c247-4c54-a1a1-ea8f8f86a1d1",
+                  "integrationPackId": "cd17f866-c247-4c54-a1a1-ea8f8f863456",
+                  "integrationPackName": "test integration pack",
+                  "installationType": "SINGLE",
+                  "id": "MXxjZDE3Zjg2Ni1jMjQ3LTRjNTQtYTFhMS1lYThmOGY4NmExZDE"
+                },
+                {
+                  "@type": "AccountGroupIntegrationPack",
+                  "accountGroupId": "cd17f866-c247-4c54-a1a1-ea8f8f86a1d1",
+                  "integrationPackId": "fc32f440-9a53-45ce-bd6b-014755dadb64",
+                  "integrationPackName": "New update Ipac",
+                  "installationType": "MULTI",
+                  "id": "MTJ8Y2QxN2Y4NjYtYzI0Ny00YzU0LWExYTEtZWE4ZjhmODZhMWQx"
+                }
+              ],
+              "numberOfResults": 2
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroupIntegrationPackQueryResponse.json"
+            },
+            "example": "<bns:QueryResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" numberOfResults=\"2\">\n    <bns:result xsi:type=\"bns:AccountGroupIntegrationPack\" accountGroupId=\"cd17f866-c247-4c54-a1a1-ea8f8f86a1d1\" integrationPackId=\"cd17f866-c247-4c54-a1a1-ea8f8f863456\" integrationPackName=\"test integration pack\" installationType=\"SINGLE\" id=\"MXxjZDE3Zjg2Ni1jMjQ3LTRjNTQtYTFhMS1lYThmOGY4NmExZDE\"/>\n    <bns:result xsi:type=\"bns:AccountGroupIntegrationPack\" accountGroupId=\"cd17f866-c247-4c54-a1a1-ea8f8f86a1d1\" integrationPackId=\"fc32f440-9a53-45ce-bd6b-014755dadb64\" integrationPackName=\"New update Ipac\" installationType=\"MULTI\" id=\"MTJ8Y2QxN2Y4NjYtYzI0Ny00YzU0LWExYTEtZWE4ZjhmODZhMWQx\"/>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "get": {
+    "tags": [
+      "atom"
+    ],
+    "summary": "Retrieves an AtomCounters object by identifier",
+    "description": "For a response, use the token from the initial GET response in a new request.",
+    "operationId": "AsyncTokenAtomCounters",
+    "parameters": [
+      {
+        "name": "token",
+        "in": "path",
+        "description": "Takes in the token from a previous call to return a result.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AtomCountersAsyncResponse.json"
+            },
+            "example": {
+              "@type": "AsyncOperationResult",
+              "result": [
+                {
+                  "@type": "AtomCounters",
+                  "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+                  "Counters": [
+                    {
+                      "Counter": [
+                        {
+                          "@type": "Counter",
+                          "name": "counter1",
+                          "value": "2"
+                        },
+                        {
+                          "@type": "Counter",
+                          "name": "counter2",
+                          "value": "1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "responseStatusCode": "200"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AtomCountersAsyncResponse.json"
+            },
+            "example": {
+              "$ref": "./async_AtomCounters_response_{token}.json#/get/responses/200/content/application~1json/example"
+            }
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

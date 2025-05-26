@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "fromFunction": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "fromKey": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "toFunction": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "toKey": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

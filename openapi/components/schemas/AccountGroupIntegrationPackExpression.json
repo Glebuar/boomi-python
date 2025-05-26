@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "",
+      "description": "A unique ID assigned by the system to the integration pack. This field populates only if you add the integration pack to an account group."
+    },
+    "name": {
+      "type": "string",
+      "example": "",
+      "description": "The name of the integration pack."
+    },
+    "status": {
+      "type": "string",
+      "enum": [],
+      "example": ""
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "example": ""
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "example": ""
+        }
+      }
+    }
+  },
+  "required": [],
+  "oneOf": [
+    {
+      "$ref": "./AccountGroupIntegrationPackSimpleExpression.json"
+    },
+    {
+      "$ref": "./AccountGroupIntegrationPackGroupingExpression.json"
+    }
+  ]
+}

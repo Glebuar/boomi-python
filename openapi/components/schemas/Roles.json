@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "Role": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./Role.json"
+      }
+    }
+  },
+  "xml": {
+    "name": "Roles",
+    "namespace": "http://api.platform.boomi.com/"
+  }
+}

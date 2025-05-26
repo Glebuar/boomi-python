@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "properties": {
+    "expectAckForOutbound": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "invalidDocumentRouting": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "documentsPath",
+        "errorsPath"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "profileId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "qualifierValidation": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "typeId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "use999Ack": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "useTA1Ack": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "validateOutboundTransactionSets": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

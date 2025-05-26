@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the component.The component ID is available in the Revision History dialog, which you can open from the Build page in the user interface. Potentially, this ID can return multiple components."
+    },
+    "version": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "description": "Each saved configuration is assigned a Revision History number when you change a component on the Build tab. The component version is available in the Revision History dialog, which you can access from the Build page  service."
+    }
+  }
+}

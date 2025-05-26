@@ -1,0 +1,23 @@
+{
+  "required": [
+    "Application",
+    "Facility",
+    "NetworkAddress",
+    "ProcessingId"
+  ],
+  "type": "object",
+  "properties": {
+    "Application": {
+      "$ref": "./HDType.json"
+    },
+    "Facility": {
+      "$ref": "./HDType.json"
+    },
+    "NetworkAddress": {
+      "$ref": "./HDType.json"
+    },
+    "ProcessingId": {
+      "$ref": "./ProcessingType.json"
+    }
+  }
+}

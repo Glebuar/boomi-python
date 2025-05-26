@@ -1,0 +1,125 @@
+{
+  "type": "object",
+  "properties": {
+    "ref1": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref10": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref11": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref12": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref13": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref14": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref15": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref16": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref17": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref18": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref19": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref2": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref20": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref3": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref4": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref5": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref6": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref7": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref8": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ref9": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

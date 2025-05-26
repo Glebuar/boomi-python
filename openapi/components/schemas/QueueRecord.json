@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "deadLettersCount": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      },
+      "example": 0
+    },
+    "messagesCount": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      },
+      "example": 150
+    },
+    "queueName": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "example": "Queue1"
+    },
+    "queueType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "example": "Point-to-Point"
+    },
+    "topicSubscribers": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./TopicSubscriber.json"
+      }
+    }
+  }
+}

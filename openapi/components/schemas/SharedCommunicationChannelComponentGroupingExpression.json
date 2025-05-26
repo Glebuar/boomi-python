@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "nestedExpression": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./SharedCommunicationChannelComponentExpression.json"
+      }
+    },
+    "operator": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "and",
+        "or"
+      ]
+    }
+  },
+  "required": [
+    "operator"
+  ],
+  "xml": {
+    "name": "GroupingExpression",
+    "namespace": "http://api.platform.boomi.com/"
+  }
+}

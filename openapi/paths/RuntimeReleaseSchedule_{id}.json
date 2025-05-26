@@ -1,0 +1,163 @@
+{
+  "get": {
+    "tags": [
+      "RuntimeReleaseSchedule"
+    ],
+    "summary": "Retrieves an instance of a RuntimeReleaseSchedule object",
+    "description": "The GET operation returns the current schedule for receiving updates on a specified Runtime, Runtime cluster, or Runtime cloud.",
+    "operationId": "GetRuntimeReleaseSchedule",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ID of the container for which you want to set a schedule."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/RuntimeReleaseSchedule.json"
+            },
+            "example": {
+              "@type": "RuntimeReleaseSchedule",
+              "atomId": "2f717303-f3a1-4c09-8195-29d105b35620",
+              "scheduleType": "LAST",
+              "dayOfWeek": "SATURDAY",
+              "hourOfDay": 17,
+              "timeZone": "Australia/Queensland"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/RuntimeReleaseSchedule.json"
+            },
+            "example": "<?xml version=\"1.0\" ?>\n<bns:RuntimeReleaseSchedule xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\">\n  <bns:atomId>c2eed3ce-8caf-4c4c-9420-9v4sfab0c3ed</bns:atomId>\n  <bns:scheduleType>NEVER</bns:scheduleType>\n  <bns:hourOfDay>0</bns:hourOfDay>\n</bns:RuntimeReleaseSchedule>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "RuntimeReleaseSchedule"
+    ],
+    "summary": "Modifies or updates a RuntimeReleaseSchedule object",
+    "description": "The UPDATE operation modifies a set schedule for receiving updates.",
+    "operationId": "UpdateRuntimeReleaseSchedule",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ID of the container for which you want to set a schedule."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/RuntimeReleaseSchedule.json"
+          },
+          "example": {
+            "atomId": "2f717303-f3a1-4c09-8195-29d105b35620",
+            "scheduleType": "LAST",
+            "dayOfWeek": "FRIDAY",
+            "hourOfDay": 0,
+            "timeZone": "Australia/Queensland"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/RuntimeReleaseSchedule.json"
+          },
+          "example": "<?xml version=\"1.0\" ?>\n<api:RuntimeReleaseSchedule xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:api=\"http://api.platform.boomi.com/\">\n  <api:atomId>407e55c8-b4b8-452a-8163-8e8989e64bc8</api:atomId>\n  <api:scheduleType>LAST</api:scheduleType>\n  <api:dayOfWeek>FRIDAY</api:dayOfWeek>\n  <api:hourOfDay>0</api:hourOfDay>\n  <api:timeZone>Australia/Queensland</api:timeZone>\n</api:RuntimeReleaseSchedule>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/RuntimeReleaseSchedule.json"
+            },
+            "example": {
+              "@type": "RuntimeReleaseSchedule",
+              "atomId": "2f717303-f3a1-4c09-8195-29d105b35620",
+              "scheduleType": "LAST",
+              "dayOfWeek": "FRIDAY",
+              "hourOfDay": 0,
+              "timeZone": "Australia/Queensland"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/RuntimeReleaseSchedule.json"
+            },
+            "example": "<?xml version=\"1.0\" ?><bns:RuntimeReleaseSchedule xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\"><bns:atomId>c2eed3ce-8caf-4c4c-9420-9af3fab0c3ed</bns:atomId><bns:scheduleType>LAST</bns:scheduleType><bns:dayOfWeek>FRIDAY</bns:dayOfWeek><bns:hourOfDay>0</bns:hourOfDay><bns:timeZone>Australia/Queensland</bns:timeZone></bns:RuntimeReleaseSchedule>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "RuntimeReleaseSchedule"
+    ],
+    "summary": "Deletes a RuntimeReleaseSchedule object",
+    "description": "The DELETE operation sets the scheduleType to NEVER, meaning that the Runtime, Runtime cluster, or Runtime cloud receives updates only during the .",
+    "operationId": "DeleteRuntimeReleaseSchedule",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ID of the container for which you want to set a schedule."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

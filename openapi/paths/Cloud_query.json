@@ -1,0 +1,121 @@
+{
+  "post": {
+    "tags": [
+      "Cloud"
+    ],
+    "summary": "Queries for a Cloud object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryCloud",
+    "requestBody": {
+      "description": " Possible properties include: name, id",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/CloudQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "MyCompany Cloud"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "name"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "MyCompany Cloud"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "name"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/CloudQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n      <QueryFilter>\n        <expression operator=\"EQUALS\" property=\"name\"\n               xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n               <argument>MyCompany Cloud</argument>\n        </expression>\n      </QueryFilter>\n    </QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"name\">\n      <argument>MyCompany Cloud</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/CloudQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 1,
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "Cloud",
+                  "Atom": [
+                    {
+                      "@type": "CloudAtom",
+                      "atomId": "3456789a-bcde-f0123-4567-89abcdef012"
+                    },
+                    {
+                      "@type": "CloudAtom",
+                      "atomId": "cdef0123-4567-89ab-cdef-0123456789ab"
+                    }
+                  ],
+                  "id": "23456789-abcd-ef01-2345-6789abcdef01",
+                  "name": "MyCompany Cloud"
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/CloudQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"1\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n       <bns:result xsi:type=\"Cloud\" name=\"MyCompany Cloud\" id=\"23456789-abcd-ef01-2345-6789abcdef01\">\n          <bns:Atom atomId=\"3456789a-bcde-f0123-4567-89abcdef012\"/>\n          <bns:Atom atomId=\"cdef0123-4567-89ab-cdef-0123456789ab\"/>\n       </bns:result>\n    </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

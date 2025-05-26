@@ -1,0 +1,35 @@
+{
+  "required": [
+    "responseStatusCode"
+  ],
+  "type": "object",
+  "properties": {
+    "numberOfResults": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "responseStatusCode": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "result": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./AtomDiskSpace.json"
+      }
+    }
+  },
+  "xml": {
+    "name": "AsyncOperationTokenResult",
+    "namespace": "http://api.platform.boomi.com/"
+  }
+}

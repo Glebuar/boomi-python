@@ -1,0 +1,11 @@
+{
+  "required": [
+    "MSHControlInfo"
+  ],
+  "type": "object",
+  "properties": {
+    "MSHControlInfo": {
+      "$ref": "./MSHControlInfo.json"
+    }
+  }
+}

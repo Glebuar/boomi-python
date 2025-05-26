@@ -1,0 +1,52 @@
+{
+  "type": "object",
+  "properties": {
+    "Character": {
+      "$ref": "./MapExtensionsCharacter.json"
+    },
+    "DateTime": {
+      "$ref": "./MapExtensionsDateTime.json"
+    },
+    "Number": {
+      "$ref": "./MapExtensionsNumber.json"
+    },
+    "enforceUnique": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "fieldLengthValidation": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "mandatory": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "maxLength": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "minLength": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}
