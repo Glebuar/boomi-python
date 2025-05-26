@@ -13,6 +13,8 @@ from .resources.environments import Environments
 from .resources.runtime_release import RuntimeRelease
 from .resources.execute import Execute
 from .resources.extensions import Extensions
+from .resources.accounts import Accounts
+
 
 class Boomi:
     """Fluent client for the Boomi Platform REST API."""
@@ -32,6 +34,7 @@ class Boomi:
         self.extensions = Extensions(http)
         self.runtime = RuntimeRelease(http)
         self.execute = Execute(http)
+        self.accounts = Accounts(http)
 
     # short‑hand constructor from env vars -------------------------------
     @classmethod
