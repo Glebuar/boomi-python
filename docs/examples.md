@@ -92,6 +92,7 @@ environments = client.environments.list()
 
 ### Atom Management
 
+```python
 # List atoms
 # Get all atoms (uses GET /Atom)
 all_atoms = client.atoms.list()
