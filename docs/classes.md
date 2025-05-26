@@ -34,6 +34,15 @@ class Boomi:
 
 ## Resource Classes
 
+
+### Accounts
+Manages accounts.
+
+```python
+class Accounts:
+    get_account_details(self, account_id: str) -> dict
+    get_account_list(self, query_payload: dict = None) -> dict
+```
 ### Components
 Manages Boomi components.
 
@@ -72,11 +81,11 @@ class Deployments:
 ```
 
 ### Atoms
-Lists Boomi atoms.
-
 ```python
 class Atoms:
-    def list(self)
+    list(self, query_payload: Optional[dict] = None) -> List[dict]
+    post_atom_disable(self, atomid_val: str, payload: dict) -> dict
+    post_atom_query(self, query_payload: dict) -> List[dict]
 ```
 
 ### Environments
@@ -163,7 +172,9 @@ class Component(BaseModel):
     id: str = Field(..., alias="componentId")
     name: str
     type: str
-    folder_id: Optional[str] = Field(None, alias="folderId")
+    folder_id: Optional[str] = Field(None, alias="folderId")    description: str
+    version: int
+
 ```
 
 ### Deployment
@@ -223,4 +234,4 @@ Raised when supplied credentials are invalid or expired (HTTP 401).
 Raised when the Boomi API returns HTTP 429 (Too Many Requests).
 
 ### ApiError
-Raised for any other non-retryable API error (HTTP >= 400). 
+Raised for any other non-retryable API error (HTTP >= 400).

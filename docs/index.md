@@ -23,6 +23,7 @@ The Boomi Python SDK is a client library that makes it easy to interact with the
 - Built-in error handling
 - Resource-oriented interface
 - Type hints and documentation
+- Account Management: Access account details and lists.
 
 ## Requirements
 
@@ -35,4 +36,4 @@ If you encounter any issues or have questions, please:
 
 1. Check the [examples](examples.md) for common use cases
 2. Review the [error handling guide](errors.md) for troubleshooting
-3. Open an issue on our GitHub repository 
+3. Open an issue on our GitHub repository
