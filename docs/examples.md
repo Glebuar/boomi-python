@@ -37,6 +37,10 @@ with open("component.xml", "rb") as f:
 
 # Get component details
 component_details = client.components.get(cid=component.id)
+# The component_details object is an instance of the Component model.
+# It now includes 'description' and 'version' fields (if provided by the API).
+# Example: print(component_details.description)
+# Example: print(component_details.version)
 
 # Update component
 client.components.update(cid=component.id, xml="<Component>...</Component>")
@@ -58,6 +62,27 @@ package = client.packages.create(
 )
 ```
 
+### Working with Accounts
+
+```python
+# Assuming 'client' is an initialized Boomi client instance
+
+# Example for get_account_details
+try:
+    result = client.accounts.get_account_details(account_id="your-account-id-example")
+    print(result)
+except Exception as e:
+    print(f'Error calling get_account_details: {e}')
+
+# Example for get_account_list
+try:
+    result = client.accounts.get_account_list(query_payload={"filter": "example_filter"})
+    print(result)
+except Exception as e:
+    print(f'Error calling get_account_list: {e}')
+
+```
+
 ### Environment Management
 
 ```python
@@ -69,7 +94,22 @@ environments = client.environments.list()
 
 ```python
 # List atoms
-atoms = client.atoms.list()
+# Get all atoms (uses GET /Atom)
+all_atoms = client.atoms.list()
+
+# Example: Query for specific atoms (uses POST /Atom/query)
+# The exact query_payload structure depends on API capabilities.
+query_payload_example = {'QueryFilter': {'expression': {'operator': 'and', 'nestedExpression': [
+    {'argument': ['MyAtomName'], 'operator': 'EQUALS', 'property': 'name'}
+]}}}
+filtered_atoms = client.atoms.list(query_payload=query_payload_example)
+
+```python
+# Example usage for new Atom methods:
+# result = client.atoms.post_atom_disable(atomid_val="your_atom_id", payload={"key": "value"})
+# print(result)
+# result = client.atoms.post_atom_query(query_payload={"filter": {"example_field": "example_value"}})
+# print(result)
 ```
 
 ### Deployment Workflow
@@ -218,5 +258,4 @@ def batch_create_components(xml_files):
 
 - Review the [Resources](resources.md) documentation for detailed API information
 - Check out the [Error Handling](errors.md) guide for error management
-- See the [Client Configuration](client.md) for advanced setup options 
-
+- See the [Client Configuration](client.md) for advanced setup options

@@ -50,6 +50,7 @@ client = Boomi.from_env()
 
 The client provides access to the following resources:
 
+- `accounts`: Manage Boomi accounts.
 - `components`: Manage Boomi components (create, get, update, delete)
 - `folders`: Manage folders (create, get, delete)
 - `packages`: Create component packages

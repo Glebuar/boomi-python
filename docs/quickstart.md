@@ -23,6 +23,10 @@ component = client.components.create(xml_file)
 
 # Get component details
 component_details = client.components.get(cid=component.id)
+# The component_details object is an instance of the Component model.
+# It now includes 'description' and 'version' fields (if provided by the API).
+# Example: print(component_details.description)
+# Example: print(component_details.version)
 ```
 
 ## Authentication
@@ -79,12 +83,63 @@ client.components.update(cid=component.id, xml="<Component>...</Component>")
 client.components.delete(cid=component.id)
 ```
 
+### Working with Accounts
+
+```python
+# Assuming 'client' is an initialized Boomi client instance
+
+# Example for get_account_details
+try:
+    result = client.accounts.get_account_details(account_id="your-account-id-example")
+    print(result)
+except Exception as e:
+    print(f'Error calling get_account_details: {e}')
+
+# Example for get_account_list
+try:
+    result = client.accounts.get_account_list(query_payload={"filter": "example_filter"})
+    print(result)
+except Exception as e:
+    print(f'Error calling get_account_list: {e}')
+
+```
+
+### Atom Management (Updated Example)
+
+```python
+# List all atoms (uses GET /Atom)
+all_atoms = client.atoms.list()
+print(f"Found {len(all_atoms)} atoms.")
+
+# Example: Query for specific atoms (uses POST /Atom/query)
+# The exact query_payload structure depends on API capabilities.
+query_payload_example = {'QueryFilter': {'expression': {'operator': 'and', 'nestedExpression': [
+    {'argument': ['MyAtomName'], 'operator': 'EQUALS', 'property': 'name'}
+]}}}
+filtered_atoms = client.atoms.list(query_payload=query_payload_example)
+print(f"Found {len(filtered_atoms)} atoms matching the query.")
+
+# Example usage for new Atom methods (conceptual):
+# atom_id_to_disable = "your_atom_id_here" 
+# disable_payload = {"reason": "Scheduled maintenance"} 
+# try:
+#     client.atoms.post_atom_disable(atomid_val=atom_id_to_disable, payload=disable_payload)
+#     print(f"Atom {atom_id_to_disable} disable request sent.")
+# except Exception as e:
+#     print(f"Error disabling atom: {e}")
+
+# specific_query_payload = {'QueryFilter': {'expression': {'operator': 'EQUALS', 'property': 'type', 'argument': ['CLOUD']}}}
+# cloud_atoms = client.atoms.post_atom_query(query_payload=specific_query_payload)
+# print(f"Found {len(cloud_atoms)} cloud atoms.")
+```
+
 ### Working with Packages
 
 ```python
 # Create a package
+# Assuming 'component' is a Component object from a previous step
 package = client.packages.create(
-    cid=component.id,
+    cid=component.id, 
     ver="1.0.0",
     notes="Initial release"
 )
@@ -94,9 +149,10 @@ package = client.packages.create(
 
 ```python
 # Deploy a package
+# Assuming 'package' is a Package object from a previous step
 deployment = client.deployments.deploy(
-    env_id="env-123",
-    pkg_id=package.id,
+    env_id="env-123", # Replace with an actual environment ID
+    pkg_id=package.id, 
     notes="Production deployment"
 )
 ```
@@ -122,7 +178,7 @@ client.folders.delete(fid=folder.id)
 ```python
 # Execute a process
 execution = client.execute.run({
-    "processId": "process-id",
+    "processId": "process-id", # Replace with an actual process ID
     "properties": {
         "property1": "value1"
     }
@@ -140,7 +196,8 @@ The SDK provides built-in error handling:
 from boomi.exceptions import BoomiError, AuthenticationError, ApiError
 
 try:
-    component = client.components.get(component_id="non-existent")
+    # Example operation that might fail
+    component = client.components.get(cid="non-existent-component-id")
 except AuthenticationError as e:
     print(f"Authentication failed: {e}")
 except ApiError as e:
@@ -153,5 +210,4 @@ except BoomiError as e:
 
 - Check out the [Client Configuration](client.md) for advanced setup options
 - Review the [Resources](resources.md) documentation for detailed API information
-- See [Examples](examples.md) for more complex use cases 
-
+- See [Examples](examples.md) for more complex use cases
