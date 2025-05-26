@@ -25,10 +25,10 @@ class Components:
         r = self._http.post("/Component", data=xml_bytes, headers=_HDR_XML)
         return Component.model_validate(self._attrs(r.content))
 
-    def get(self, cid: str) -> Component:
+    def get(self, cid: str) ->Component:
         """Retrieve component details by id."""
-        r = self._http.get(f"/Component/{cid}", headers=_HDR_XML)
-        return Component.model_validate(self._attrs(r.content))
+        r = self._http.get(f'/Component/{cid}')
+        return Component.model_validate(r.json())
 
     def update(self, cid: str, xml: Union[str, Path, BinaryIO]) -> Component:
         """Update a component with new XML content."""
