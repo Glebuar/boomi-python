@@ -177,6 +177,8 @@ Queries Atoms using a POST request to /atom/query with the given payload.
 post_atom_query(self, query_payload: dict) -> List[dict]
 ```
 
+**Returns:**
+A list of dictionaries, where each dictionary represents an Atom and contains its details.
 ## Environment Resource
 
 ### List Environments
