@@ -185,11 +185,9 @@ def analyze_and_refactor_components(
                                 if kw.arg == "headers" and isinstance(kw.value, ast.Name) and kw.value.id == "_HDR_XML":
                                     xml_header_used = True
                                     # Modify to remove headers=_HDR_XML or change to JSON accept header
-                                    kw.arg = None # Mark for removal or change (simplistic removal here)
-                                    kw.value = None 
+                                    stmt.value.keywords = [k for k in stmt.value.keywords if not (k.arg == "headers" and isinstance(k.value, ast.Name) and k.value.id == "_HDR_XML")]
+                                    xml_header_used = True
                                     resource_changes_made = True
-                            # Compact keywords if some were removed
-                            stmt.value.keywords = [k for k in stmt.value.keywords if k.arg is not None]
 
 
                     if isinstance(stmt, ast.Return) and isinstance(stmt.value, ast.Call): # return Component.model_validate(...)
