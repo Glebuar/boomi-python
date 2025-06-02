@@ -1,0 +1,88 @@
+{
+  "type": "object",
+  "properties": {
+    "ReleasePackagedComponents": {
+      "$ref": "./ReleasePackagedComponents.json"
+    },
+    "installationType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The type of integration pack. Possible values:\n\n- SINGLE — single attachment \n- MULTI — multiple attachment",
+      "enum": [
+        "SINGLE",
+        "MULTI"
+      ],
+      "example": "MULTI"
+    },
+    "integrationPackId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "A unique ID assigned by the system to the integration pack.",
+      "example": "d7c16f5d-3311-417e-a149-3c55436f7d8d"
+    },
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The name of the integration pack.",
+      "example": "perf testing ipack"
+    },
+    "releaseOnDate": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "Date for future release of integration pack. \nDate Format: yyyy-MM-dd"
+    },
+    "releaseSchedule": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "Specify the type of release schedule for the integration pack. Possible values:\n- IMMEDIATELY — for immediate release\n- RELEASE_ON_SPECIFIED_DATE — for future release",
+      "enum": [
+        "IMMEDIATELY",
+        "RELEASE_ON_SPECIFIED_DATE"
+      ],
+      "example": "IMMEDIATELY"
+    },
+    "releaseStatus": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The type of release Status. Possible values:\n\n- INPROGRESS — for currently releasing integration pack\n- SUCCESS — for successfully released integration pack\n- SCHEDULED — for future release integration pack\n- ERROR — for any error resulting in the release",
+      "enum": [
+        "IN_PROGRESS",
+        "SUCCESS",
+        "SCHEDULED",
+        "ERROR"
+      ],
+      "example": "SUCCESS"
+    },
+    "requestId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "A unique ID assigned by the system to the integration pack release request.",
+      "example": "release-dcfbfd2c-09d9-492d-9965-bbd9ab8f2ffc"
+    },
+    "responseStatusCode": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "example": "200"
+    }
+  },
+  "required": [
+    "responseStatusCode"
+  ]
+}

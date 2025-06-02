@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "description": "Indicates the number of Runtime clusters available on an account and the number of Runtime clusters currently in use.",
+  "properties": {
+    "purchased": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "example": 1
+    },
+    "used": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "example": 0
+    }
+  }
+}

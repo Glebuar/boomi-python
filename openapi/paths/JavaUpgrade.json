@@ -1,0 +1,79 @@
+{
+  "post": {
+    "tags": [
+      "JavaUpgrade"
+    ],
+    "summary": "Creates a JavaUpgrade object",
+    "description": "Download and run the Java upgrader script for a specified Runtime, Runtime cluster, Runtime cloud, Authentication Broker, or API Gateway.  Upgrades your selected container to Boomis latest supported version of Java. \n\n - After providing the endpoint and a request body that includes the containerID, the CREATE operation immediately upgrades the given container to Boomi's latest supported version of Java. After performing a CREATE operation, you can determine a successful upgrade when the **Update to use Java 11.<minor_version>** link no longer appears on the following pages:\n  -  For Runtimes, Runtime clusters, and Runtime clouds — the **Runtime Information** panel (**Manage** > **Runtime Management** of the user interface).\n  -  For Brokers (applicable for versions newer than 1.8.0_281-b09)— the **Broker Information** panel (**Configure Server** > **Authentication** of the user interface).\n  -  For API Gateways — the **Gateway Information** panel (**Configure Server** > **Gateways** of the user interface).\n - You must have the **Runtime Management** privilege to perform the CREATE operation. If you have the **Runtime Management Read Access** privilege, you cannot use this operation to upgrade your container.\n - The container must be online to use the Upgrade Java operation.\n- The container must be eligible for upgrade.\n\n >**Important:** Only the node that runs upgrades (typically the head node) restarts automatically to run the updated Java version. Therefore, you must restart all other cluster nodes to install the upgrade.",
+    "operationId": "CreateJavaUpgrade",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/JavaUpgrade.json"
+          },
+          "example": {
+            "atomId": "01f3696e-6d92-4668-8019-061fec55264c",
+            "scheduleType": "FIRST",
+            "dayOfWeek": "TUESDAY",
+            "hourOfDay": "13",
+            "timeZone": "America/New_York",
+            "JavaUpgradeOptions": {
+              "migrateCertificate": true,
+              "cacertsPath": "/cacerts/path1",
+              "externalJDKPath": "/external/JDK/path1",
+              "prefJreLocation": "EXTERNAL"
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/JavaUpgrade.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:JavaUpgrade xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" atomId=\"22f78648-7455-496f-aab7-ca91e31f91fa\">\n    <bns:JavaUpgradeOptions>\n        <bns:migrateCertificate>true</bns:migrateCertificate>\n        <bns:cacertsPath>/boomi_atom/jre</bns:cacertsPath>\n        <bns:externalJDKPath>/usr/java/latest</bns:externalJDKPath>\n        <bns:prefJreLocation>external</bns:prefJreLocation>\n    </bns:JavaUpgradeOptions>\n</bns:JavaUpgrade>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/JavaUpgrade.json"
+            },
+            "example": {
+              "@type": "JavaUpgradeSchedule",
+              "atomId": "01f3696e-6d92-4668-8019-061fec55264c",
+              "scheduleType": "FIRST",
+              "dayOfWeek": "TUESDAY",
+              "hourOfDay": "13",
+              "timeZone": "America/New_York",
+              "JavaUpgradeOptions": {
+                "migrateCertificate": true,
+                "cacertsPath": "/cacerts/path1",
+                "externalJDKPath": "/external/JDK/path1",
+                "prefJreLocation": "EXTERNAL"
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/JavaUpgrade.json"
+            },
+            "example": "<bns:JavaUpgrade xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" atomId=\"3456789a-bcde-f012-3456-789abcdef012\">\n    <bns:JavaUpgradeOptions>\n        <bns:migrateCertificate>true</bns:migrateCertificate>\n        <bns:cacertsPath>/boomi_atom/jre</bns:cacertsPath>\n        <bns:prefJreLocation>external</bns:prefJreLocation>\n        <bns:externalJDKPath>/usr/java/latest</bns:externalJDKPath>\n    </bns:JavaUpgradeOptions>\n</bns:JavaUpgrade>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

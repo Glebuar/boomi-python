@@ -1,0 +1,194 @@
+{
+  "get": {
+    "tags": [
+      "SharedCommunicationChannelComponent"
+    ],
+    "summary": "Retrieves an instance of a SharedCommunicationChannelComponent object",
+    "description": "Send an HTTP GET request where `{accountId}` is the ID of the authenticating account for the request and `{componentId}` is the ID of the component being retrieved.",
+    "operationId": "GetSharedCommunicationChannelComponent",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "ID of the component being retrieved."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/SharedCommunicationChannelComponent.json"
+            },
+            "example": {
+              "SharedCommunicationChannelComponent": {
+                "PartnerCommunication": {
+                  "DiskCommunicationOptions": {
+                    "DiskGetOptions": {
+                      "fileFilter": "*",
+                      "getDirectory": "ExampleGetDirectory"
+                    },
+                    "DiskSendOptions": {
+                      "sendDirectory": "ExampleSendDirectory"
+                    }
+                  }
+                },
+                "PartnerArchiving": {
+                  "enableArchiving": false
+                }
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/SharedCommunicationChannelComponent.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:SharedCommunicationChannelComponent xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" componentName=\"Disk Comms Channel\" componentId=\"448deb20-13ef-4b5a-aeb0-cc15db8eaf7d\" folderName=\"Boomi\" folderId=\"894\">\n<bns:PartnerCommunication>\n<bns:DiskCommunicationOptions>\n<bns:DiskGetOptions useDefaultGetOptions=\"false\" deleteAfterRead=\"false\" maxFileCount=\"0\" filterMatchType=\"wildcard\">\n<bns:fileFilter>*</bns:fileFilter>\n<bns:getDirectory>ExampleGetDirectory</bns:getDirectory>\n</bns:DiskGetOptions>\n<bns:DiskSendOptions useDefaultSendOptions=\"false\" createDirectory=\"true\" writeOption=\"unique\">\n<bns:sendDirectory>ExampleSendDirectory</bns:sendDirectory>\n</bns:DiskSendOptions>\n</bns:DiskCommunicationOptions>\n</bns:PartnerCommunication>\n<bns:PartnerArchiving>\n<bns:enableArchiving>false</bns:enableArchiving>\n</bns:PartnerArchiving>\n</bns:SharedCommunicationChannelComponent>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "SharedCommunicationChannelComponent"
+    ],
+    "summary": "Modifies or updates a SharedCommunicationChannelComponent object",
+    "description": "The sample request updates the component named `Disk Comms Channel`.",
+    "operationId": "UpdateSharedCommunicationChannelComponent",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "ID of the component that needs updating."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/SharedCommunicationChannelComponent.json"
+          },
+          "example": {
+            "@type": "SharedCommunicationChannelComponent",
+            "PartnerCommunication": {
+              "@type": "PartnerCommunication",
+              "DiskCommunicationOptions": {
+                "@type": "DiskCommunicationOptions",
+                "DiskGetOptions": {
+                  "@type": "DiskGetOptions",
+                  "fileFilter": "*",
+                  "getDirectory": "GetDirectory",
+                  "useDefaultGetOptions": false,
+                  "deleteAfterRead": true,
+                  "maxFileCount": [
+                    "BigInteger",
+                    0
+                  ],
+                  "filterMatchType": "wildcard"
+                },
+                "DiskSendOptions": {
+                  "@type": "DiskSendOptions",
+                  "sendDirectory": "SendDirectory",
+                  "useDefaultSendOptions": false,
+                  "createDirectory": true,
+                  "writeOption": "unique"
+                }
+              }
+            },
+            "PartnerArchiving": {
+              "@type": "PartnerArchiving",
+              "enableArchiving": false
+            },
+            "componentName": "DISK Communication object",
+            "componentId": "6e9255ee-1899-49fa-891c-f7111d7e4e07",
+            "folderName": "Boomi/SampleFolder",
+            "folderId": 922
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/SharedCommunicationChannelComponent.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:SharedCommunicationChannelComponent xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" componentName=\"Disk Comms Channel\" folderName=\"Boomi\" folderId=\"894\">\n<bns:PartnerCommunication>\n<bns:DiskCommunicationOptions>\n<bns:DiskGetOptions useDefaultGetOptions=\"false\" deleteAfterRead=\"false\" maxFileCount=\"0\" filterMatchType=\"wildcard\">\n<bns:fileFilter>*</bns:fileFilter>\n<bns:getDirectory>ExampleGetDirectory</bns:getDirectory>\n</bns:DiskGetOptions>\n<bns:DiskSendOptions useDefaultSendOptions=\"false\" createDirectory=\"true\" writeOption=\"unique\">\n<bns:sendDirectory>ExampleSendDirectory</bns:sendDirectory>\n</bns:DiskSendOptions>\n</bns:DiskCommunicationOptions>\n</bns:PartnerCommunication>\n<bns:PartnerArchiving>\n<bns:enableArchiving>false</bns:enableArchiving>\n</bns:PartnerArchiving>\n</bns:SharedCommunicationChannelComponent>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/SharedCommunicationChannelComponent.json"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/SharedCommunicationChannelComponent.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:SharedCommunicationChannelComponent xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" componentName=\"Disk Comms Channel\" componentId=\"448deb20-13ef-4b5a-aeb0-cc15db8eaf7d\" folderName=\"Boomi\" folderId=\"894\">\n<bns:PartnerCommunication>\n<bns:DiskCommunicationOptions>\n<bns:DiskGetOptions useDefaultGetOptions=\"false\" deleteAfterRead=\"false\" maxFileCount=\"0\" filterMatchType=\"wildcard\">\n<bns:fileFilter>*</bns:fileFilter>\n<bns:getDirectory>ExampleGetDirectory</bns:getDirectory>\n</bns:DiskGetOptions>\n<bns:DiskSendOptions useDefaultSendOptions=\"false\" createDirectory=\"true\" writeOption=\"unique\">\n<bns:sendDirectory>ExampleSendDirectory</bns:sendDirectory>\n</bns:DiskSendOptions>\n</bns:DiskCommunicationOptions>\n</bns:PartnerCommunication>\n<bns:PartnerArchiving>\n<bns:enableArchiving>false</bns:enableArchiving>\n</bns:PartnerArchiving>\n</bns:SharedCommunicationChannelComponent>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "SharedCommunicationChannelComponent"
+    ],
+    "summary": "Deletes a SharedCommunicationChannelComponent object",
+    "description": "If the Shared Communication Channel component is deleted successfully, the response is `true`.",
+    "operationId": "DeleteSharedCommunicationChannelComponent",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "ID of the component that you want to delete."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "get": {
+    "tags": [
+      "AccountGroupIntegrationPack"
+    ],
+    "summary": "Retrieves an instance of an AccountGroupIntegrationPack object",
+    "description": "The ordinary GET operation retrieves the properties of the AccountGroupIntegrationPack with the specified ID. \nThe bulk GET operation retrieves the properties of the AccountGroupIntegrationPack with the specified IDs to a maximum of 100. \nYou can obtain AccountGroupIntegrationPack IDs from the QUERY operation.",
+    "operationId": "GetAccountGroupIntegrationPack",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID assigned by the system to the integration pack."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroupIntegrationPack.json"
+            },
+            "example": {
+              "@type": "AccountGroupIntegrationPack",
+              "id": "MXxjZDE3Zjg2Ni1jMjQ3LTRjNTQtYTFhMS1lYThmOGY4NmExZDE",
+              "integrationPackId": "cd17f866-c247-4c54-a1a1-ea8f8f863456",
+              "integrationPackName": "test integration pack",
+              "installationType": "SINGLE",
+              "accountGroupId": "cd17f866-c247-4c54-a1a1-ea8f8f86a1d1"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroupIntegrationPack.json"
+            },
+            "example": "<bns:AccountGroupIntegrationPack xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" accountGroupId=\"cd17f866-c247-4c54-a1a1-ea8f8f86a1d1\" integrationPackId=\"cd17f866-c247-4c54-a1a1-ea8f8f863456\" integrationPackName=\"test integration pack\" installationType=\"SINGLE\" id=\"MXxjZDE3Zjg2Ni1jMjQ3LTRjNTQtYTFhMS1lYThmOGY4NmExZDE\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "AccountGroupIntegrationPack"
+    ],
+    "summary": "Deletes an AccountGroupIntegrationPack object",
+    "description": "Removes the integration pack with a specified ID from the requesting account group. \nYou can obtain this ID from a QUERY operation.",
+    "operationId": "DeleteAccountGroupIntegrationPack",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID assigned by the system to the integration pack."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "description": "Each pair of `name` and `version` fields represents a connector listed on the **Runtime Management page > Runtime & Connector Versions** tab.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The connector name used by the Runtime, Runtime cluster, or Runtime cloud."
+    },
+    "version": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The connector version used by the Runtime, Runtime cluster, or Runtime cloud."
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "post": {
+    "tags": [
+      "EnvironmentMapExtensionUserDefinedFunction"
+    ],
+    "summary": "Creates an EnvironmentMapExtensionUserDefinedFunction object",
+    "description": "The CREATE operation creates a new extensible user-defined function. User-defined functions created using the Environment Map Extension User Defined Function object exists only at the environment extension level and are tied to a single map extension only. \n\n When creating a new user-defined function, you define individual function steps that make up the greater user-defined function. Then, in the `<Mappings>` section of the request, you determine how to map or link each step to and from the function's input and output. \n\n >**Caution:** Creating new functions requires all existing input and output values in the request regardless if they are mapped or populated with a default value. Otherwise, it overrides and removes those variables from the function.",
+    "operationId": "CreateEnvironmentMapExtensionUserDefinedFunction",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentMapExtensionUserDefinedFunction.json"
+          },
+          "example": {
+            "name": "My Production Environment",
+            "classification": "PROD"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentMapExtensionUserDefinedFunction.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:EnvironmentMapExtensionUserDefinedFunction xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" environmentMapExtensionId=\"MWRiZDhk...\"  name=\"My UDF in MapExtension\">\n       <bns:Inputs>\n           <bns:Input name=\"str\" key=\"1\"/>\n           <bns:Input name=\"str2\" key=\"2\"/>\n       </bns:Inputs>\n       <bns:Outputs>\n           <bns:Output name=\"out1\" key=\"1\"/>\n           <bns:Output name=\"out2\" key=\"2\"/>\n       </bns:Outputs>\n       <bns:Steps>\n           <bns:Step position=\"1\" cacheType=\"ByMap\" id=\"2\" type=\"RightTrim\">\n               <bns:Inputs>\n                   <bns:Input default=\"Test\" name=\"Original String\" key=\"1\"/>\n                   <bns:Input default=\"3\" name=\"Fix to Length\" key=\"2\"/>\n               </bns:Inputs>\n               <bns:Outputs>\n                   <bns:Output name=\"Result\" key=\"1\"/>\n               </bns:Outputs>\n               <bns:Configuration/>\n           </bns:Step>\n       </bns:Steps>\n       <bns:Mappings/>\n    </bns:EnvironmentMapExtensionUserDefinedFunction>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentMapExtensionUserDefinedFunction.json"
+            },
+            "example": {
+              "@type": "Environment",
+              "id": "456789ab-cdef-0123-4567-89abcdef0123",
+              "name": "My Production Environment",
+              "classification": "PROD"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentMapExtensionUserDefinedFunction.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:EnvironmentMapExtensionUserDefinedFunction xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" environmentMapExtensionId=\"MWRiZDhk...\" id=\"abcd12345-6c78-9012-9eb8-345f6b678901\" name=\"My UDF in MapExtension\" deleted=\"false\" createdDate=\"2021-12-06T19:11:32.578Z\" createdBy=\"user@boomi.com\" modifiedDate=\"2021-12-06T19:11:32.578Z\" modifiedBy=\"user@boomi.com\">\n       <bns:Inputs>\n           <bns:Input name=\"str\" key=\"1\"/>\n           <bns:Input name=\"str2\" key=\"2\"/>\n       </bns:Inputs>\n       <bns:Outputs>\n           <bns:Output name=\"out1\" key=\"1\"/>\n           <bns:Output name=\"out2\" key=\"2\"/>\n       </bns:Outputs>\n       <bns:Steps>\n           <bns:Step position=\"1\" cacheType=\"ByMap\" id=\"2\" type=\"RightTrim\">\n               <bns:Inputs>\n                   <bns:Input default=\"Test\" name=\"Original String\" key=\"1\"/>\n                   <bns:Input default=\"3\" name=\"Fix to Length\" key=\"2\"/>\n               </bns:Inputs>\n               <bns:Outputs>\n                   <bns:Output name=\"Result\" key=\"1\"/>\n               </bns:Outputs>\n               <bns:Configuration/>\n           </bns:Step>\n       </bns:Steps>\n       <bns:Mappings/>\n    </bns:EnvironmentMapExtensionUserDefinedFunction>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

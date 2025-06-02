@@ -1,0 +1,371 @@
+{
+  "required": [
+    "account",
+    "actionType",
+    "atomId",
+    "connectorName",
+    "connectorType",
+    "customFields",
+    "dateProcessed",
+    "errorMessage",
+    "executionId",
+    "id",
+    "operationName"
+  ],
+  "type": "object",
+  "properties": {
+    "PIPCode": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The Partner Interface Process \\(PIP\\) code.",
+      "example": "3A4"
+    },
+    "PIPVersion": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The unique version number of the PIP document.",
+      "example": "V02.00.00"
+    },
+    "account": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the account in which you ran the record.",
+      "example": "account-123456"
+    },
+    "ackReport": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The acknowledgment report.",
+      "example": "Success"
+    },
+    "ackStatus": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The acknowledgment status — either Acknowledged, Error - No Acknowledgement Returned, Exception, or Not Expected.",
+      "example": "Acknowledged"
+    },
+    "actionInstanceIdentifier": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The unique identifier for the action instance.",
+      "example": "2"
+    },
+    "actionType": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The type of action with which this record corresponds — Send for an outbound interchange, Get for an inbound interchange using the Disk, FTP, or SFTP communication method, or Listen for an inbound interchange using the AS2 or HTTP communication method.",
+      "example": "Listen"
+    },
+    "atomId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the Runtime that processed this record.",
+      "example": "3456789a-bcde-f012-3456-789abcdef012"
+    },
+    "attemptCount": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The number of times you attempted the transaction — for example, 1 for the first attempt. For a RosettaNet 2.0 interchange, the value is N/A.",
+      "example": "N/A"
+    },
+    "businessActivityIdentifier": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The code identifying the business activity within the PIP.",
+      "example": "Request Purchase Order"
+    },
+    "connectorName": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The value is Trading Partner** for a RosettaNet trading partner Send operation, or Start for a RosettaNet trading partner Listen operation.",
+      "example": "Start"
+    },
+    "connectorType": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "*rosettanet* is the connector type for any record.",
+      "example": "rosettanet"
+    },
+    "customFields": {
+      "$ref": "./customFields.json",
+      "description": "Custom fields based on the fields configured on the **Document Tracking** tab of the **Setup** page. The names of the fields are dependent upon your account setup.",
+      "example": {
+        "customNumber": "13",
+        "customDate": "2018-09-05T10:53:59-0400",
+        "customCharacter": "sample"
+      }
+    },
+    "dateProcessed": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The processing date and time of this record. The format is *yyyy-MM-dd'T'HH:mm:ss'Z'*, — for example, 2016-01-31T15:32:00Z.",
+      "example": "2018-09-05T06:24:12Z"
+    },
+    "dateTime": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The date and time of the message delivery.",
+      "example": "20180905T062412.327Z"
+    },
+    "documentIndex": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The numerical index of this record in the run.",
+      "example": "0"
+    },
+    "errorMessage": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Any error message associated with this record. This field is omitted for a successful interchange."
+    },
+    "executionId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the run.",
+      "example": "execution-01234567-89ab-cdef-0123-456789abcdef-2018.09.05"
+    },
+    "frameworkVersion": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The version of the RosettaNet Implementation Framework — *1.1* or *2.0* — that specifies the structure of the document represented by this record.",
+      "example": "2.0"
+    },
+    "fromGlobalBusinessServiceCode": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The code identifying the sending trading partner’s business service network component.",
+      "example": "Seller Service"
+    },
+    "fromGlobalPartnerRoleClassificationCode": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The code identifying the role the sending trading partner plays in the PIP.",
+      "example": "Seller"
+    },
+    "globalBusinessActionCode": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The business action.",
+      "example": "N/A"
+    },
+    "globalDocumentFunctionCode": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Specifies whether the record represents a Request, Response, or neither; in the latter case the value is N/A. For a RosettaNet 2.0 interchange the value is N/A.",
+      "example": "N/A"
+    },
+    "globalProcessCode": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The name of the PIP specification document. For a RosettaNet 2.0 interchange, the value is *N/A*.",
+      "example": "N/A"
+    },
+    "globalUsageCode": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Indicates whether the record is a Production or Test mode interchange.",
+      "example": "Test"
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of this record.",
+      "example": "connector-abcdef01-2345-6789-abcd-ef0123456789"
+    },
+    "inResponseToGlobalBusinessActionCode": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "If the document is a response, the business action of the corresponding request.",
+      "example": "Purchase Order Request"
+    },
+    "inResponseToInstanceIdentifier": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "If the document is a response, the action instance identifier of the corresponding request.",
+      "example": "9"
+    },
+    "isSecureTransportRequired": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Yes indicates transporting the document from the next hub securely. No suggests the document does not need transporting from the next hub uniquely. For a RosettaNet 1.1 interchange, the value is N/A.",
+      "example": "Yes"
+    },
+    "knownInitiatingPartnerID": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The unique identifier for the known initiating trading partner. The value is sourced by the document property Known Initiating Partner Global Business Identifier in the process. If this document property is not set in the process, the field’s value is the same as the senderID.",
+      "example": "951751851"
+    },
+    "operationName": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The name of the operation component that processed the record.",
+      "example": "Sample RosettaNet Listen Operation"
+    },
+    "outboundValidationReport": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The outbound validation report. This report contains descriptions of errors present in the outbound message. If you did not select the outbound validation option in the sending trading partner, the value is N/A. Inbound messages omit this field."
+    },
+    "outboundValidationStatus": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The outbound validation status — is either Success, Error-Message, or N/A. For an outbound message for which you do not select the outbound validation option in the sending trading partner, the value is N/A. Inbound messages omit this field."
+    },
+    "processInstanceIdentifier": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The unique identifier for the process instance. For a RosettaNet 2.0 interchange, the value is N/A.",
+      "example": "N/A"
+    },
+    "receiverID": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The unique identifier for the receiving trading partner.",
+      "example": "928523723"
+    },
+    "senderID": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The unique identifier for the sending trading partner.",
+      "example": "951751851"
+    },
+    "size": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The size, in bytes, of the document that corresponds to this record.",
+      "example": "654"
+    },
+    "successful": {
+      "type": "boolean",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Whether the record is a success or error.",
+      "example": "true"
+    },
+    "timeToAcknowledgeAcceptance": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The length of the time-out period, in the format *CCYYMMDDThhmmss.sss*, for acknowledging acceptance of a message. For a RosettaNet 2.0 interchange, the value is N/A.",
+      "example": "N/A"
+    },
+    "timeToAcknowledgeReceipt": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The length of the time-out period, in the format *CCYYMMDDThhmmss.sss*, for acknowledging receipt of a message. For a RosettaNet 2.0 interchange, the value is N/A.",
+      "example": "N/A"
+    },
+    "timeToPerform": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The maximum length of the time period, in the format *CCYYMMDDThhmmss.sss*, that an initiating business activity waits for a responding activity to process a document. For a RosettaNet 2.0 interchange, the value is N/A.",
+      "example": "N/A"
+    },
+    "toGlobalBusinessServiceCode": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The code identifying the receiving trading partner’s business service network component.",
+      "example": "Buyer Service"
+    },
+    "toGlobalPartnerRoleClassificationCode": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The code identifying the role the receiving trading partner plays in the PIP.",
+      "example": "42"
+    },
+    "transactionInstanceIdentifier": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The unique identifier for the transaction instance.",
+      "example": "9"
+    }
+  }
+}

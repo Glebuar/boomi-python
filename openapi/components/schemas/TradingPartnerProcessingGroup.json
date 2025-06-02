@@ -1,0 +1,89 @@
+{
+  "type": "object",
+  "properties": {
+    "DefaultRouting": {
+      "$ref": "./ProcessingGroupDefaultRouting.json"
+    },
+    "DocumentRouting": {
+      "$ref": "./ProcessingGroupDocumentBasedRouting.json",
+      "example": {
+        "processId": "543210fe-dcba-9876-5432-10fedcba9876",
+        "StandardRoute": [
+          {
+            "standard": "edifact",
+            "processId": "456789ab-cdef-0123-4567-89abcdef0123",
+            "DocumentTypeRoute": {
+              "documentType": "AUTHOR",
+              "processId": "56789abc-def0-1234-5678-9abcdef01234"
+            }
+          },
+          {
+            "standard": "x12",
+            "processId": "3210fedc-ba98-7654-3210-fedcba987654",
+            "DocumentTypeRoute": {
+              "documentType": "107",
+              "processId": "43210fed-cba9-8765-4321-0fedcba98765"
+            }
+          }
+        ]
+      }
+    },
+    "PartnerRouting": {
+      "$ref": "./ProcessingGroupPartnerBasedRouting.json"
+    },
+    "TradingPartners": {
+      "$ref": "./ProcessingGroupTradingPartners.json",
+      "example": {
+        "TradingPartner": [
+          {
+            "id": "12345678-9abc-def0-1234-56789abcdef0"
+          },
+          {
+            "id": "0fedcba9-8765-4321-0fed-cba987654321"
+          }
+        ]
+      }
+    },
+    "componentId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "example": "3456789a-bcde-f012-34-56789abcdef012"
+    },
+    "componentName": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "example": "East Coast partners"
+    },
+    "deleted": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "description": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "folderId": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      },
+      "example": "11669"
+    },
+    "folderName": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "example": "Home:TPs:PGs:Domestic"
+    }
+  }
+}

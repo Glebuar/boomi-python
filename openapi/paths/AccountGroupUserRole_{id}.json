@@ -1,0 +1,33 @@
+{
+  "delete": {
+    "tags": [
+      "AccountGroupUserRole"
+    ],
+    "summary": "Deletes an AccountGroupUserRole object",
+    "description": "Removes the user from an account group specified by the conceptual Account Group User Role object ID.",
+    "operationId": "DeleteAccountGroupUserRole",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

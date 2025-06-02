@@ -1,0 +1,105 @@
+{
+  "post": {
+    "tags": [
+      "AccountUserFederation"
+    ],
+    "summary": "Modifies or updates an AccountUserFederation object",
+    "description": "Updates the federation ID of a specific user in a specific account.",
+    "operationId": "UpdateAccountUserFederation",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AccountUserFederation.json"
+          },
+          "example": {
+            "accountId": "account-123456",
+            "userId": "user123@company.biz",
+            "federationId": "user456"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AccountUserFederation.json"
+          },
+          "example": "<bns:AccountUserFederation federationId=\"user456\" userId=\"user123@company.biz\" accountId=\"account-123456\" \nxmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>\n"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountUserFederation.json"
+            },
+            "example": {
+              "@type": "AccountUserFederation",
+              "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts",
+              "accountId": "account-123456",
+              "userId": "user123@company.biz",
+              "federationId": "user456"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountUserFederation.json"
+            },
+            "example": "<bns:AccountUserFederation federationId=\"user456\" userId=\"user123@company.biz\"\naccountId=\"account-123456\" id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts\"\nxmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>\n"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "AccountUserFederation"
+    ],
+    "summary": "Deletes an AccountUserFederation object",
+    "description": "Disables single sign-on for the user specified by the conceptual Account User Federation object ID.",
+    "operationId": "DeleteAccountUserFederation",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

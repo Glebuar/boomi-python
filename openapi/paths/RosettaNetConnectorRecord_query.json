@@ -1,0 +1,212 @@
+{
+  "post": {
+    "tags": [
+      "RosettaNetConnectorRecord"
+    ],
+    "summary": "Queries for a RosettaNetConnectorRecord object(s)",
+    "description": "- To filter by a customField, use the format customFields/fieldName as the filter property where fieldName is the element name of the custom field in the EDIFACT Connector Record structure. To get a list of the available custom fields, refer to [Custom Tracked Field object](#tag/CustomTrackedField). \n - The STARTS_WITH operator accepts values that do not include spaces only. \n\n For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryRosettaNetConnectorRecord",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/RosettaNetConnectorRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "execution-01234567-89ab-cdef-0123-456789abcdef-2018.09.05"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "executionId"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "execution-01234567-89ab-cdef-0123-456789abcdef-2018.09.05"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "executionId"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/RosettaNetConnectorRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n  <QueryFilter>\n    <expression operator=\"EQUALS\" property=\"executionId\"\n      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n      <argument>execution-01234567-89ab-cdef-0123-456789abcdef-2018.09.05</argument>\n    </expression>\n  </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"executionId\">\n      <argument>execution-01234567-89ab-cdef-0123-456789abcdef-2018.09.05</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/RosettaNetConnectorRecordQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 100,
+              "queryToken": "EXAMPLE_QUERY_TOKEN",
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "RosettaNetConnectorRecord",
+                  "ackStatus": "Acknowledged",
+                  "ackReport": "Success",
+                  "senderID": "951751851",
+                  "receiverID": "928523723",
+                  "knownInitiatingPartnerID": "951751851",
+                  "frameworkVersion": "2.0",
+                  "PIPCode": "3A4",
+                  "PIPVersion": "V02.00.00",
+                  "globalProcessCode": "N/A",
+                  "globalBusinessActionCode": "N/A",
+                  "globalDocumentFunctionCode": "N/A",
+                  "fromGlobalPartnerRoleClassificationCode": "Seller",
+                  "toGlobalPartnerRoleClassificationCode": "42",
+                  "fromGlobalBusinessServiceCode": "Seller Service",
+                  "toGlobalBusinessServiceCode": "Buyer Service",
+                  "businessActivityIdentifier": "Request Purchase Order",
+                  "processInstanceIdentifier": "N/A",
+                  "transactionInstanceIdentifier": "9",
+                  "actionInstanceIdentifier": "2",
+                  "inResponseToGlobalBusinessActionCode": "Purchase Order Request",
+                  "inResponseToInstanceIdentifier": "9",
+                  "globalUsageCode": "Test",
+                  "attemptCount": "N/A",
+                  "dateTime": "20180905T062412.327Z",
+                  "isSecureTransportRequired": "Yes",
+                  "timeToAcknowledgeAcceptance": "N/A",
+                  "timeToAcknowledgeReceipt": "N/A",
+                  "timeToPerform": "N/A",
+                  "account": "account-123456",
+                  "executionId": "execution-01234567-89ab-cdef-0123-456789abcdef-2018.09.05",
+                  "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+                  "dateProcessed": "2018-09-05T06:24:12Z",
+                  "id": "connector-abcdef01-2345-6789-abcd-ef0123456789",
+                  "actionType": "Listen",
+                  "connectorType": "rosettanet",
+                  "connectorName": "Start",
+                  "operationName": "Sample RosettaNet Listen Operation",
+                  "documentIndex": 0,
+                  "successful": true,
+                  "size": [
+                    "Long",
+                    654
+                  ],
+                  "customFields": [
+                    {
+                      "customNumber": 13,
+                      "customDate": "2018-09-05T10:53:59-0400",
+                      "customCharacter": "sample"
+                    }
+                  ]
+                },
+                {
+                  "@type": "RosettaNetConnectorRecord",
+                  "ackStatus": "Acknowledged",
+                  "ackReport": "Success",
+                  "senderID": "951751851",
+                  "receiverID": "928523723",
+                  "knownInitiatingPartnerID": "951751851",
+                  "frameworkVersion": "2.0",
+                  "PIPCode": "3A4",
+                  "PIPVersion": "V02.00.00",
+                  "globalProcessCode": "N/A",
+                  "globalBusinessActionCode": "N/A",
+                  "globalDocumentFunctionCode": "N/A",
+                  "fromGlobalPartnerRoleClassificationCode": "Seller",
+                  "toGlobalPartnerRoleClassificationCode": "42",
+                  "fromGlobalBusinessServiceCode": "Seller Service",
+                  "toGlobalBusinessServiceCode": "Buyer Service",
+                  "businessActivityIdentifier": "Request Purchase Order",
+                  "processInstanceIdentifier": "N/A",
+                  "transactionInstanceIdentifier": "9",
+                  "actionInstanceIdentifier": "2",
+                  "inResponseToGlobalBusinessActionCode": "Purchase Order Request",
+                  "inResponseToInstanceIdentifier": "9",
+                  "globalUsageCode": "Test",
+                  "attemptCount": "N/A",
+                  "dateTime": "20180905T062502.327Z",
+                  "isSecureTransportRequired": "Yes",
+                  "timeToAcknowledgeAcceptance": "N/A",
+                  "timeToAcknowledgeReceipt": "N/A",
+                  "timeToPerform": "N/A",
+                  "account": "account-123456",
+                  "executionId": "execution-01234567-89ab-cdef-0123-456789abcdef-2018.09.05",
+                  "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+                  "dateProcessed": "2018-09-05T06:25:02Z",
+                  "id": "connector-bcdef012-3456-789a-bcde-f0123456789a",
+                  "actionType": "Listen",
+                  "connectorType": "rosettanet",
+                  "connectorName": "Start",
+                  "operationName": "Sample RosettaNet Listen Operation",
+                  "documentIndex": 49,
+                  "successful": true,
+                  "size": [
+                    "Long",
+                    564
+                  ],
+                  "customFields": [
+                    {
+                      "customNumber": 55,
+                      "customDate": "2018-09-05T10:57:14-0400",
+                      "customCharacter": "sample"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/RosettaNetConnectorRecordQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"100\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n   <bns:queryToken>EXAMPLE_QUERY_TOKEN</bns:queryToken>\n   <bns:result xsi:type=\"RosettaNetConnectorRecord\">\n      <bns:account>account-123456</bns:account>\n      <bns:executionId>execution-01234567-89ab-cdef-0123-456789abcdef-2018.09.05</bns:executionId>\n      <bns:atomId>3456789a-bcde-f012-3456-789abcdef012</bns:atomId>\n      <bns:dateProcessed>2018-09-05T06:24:12Z</bns:dateProcessed>\n      <bns:id>connector-abcdef01-2345-6789-abcd-ef0123456789</bns:id>\n      <bns:actionType>Listen</bns:actionType>\n      <bns:connectorType>rosettanet</bns:connectorType>\n      <bns:connectorName>Start</bns:connectorName>\n      <bns:operationName>Sample RosettaNet Listen Operation</bns:operationName>\n      <bns:documentIndex>0</bns:documentIndex>\n      <bns:successful>true</bns:successful>\n      <bns:size>654</bns:size>\n      <bns:customFields>\n         <bns:customNumber>13</bns:customNumber>\n         <bns:customDate>2018-09-05T10:53:59-0400</bns:customDate>\n         <bns:customCharacter>sample</bns:customCharacter>\n      </bns:customFields>\n      <bns:ackStatus>Acknowledged</bns:ackStatus>\n      <bns:ackReport>Success</bns:ackReport>\n      <bns:senderID>951751851</bns:senderID>\n      <bns:receiverID>928523723</bns:receiverID>\n      <bns:knownInitiatingPartnerID>951751851</bns:knownInitiatingPartnerID>\n      <bns:frameworkVersion>2.0</bns:frameworkVersion>\n      <bns:PIPCode>3A4</bns:PIPCode>\n      <bns:PIPVersion>V02.00.00</bns:PIPVersion>\n      <bns:globalProcessCode>N/A</bns:globalProcessCode>\n      <bns:globalBusinessActionCode>N/A</bns:globalBusinessActionCode>\n      <bns:globalDocumentFunctionCode>N/A</bns:globalDocumentFunctionCode>\n      <bns:fromGlobalPartnerRoleClassificationCode>Seller</bns:fromGlobalPartnerRoleClassificationCode>\n      <bns:toGlobalPartnerRoleClassificationCode>42</bns:toGlobalPartnerRoleClassificationCode>\n      <bns:fromGlobalBusinessServiceCode>Seller Service</bns:fromGlobalBusinessServiceCode>\n      <bns:toGlobalBusinessServiceCode>Buyer Service</bns:toGlobalBusinessServiceCode>\n      <bns:businessActivityIdentifier>Request Purchase Order</bns:businessActivityIdentifier>\n      <bns:processInstanceIdentifier>N/A</bns:processInstanceIdentifier>\n      <bns:transactionInstanceIdentifier>9</bns:transactionInstanceIdentifier>\n      <bns:actionInstanceIdentifier>2</bns:actionInstanceIdentifier>\n      <bns:inResponseToGlobalBusinessActionCode>Purchase Order Request</bns:inResponseToGlobalBusinessActionCode>\n      <bns:inResponseToInstanceIdentifier>9</bns:inResponseToInstanceIdentifier>\n      <bns:globalUsageCode>Test</bns:globalUsageCode>\n      <bns:attemptCount>N/A</bns:attemptCount>\n      <bns:dateTime>20180905T062412.327Z</bns:dateTime>\n      <bns:isSecureTransportRequired>Yes</bns:isSecureTransportRequired>\n      <bns:timeToAcknowledgeAcceptance>N/A</bns:timeToAcknowledgeAcceptance>\n      <bns:timeToAcknowledgeReceipt>N/A</bns:timeToAcknowledgeReceipt>\n      <bns:timeToPerform>N/A</bns:timeToPerform>\n   </bns:result>\n   ...\n   <bns:result xsi:type=\"RosettaNetConnectorRecord\">\n      <bns:account>account-123456</bns:account>\n      <bns:executionId>execution-01234567-89ab-cdef-0123-456789abcdef-2018.09.05</bns:executionId>\n      <bns:atomId>3456789a-bcde-f012-3456-789abcdef012</bns:atomId>\n      <bns:dateProcessed>2018-09-05T06:25:02Z</bns:dateProcessed>\n      <bns:id>connector-bcdef012-3456-789a-bcde-f0123456789a</bns:id>\n      <bns:actionType>Listen</bns:actionType>\n      <bns:connectorType>rosettanet</bns:connectorType>\n      <bns:connectorName>Start</bns:connectorName>\n      <bns:operationName>Sample RosettaNet Listen Operation</bns:operationName>\n      <bns:documentIndex>49</bns:documentIndex>\n      <bns:successful>true</bns:successful>\n      <bns:size>564</bns:size>\n      <bns:customFields>\n         <bns:customNumber>55</bns:customNumber>\n         <bns:customDate>2018-09-05T10:57:14-0400</bns:customDate>\n         <bns:customCharacter>sample</bns:customCharacter>\n      </bns:customFields>\n      <bns:ackStatus>Acknowledged</bns:ackStatus>\n      <bns:ackReport>Success</bns:ackReport>\n      <bns:senderID>951751851</bns:senderID>\n      <bns:receiverID>928523723</bns:receiverID>\n      <bns:knownInitiatingPartnerID>951751851</bns:knownInitiatingPartnerID>\n      <bns:frameworkVersion>2.0</bns:frameworkVersion>\n      <bns:PIPCode>3A4</bns:PIPCode>\n      <bns:PIPVersion>V02.00.00</bns:PIPVersion>\n      <bns:globalProcessCode>N/A</bns:globalProcessCode>\n      <bns:globalBusinessActionCode>N/A</bns:globalBusinessActionCode>\n      <bns:globalDocumentFunctionCode>N/A</bns:globalDocumentFunctionCode>\n      <bns:fromGlobalPartnerRoleClassificationCode>Seller</bns:fromGlobalPartnerRoleClassificationCode>\n      <bns:toGlobalPartnerRoleClassificationCode>42</bns:toGlobalPartnerRoleClassificationCode>\n      <bns:fromGlobalBusinessServiceCode>Seller Service</bns:fromGlobalBusinessServiceCode>\n      <bns:toGlobalBusinessServiceCode>Buyer Service</bns:toGlobalBusinessServiceCode>\n      <bns:businessActivityIdentifier>Request Purchase Order</bns:businessActivityIdentifier>\n      <bns:processInstanceIdentifier>N/A</bns:processInstanceIdentifier>\n      <bns:transactionInstanceIdentifier>9</bns:transactionInstanceIdentifier>\n      <bns:actionInstanceIdentifier>2</bns:actionInstanceIdentifier>\n      <bns:inResponseToGlobalBusinessActionCode>Purchase Order Request</bns:inResponseToGlobalBusinessActionCode>\n      <bns:inResponseToInstanceIdentifier>9</bns:inResponseToInstanceIdentifier>\n      <bns:globalUsageCode>Test</bns:globalUsageCode>\n      <bns:attemptCount>N/A</bns:attemptCount>\n      <bns:dateTime>20180905T062502.327Z</bns:dateTime>\n            <bns:isSecureTransportRequired>Yes</bns:isSecureTransportRequired>\n      <bns:timeToAcknowledgeAcceptance>N/A</bns:timeToAcknowledgeAcceptance>\n      <bns:timeToAcknowledgeReceipt>N/A</bns:timeToAcknowledgeReceipt>\n      <bns:timeToPerform>N/A</bns:timeToPerform>\n   </bns:result>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

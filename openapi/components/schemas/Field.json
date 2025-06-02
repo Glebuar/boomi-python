@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "componentOverride": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "customProperties": {
+      "$ref": "./CustomProperties.json"
+    },
+    "encryptedValueSet": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "useDefault": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "usesEncryption": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "value": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "post": {
+    "tags": [
+      "EDIFACTConnectorRecord"
+    ],
+    "summary": "Queries for an EDIFACTConnectorRecord object(s)",
+    "description": "- To filter by a customField, use the format customFields/fieldName as the filter property where fieldName is the element name of the custom field in the EDIFACT Connector Record structure. To get a list of the available custom fields, refer to [Custom Tracked Field object](#tag/CustomTrackedField). \n - The STARTS_WITH operator accepts values that do not include spaces only. \n\n For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryEDIFACTConnectorRecord",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/EDIFACTConnectorRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "execution-01234567-89ab-cdef-0123-456789abcdef-2018.08.08"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "executionId"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "execution-01234567-89ab-cdef-0123-456789abcdef-2018.08.08"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "executionId"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/EDIFACTConnectorRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n  <QueryFilter>\n    <expression operator=\"EQUALS\" property=\"executionId\"\n      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n      <argument>execution-01234567-89ab-cdef-0123-456789abcdef-2018.08.08</argument>\n    </expression>\n  </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"executionId\">\n      <argument>execution-01234567-89ab-cdef-0123-456789abcdef-2018.08.08</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/EDIFACTConnectorRecordQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 100,
+              "queryToken": "EXAMPLE_QUERY_TOKEN",
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "EDIFACTConnectorRecord",
+                  "ackStatus": "Accepted",
+                  "ackReport": "Message Reference #: 1 \n Acknowledgement Status: This level acknowledged, next lower level acknowledged if not explicitly rejected",
+                  "senderID": "12345",
+                  "receiverID": "67890",
+                  "interchangeControlReference": "4",
+                  "messageType": "INVOIC",
+                  "messageReferenceNumber": "1",
+                  "interchangeDate": "180808",
+                  "interchangeTime": "0624",
+                  "ackRequested": "1",
+                  "outboundValidationStatus": "Error - Message",
+                  "outboundValidationReport": "Message Reference #: 1 \n Validation Status: This level and all lower levels rejected \n Message: Missing \n Segment Position: 2 \n Message: Unspecified error Data Element Error for '' Position in Segment: 1 \n Message: notification that the length of the data element received exceeded the maximum length specified in the data element description.",
+                  "account": "account-123456",
+                  "executionId": "execution-01234567-89ab-cdef-0123-456789abcdef-2018.08.08",
+                  "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+                  "dateProcessed": "2018-08-08T06:24:12Z",
+                  "id": "connector-abcdef01-2345-6789-abcd-ef0123456789",
+                  "actionType": "Send",
+                  "connectorType": "edifact",
+                  "connectorName": "Trading Partner",
+                  "operationName": "Sample EDIFACT Send Operation",
+                  "documentIndex": 0,
+                  "successful": true,
+                  "size": [
+                    "Long",
+                    654
+                  ],
+                  "customFields": [
+                    {
+                      "customNumber": 13,
+                      "customDate": "2018-08-08T10:53:59-0400",
+                      "customCharacter": "sample"
+                    }
+                  ],
+                  "version": "D"
+                },
+                {
+                  "@type": "EDIFACTConnectorRecord",
+                  "ackStatus": "Accepted",
+                  "ackReport": "Message Reference #: 100 \n Acknowledgement Status: This level acknowledged, next lower level acknowledged if not explicitly rejected",
+                  "senderID": "54321",
+                  "receiverID": "67890",
+                  "interchangeControlReference": "4",
+                  "messageType": "INVOIC",
+                  "messageReferenceNumber": "1",
+                  "interchangeDate": "180808",
+                  "interchangeTime": "0625",
+                  "ackRequested": "1",
+                  "outboundValidationStatus": "Error - Message",
+                  "outboundValidationReport": "Message Reference #: 1 \n Validation Status: This level and all lower levels rejected \n Message: Missing \n Segment Position: 2 \n Message: Unspecified error Data Element Error for '' Position in Segment: 1 \n Message: notification that the length of the data element received exceeded the maximum length specified in the data element description.",
+                  "account": "account-123456",
+                  "executionId": "execution-01234567-89ab-cdef-0123-456789abcdef-2018.08.08",
+                  "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+                  "dateProcessed": "2018-08-08T06:25:02Z",
+                  "id": "connector-bcdef012-3456-789a-bcde-f0123456789a",
+                  "actionType": "Send",
+                  "connectorType": "edifact",
+                  "connectorName": "Trading Partner",
+                  "operationName": "Sample EDIFACT Send Operation",
+                  "documentIndex": 49,
+                  "successful": true,
+                  "size": [
+                    "Long",
+                    564
+                  ],
+                  "customFields": [
+                    {
+                      "customNumber": 55,
+                      "customDate": "2018-08-08T10:57:14-0400",
+                      "customCharacter": "sample"
+                    }
+                  ],
+                  "version": "D"
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/EDIFACTConnectorRecordQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"100\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n   <bns:queryToken>EXAMPLE_QUERY_TOKEN</bns:queryToken>\n   <bns:result xsi:type=\"EDIFACTConnectorRecord\" >\n      <bns:account>account-123456</bns:account>\n      <bns:executionId>execution-01234567-89ab-cdef-0123-456789abcdef-2018.08.08</bns:executionId>\n      <bns:atomId>3456789a-bcde-f012-3456-789abcdef012</bns:atomId>\n      <bns:dateProcessed>2018-08-08T06:24:12Z</bns:dateProcessed>\n      <bns:id>connector-abcdef01-2345-6789-abcd-ef0123456789</bns:id>\n      <bns:actionType>Send</bns:actionType>\n      <bns:connectorType>edifact</bns:connectorType>\n      <bns:connectorName>Trading Partner</bns:connectorName>\n      <bns:operationName>Sample EDIFACT Send Operation</bns:operationName>\n      <bns:documentIndex>0</bns:documentIndex>\n      <bns:successful>true</bns:successful>\n      <bns:size>654</bns:size>\n      <bns:customFields>\n         <bns:customNumber>13</bns:customNumber>\n         <bns:customDate>2018-08-08T10:53:59-0400</bns:customDate>\n         <bns:customCharacter>sample</bns:customCharacter>\n      </bns:customFields>\n      <bns:ackStatus>Accepted</bns:ackStatus>\n      <bns:ackReport>Message Reference #: 1\n         Acknowledgement Status: This level acknowledged, next lower level acknowledged if not explicitly rejected\n      </bns:ackReport> \n      <bns:senderID>12345</bns:senderID>\n      <bns:receiverID>67890</bns:receiverID>\n      <bns:interchangeControlReference>4</bns:interchangeControlReference>\n      <bns:messageType>INVOIC</bns:messageType>\n      <bns:messageReferenceNumber>1</bns:messageReferenceNumber>\n      <bns:interchangeDate>180808</bns:interchangeDate>\n      <bns:interchangeTime>0624</bns:interchangeTime>\n      <bns:ackRequested>1</bns:ackRequested>\n      <bns:outboundValidationStatus>Error - Message</bns:outboundValidationStatus>\n      <bns:outboundValidationReport>Message Reference #: 1\n         Validation Status: This level and all lower levels rejected\n         Message: Missing\n         Segment Position: 2\n         Message: Unspecified error\n         Data Element Error for ''\n         Position in Segment: 1\n         Message: notification that the length of the data element received exceeded the\n         maximum length specified in the data element\n         description.\n      </bns:outboundValidationReport>\n   </bns:result>\n   <bns:result xsi:type=\"EDIFACTConnectorRecord\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n      <bns:account>account-123456</bns:account>\n      <bns:executionId>execution-01234567-89ab-cdef-0123-456789abcdef-2018.08.08</bns:executionId>\n      <bns:atomId>3456789a-bcde-f012-3456-789abcdef012</bns:atomId>\n      <bns:dateProcessed>2018-08-08T06:25:02Z</bns:dateProcessed>\n      <bns:id>connector-bcdef012-3456-789a-bcde-f0123456789a</bns:id>\n      <bns:actionType>Send</bns:actionType>\n      <bns:connectorType>edifact</bns:connectorType>\n      <bns:connectorName>Trading Partner</bns:connectorName>\n      <bns:operationName>Sample EDIFACT Send Operation</bns:operationName>\n      <bns:documentIndex>49</bns:documentIndex>\n      <bns:successful>true</bns:successful>\n      <bns:size>564</bns:size>\n      <bns:customFields>\n         <bns:customNumber>55</bns:customNumber>\n         <bns:customDate>2018-08-08T10:57:14-0400</bns:customDate>\n         <bns:customCharacter>sample</bns:customCharacter>\n      </bns:customFields>\n      <bns:ackStatus>Accepted</bns:ackStatus>\n      <bns:ackReport>Message Reference #: 100\n         Acknowledgement Status: This level acknowledged, next lower level acknowledged if not explicitly rejected\n      </bns:ackReport> \n      <bns:senderID>54321</bns:senderID>\n      <bns:receiverID>67890</bns:receiverID>\n      <bns:interchangeControlReference>4</bns:interchangeControlReference>\n      <bns:messageType>INVOIC</bns:messageType>\n      <bns:messageReferenceNumber>1</bns:messageReferenceNumber>\n      <bns:interchangeDate>180808</bns:interchangeDate>\n      <bns:interchangeTime>0625</bns:interchangeTime>\n      <bns:ackRequested>1</bns:ackRequested>\n      <bns:outboundValidationStatus>Error - Message</bns:outboundValidationStatus>\n      <bns:outboundValidationReport>Message Reference #: 1\n         Validation Status: This level and all lower levels rejected\n         Message: Missing\n         Segment Position: 2\n         Message: Unspecified error\n         Data Element Error for ''\n         Position in Segment: 1\n         Message: notification that the length of the data element received exceeded the\n         maximum length specified in the data element\n         description.\n      </bns:outboundValidationReport>\n   </bns:result>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

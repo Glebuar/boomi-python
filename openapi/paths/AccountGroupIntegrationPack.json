@@ -1,0 +1,64 @@
+{
+  "post": {
+    "tags": [
+      "AccountGroupIntegrationPack"
+    ],
+    "summary": "Creates an AccountGroupIntegrationPack object",
+    "description": "Adds an integration pack to the requesting account group.",
+    "operationId": "CreateAccountGroupIntegrationPack",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AccountGroupIntegrationPack.json"
+          },
+          "example": {
+            "integrationPackId": "fc32f440-9a53-45ce-bd6b-014755dadb64",
+            "accountGroupId": "cd17f866-c247-4c54-a1a1-ea8f8f86a1d1"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AccountGroupIntegrationPack.json"
+          },
+          "example": "<bns:AccountGroupIntegrationPack xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" accountGroupId=\"cd17f866-c247-4c54-a1a1-ea8f8f86a1d1\" integrationPackId=\"cd17f866-c247-4c54-a1a1-ea8f8f863456\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroupIntegrationPack.json"
+            },
+            "example": {
+              "@type": "AccountGroupIntegrationPack",
+              "id": "MXxjZDE3Zjg2Ni1jMjQ3LTRjNTQtYTFhMS1lYThmOGY4NmExZDE",
+              "integrationPackId": "cd17f866-c247-4c54-a1a1-ea8f8f863456",
+              "integrationPackName": "test integration pack",
+              "installationType": "SINGLE",
+              "accountGroupId": "cd17f866-c247-4c54-a1a1-ea8f8f86a1d1"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroupIntegrationPack.json"
+            },
+            "example": "<bns:AccountGroupIntegrationPack xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" accountGroupId=\"cd17f866-c247-4c54-a1a1-ea8f8f86a1d1\" integrationPackId=\"cd17f866-c247-4c54-a1a1-ea8f8f863456\" integrationPackName=\"test integration pack\" installationType=\"SINGLE\" id=\"MXxjZDE3Zjg2Ni1jMjQ3LTRjNTQtYTFhMS1lYThmOGY4NmExZDE\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

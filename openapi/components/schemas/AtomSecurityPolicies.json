@@ -1,0 +1,57 @@
+{
+  "required": [
+    "atomId",
+    "common"
+  ],
+  "type": "object",
+  "properties": {
+    "atomId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the Runtime cloud or Runtime cluster.",
+      "example": "4ce4a1c2-5bd9-4bd9-9201-46198e2d88db"
+    },
+    "browser": {
+      "$ref": "./AtomSecurityPoliciesType.json",
+      "example": {
+        "policies": {
+          "privilegeType": "Test",
+          "arguments": [
+            {
+              "value": "arg1"
+            },
+            {
+              "value": "arg2"
+            }
+          ]
+        }
+      }
+    },
+    "common": {
+      "$ref": "./AtomSecurityPoliciesType.json",
+      "example": {
+        "policies": {
+          "privilegeType": "RuntimePermission",
+          "arguments": [
+            {
+              "value": "arg1"
+            },
+            {
+              "value": "arg2"
+            }
+          ]
+        }
+      }
+    },
+    "runner": {
+      "$ref": "./AtomSecurityPoliciesType.json",
+      "example": null
+    },
+    "worker": {
+      "$ref": "./AtomSecurityPoliciesType.json",
+      "example": null
+    }
+  }
+}

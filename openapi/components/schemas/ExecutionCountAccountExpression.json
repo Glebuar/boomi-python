@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./ExecutionCountAccountSimpleExpression.json"
+    },
+    {
+      "$ref": "./ExecutionCountAccountGroupingExpression.json"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "post": {
+    "tags": [
+      "CustomTrackedField"
+    ],
+    "summary": "Queries for a CustomTrackedField object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).\n\n>**Note:** This operation doesn't accept filters because the list is constrained to 20 fields.",
+    "operationId": "QueryCustomTrackedField",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/CustomTrackedFieldQueryConfig.json"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/CustomTrackedFieldQueryConfig.json"
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/CustomTrackedFieldQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 5,
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "CustomTrackedField",
+                  "label": "Field 1",
+                  "type": "character",
+                  "position": 1
+                },
+                {
+                  "@type": "CustomTrackedField",
+                  "label": "Field 5",
+                  "type": "number",
+                  "position": 5
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/CustomTrackedFieldQueryResponse.json"
+            },
+            "example": "<QueryResult numberOfResults=\"5\" xmlns=\"http://api.platform.boomi.com/\">\n    <result xsi:type=\"CustomTrackedField\" position=\"1\" type=\"character\" label=\"Field 1\"/>\n    <result xsi:type=\"CustomTrackedField\" position=\"5\" type=\"number\" label=\"Field 5\"/>\n </QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

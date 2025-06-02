@@ -1,0 +1,54 @@
+{
+  "get": {
+    "tags": [
+      "IntegrationPack"
+    ],
+    "summary": "Retrieves an instance of an IntegrationPack object",
+    "description": "Retrieves the properties of the integration pack with a specified ID. The ordinary GET operation retrieves the properties of the integration pack with a specified ID. The bulk GET operation retrieves the properties of the integration packs having the specified IDs, to a maximum of 100.",
+    "operationId": "GetIntegrationPack",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID assigned by the system to the integration pack."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/IntegrationPack.json"
+            },
+            "example": {
+              "@type": "IntegrationPack",
+              "Description": "Order Intake Ipack",
+              "id": "89abcdef-0123-4567-89ab-cdef01234567",
+              "name": "Order Intake",
+              "installationType": "SINGLE"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/IntegrationPack.json"
+            },
+            "example": "<bns:IntegrationPack installationType=\"SINGLE\" name=\"Order Intake\" id=\"89abcdef-0123-4567-89ab-cdef01234567\" \n       xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\"> \n        <bns:Description>Order Intake Ipack</bns:Description>\n    </bns:IntegrationPack>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

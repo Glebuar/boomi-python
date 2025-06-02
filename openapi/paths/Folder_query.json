@@ -1,0 +1,123 @@
+{
+  "post": {
+    "tags": [
+      "Folder"
+    ],
+    "summary": "Queries for a Folder object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).\n\n- You can perform the QUERY operation for the Folder object by id, name, fullPath and deleted.\n\n- The QUERY MORE operation is also available for the Folder object.\n\n- You can perform an empty QUERY to return all folders.\n\n- If no filter is specified, both non-deleted and deleted records are returned.",
+    "operationId": "QueryFolder",
+    "requestBody": {
+      "description": " Possible properties include: accountId, id, name, fullPath, deleted, parentId, parentName, permittedRoles",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/FolderQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "EQUALS",
+                        "property": "name",
+                        "argument": [
+                          "SOAP and Platform API Connector"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "and",
+                        "nestedExpression": [
+                          {
+                            "operator": "EQUALS",
+                            "property": "name",
+                            "argument": [
+                              "SOAP and Platform API Connector"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/FolderQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n        <expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n            <nestedExpression operator=\"EQUALS\" property=\"name\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>SOAP and {conKeyRefs.AtomSphere_BoomiEnterprisePlatform} API Connector</argument>\n            </nestedExpression>\n        </expression>\n    </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"name\">\n      <argument>SOAP and {conKeyRefs.AtomSphere_BoomiEnterprisePlatform} API Connector</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/FolderQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "Folder",
+                  "id": "folderId123",
+                  "name": "SOAP and Platform API Connector",
+                  "fullPath": "API Regression/Tests/SOAP and Platform API Connector",
+                  "deleted": false
+                }
+              ],
+              "numberOfResults": 1
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/FolderQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"1\"\n    \txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    \txmlns:bns=\"http://api.boomi.com/\">\n    \t<bns:result xsi:type=\"Folder\" id=\"folderId123\" name=\"SOAP and Platform API Connector\" fullPath=\"API Regression/Tests/SOAP and Platform API Connector\" deleted=\"false\"/>\n    </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "required": [
+    "Description"
+  ],
+  "type": "object",
+  "properties": {
+    "Description": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "IntegrationPack": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./ProcessIntegrationPackInfo.json"
+      },
+      "example": {
+        "integrationPackInstanceId": "76543210FEDCBA9876543210FEDCBA98",
+        "integrationPackId": "89abcdef-0123-4567-89ab-cdef01234567"
+      }
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "A unique ID assigned by the system to the process. For deployed processes and processes belonging to single-install integration packs, this value is the process component ID.For processes belonging to multi-install integration packs, this is an synthetic ID and does not match an actual process component. You can use this value as the extensionGroupId when querying the Environment Extensions object",
+      "example": "56789abc-def0-1234-5678-9abcdef01234"
+    },
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The name of the process.",
+      "example": "Order Intake"
+    }
+  }
+}

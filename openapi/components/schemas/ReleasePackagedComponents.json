@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "ReleasePackagedComponent": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./ReleasePackagedComponent.json"
+      }
+    }
+  },
+  "required": [
+    "ReleasePackagedComponent"
+  ]
+}

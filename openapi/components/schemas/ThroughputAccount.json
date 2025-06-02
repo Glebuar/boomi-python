@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The account ID from which you process the data.",
+      "example": "account-123456"
+    },
+    "atomId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The Runtime ID from which you process the data.",
+      "example": "3456789a-bcde-f0123-4567-89abcdef012"
+    },
+    "date": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The processing date of the data. The time zone is UTC±00:00.",
+      "example": "2016-05-14"
+    },
+    "value": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The calculated throughput size, in bytes.",
+      "example": "84955"
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "post": {
+    "tags": [
+      "AtomSecurityPolicies"
+    ],
+    "summary": "Modifies or updates an AtomSecurityPolicies object",
+    "description": "Updates the security policy for the specified Runtime cloud or Runtime cluster. You can add, update, or delete permissions by using the UPDATE operation. You can add custom Java runtime permissions you specify in an UPDATE operation to the appropriate High-security policy file. In addition, all High-security policy files contain custom permissions that you specify in the <common> section. \n As confirmation of the changes made, the UPDATE operation returns a copy of the request.",
+    "operationId": "UpdateAtomSecurityPolicies",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The runtime (container) id for the applicable runtime (accepts only Runtime cloud cluster and regular Runtime cluster types, no basic runtimes or cloud attachments)."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AtomSecurityPolicies.json"
+          },
+          "example": {
+            "atomId": "8f535694-c152-42f3-9923-2f805a17775a",
+            "common": {
+              "policies": {
+                "privilegeType": "runtimePermission",
+                "arguments": {
+                  "value": "arg2"
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AtomSecurityPolicies.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<api:AtomSecurityPolicies xmlns:api=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" atomId=\"8f535694-c152-42f3-9923-2f805a17775a\">\n  <api:common>\n    <api:policies privilegeType=\"runtimePermission\">\n      <api:arguments value=\"arg2\"/>\n    </api:policies>\n  </api:common>\n</api:AtomSecurityPolicies>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AtomSecurityPolicies.json"
+            },
+            "example": {
+              "@type": "AtomSecurityPolicies",
+              "common": {
+                "@type": "AtomSecurityPoliciesType",
+                "policies": [
+                  {
+                    "@type": "AtomSecurityPolicy",
+                    "arguments": [
+                      {
+                        "@type": "AtomSecurityPolicyArgumentType",
+                        "value": "arg2"
+                      }
+                    ],
+                    "privilegeType": "runtimePermission"
+                  }
+                ]
+              },
+              "runner": {
+                "@type": "AtomSecurityPoliciesType",
+                "policies": []
+              },
+              "worker": {
+                "@type": "AtomSecurityPoliciesType",
+                "policies": []
+              },
+              "browser": {
+                "@type": "AtomSecurityPoliciesType",
+                "policies": []
+              },
+              "atomId": "8f535694-c152-42f3-9923-2f805a17775a"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AtomSecurityPolicies.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<api:AtomSecurityPolicies xmlns:api=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" atomId=\"8f535694-c152-42f3-9923-2f805a17775a\">\n  <api:common>\n    <api:policies privilegeType=\"runtimePermission\">\n      <api:arguments value=\"arg2\"/>\n    </api:policies>\n  </api:common>\n</api:AtomSecurityPolicies>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

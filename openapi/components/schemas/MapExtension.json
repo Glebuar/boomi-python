@@ -1,0 +1,35 @@
+{
+  "required": [
+    "BrowseSettings",
+    "DestinationProfile",
+    "DestinationProfileExtensions",
+    "ExtendedFunctions",
+    "ExtendedMappings",
+    "SourceProfile",
+    "SourceProfileExtensions"
+  ],
+  "type": "object",
+  "properties": {
+    "BrowseSettings": {
+      "$ref": "./MapExtensionBrowseSettings.json"
+    },
+    "DestinationProfile": {
+      "$ref": "./MapExtensionsProfile.json"
+    },
+    "DestinationProfileExtensions": {
+      "$ref": "./MapExtensionExtendProfile.json"
+    },
+    "ExtendedFunctions": {
+      "$ref": "./MapExtensionsFunctions.json"
+    },
+    "ExtendedMappings": {
+      "$ref": "./MapExtensionsExtendedMappings.json"
+    },
+    "SourceProfile": {
+      "$ref": "./MapExtensionsProfile.json"
+    },
+    "SourceProfileExtensions": {
+      "$ref": "./MapExtensionExtendProfile.json"
+    }
+  }
+}

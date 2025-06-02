@@ -1,0 +1,49 @@
+{
+  "post": {
+    "tags": [
+      "RuntimeReleaseSchedule"
+    ],
+    "summary": "Retrieves multiple RuntimeReleaseSchedule objects by identifier.",
+    "operationId": "BulkRuntimeReleaseSchedule",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/RuntimeReleaseScheduleBulkRequest.json"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/RuntimeReleaseScheduleBulkRequest.json"
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/RuntimeReleaseScheduleBulkResponse.json"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/RuntimeReleaseScheduleBulkResponse.json"
+            }
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

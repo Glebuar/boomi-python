@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "defaultValue": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "persist": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "propertyId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "propertyName": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

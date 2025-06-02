@@ -1,0 +1,62 @@
+{
+  "required": [
+    "as2Id",
+    "clientSSLCertificate",
+    "encryptionPublicCertificate",
+    "mdnSignaturePublicCertificate",
+    "signingPublicCertificate"
+  ],
+  "type": "object",
+  "properties": {
+    "ListenAttachmentSettings": {
+      "$ref": "./AttachmentInfo.json"
+    },
+    "ListenAuthSettings": {
+      "$ref": "./AS2BasicAuthInfo.json"
+    },
+    "as2Id": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "basicAuthEnabled": {
+      "type": "boolean",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "default": false
+    },
+    "clientSSLCertificate": {
+      "$ref": "./PublicCertificate.json"
+    },
+    "enabledLegacySMIME": {
+      "type": "boolean",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "encryptionPublicCertificate": {
+      "$ref": "./PublicCertificate.json"
+    },
+    "mdnSignaturePublicCertificate": {
+      "$ref": "./PublicCertificate.json"
+    },
+    "messagesToCheckForDuplicates": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "rejectDuplicateMessages": {
+      "type": "boolean",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "signingPublicCertificate": {
+      "$ref": "./PublicCertificate.json"
+    }
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "post": {
+    "tags": [
+      "ComponentAtomAttachment"
+    ],
+    "summary": "Creates a ComponentAtomAttachment object",
+    "description": "Attaches a component with a specific ID to the Runtime with a specific ID. You must have the Runtime Management privilege to perform the CREATE operation. If you have the Runtime Management Read Access privilege, you cannot attach components.",
+    "operationId": "CreateComponentAtomAttachment",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentAtomAttachment.json"
+          },
+          "example": {
+            "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+            "componentId": "56789abc-def0-1234-5678-9abcdef01234"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentAtomAttachment.json"
+          },
+          "example": "<bns:ComponentAtomAttachment atomId=\"3456789a-bcde-f012-3456-789abcdef012\" \n         componentId=\"56789abc-def0-1234-5678-9abcdef01234\" xmlns:bns=\"http://api.platform.boomi.com/\" \n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentAtomAttachment.json"
+            },
+            "example": {
+              "@type": "Component",
+              "folderFullPath": "Boomi/Admin",
+              "componentId": "bb302dbb-2e30-41a8-9e59-035f491e6da6",
+              "version": "1",
+              "name": "Process A",
+              "type": "process",
+              "createdDate": "2023-07-05T15:43:18Z",
+              "createdBy": "adminboomi.com",
+              "modifiedDate": "2023-07-05T15:43:18Z",
+              "modifiedBy": "adminboomi.com",
+              "deleted": "false",
+              "currentVersion": "true",
+              "folderName": "Admin",
+              "folderId": "RjozMDk2OQ",
+              "encryptedValues": null,
+              "object": {
+                "process": {
+                  "xmlns": "",
+                  "allowSimultaneous": "false",
+                  "enableUserLog": "false",
+                  "processLogOnErrorOnly": "false",
+                  "purgeDataImmediately": "false",
+                  "updateRunDates": "true",
+                  "workload": "general",
+                  "shapes": {
+                    "shape": [
+                      {
+                        "image": "start",
+                        "name": "shape1",
+                        "shapetype": "start",
+                        "userlabel": "",
+                        "x": "96.0",
+                        "y": "94.0",
+                        "configuration": {
+                          "noaction": null
+                        },
+                        "dragpoints": {
+                          "dragpoint": {
+                            "name": "shape1.dragpoint1",
+                            "toShape": "shape2",
+                            "x": "240.0",
+                            "y": "120.0"
+                          }
+                        }
+                      },
+                      {
+                        "image": "map_icon",
+                        "name": "shape2",
+                        "shapetype": "map",
+                        "userlabel": "",
+                        "x": "256.0",
+                        "y": "112.0",
+                        "configuration": {
+                          "map": null
+                        },
+                        "dragpoints": {
+                          "dragpoint": {
+                            "name": "shape2.dragpoint1",
+                            "toShape": "shape3",
+                            "x": "368.0",
+                            "y": "120.0"
+                          }
+                        }
+                      },
+                      {
+                        "image": "stop_icon",
+                        "name": "shape3",
+                        "shapetype": "stop",
+                        "userlabel": "",
+                        "x": "384.0",
+                        "y": "112.0",
+                        "configuration": {
+                          "stop": {
+                            "continue": "true"
+                          }
+                        },
+                        "dragpoints": null
+                      }
+                    ]
+                  }
+                }
+              },
+              "processOverrides": null
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentAtomAttachment.json"
+            },
+            "example": "<bns:ComponentAtomAttachment atomId=\"3456789a-bcde-f012-3456-789abcdef012\" \n         componentId=\"56789abc-def0-1234-5678-9abcdef01234\"\n         componentType=\"process\"\n         id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\"\n         xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

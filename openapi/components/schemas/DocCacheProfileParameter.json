@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "index": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "key": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "tagListKey": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

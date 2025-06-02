@@ -1,0 +1,132 @@
+{
+  "post": {
+    "tags": [
+      "ListenerStatus"
+    ],
+    "summary": "Retrieves a ListenerStatus object by identifier",
+    "description": "Send an HTTP POST where {accountId} is the ID of the authenticating account for the request. \n >**Note:** For backward compatibility, Boomi continues to support the legacy URL: https://api.boomi.com/api/rest/v1/accountId/ListenerStatus/query/async. \n\n For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "AsyncGetListenerStatus",
+    "requestBody": {
+      "description": " Possible properties include: listenerId, containerId",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ListenerStatusQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "ea56da44-ea7d-4c80-9866-30556474938e"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "listenerId"
+                      },
+                      {
+                        "argument": [
+                          "1045759d-7f6c-4108-bd0e-7b71541d6a2d"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "containerId"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "and",
+                        "nestedExpression": [
+                          {
+                            "argument": [
+                              "ea56da44-ea7d-4c80-9866-30556474938e"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "listenerId"
+                          },
+                          {
+                            "argument": [
+                              "1045759d-7f6c-4108-bd0e-7b71541d6a2d"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "containerId"
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ListenerStatusQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n        <expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n            <nestedExpression operator=\"EQUALS\" property=\"listenerId\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>ea56da44-ea7d-4c80-9866-30556474938e</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"EQUALS\" property=\"containerId\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>1045759d-7f6c-4108-bd0e-7b71541d6a2d</argument>\n            </nestedExpression>\n        </expression>\n    </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"listenerId\">\n      <argument>ea56da44-ea7d-4c80-9866-30556474938e</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AsyncOperationTokenResult.json"
+            },
+            "example": {
+              "@type": "AsyncOperationTokenResult",
+              "asyncToken": {
+                "@type": "AsyncToken",
+                "token": "ListenerStatus-3b0a7ae0-60f4-46e7-8169-f9c19a83a2e2"
+              },
+              "responseStatusCode": 202
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AsyncOperationTokenResult.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:AsyncOperationTokenResult xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" responseStatusCode=\"202\">\n        <bns:asyncToken token=\"ListenerStatus-588980e6-17f2-4ca7-8699-5325da067b9a\"/>\n    </bns:AsyncOperationTokenResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

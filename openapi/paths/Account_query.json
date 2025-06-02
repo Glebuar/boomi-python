@@ -1,0 +1,248 @@
+{
+  "post": {
+    "tags": [
+      "Account"
+    ],
+    "summary": "Queries for an Account object(s)",
+    "description": "The Account Query API returns accounts that were created by the parent account identified in the request URL. \n\n For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryAccount",
+    "requestBody": {
+      "description": " Possible properties include: ACCOUNTID, DATECREATED, EXPIRATIONDATE, NAME, STATUS, WIDGETACCOUNT, OVERDEPLOYED",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AccountQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "deleted"
+                        ],
+                        "operator": "NOT_EQUALS",
+                        "property": "status"
+                      },
+                      {
+                        "argument": [
+                          "2014-01-01T00:00:00Z",
+                          "2016-01-01T00:00:00Z"
+                        ],
+                        "operator": "BETWEEN",
+                        "property": "dateCreated"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "and",
+                        "nestedExpression": [
+                          {
+                            "argument": [
+                              "deleted"
+                            ],
+                            "operator": "NOT_EQUALS",
+                            "property": "status"
+                          },
+                          {
+                            "argument": [
+                              "2014-01-01T00:00:00Z",
+                              "2016-01-01T00:00:00Z"
+                            ],
+                            "operator": "BETWEEN",
+                            "property": "dateCreated"
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AccountQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n<QueryFilter>\n<expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n<nestedExpression operator=\"NOT_EQUALS\" property=\"status\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n<argument>deleted</argument>\n</nestedExpression>\n<nestedExpression operator=\"BETWEEN\" property=\"dateCreated\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n<argument>2014-01-01T00:00:00Z</argument>\n<argument>2016-01-01T00:00:00Z</argument>\n</nestedExpression>\n</expression>\n</QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"NOT_EQUALS\" property=\"status\">\n      <argument>deleted</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 100,
+              "queryToken": "EXAMPLE_QUERY_TOKEN",
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "Account",
+                  "licensing": {
+                    "@type": "",
+                    "standard": {
+                      "@type": "License",
+                      "purchased": 0,
+                      "used": 0
+                    },
+                    "smallBusiness": {
+                      "@type": "License",
+                      "purchased": 0,
+                      "used": 0
+                    },
+                    "enterprise": {
+                      "@type": "License",
+                      "purchased": 0,
+                      "used": 0
+                    },
+                    "tradingPartner": {
+                      "@type": "License",
+                      "purchased": 0,
+                      "used": 0
+                    },
+                    "standardTest": {
+                      "@type": "License",
+                      "purchased": 1000,
+                      "used": 0
+                    },
+                    "smallBusinessTest": {
+                      "@type": "License",
+                      "purchased": 1000,
+                      "used": 0
+                    },
+                    "enterpriseTest": {
+                      "@type": "License",
+                      "purchased": 1000,
+                      "used": 0
+                    },
+                    "tradingPartnerTest": {
+                      "@type": "License",
+                      "purchased": 1000,
+                      "used": 0
+                    }
+                  },
+                  "molecule": {
+                    "@type": "Molecule",
+                    "purchased": 40,
+                    "used": 8
+                  },
+                  "accountId": "abc-H566GG",
+                  "name": "ABC Co",
+                  "status": "active",
+                  "dateCreated": "2010-02-22T15:43:03Z",
+                  "supportAccess": true,
+                  "suggestionsEnabled": false,
+                  "supportLevel": "standard"
+                },
+                {
+                  "@type": "Account",
+                  "licensing": {
+                    "@type": "",
+                    "standard": {
+                      "@type": "License",
+                      "purchased": 10,
+                      "used": 2
+                    },
+                    "smallBusiness": {
+                      "@type": "License",
+                      "purchased": 10,
+                      "used": 0
+                    },
+                    "enterprise": {
+                      "@type": "License",
+                      "purchased": 10,
+                      "used": 0
+                    },
+                    "tradingPartner": {
+                      "@type": "License",
+                      "purchased": 10,
+                      "used": 0
+                    },
+                    "standardTest": {
+                      "@type": "License",
+                      "purchased": 1000,
+                      "used": 0
+                    },
+                    "smallBusinessTest": {
+                      "@type": "License",
+                      "purchased": 1000,
+                      "used": 0
+                    },
+                    "enterpriseTest": {
+                      "@type": "License",
+                      "purchased": 1000,
+                      "used": 0
+                    },
+                    "tradingPartnerTest": {
+                      "@type": "License",
+                      "purchased": 1000,
+                      "used": 0
+                    }
+                  },
+                  "molecule": {
+                    "@type": "Molecule",
+                    "purchased": 500,
+                    "used": 1
+                  },
+                  "accountId": "xyz-V3M1QL",
+                  "name": "Boomi Inc",
+                  "status": "active",
+                  "dateCreated": "2010-06-07T17:42:18Z",
+                  "supportAccess": true,
+                  "supportLevel": "standard"
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountQueryResponse.json"
+            },
+            "example": "<QueryResult numberOfResults=\"100\" xmlns=\"http://api.platform.boomi.com/\" xmlns:bns=\"http://api.platform.boomi.com/\">\n      <queryToken>EXAMPLE_QUERY_TOKEN</queryToken>\n      <result xsi:type=\"Account\" supportLevel=\"standard\" supportAccess=\"true\" suggestionsEnabled=\"false\"\n   overDeployed=\"false\"\n     dateCreated=\"2010-02-22T15:43:03Z\" expirationDate=\"2016-03-18T05:00:00Z\" status=\"active\" \n        name=\"ABC Co\" accountId=\"abc-H566GG\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n         <bns:licensing>\n            <bns:standard used=\"0\" purchased=\"0\"/>\n            <bns:smallBusiness used=\"0\" purchased=\"0\"/>\n            <bns:enterprise used=\"0\" purchased=\"0\"/>\n            <bns:tradingPartner used=\"0\" purchased=\"0\"/>\n            <bns:standardTest used=\"0\" purchased=\"0\"/>\n            <bns:smallBusinessTest used=\"0\" purchased=\"0\"/>\n            <bns:enterpriseTest used=\"0\" purchased=\"0\"/>\n            <bns:tradingPartnerTest used=\"0\" purchased=\"0\"/>\n         </bns:licensing>\n         <bns:molecule purchased=\"40\" used=\"8\"/>\n      </result>    \n      <result xsi:type=\"Account\" supportLevel=\"standard\" supportAccess=\"true\" \n        dateCreated=\"2010-06-07T17:42:18Z\" expirationDate=\"2016-09-07T05:00:00Z\" status=\"active\" \n        name=\"Boomi Inc\" accountId=\"xyz-V3M1QL\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n         <bns:licensing>\n            <bns:standard used=\"0\" purchased=\"0\"/>\n            <bns:smallBusiness used=\"0\" purchased=\"0\"/>\n            <bns:enterprise used=\"0\" purchased=\"0\"/>\n            <bns:tradingPartner used=\"0\" purchased=\"0\"/>\n            <bns:standardTest used=\"0\" purchased=\"0\"/>\n            <bns:smallBusinessTest used=\"0\" purchased=\"0\"/>\n            <bns:enterpriseTest used=\"0\" purchased=\"0\"/>\n            <bns:tradingPartnerTest used=\"0\" purchased=\"0\"/>\n         </bns:licensing>\n         <bns:molecule purchased=\"500\" used=\"1\"/>\n      </result>\n   </QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

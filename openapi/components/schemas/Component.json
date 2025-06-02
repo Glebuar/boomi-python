@@ -1,0 +1,51 @@
+{
+  "required": [
+    "description",
+    "encryptedValues",
+    "object",
+    "processOverrides"
+  ],
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "./ComponentMetadata.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "encryptedValues": {
+          "$ref": "./EncryptedValues.json",
+          "description": "A list of encrypted values.Optional for CREATE and UPDATE."
+        },
+        "description": {
+          "type": "string",
+          "xml": {
+            "namespace": "http://api.platform.boomi.com/"
+          },
+          "description": "If specified, the text description that appears at the top of an opened component.Optional for CREATE and UPDATE."
+        },
+        "object": {
+          "type": "object",
+          "xml": {
+            "namespace": "http://api.platform.boomi.com/"
+          },
+          "description": "The XML structure of the component object. The structure of the object contents vary by component type. Required. Object name for specific component type. Determines the type of component to create and update. Recommend exporting existing components to determine values. \n\n >**Note:** These values are slightly different from Component/@type values (reference the [Component Metadata object](/api/platformapi#tag/ComponentMetadata) topic for more information)."
+        },
+        "processOverrides": {
+          "type": "object",
+          "xml": {
+            "namespace": "http://api.platform.boomi.com/"
+          },
+          "description": "For process type components, specifies overridden values (for example, variables overridden by environment extensions)."
+        },
+        "folderFullPath": {
+          "type": "string",
+          "xml": {
+            "attribute": true
+          },
+          "description": "<br/>version <br/>type <br/>createdDate <br/>createdBy <br/>modifiedDate <br/>modifiedBy <br/>Deleted <br/>currentVersion <br/>folderName <br/>folderFullPath. \n\n Read-only system-generated values returned in the response. If included in the response, values for these fields are ignored."
+        }
+      }
+    }
+  ]
+}

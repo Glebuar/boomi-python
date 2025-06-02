@@ -1,0 +1,200 @@
+{
+  "post": {
+    "tags": [
+      "PackagedComponent"
+    ],
+    "summary": "Queries for a PackagedComponent object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryPackagedComponent",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/PackagedComponentQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "process"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "componentType"
+                      },
+                      {
+                        "argument": [
+                          "66d665d1-3ec7-479c-9e24-8df3fa728cf8"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "componentId"
+                      },
+                      {
+                        "argument": [
+                          "1.0"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "packageVersion"
+                      },
+                      {
+                        "argument": [
+                          "true"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "shareable"
+                      },
+                      {
+                        "argument": [
+                          "user@boomi.com"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "createdBy"
+                      },
+                      {
+                        "argument": [
+                          "2017-01-01T00:00:00Z",
+                          "2017-11-02T00:00:00Z"
+                        ],
+                        "operator": "BETWEEN",
+                        "property": "createdDate"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "and",
+                        "nestedExpression": [
+                          {
+                            "argument": [
+                              "process"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "componentType"
+                          },
+                          {
+                            "argument": [
+                              "66d665d1-3ec7-479c-9e24-8df3fa728cf8"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "componentId"
+                          },
+                          {
+                            "argument": [
+                              "1.0"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "packageVersion"
+                          },
+                          {
+                            "argument": [
+                              "true"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "shareable"
+                          },
+                          {
+                            "argument": [
+                              "user@boomi.com"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "createdBy"
+                          },
+                          {
+                            "argument": [
+                              "2017-01-01T00:00:00Z",
+                              "2017-11-02T00:00:00Z"
+                            ],
+                            "operator": "BETWEEN",
+                            "property": "createdDate"
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/PackagedComponentQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n        <expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n            <nestedExpression operator=\"EQUALS\" property=\"componentType\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>process</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"EQUALS\" property=\"componentId\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>66d665d1-3ec7-479c-9e24-8df3fa728cf8</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"EQUALS\" property=\"packageVersion\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>1.0</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"EQUALS\" property=\"shareable\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>true</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"EQUALS\" property=\"createdBy\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>user@boomi.com</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"BETWEEN\" property=\"createdDate\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>2017-01-01T00:00:00Z</argument>\n                <argument>2017-11-01T00:00:00Z</argument>\n            </nestedExpression>\n        </expression>\n    </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"componentType\">\n      <argument>process</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PackagedComponentQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "PackagedComponent",
+                  "packageId": "a4543ff8-5acf-4090-8094-ec8dbb6a7406",
+                  "packageVersion": "1.0",
+                  "componentId": "66d665d1-3ec7-479c-9e24-8df3fa728cf8",
+                  "componentVersion": "2.0",
+                  "componentType": "process",
+                  "createdDate": "2017-01-12T17:29:55Z",
+                  "createdBy": "user@boomi.com",
+                  "notes": "Created for component publication with GUID xxx",
+                  "shareable": true,
+                  "deleted": true
+                }
+              ],
+              "numberOfResults": 1
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/PackagedComponentQueryResponse.json"
+            },
+            "example": "<bns:QueryResult xmlns:bns=\"http://api.platform.boomi.com/\" numberOfResults=\"1\">\n        <bns:result xsi:type=\"PackagedComponent\">\n            <bns:packageId>a4543ff8-5acf-4090-8094-ec8dbb6a7406</bns:packageId>\n            <bns:packageVersion>1.0</bns:packageVersion>\n            <bns:componentId>66d665d1-3ec7-479c-9e24-8df3fa728cf8</bns:componentId>\n            <bns:componentVersion>2.0</bns:componentVersion>\n            <bns:componentType>process</bns:componentType>\n            <bns:createdDate>2017-01-12T17:29:55Z</bns:createdDate>\n            <bns:createdBy>user@boomi.com</bns:createdBy>\n            <bns:notes>Created for component publication with GUID xxx</bns:notes>\n            <bns:shareable>true</bns:shareable>\n            <bns:deleted>false</bns:deleted> \n        </bns:result>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

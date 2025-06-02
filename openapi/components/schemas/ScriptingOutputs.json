@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "Output": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./ScriptingParameter.json"
+      }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "required": [
+    "externalURL",
+    "mdnClientSSLCert",
+    "mdnSSLCert"
+  ],
+  "type": "object",
+  "properties": {
+    "externalURL": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "mdnClientSSLCert": {
+      "$ref": "./PrivateCertificate.json"
+    },
+    "mdnDigestAlg": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "SHA1",
+        "SHA224",
+        "SHA256",
+        "SHA384",
+        "SHA512"
+      ]
+    },
+    "mdnSSLCert": {
+      "$ref": "./PublicCertificate.json"
+    },
+    "requestMDN": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "signed": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "synchronous": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "sync",
+        "async"
+      ]
+    },
+    "useExternalURL": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "useSSL": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

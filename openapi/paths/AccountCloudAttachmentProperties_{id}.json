@@ -1,0 +1,93 @@
+{
+  "post": {
+    "tags": [
+      "AccountCloudAttachmentProperties"
+    ],
+    "summary": "Modifies or updates an AccountCloudAttachmentProperties object",
+    "description": "Modifies one or more Account Cloud attachment properties. \n\n - To update property values, include all property names that you want to modify including their new values in the request body you do not need to provide the full list of properties in the request. This action is equivalent to editing property values on the [Attachment quotas tab](https://help.boomi.com/docs/Atomsphere/Integration/Integration%20management/r-atm-Attachment_Quotas_tab_4fbc3fff-7aaf-4bbd-a2dc-25d0edb5189c) (Manage > Cloud Management) in the user interface. \n\n - To ensure a successful request, you must provide valid property names and their accepted values in the request body. Otherwise, it returns an error. \n\n - The response returns a status code of 200 indicating a successful request. To verify updates made to a property, you can make a new GET request or view the Cloud attachment quotas tab (Manage > Cloud Management) in the user interface. \n\n - To modify properties, you must be the owner of the private Runtime cloud, and both the Runtime cloud and its attachments must be online.",
+    "operationId": "UpdateAccountCloudAttachmentProperties",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AccountCloudAttachmentProperties.json"
+          },
+          "example": {
+            "containerId": "1b7a821e-2d32-4fa1-bdba-6b7caeaec33d",
+            "accountDiskUsage": "429496729600",
+            "numberofAtomWorkers": "1",
+            "atomInputSize": "413132133313",
+            "atomOutputOverflowSize": "421313313",
+            "atomWorkingOverflowSize": "31313313",
+            "httpRequestRate": "31313313",
+            "workerMaxExecutionTime": "30000",
+            "workerMaxGeneralExecutionTime": "600000",
+            "workerMaxRunningExecutions": "20",
+            "workerMaxQueuedExecutions": "10",
+            "workerQueuedExecutionTimeout": "10000",
+            "maxConnectorTrackDocs": "10000",
+            "httpWorkload": "LOW_LATENCY",
+            "as2Workload": "GENERAL",
+            "cloudAccountExecutionLimit": "2147383646",
+            "cloudAccountExecutionWarningOffset": "31313213",
+            "enableAtomWorkerWarmup": "false",
+            "minNumberofAtomWorkers": "1",
+            "testModeMaxDocs": "100",
+            "testModeMaxDocBytes": "10485760",
+            "enableAccountDataArchiving": "false",
+            "listenerMaxConcurrentExecutions": "6",
+            "downloadRunnerlogs": "true"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AccountCloudAttachmentProperties.json"
+          },
+          "example": "<bns:AccountCloudAttachmentProperties\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xmlns:bns=\"http://api.platform.boomi.com/\"\n    containerId=\"1b7a821e-2d32-4fa1-bdba-6b7caeaec33d\"\n    accountDiskUsage=\"429496729600\"\n    numberofAtomWorkers=\"1\"\n    atomInputSize=\"413132133313\"\n    atomOutputOverflowSize=\"421313313\"\n    atomWorkingOverflowSize=\"31313313\"\n    httpRequestRate=\"31313313\"\n    workerMaxExecutionTime=\"30000\"\n    workerMaxGeneralExecutionTime=\"600000\"\n    workerMaxRunningExecutions=\"20\"\n    workerMaxQueuedExecutions=\"10\"\n    workerQueuedExecutionTimeout=\"10000\"\n    maxConnectorTrackDocs=\"10000\"\n    httpWorkload=\"LOW_LATENCY\"\n    as2Workload=\"GENERAL\"\n    cloudAccountExecutionLimit=\"2147383646\"\n    cloudAccountExecutionWarningOffset=\"31313213\"\n    enableAtomWorkerWarmup=\"false\"\n    minNumberofAtomWorkers=\"1\"\n    testModeMaxDocs=\"100\"\n    testModeMaxDocBytes=\"10485760\"\n    enableAccountDataArchiving=\"false\"\n    listenerMaxConcurrentExecutions=\"6\"\n    downloadRunnerlogs=\"true\"\n/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountCloudAttachmentProperties.json"
+            },
+            "example": {
+              "@type": "AccountCloudAttachmentProperties",
+              "statusCode": "200",
+              "sessionId": "AccountCloudAttachmentProperties-1f23456f-a78f-91cc-012e-3e4dec5b67d8"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountCloudAttachmentProperties.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:AccountCloudAttachmentProperties xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" statusCode=\"200\" sessionId=\"AccountCloudAttachmentProperties-1f23456f-a78f-91cc-012e-3e4dec5b67d8\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

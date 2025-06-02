@@ -1,0 +1,19 @@
+{
+  "post": {
+    "tags": [
+      "ExecuteProcess"
+    ],
+    "summary": "Execute process operation",
+    "description": "This API is documented externally. Please visit the following link for full details:",
+    "externalDocs": {
+      "description": "Execute process operation",
+      "url": "/docs/APIs/PlatformAPI/MissingInOpenAPI/Execute_process_operation"
+    },
+    "responses": {
+      "201": {
+        "description": "Resource created",
+        "content": {}
+      }
+    }
+  }
+}

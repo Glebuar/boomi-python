@@ -1,0 +1,12 @@
+# RerunDocument
+
+**Properties**
+
+| Name                  | Type              | Required | Description                                                                                                                                                                                                                                                                               |
+| :-------------------- | :---------------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| all_documents         | AllDocuments      | ✅       | You must include either the `AllDocuments` field or the `SelectedDocuments` field in a request, but not both. Indicates that the Rerun Document operation reruns all documents in the original run. When using AllDocuments in a request, you must also specify a `documentStatus` value. |
+| selected_documents    | SelectedDocuments | ✅       | You must include either the `AllDocuments` field or the `SelectedDocuments` field in a request, but not both. Indicates that the Rerun Document operation reruns only those documents you specify in the `genericConnectorRecordId` value.                                                |
+| original_execution_id | str               | ✅       | The ID of the original process run. You can obtain the `originalExecutionId` from the user interface from the Process Reporting page, selecting the Actions menu for a specific process run, and selecting View Extended Information from the list of options.                            |
+| record_url            | str               | ❌       | (Response-only field) The ID of the process run. The initial CREATE response returns this field and uses it in the subsequent call to find the corresponding run record.                                                                                                                  |
+| request_id            | str               | ❌       | (Response-only field) The full endpoint URL used to make a second call to the Execution Record object. This URL is provided for your convenience in recordUrl field of the initial CREATE response.                                                                                       |
+

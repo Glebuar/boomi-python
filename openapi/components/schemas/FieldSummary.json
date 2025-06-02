@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "./Field.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "oauth2AuthorizationUrl": {
+          "type": "string",
+          "xml": {
+            "attribute": true
+          }
+        }
+      }
+    }
+  ]
+}

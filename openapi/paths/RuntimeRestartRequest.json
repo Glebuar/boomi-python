@@ -1,0 +1,60 @@
+{
+  "post": {
+    "tags": [
+      "RuntimeRestartRequest"
+    ],
+    "summary": "Creates a RuntimeRestartRequest object",
+    "description": "Restarts the runtime. \n\n - The client sends a runtime restart request to the platform API that specifies the runtimeId that you want to restart. \n - The platform returns the status code and message while the request is in progress. A successful response implies the restart request was submitted, not when the runtime restart is completed.",
+    "operationId": "CreateRuntimeRestartRequest",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/RuntimeRestartRequest.json"
+          },
+          "example": {
+            "runtimeId": "3456789a-bcde-f012-3456-789abcdef012"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/RuntimeRestartRequest.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:RuntimeRestartRequest runtimeId=\"657ff9d7-ad4c-4f46-bb4e-06827b12221b\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/RuntimeRestartRequest.json"
+            },
+            "example": {
+              "@type": "RuntimeRestartRequest",
+              "statusCode": 200,
+              "message": "Restart request submitted for runtimeId `3456789a-bcde-f012-3456-789abcdef012`. Use the Atom object to retrieve the current runtime status."
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/RuntimeRestartRequest.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:RuntimeRestartRequest xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" statusCode=\"200\" message=\"Restart request submitted for runtimeId \"3456789a-bcde-f012-3456-789abcdef012\". Use the Atom object to retrieve the current runtime status.\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

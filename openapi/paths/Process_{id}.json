@@ -1,0 +1,59 @@
+{
+  "get": {
+    "tags": [
+      "Process"
+    ],
+    "summary": "Retrieves an instance of a Process object",
+    "description": "Retrieves the properties of the process having the specified ID. \n\n The ordinary GET operation retrieves the properties of the process having the specified ID. The bulk GET operation retrieves the properties of the processes having the specified IDs, to a maximum of 100.",
+    "operationId": "GetProcess",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID assigned by the system to the process. For deployed processes and processes belonging to single-install integration packs, this value is the process component ID. For processes belonging to multi-install integration packs, this is an synthetic ID and does not match an actual process component. You can use this value as the `extensionGroupId` when querying the Environment Extensions object."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Process.json"
+            },
+            "example": {
+              "@type": "Process",
+              "IntegrationPack": [
+                {
+                  "@type": "ProcessIntegrationPackInfo",
+                  "integrationPackId": "89abcdef-0123-4567-89ab-cdef01234567",
+                  "integrationPackInstanceId": "76543210FEDCBA9876543210FEDCBA98"
+                }
+              ],
+              "name": "Order Intake",
+              "id": "56789abc-def0-1234-5678-9abcdef01234"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Process.json"
+            },
+            "example": "<bns:Process xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \n       id=\"56789abc-def0-1234-5678-9abcdef01234\" name=\"Order Intake\">\n        <bns:IntegrationPack integrationPackInstanceId=\"76543210FEDCBA9876543210FEDCBA98\" \n          integrationPackId=\"89abcdef-0123-4567-89ab-cdef01234567\"/>\n     </bns:Process>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

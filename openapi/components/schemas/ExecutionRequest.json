@@ -1,0 +1,79 @@
+{
+  "required": [
+    "DynamicProcessProperties",
+    "ProcessProperties",
+    "atomId"
+  ],
+  "type": "object",
+  "properties": {
+    "DynamicProcessProperties": {
+      "description": "The full list of Dynamic Process properties within the specified Runtime, Runtime cluster, or cloud, where each property is defined by their name and value.",
+      "$ref": "./ExecutionRequestDynamicProcessProperties.json",
+      "example": {
+        "DynamicProcessProperty": [
+          {
+            "name": "property1",
+            "value": "value1"
+          },
+          {
+            "name": "property2"
+          }
+        ]
+      }
+    },
+    "ProcessProperties": {
+      "$ref": "./ExecutionRequestProcessProperties.json",
+      "example": {
+        "ProcessProperty": {
+          "componentId": "456789a-bcde-f0123-4567-89abcdef012",
+          "ProcessPropertyValue": [
+            {
+              "key": "key1",
+              "value": "value1"
+            },
+            {
+              "key": "key2"
+            }
+          ]
+        }
+      }
+    },
+    "atomId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the Runtime on which to run the process. Locate the Runtime ID by navigating to **Manage** \\> **Runtime Management** on the user interface, and viewing the Runtime Information panel for a selected Runtime.",
+      "example": "3456789a-bcde-f0123-4567-89abcdef012"
+    },
+    "processId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the process to run. You can find ID of a process by locating the process' **Component ID** in the **Revision History** dialog on the user interface.",
+      "example": "789abcde-f012-3456-789a-bcdef0123456"
+    },
+    "processName": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "recordUrl": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "\\(Response-only field\\) The ID of the process run. This field is returned in the initial POST response and is used in the subsequent call to find the corresponding run record.",
+      "example": "https://api.boomi.com/api/rest/v1/account1234/ExecutionRecord/async/executionrecord-110b23f4-567a-8d90-1234-56789e0b123d"
+    },
+    "requestId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "example": "executionrecord-110b23f4-567a-8d90-1234-56789e0b123d"
+    }
+  }
+}

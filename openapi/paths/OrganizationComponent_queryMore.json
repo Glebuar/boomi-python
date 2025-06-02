@@ -1,0 +1,73 @@
+{
+  "post": {
+    "tags": [
+      "OrganizationComponent"
+    ],
+    "summary": "Retrieves additional results for an OrganizationComponent query",
+    "description": "To learn about using `queryMore`, refer to [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryMoreOrganizationComponent",
+    "requestBody": {
+      "content": {
+        "text/plain": {
+          "schema": {
+            "type": "string"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/OrganizationComponentQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "OrganizationComponent",
+                  "OrganizationContactInfo": {
+                    "@type": "OrganizationContactInfo",
+                    "contactName": "Tom Miller",
+                    "description": "Shared Organization component for Best Wholesaling",
+                    "address1": "127 Comstock Ave.",
+                    "address2": "",
+                    "city": "Philadelphia",
+                    "state": "PA",
+                    "postalcode": "19100",
+                    "country": "US",
+                    "email": "tom@bestwholesaling.biz",
+                    "phone": "311 555-3579",
+                    "contactUrl": "https://www.bestwholesaling.biz",
+                    "fax": "311 555-9753"
+                  },
+                  "componentName": "Best Wholesaling",
+                  "componentId": "89abcdef-0123-4567-89ab-cdef01234567",
+                  "folderId": 11356
+                }
+              ],
+              "numberOfResults": 1
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/OrganizationComponentQueryResponse.json"
+            },
+            "example": "<bns:QueryResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" numberOfResults=\"1\">\n<bns:result xsi:type=\"bns:OrganizationComponent\" componentName=\"Best Wholesaling\" componentId=\"89abcdef-0123-4567-89ab-cdef01234567\" folderId=\"11356\">\n<bns:OrganizationContactInfo>\n<bns:contactName>Tom Miller</bns:contactName>\n<bns:address1>127 Comstock Ave.</bns:address1>\n<bns:address2></bns:address2>\n<bns:city>Philadelphia</bns:city>\n<bns:state>PA</bns:state>\n<bns:postalcode>19100</bns:postalcode>\n<bns:country>US</bns:country>\n<bns:email>tom@bestwholesaling.biz</bns:email>\n<bns:phone>311 555-3579</bns:phone>\n<bns:contactUrl>https://www.bestwholesaling.biz</bns:contactUrl>\n<bns:fax>311 555-9753</bns:fax>\n</bns:OrganizationContactInfo>\n</bns:result>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

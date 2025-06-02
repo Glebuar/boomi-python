@@ -1,0 +1,33 @@
+{
+  "delete": {
+    "tags": [
+      "deployment"
+    ],
+    "summary": "Deletes a ProcessEnvironmentAttachment object",
+    "description": "Detaches a process from an environment where the attachment is specified by the conceptual Process Environment Attachment object ID.",
+    "operationId": "DeleteProcessEnvironmentAttachment",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

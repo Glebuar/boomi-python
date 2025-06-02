@@ -1,0 +1,156 @@
+{
+  "post": {
+    "tags": [
+      "Atom"
+    ],
+    "summary": "Queries for a Runtime object(s)",
+    "description": "Use either `BROKER` or `GATEWAY` with either the CONTAINS or NOT_CONTAINS operator to filter by API Gateways and Authentication Brokers that you own. \n\n For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryAtom",
+    "requestBody": {
+      "description": " Possible properties include: name, id, hostname, status, type, capabilities",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AtomQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "ONLINE"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "status"
+                      },
+                      {
+                        "argument": [
+                          "ATOM"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "type"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "and",
+                        "nestedExpression": [
+                          {
+                            "argument": [
+                              "ONLINE"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "status"
+                          },
+                          {
+                            "argument": [
+                              "ATOM"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "type"
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AtomQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n<QueryFilter>\n<expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n<nestedExpression operator=\"EQUALS\" property=\"status\" xsi:type=\"SimpleExpression\">\n<argument>ONLINE</argument>\n</nestedExpression>\n<nestedExpression operator=\"EQUALS\" property=\"type\" xsi:type=\"SimpleExpression\">\n<argument>ATOM</argument>\n</nestedExpression>\n</expression>\n</QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"status\">\n      <argument>ONLINE</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AtomQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 6,
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "Atom",
+                  "id": "3456789a-bcde-f012-3456-789abcdef012",
+                  "name": "My Local Atom",
+                  "status": "ONLINE",
+                  "type": "ATOM",
+                  "hostName": "WN7X64-11A2BB3",
+                  "dateInstalled": "2016-02-05T14:49:21Z",
+                  "currentVersion": "17.08.0.0",
+                  "purgeHistoryDays": 18,
+                  "purgeImmediate": false,
+                  "forceRestartTime": 9
+                },
+                {
+                  "@type": "Atom",
+                  "id": "210fedcb-a987-6543-210f-edcba9876543",
+                  "name": "My Sixth Local Atom",
+                  "status": "ONLINE",
+                  "type": "ATOM",
+                  "hostName": "WN7X64-11A2BB3",
+                  "dateInstalled": "2016-01-09T11:22:33Z",
+                  "currentVersion": "17.08.0.0",
+                  "purgeHistoryDays": 15,
+                  "purgeImmediate": false,
+                  "forceRestartTime": 9
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AtomQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"6\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns=\"http://api.platform.boomi.com/\">\n      <bns:result xsi:type=\"Atom\" id=\"3456789a-bcde-f012-3456-789abcdef012\" \n         name=\"My Local Atom\" status=\"ONLINE\" type=\"ATOM\" hostName=\"WN7X64-11A2BB3\" \n         dateInstalled=\"2016-02-05T14:49:21Z\" currentVersion=\"17.08.0.0\" \n         purgeHistoryDays=\"18\" purgeImmediate=\"false\" forceRestartTime=\"9\"/>\n      <bns:result xsi:type=\"Atom\" id=\"210fedcb-a987-6543-210f-edcba9876543\" \n         name=\"My Sixth Local Atom\" status=\"ONLINE\" type=\"ATOM\" hostName=\"WN7X64-11A2BB3\" \n         dateInstalled=\"2016-01-09T11:22:33Z\" currentVersion=\"17.08.0.0\" \n         purgeHistoryDays=\"15\" purgeImmediate=\"false\" forceRestartTime=\"9\"/>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

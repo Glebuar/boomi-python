@@ -1,0 +1,76 @@
+{
+  "post": {
+    "tags": [
+      "IntegrationPackInstance"
+    ],
+    "summary": "Creates an IntegrationPackInstance object",
+    "description": "Installs an instance of the integration pack with a specific ID in the requesting account. You can set the integrationPackOverrideName field only if you configure the specified integration pack to allow multiple installs.",
+    "operationId": "CreateIntegrationPackInstance",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/IntegrationPackInstance.json"
+          },
+          "example": {
+            "integrationPackOverrideName": "Domestic Order Intake",
+            "integrationPackId": "89abcdef-0123-4567-89ab-cdef01234567"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/IntegrationPackInstance.json"
+          },
+          "example": "<bns:IntegrationPackInstance integrationPackOverrideName=\"Domestic Order Intake\"\n      integrationPackId=\"89abcdef-0123-4567-89ab-cdef01234567\" xmlns:bns=\"http://api.platform.boomi.com/\" \n      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/IntegrationPackInstance.json"
+            },
+            "example": {
+              "@type": "IntegrationPackInstance",
+              "ProcessId": [
+                {
+                  "@type": "ProcessId",
+                  "originalProcessId": "bc407c7d-cacc-48da-a430-c6a4d2835a83",
+                  "wrapperProcessId": "52896de8-229a-449a-ae5d-ecfe8fc2e770",
+                  "name": "Domestic Order Intake test1 - INT"
+                },
+                {
+                  "@type": "ProcessId",
+                  "originalProcessId": "f23ce1b1-7440-4535-a534-685a17a41607",
+                  "wrapperProcessId": "4dbfb44f-2676-488c-beb8-1121677117a3",
+                  "name": "Domestic Order Intake test1 - New Process 3"
+                }
+              ],
+              "integrationPackId": "89abcdef-0123-4567-89ab-cdef01234567",
+              "integrationPackOverrideName": "Domestic Order Intake test1",
+              "id": "SW50ZWdyYXRpb25QYWNrSW5zdGFuY2UyNQ"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/IntegrationPackInstance.json"
+            },
+            "example": "<bns:IntegrationPackInstance xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" integrationPackId=\"89abcdef-0123-4567-89ab-cdef01234567\" integrationPackOverrideName=\"Domestic Order Intake test1\" id=\"SW50ZWdyYXRpb25QYWNrSW5zdGFuY2UyMw\">\n       <bns:ProcessId originalProcessId=\"bc407c7d-cacc-48da-a430-c6a4d2835a83\" wrapperProcessId=\"4189e5df-a456-4cb7-9cdb-fb84f82ab609\" name=\"Domestic Order Intake test1 - INT\"/>\n       <bns:ProcessId originalProcessId=\"f23ce1b1-7440-4535-a534-685a17a41607\" wrapperProcessId=\"0dece882-8f8a-4d95-9f73-69a3c8315aeb\" name=\"Domestic Order Intake test1 - New Process 3\"/>\n    </bns:IntegrationPackInstance>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

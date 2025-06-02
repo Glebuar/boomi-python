@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./IntegrationPackSimpleExpression.json"
+    },
+    {
+      "$ref": "./IntegrationPackGroupingExpression.json"
+    }
+  ]
+}

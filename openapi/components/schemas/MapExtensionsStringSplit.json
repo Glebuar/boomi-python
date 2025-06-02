@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "delimiter": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "splitLength": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

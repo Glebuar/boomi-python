@@ -1,0 +1,121 @@
+{
+  "post": {
+    "tags": [
+      "AccountGroupIntegrationPack"
+    ],
+    "summary": "Queries for an AccountGroupIntegrationPack object(s)",
+    "description": "Retrieves all integration packs available to the requesting account group ID. \n\n For general information about the structure of QUERY filters and how to handle paged results, see the Query filters and Query paging topics.",
+    "operationId": "QueryAccountGroupIntegrationPack",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AccountGroupIntegrationPackQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "cd17f866-c247-4c54-a1a1-ea8f8f86a1d1"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "accountGroupId"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "cd17f866-c247-4c54-a1a1-ea8f8f86a1d1"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "accountGroupId"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AccountGroupIntegrationPackQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n  <QueryFilter>\n    <expression operator=\"EQUALS\" property=\"accountGroupId\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n      <argument>cd17f866-c247-4c54-a1a1-ea8f8f86a1d1</argument>\n    </expression>\n  </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<?xml version=\"1.0\" ?>\n<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n  <QueryFilter>\n    <expression operator=\"and\" xsi:type=\"GroupingExpression\">\n      <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"accountGroupId\">\n        <argument>cd17f866-c247-4c54-a1a1-ea8f8f86a1d1</argument>\n      </nestedExpression>\n      <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n        <argument>another-value</argument>\n      </nestedExpression>\n    </expression>\n  </QueryFilter>\n</QueryConfig>\n"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroupIntegrationPackQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "AccountGroupIntegrationPack",
+                  "accountGroupId": "cd17f866-c247-4c54-a1a1-ea8f8f86a1d1",
+                  "integrationPackId": "cd17f866-c247-4c54-a1a1-ea8f8f863456",
+                  "integrationPackName": "test integration pack",
+                  "installationType": "SINGLE",
+                  "id": "MXxjZDE3Zjg2Ni1jMjQ3LTRjNTQtYTFhMS1lYThmOGY4NmExZDE"
+                },
+                {
+                  "@type": "AccountGroupIntegrationPack",
+                  "accountGroupId": "cd17f866-c247-4c54-a1a1-ea8f8f86a1d1",
+                  "integrationPackId": "fc32f440-9a53-45ce-bd6b-014755dadb64",
+                  "integrationPackName": "New update Ipac",
+                  "installationType": "MULTI",
+                  "id": "MTJ8Y2QxN2Y4NjYtYzI0Ny00YzU0LWExYTEtZWE4ZjhmODZhMWQx"
+                }
+              ],
+              "numberOfResults": 2
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroupIntegrationPackQueryResponse.json"
+            },
+            "example": "<bns:QueryResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" numberOfResults=\"2\">\n    <bns:result xsi:type=\"bns:AccountGroupIntegrationPack\" accountGroupId=\"cd17f866-c247-4c54-a1a1-ea8f8f86a1d1\" integrationPackId=\"cd17f866-c247-4c54-a1a1-ea8f8f863456\" integrationPackName=\"test integration pack\" installationType=\"SINGLE\" id=\"MXxjZDE3Zjg2Ni1jMjQ3LTRjNTQtYTFhMS1lYThmOGY4NmExZDE\"/>\n    <bns:result xsi:type=\"bns:AccountGroupIntegrationPack\" accountGroupId=\"cd17f866-c247-4c54-a1a1-ea8f8f86a1d1\" integrationPackId=\"fc32f440-9a53-45ce-bd6b-014755dadb64\" integrationPackName=\"New update Ipac\" installationType=\"MULTI\" id=\"MTJ8Y2QxN2Y4NjYtYzI0Ny00YzU0LWExYTEtZWE4ZjhmODZhMWQx\"/>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

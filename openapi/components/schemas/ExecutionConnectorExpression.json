@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./ExecutionConnectorSimpleExpression.json"
+    },
+    {
+      "$ref": "./ExecutionConnectorGroupingExpression.json"
+    }
+  ]
+}

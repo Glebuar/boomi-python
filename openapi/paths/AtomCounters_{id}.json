@@ -1,0 +1,83 @@
+{
+  "post": {
+    "tags": [
+      "AtomCounters"
+    ],
+    "summary": "Modifies or updates an AtomCounters object",
+    "description": "The UPDATE operation updates Runtime Counter values for a specific Runtime. Using the UPDATE operation overrides all settings set on the current counter. However, calling the UPDATE operation does not delete any existing counters that are not included in the `AtomCounters` object.",
+    "operationId": "UpdateAtomCounters",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID assigned by the system to the Runtime."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AtomCounters.json"
+          },
+          "example": {
+            "id": "3456789a-bcde-f012-3456-789abcdef012",
+            "purgeHistoryDays": 90
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AtomCounters.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <api:AtomCounters xmlns:api=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" atomId=\"3456789a-bcde-f012-3456-789abcdef012\">\n        <api:counter name=\"run130Counter\" value=\"6\"/>\n    </api:AtomCounters>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AtomCounters.json"
+            },
+            "example": {
+              "@type": "AtomCounters",
+              "counter": [
+                {
+                  "@type": "Counter",
+                  "name": "counter1",
+                  "value": 3
+                },
+                {
+                  "@type": "Counter",
+                  "name": "counter2",
+                  "value": 4
+                }
+              ],
+              "atomId": "d63aaa92-4520-4592-b070-3487d0e03522"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AtomCounters.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <api:AtomCounters xmlns:api=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" atomId=\"3456789a-bcde-f012-3456-789abcdef012\">\n        <api:counter name=\"run130Counter\" value=\"6\"/>\n    </api:AtomCounters>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

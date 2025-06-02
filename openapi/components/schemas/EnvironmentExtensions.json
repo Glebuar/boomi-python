@@ -1,0 +1,287 @@
+{
+  "required": [
+    "PGPCertificates",
+    "connections",
+    "crossReferences",
+    "operations",
+    "processProperties",
+    "properties",
+    "sharedCommunications",
+    "tradingPartners"
+  ],
+  "type": "object",
+  "properties": {
+    "PGPCertificates": {
+      "$ref": "./PGPCertificates.json",
+      "example": {
+        "PGPCertificate": {
+          "id": "6a9cb126...",
+          "value": "Production Certificate"
+        }
+      }
+    },
+    "connections": {
+      "$ref": "./Connections.json",
+      "example": {
+        "connection": [
+          {
+            "name": "Local MySql",
+            "id": "9ba5dfab-8781-4e6a-b908-0c7a7797d17a",
+            "field": [
+              {
+                "componentOverride": "false",
+                "usesEncryption": "false",
+                "encryptedValueSet": "false",
+                "id": "exhaustedAction",
+                "useDefault": "true"
+              },
+              {
+                "componentOverride": "false",
+                "usesEncryption": "false",
+                "encryptedValueSet": "false",
+                "id": "driverId",
+                "useDefault": "true",
+                "customProperties": {
+                  "properties": [
+                    {
+                      "key": "plainTextKey",
+                      "value": "plaintextValue",
+                      "encrypted": "false"
+                    },
+                    {
+                      "key": "encryptedKey"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "name": "AndLinux - Datadump",
+            "id": "e3aeadb7-ee49-4596-9e8f-22c04724c88d",
+            "field": {
+              "componentOverride": "false",
+              "usesEncryption": "false",
+              "encryptedValueSet": "false",
+              "id": "directory",
+              "value": "mydirectory",
+              "useDefault": "true"
+            }
+          },
+          {
+            "name": "New QuickBooks Connection",
+            "id": "c9f59f09-e592-4dae-98b9-ddf1e3512f53",
+            "field": [
+              {
+                "componentOverride": "false",
+                "usesEncryption": "false",
+                "encryptedValueSet": "false",
+                "id": "appName",
+                "useDefault": "true"
+              },
+              {
+                "componentOverride": "false"
+              },
+              {
+                "componentOverride": "false"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "crossReferences": {
+      "$ref": "./CrossReferences.json",
+      "example": {
+        "crossReference": {
+          "name": "My Cross Reference",
+          "overrideValues": "true",
+          "id": "a6759305...",
+          "CrossReferenceRows": {
+            "row": [
+              {
+                "ref3": "3",
+                "ref2": "2",
+                "ref1": "1"
+              },
+              {
+                "ref3": "1"
+              },
+              {
+                "ref3": "2"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "environmentId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the environment.",
+      "example": "456789ab-cdef-0123-4567-89abcdef0123"
+    },
+    "extensionGroupId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The synthesized ID of the process belonging to a multi-install integration pack to which the extension values apply, if applicable. For more information, see the section in the Working with Environment Extensions subtopic about multi-install integration packs.",
+      "example": ""
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the object. This can be either of the following:<br /> 1. The value of environmentId.<br /> 2. A conceptual ID synthesized from the environment ID \\(environmentId\\) and the ID of the multi-install integration pack to which the extension values apply \\(extensionGroupId\\).",
+      "example": "456789ab-cdef-0123-4567-89abcdef0123"
+    },
+    "operations": {
+      "$ref": "./Operations.json",
+      "example": {
+        "operation": {
+          "id": "2b9a80d2...",
+          "name": "WebService Operation",
+          "field": {
+            "componentOverride": "false",
+            "encryptedValueSet": "false",
+            "id": "ObjectName",
+            "usesEncryption": "false",
+            "value": "Updated",
+            "useDefault": "true"
+          }
+        }
+      }
+    },
+    "partial": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      },
+      "description": "Supplied only in an UPDATE operation. <br />-   If set to true, indicates that the request includes only a subset of environment extension values to update. <br /> -   If set to false, indicates that the request includes the full set of environment extension values to update. Values not included in the request are reset to use their default values."
+    },
+    "processProperties": {
+      "$ref": "./OverrideProcessProperties.json",
+      "example": {
+        "ProcessProperty": {
+          "name": "Test Process Property",
+          "id": "5399215e...",
+          "ProcessPropertyValue": [
+            {
+              "encryptedValueSet": "false",
+              "value": "300",
+              "key": "new-1355426770730",
+              "label": "First",
+              "useDefault": "true"
+            },
+            {
+              "encryptedValueSet": "false"
+            }
+          ]
+        }
+      }
+    },
+    "properties": {
+      "$ref": "./Properties.json",
+      "example": {
+        "property": [
+          {
+            "name": "reference",
+            "value": "myreference"
+          },
+          {
+            "name": "baseURL"
+          },
+          {
+            "name": "datetime"
+          }
+        ]
+      }
+    },
+    "sharedCommunications": {
+      "$ref": "./SharedCommunications.json",
+      "example": {
+        "sharedCommunication": {
+          "id": "54748ce7...",
+          "name": "Best Enterprises MyCo",
+          "type": "http",
+          "field": [
+            {
+              "id": "http-trustedcertalias",
+              "encryptedValueSet": "false",
+              "usesEncryption": "false",
+              "componentOverride": "false",
+              "value": "usercred",
+              "useDefault": "true"
+            },
+            {
+              "id": "http-password"
+            },
+            {
+              "id": "http-clientId"
+            },
+            {
+              "id": "http-user"
+            },
+            {
+              "id": "http-password"
+            }
+          ]
+        }
+      }
+    },
+    "tradingPartners": {
+      "$ref": "./TradingPartners.json",
+      "example": {
+        "tradingPartner": {
+          "name": "My Company",
+          "id": "19b261d1...",
+          "category": [
+            {
+              "name": "AS2",
+              "id": "as2",
+              "field": [
+                {
+                  "componentOverride": "true",
+                  "usesEncryption": "false",
+                  "encryptedValueSet": "false",
+                  "value": "85166fdd...",
+                  "id": "as2identity-encryptAlias",
+                  "useDefault": "true"
+                },
+                {
+                  "componentOverride": "false"
+                },
+                {
+                  "componentOverride": "false"
+                }
+              ]
+            },
+            {
+              "name": "X12 Information",
+              "id": "x12",
+              "field": [
+                {
+                  "componentOverride": "false",
+                  "usesEncryption": "false",
+                  "encryptedValueSet": "false",
+                  "id": "x12envelope-interchangeid",
+                  "useDefault": "true"
+                },
+                {
+                  "componentOverride": "false"
+                },
+                {
+                  "componentOverride": "false"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "required": [
+    "componentId",
+    "sourceVersion",
+    "targetVersion"
+  ],
+  "type": "object",
+  "properties": {
+    "CompDiffConfig": {
+      "$ref": "./CompDiffConfig.json"
+    },
+    "componentId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the component for which you want to compare versions."
+    },
+    "sourceVersion": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The source version of the component."
+    },
+    "targetVersion": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The target version which you want to compare to the source version."
+    }
+  }
+}

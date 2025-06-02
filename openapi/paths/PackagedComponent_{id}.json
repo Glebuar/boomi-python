@@ -1,0 +1,90 @@
+{
+  "get": {
+    "tags": [
+      "PackagedComponent"
+    ],
+    "summary": "Retrieves an instance of a PackagedComponent object",
+    "description": "Retrieves the packaged component with the specified ID.",
+    "operationId": "GetPackagedComponent",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PackagedComponent.json"
+            },
+            "example": {
+              "@type": "PackagedComponent",
+              "packageId": "e8dbc278-e970-49e5-84bd-af39d7d38140",
+              "packageVersion": "2.0",
+              "componentId": "66d665d1-3ec7-479c-9e24-8df3fa728cf8",
+              "componentVersion": "2.0",
+              "componentType": "process",
+              "createdDate": "2017-03-16T13:34:01Z",
+              "createdBy": "user@boomi.com",
+              "notes": "Created for component publication with GUID f7f6ddb6-9437-4a90-9655-f01970068ca8 and version 2.",
+              "shareable": true,
+              "deleted": false
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/PackagedComponent.json"
+            },
+            "example": "<bns:PackagedComponent xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n        <bns:packageId>e8dbc278-e970-49e5-84bd-af39d7d38140</bns:packageId>\n        <bns:packageVersion>2.0</bns:packageVersion>\n        <bns:componentId>66d665d1-3ec7-479c-9e24-8df3fa728cf8</bns:componentId>\n        <bns:componentVersion>2.0</bns:componentVersion>\n        <bns:componentType>process</bns:componentType>\n        <bns:createdDate>2017-03-16T13:34:01Z</bns:createdDate>\n        <bns:createdBy>user@boomi.com</bns:createdBy>\n        <bns:notes>Created for component publication with GUID f7f6ddb6-9437-4a90-9655-f01970068ca8 and version 2.</bns:notes>\n        <bns:shareable>true</bns:shareable>\n        <bns:deleted>false</bns:deleted> \n     </bns:PackagedComponent>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "PackagedComponent"
+    ],
+    "summary": "Deletes a PackagedComponent object",
+    "description": "- The DELETE operation deletes a specific packaged component version. The id that you provide in the endpoint represents a Packaged Component ID. You can retrieve the Packaged Component ID (packageId) using the GET and QUERY operations, or by viewing the **Packaged Component History** dialog for a specific version in the Integration user interface.\n  >**Note:** You can restore deleted packaged components using the CREATE operation. See the section **Using the CREATE operation** for more details.\n\n- You cannot delete a packaged component if it is already in use. If currently deployed, a packaged component is considered in use if it is used in the **Process Library** or as part of an integration pack.",
+    "operationId": "DeletePackagedComponent",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

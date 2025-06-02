@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "convertFrom": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "convertTo": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

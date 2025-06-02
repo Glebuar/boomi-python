@@ -1,0 +1,19 @@
+{
+  "get": {
+    "tags": [
+      "CancelExecution"
+    ],
+    "summary": "Cancel execution operation",
+    "description": "This API is supported by the Platform Partner APIs. Refer to the Partner API Reference.",
+    "externalDocs": {
+      "description": "Partner API Reference",
+      "url": "/api/platformpartnerapi#tag/Cancel-execution-operation"
+    },
+    "responses": {
+      "200": {
+        "description": "Success response",
+        "content": {}
+      }
+    }
+  }
+}

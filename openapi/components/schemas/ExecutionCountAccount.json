@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the account under which the runs occurred.",
+      "example": "account-123456"
+    },
+    "atomId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the Runtime on which the runs occurred.",
+      "example": "3456789a-bcde-f0123-4567-89abcdef012"
+    },
+    "date": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The date on which the runs occurred. The time zone is UTC±00:00.",
+      "example": "2016-05-14"
+    },
+    "failures": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The count of failed runs.",
+      "example": "4"
+    },
+    "successes": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The count of successful runs.",
+      "example": "284"
+    }
+  }
+}

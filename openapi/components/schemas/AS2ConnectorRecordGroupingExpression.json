@@ -1,0 +1,59 @@
+{
+  "required": [
+    "operator"
+  ],
+  "type": "object",
+  "properties": {
+    "nestedExpression": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./AS2ConnectorRecordExpression.json"
+      }
+    },
+    "operator": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "and",
+        "or"
+      ]
+    }
+  },
+  "content": {
+    "application/json": {
+      "examples": {
+        "jsonExample": {
+          "summary": "Grouping Expression in JSON",
+          "value": {
+            "operator": "and",
+            "nestedExpression": [
+              {
+                "operator": "EQUALS",
+                "property": "executionId",
+                "argument": [
+                  "execution-01234567-89ab-cdef-0123-456789abcdef-2018.07.11"
+                ]
+              },
+              {
+                "operator": "EQUALS",
+                "property": "as2FromId",
+                "argument": [
+                  "DASHER"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "xml": {
+    "name": "GroupingExpression",
+    "namespace": "http://api.platform.boomi.com/"
+  }
+}

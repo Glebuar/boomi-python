@@ -1,0 +1,52 @@
+{
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "required": [
+          "Result"
+        ],
+        "type": "object",
+        "properties": {
+          "Result": {
+            "$ref": "./AccountSSOConfig.json"
+          },
+          "index": {
+            "type": "integer",
+            "format": "int32",
+            "xml": {
+              "attribute": true
+            }
+          },
+          "id": {
+            "type": "string",
+            "xml": {
+              "attribute": true
+            }
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32",
+            "xml": {
+              "attribute": true
+            }
+          },
+          "errorMessage": {
+            "type": "string",
+            "xml": {
+              "attribute": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "xml": {
+    "name": "BulkResult",
+    "namespace": "http://api.platform.boomi.com/"
+  }
+}

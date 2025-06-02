@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "integrationPackId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "If the process is in an installed integration pack, this is the unique ID assigned by the system to the integration pack."
+    },
+    "integrationPackInstanceId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "If the process is in an installed integration pack, this is the unique ID assigned by the system to the installed instance of the integration pack."
+    }
+  }
+}

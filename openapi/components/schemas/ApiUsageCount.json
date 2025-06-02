@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "classification": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "PROD",
+        "TEST"
+      ],
+      "description": "The environment classification."
+    },
+    "errorCount": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The count of unsuccessful process runs, where the status is error or aborted."
+    },
+    "processDate": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The start time of the day, in UTC. \n\n Date with the format yyyy-MM-dd'T'HH:mm:ss'Z' — for example, 2017-09-01T00:00:00Z.To specify a time block, use the BETWEEN operator with two arguments, one representing the start time and the other representing the end time. \n\n Boomi recommends specifying a time block in all queries, particularly for heavy users of Low Latency processes, as a means of preventing the return of excessively large amounts of data."
+    },
+    "successCount": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The count of successful process runs, where a successful run is one with a status of complete."
+    }
+  }
+}

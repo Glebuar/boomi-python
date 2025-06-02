@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The endpoint URL to retrieve the connector document. This URL is returned in the initial CREATE response.",
+      "example": "https://api.platform.boomi.com/account/boomiaccount123/api/download/ConnectorDocument-a6bc21d6-94e6-4039-8f29-g4h1094i1802"
+    },
+    "message": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "",
+      "example": "Beginning download."
+    },
+    "statusCode": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "",
+      "example": "202"
+    }
+  }
+}

@@ -1,0 +1,189 @@
+{
+  "get": {
+    "tags": [
+      "Role"
+    ],
+    "summary": "Retrieves an instance of a Role object",
+    "description": "Returns a single Role object based on the supplied role ID.",
+    "operationId": "GetRole",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Role.json"
+            },
+            "example": {
+              "@type": "Role",
+              "Description": "Updated Role",
+              "Privileges": {
+                "@type": "Privileges",
+                "Privilege": [
+                  {
+                    "@type": "",
+                    "name": "DEPLOY"
+                  },
+                  {
+                    "@type": "",
+                    "name": "SCHEDULE_MAINTENANCE"
+                  }
+                ]
+              },
+              "id": "f3fb5e19-fc47-442e-a978-c47db961ecfb",
+              "accountId": "account-12345",
+              "name": "Soap Role"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Role.json"
+            },
+            "example": "<bns:Role xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" parentId=\"ca7f37b3-f976-4d06-b885-81520b467a69\" name=\"Other Role\" accountId=\"accountId-12345\" id=\"939f8472-c279-4b65-93b0-ee56c2881b3e\">\n        <bns:Description>my role</bns:Description>\n        <bns:Privileges>\n            <bns:Privilege name=\"API\"/>\n            <bns:Privilege name=\"BUILD\"/>\n        </bns:Privileges>\n    </bns:Role>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "Role"
+    ],
+    "summary": "Modifies or updates a Role object",
+    "description": "Updates a role as identified by its role ID.",
+    "operationId": "UpdateRole",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/Role.json"
+          },
+          "example": {
+            "Description": "my updated role",
+            "Privileges": {
+              "Privilege": [
+                {
+                  "name": "VIEW_RESULT"
+                },
+                {
+                  "name": "EMBED"
+                }
+              ]
+            },
+            "accountId": "accountid-12345",
+            "id": "f3fb5e19-fc47-442e-a978-c47db961ecfb",
+            "name": "UpdatedJsonRole"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/Role.json"
+          },
+          "example": "<bns:Role xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" name=\"newRoleName\" accountId=\"accountId-12345\" id=\"ca7f37b3-f976-4d06-b885-81520b467a69f\">\n        <bns:Description>Updated custom role</bns:Description>\n        <bns:Privileges>\n            <bns:Privilege name=\"API\"/>\n                <bns:Privilege name=\"EXECUTE\"/>\n                <bns:Privilege name=\"BUILD\"/>\n        </bns:Privileges>\n    </bns:Role>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Role.json"
+            },
+            "example": {
+              "@type": "Role",
+              "Description": "my updated role",
+              "Privileges": {
+                "@type": "Privileges",
+                "Privilege": [
+                  {
+                    "@type": "",
+                    "name": "EMBED"
+                  }
+                ]
+              },
+              "id": "f3fb5e19-fc47-442e-a978-c47db961ecfb",
+              "accountId": "account-12345",
+              "name": "JsonRole"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Role.json"
+            },
+            "example": "<bns:Role xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" name=\"newRoleName\" accountId=\"accountId-12345\" id=\"ca7f37b3-f976-4d06-b885-81520b467a69f\">\n        <bns:Description>Updated custom role</bns:Description>\n        <bns:Privileges>\n            <bns:Privilege name=\"API\"/>\n                <bns:Privilege name=\"EXECUTE\"/>\n                <bns:Privilege name=\"BUILD\"/>\n        </bns:Privileges>\n    </bns:Role>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "Role"
+    ],
+    "summary": "Deletes a Role object",
+    "description": "Deletes a Role object based on the supplied role ID.",
+    "operationId": "DeleteRole",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

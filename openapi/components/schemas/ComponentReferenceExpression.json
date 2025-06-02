@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./ComponentReferenceSimpleExpression.json"
+    },
+    {
+      "$ref": "./ComponentReferenceGroupingExpression.json"
+    }
+  ]
+}

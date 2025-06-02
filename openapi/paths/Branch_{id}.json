@@ -1,0 +1,169 @@
+{
+  "get": {
+    "tags": [
+      "Branch"
+    ],
+    "summary": "Retrieves an instance of a Branch object",
+    "description": "When you have the branch ID, you can query for additional information about the branch. Send an HTTP GET where {accountId} is the ID of the authenticating account and {branchId} is the ID of the branch you want to query.",
+    "operationId": "GetBranch",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ID of the branch."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Branch.json"
+            },
+            "example": {
+              "Branch": {
+                "id": "Qjox",
+                "name": "main",
+                "createdBy": "adminboomi.com",
+                "createdDate": "2023-08-24T02:10:07Z",
+                "ready": "true",
+                "deleted": "false",
+                "stage": "NORMAL",
+                "description": "main branch"
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Branch.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:Branch xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \nxmlns:bns=\"http://api.platform.boomi.com/\" id=\"Qjox\" name=\"main\" createdBy=\"admin@boomi.com\" \ncreatedDate=\"2023-08-24T02:10:07Z\" ready=\"true\" deleted=\"false\" stage=\"NORMAL\" description=\"main branch\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "Branch"
+    ],
+    "summary": "Modifies or updates a Branch object",
+    "description": "To update a branch, you need the branch ID. Currently, you can only update the name of the branch.",
+    "operationId": "UpdateBranch",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ID of the branch."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/Branch.json"
+          },
+          "example": {
+            "id": "branchId",
+            "name": "branchname"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/Branch.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><bns:Branch xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" tId=\"branchId\" name=\"branchname\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Branch.json"
+            },
+            "example": {
+              "@type": "Branch",
+              "id": "branchId",
+              "name": "branchname",
+              "createdBy": "userboomi.com",
+              "createdDate": "2024-02-12T21:05:28Z",
+              "modifiedBy": "userboomi.com",
+              "modifiedDate": "2024-02-14T14:20:52.402Z",
+              "parentId": "parentbranchId",
+              "ready": "true",
+              "deleted": "false",
+              "stage": "NORMAL"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Branch.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><bns:Branch xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" id=\"branchId\" name=\"branchname\" createdBy=\"user@boomi.com\" createdDate=\"2024-02-12T21:05:28Z\" modifiedBy=\"user@boomi.com\" modifiedDate=\"2024-02-14T14:20:52.402Z\" parentId=\"parentbranchId\" ready=\"true\" deleted=\"false\" stage=\"NORMAL\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "Branch"
+    ],
+    "summary": "Deletes a Branch object",
+    "description": "Deletes a branch",
+    "operationId": "DeleteBranch",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ID of the branch."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

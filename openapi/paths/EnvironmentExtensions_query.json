@@ -1,0 +1,489 @@
+{
+  "post": {
+    "tags": [
+      "EnvironmentExtensions"
+    ],
+    "summary": "Queries for an EnvironmentExtensions object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryEnvironmentExtensions",
+    "requestBody": {
+      "description": " Possible properties include: environmentId, extensionGroupId",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentExtensionsQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "EQUALS",
+                        "property": "environmentId",
+                        "argument": [
+                          "d806057a-9a6e-4b10-85df-c648dcc16abe"
+                        ]
+                      },
+                      {
+                        "operator": "EQUALS",
+                        "property": "extensionGroupId",
+                        "argument": [
+                          "2545e8cb-3162-4729-8dff-3a8ccfc48933"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "and",
+                        "nestedExpression": [
+                          {
+                            "operator": "EQUALS",
+                            "property": "environmentId",
+                            "argument": [
+                              "d806057a-9a6e-4b10-85df-c648dcc16abe"
+                            ]
+                          },
+                          {
+                            "operator": "EQUALS",
+                            "property": "extensionGroupId",
+                            "argument": [
+                              "2545e8cb-3162-4729-8dff-3a8ccfc48933"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentExtensionsQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n        <expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n            <nestedExpression operator=\"EQUALS\" property=\"environmentId\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>d806057a-9a6e-4b10-85df-c648dcc16abe</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"EQUALS\" property=\"extensionGroupId\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>2545e8cb-3162-4729-8dff-3a8ccfc48933</argument>\n            </nestedExpression>\n        </expression>\n    </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"environmentId\">\n      <argument>d806057a-9a6e-4b10-85df-c648dcc16abe</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentExtensionsQueryResponse.json"
+            },
+            "example": {
+              "@type": "EnvironmentExtensions",
+              "connections": {
+                "@type": "Connections",
+                "connection": [
+                  {
+                    "@type": "Connection",
+                    "field": [
+                      {
+                        "@type": "Field",
+                        "customProperties": {
+                          "@type": "customProperties",
+                          "properties": [
+                            {
+                              "@type": "PropertyPair",
+                              "key": "plaintTextKey",
+                              "value": "plainTextValue",
+                              "encrypted": false
+                            },
+                            {
+                              "@type": "PropertyPair",
+                              "key": "encryptedKey",
+                              "encrypted": true
+                            }
+                          ]
+                        },
+                        "id": "port",
+                        "value": "9090",
+                        "encryptedValueSet": false,
+                        "usesEncryption": false,
+                        "componentOverride": false,
+                        "useDefault": false
+                      },
+                      {
+                        "@type": "Field",
+                        "id": "host",
+                        "value": "boomi.com",
+                        "encryptedValueSet": false,
+                        "usesEncryption": false,
+                        "componentOverride": false,
+                        "useDefault": false
+                      },
+                      {
+                        "@type": "Field",
+                        "id": "user",
+                        "value": "test",
+                        "encryptedValueSet": false,
+                        "usesEncryption": false,
+                        "componentOverride": false,
+                        "useDefault": false
+                      },
+                      {
+                        "@type": "Field",
+                        "id": "password",
+                        "encryptedValueSet": true,
+                        "usesEncryption": true,
+                        "componentOverride": false,
+                        "useDefault": false
+                      }
+                    ],
+                    "id": "ff4d8765...",
+                    "name": "New FTP Connection"
+                  },
+                  {
+                    "@type": "Connection",
+                    "field": [
+                      {
+                        "@type": "Field",
+                        "id": "url",
+                        "value": "boomi.com",
+                        "encryptedValueSet": false,
+                        "usesEncryption": false,
+                        "componentOverride": false,
+                        "useDefault": false
+                      },
+                      {
+                        "@type": "Field",
+                        "id": "authTokenURL2",
+                        "encryptedValueSet": false,
+                        "usesEncryption": false,
+                        "componentOverride": false,
+                        "useDefault": false
+                      },
+                      {
+                        "@type": "Field",
+                        "id": "accessToken2",
+                        "encryptedValueSet": false,
+                        "usesEncryption": true,
+                        "componentOverride": false,
+                        "useDefault": false
+                      },
+                      {
+                        "@type": "Field",
+                        "id": "refreshAuthScheme",
+                        "value": "req_body_params_auth",
+                        "encryptedValueSet": false,
+                        "usesEncryption": false,
+                        "componentOverride": false,
+                        "useDefault": false
+                      }
+                    ],
+                    "id": "9e9cab68...",
+                    "name": "New HTTP Client Connection"
+                  },
+                  {
+                    "@type": "Connection",
+                    "field": [
+                      {
+                        "@type": "Field",
+                        "id": "directory",
+                        "value": "C://",
+                        "encryptedValueSet": false,
+                        "usesEncryption": false,
+                        "componentOverride": false,
+                        "useDefault": false
+                      }
+                    ],
+                    "id": "f8f36a2c...",
+                    "name": "Extension Test BOOMI-194"
+                  }
+                ]
+              },
+              "tradingPartners": {
+                "@type": "TradingPartners",
+                "tradingPartner": [
+                  {
+                    "@type": "TradingPartner",
+                    "category": [
+                      {
+                        "@type": "TradingPartnerCategory",
+                        "field": [
+                          {
+                            "@type": "Field",
+                            "id": "diskget-directory",
+                            "value": "D:",
+                            "encryptedValueSet": false,
+                            "usesEncryption": false,
+                            "componentOverride": false,
+                            "useDefault": false
+                          },
+                          {
+                            "@type": "Field",
+                            "id": "disksend-create",
+                            "value": "true",
+                            "encryptedValueSet": false,
+                            "usesEncryption": false,
+                            "componentOverride": false,
+                            "useDefault": false
+                          }
+                        ],
+                        "id": "disk",
+                        "name": "Disk"
+                      },
+                      {
+                        "@type": "TradingPartnerCategory",
+                        "field": [
+                          {
+                            "@type": "Field",
+                            "id": "x12envelope-authorinfoqual",
+                            "encryptedValueSet": false,
+                            "usesEncryption": false,
+                            "componentOverride": false,
+                            "useDefault": false
+                          },
+                          {
+                            "@type": "Field",
+                            "id": "x12envelope-interchangeid",
+                            "encryptedValueSet": false,
+                            "usesEncryption": false,
+                            "componentOverride": false,
+                            "useDefault": false
+                          },
+                          {
+                            "@type": "Field",
+                            "id": "x12envelope-version",
+                            "encryptedValueSet": false,
+                            "usesEncryption": false,
+                            "componentOverride": false,
+                            "useDefault": false
+                          },
+                          {
+                            "@type": "Field",
+                            "id": "x12envelope-gsVersion",
+                            "encryptedValueSet": false,
+                            "usesEncryption": false,
+                            "componentOverride": false,
+                            "useDefault": false
+                          },
+                          {
+                            "@type": "Field",
+                            "id": "x12envelope-respagencycode",
+                            "encryptedValueSet": false,
+                            "usesEncryption": false,
+                            "componentOverride": false,
+                            "useDefault": false
+                          }
+                        ],
+                        "id": "x12",
+                        "name": "X12 Information"
+                      }
+                    ],
+                    "id": "a6b22ed0...",
+                    "name": "Boomi - My Company"
+                  },
+                  {
+                    "@type": "TradingPartner",
+                    "category": [
+                      {
+                        "@type": "TradingPartnerCategory",
+                        "field": [
+                          {
+                            "@type": "Field",
+                            "id": "disksend-create",
+                            "encryptedValueSet": false,
+                            "usesEncryption": false,
+                            "componentOverride": false,
+                            "useDefault": false
+                          }
+                        ],
+                        "id": "disk",
+                        "name": "Disk"
+                      },
+                      {
+                        "@type": "TradingPartnerCategory",
+                        "field": [
+                          {
+                            "@type": "Field",
+                            "id": "x12basic",
+                            "encryptedValueSet": false,
+                            "usesEncryption": false,
+                            "componentOverride": false,
+                            "useDefault": false
+                          },
+                          {
+                            "@type": "Field",
+                            "id": "x12basic",
+                            "encryptedValueSet": false,
+                            "usesEncryption": false,
+                            "componentOverride": false,
+                            "useDefault": false
+                          }
+                        ],
+                        "id": "x12",
+                        "name": "X12 Information"
+                      }
+                    ],
+                    "id": "67383048...",
+                    "name": "Trading Partner"
+                  }
+                ]
+              },
+              "crossReferences": {
+                "@type": "CrossReferences",
+                "crossReference": [
+                  {
+                    "@type": "CrossReference",
+                    "CrossReferenceRows": {
+                      "@type": ""
+                    },
+                    "id": "07f7533a...",
+                    "overrideValues": false,
+                    "name": "Cross Reference"
+                  },
+                  {
+                    "@type": "CrossReference",
+                    "CrossReferenceRows": {
+                      "@type": ""
+                    },
+                    "id": "702c5971-482d-45c3-87e1-f6d6840cf70e",
+                    "overrideValues": false,
+                    "name": "Cross Reference"
+                  },
+                  {
+                    "@type": "CrossReference",
+                    "CrossReferenceRows": {
+                      "@type": "",
+                      "row": [
+                        {
+                          "@type": "CrossReferenceRow",
+                          "ref1": "13.0",
+                          "ref2": "1",
+                          "ref3": "6",
+                          "ref4": "6",
+                          "ref5": "Monthly (with 13th period)",
+                          "ref6": "",
+                          "ref7": "",
+                          "ref8": "",
+                          "ref9": "",
+                          "ref10": "",
+                          "ref11": "",
+                          "ref12": "",
+                          "ref13": "",
+                          "ref14": "",
+                          "ref15": "",
+                          "ref16": "",
+                          "ref17": "",
+                          "ref18": "",
+                          "ref19": "",
+                          "ref20": ""
+                        }
+                      ]
+                    },
+                    "id": "ef8147c4...",
+                    "overrideValues": true,
+                    "name": "TEST-3292"
+                  }
+                ]
+              },
+              "processProperties": {
+                "@type": "OverrideProcessProperties",
+                "ProcessProperty": [
+                  {
+                    "@type": "OverrideProcessProperty",
+                    "ProcessPropertyValue": [
+                      {
+                        "@type": "ProcessPropertyValue",
+                        "label": "String",
+                        "key": "68dad3cb...",
+                        "encryptedValueSet": false,
+                        "useDefault": true
+                      },
+                      {
+                        "@type": "ProcessPropertyValue",
+                        "label": "Password",
+                        "key": "af61be8f...",
+                        "value": "",
+                        "encryptedValueSet": false,
+                        "useDefault": true
+                      }
+                    ],
+                    "id": "23a30680...",
+                    "name": "Test Some Props Yo"
+                  }
+                ]
+              },
+              "properties": {
+                "@type": "",
+                "property": [
+                  {
+                    "@type": "",
+                    "name": "Properties",
+                    "value": "10/10/2020"
+                  },
+                  {
+                    "@type": "",
+                    "name": "DynamicProp",
+                    "value": "string"
+                  }
+                ]
+              },
+              "PGPCertificates": {
+                "@type": "PGPCertificates",
+                "PGPCertificate": [
+                  {
+                    "@type": "PGPCertificate",
+                    "id": "0a1c950d...",
+                    "value": "e8ed9a9e...",
+                    "useDefault": false
+                  }
+                ]
+              },
+              "environmentId": "4f607d09...",
+              "extensionGroupId": "",
+              "id": "4f607d09..."
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentExtensionsQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"1\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n       <bns:result xsi:type=\"EnvironmentExtensions\" id=\"d806057a-9a6e-4b10-85df-c648dcc16abe\" \n         extensionGroupId=\"2545e8cb-3162-4729-8dff-3a8ccfc48933\" environmentId=\"d806057a-9a6e-4b10-85df-c648dcc16abe\">\n          <bns:connections>\n             <bns:connection name=\"Local MySql\" id=\"9ba5dfab-8781-4e6a-b908-0c7a7797d17a\">\n                <bns:field componentOverride=\"false\" usesEncryption=\"false\" encryptedValueSet=\"false\" id=\"exhaustedAction\" useDefault=\"true\"/>\n                <bns:field componentOverride=\"false\" usesEncryption=\"false\" encryptedValueSet=\"false\" id=\"driverId\" useDefault=\"true\"/>\n             </bns:connection>\n             <bns:connection name=\"AndLinux - Datadump\" id=\"e3aeadb7-ee49-4596-9e8f-22c04724c88d\">\n                <bns:field componentOverride=\"false\" usesEncryption=\"false\" encryptedValueSet=\"false\" id=\"directory\" value=\"mydirectory\" useDefault=\"true\"/>\n             </bns:connection>\n             <bns:connection name=\"New QuickBooks Connection\" id=\"c9f59f09-e592-4dae-98b9-ddf1e3512f53\">\n                <bns:field componentOverride=\"false\" usesEncryption=\"false\" encryptedValueSet=\"false\" id=\"appName\" useDefault=\"true\"/>\n                <bns:field componentOverride=\"false\" usesEncryption=\"false\" encryptedValueSet=\"false\" id=\"companyFileName\" useDefault=\"true\"/>\n                <bns:field componentOverride=\"false\" usesEncryption=\"true\" encryptedValueSet=\"false\" id=\"toBeEncrypted\" useDefault=\"true\"/>\n             </bns:connection>\n          </bns:connections>\n          <bns:operations>\n              <bns:operation id=\"2b9a80d2-103d-4eba-8b61-b7401ab76cf8\" name=\"WebService Operation\">\n                  <bns:field componentOverride=\"false\"\n                      encryptedValueSet=\"false\" id=\"ObjectName\"\n                      usesEncryption=\"false\" value=\"Updated\" useDefault=\"true\"/>\n              </bns:operation>\n          </bns:operations>\n          <bns:tradingPartners>\n             <bns:tradingPartner name=\"My Company\" id=\"19b261d1-70d3-45a7-bd48-ae7c7df5ea7e\">\n                <bns:category name=\"AS2\" id=\"as2\">\n                   <bns:field componentOverride=\"true\" usesEncryption=\"false\" encryptedValueSet=\"false\" \n                     value=\"85166fdd-946e-42c7-9264-2b6db77d2d35\" id=\"as2identity-encryptAlias\" useDefault=\"true\"/>\n                   <bns:field componentOverride=\"false\" usesEncryption=\"false\" encryptedValueSet=\"false\" \n                     value=\"\" id=\"as2identity-as2Id\" useDefault=\"true\"/>\n                   <bns:field componentOverride=\"false\" usesEncryption=\"false\" encryptedValueSet=\"false\" \n                     id=\"as2identity-mdnAlias\" useDefault=\"true\"/>\n                </bns:category>\n                <bns:category name=\"X12 Information\" id=\"x12\">\n                   <bns:field componentOverride=\"false\" usesEncryption=\"false\" encryptedValueSet=\"false\" \n                     id=\"x12envelope-interchangeid\" useDefault=\"true\"/>\n                   <bns:field componentOverride=\"false\" usesEncryption=\"false\" encryptedValueSet=\"false\" \n                     id=\"x12envelope-securityinfo\" useDefault=\"true\"/>\n                   <bns:field componentOverride=\"false\" usesEncryption=\"false\" encryptedValueSet=\"false\" \n                     id=\"x12envelope-version\" useDefault=\"true\"/>\n                </bns:category>\n             </bns:tradingPartner>\n          </bns:tradingPartners>\n          <bns:sharedCommunications>\n             <bns:sharedCommunication id=\"54748ce7-fd92-434c-8db3-2717b44b2692\" name=\"Best Enterprises MyCo\" type=\"http\">\n                <bns:field id=\"http-trustedcertalias\" encryptedValueSet=\"false\" \n                  usesEncryption=\"false\" componentOverride=\"false\" value=\"usercred\" useDefault=\"true\"/>\n                <bns:field id=\"http-password\" encryptedValueSet=\"false\" usesEncryption=\"false\" \n                  componentOverride=\"false\" value=\"passwd\" useDefault=\"true\"/>\n                <bns:field id=\"http-clientId\" encryptedValueSet=\"false\" usesEncryption=\"false\" \n                  componentOverride=\"false\" value=\"id123\" useDefault=\"true\"/>\n                <bns:field id=\"http-user\" encryptedValueSet=\"false\" usesEncryption=\"false\" \n                  componentOverride=\"false\" value=\"admin\" useDefault=\"true\"/>\n                <bns:field id=\"http-password\" encryptedValueSet=\"false\" usesEncryption=\"true\" \n                  componentOverride=\"false\" value=\"toBeEncrypted\" useDefault=\"true\"/>\n             </bns:sharedCommunication>\n          </bns:sharedCommunications>\n          <bns:crossReferences>\n             <bns:crossReference name=\"My Cross Reference\" overrideValues=\"true\" id=\"a6759305-9ed9-47d4-a76f-2ba227454d18\">\n                <bns:CrossReferenceRows>\n                   <bns:row ref3=\"3\" ref2=\"2\" ref1=\"1\"/>\n                   <bns:row ref3=\"1\" ref2=\"34\" ref1=\"12\"/>\n                   <bns:row ref3=\"2\" ref2=\"1\" ref1=\"3\"/>\n                </bns:CrossReferenceRows>\n             </bns:crossReference>\n          </bns:crossReferences>\n          <bns:processProperties>\n             <bns:ProcessProperty name=\"Test Process Property\" id=\"5399215e-3cc8-4006-bfe7-c3ae71df6c26\">\n                <bns:ProcessPropertyValue encryptedValueSet=\"false\" value=\"300\" key=\"new-1355426770730\" \n                  label=\"First\" useDefault=\"true\"/>\n                <bns:ProcessPropertyValue encryptedValueSet=\"false\" value=\"400\" key=\"new-1355426788553\" \n                  label=\"Second\" useDefault=\"true\"/>\n             </bns:ProcessProperty>\n          </bns:processProperties>\n          <bns:properties>\n             <bns:property name=\"reference\" value=\"myreference\"/>\n             <bns:property name=\"baseURL\" value=\"myurl\"/>\n             <bns:property name=\"datetime\" value=\"20110111\"/>\n          </bns:properties>\n          <bns:PGPCertificates>\n             <bns:PGPCertificate id=\"6a9cb126-57ef-44e1-b30b-7770f4b803b6\" value=\"Production Certifiate\"/>\n          </bns:PGPCertificates>\n       </bns:result>\n    </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

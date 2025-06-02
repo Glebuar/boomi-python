@@ -1,0 +1,70 @@
+{
+  "post": {
+    "tags": [
+      "AtomAS2Artifacts"
+    ],
+    "summary": "Creates an AtomAS2Artifacts object",
+    "description": "You can use the Download AS2 Artifacts Log operation to request and download AS2 artifacts logs.",
+    "operationId": "CreateAtomAS2Artifacts",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AtomAS2Artifacts.json"
+          },
+          "example": {
+            "cloudId": "23456789-abcd-ef01-2345-6789abcdef01",
+            "name": "Cloud Atom"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AtomAS2Artifacts.json"
+          },
+          "example": "<AtomAS2Artifacts xmlns=\"http://api.platform.boomi.com/\" atomId=\"3456789a-bcde-f012-3456-789abcdef012\" \n    logDate=\"2016-02-05\"/>\n"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/LogDownload.json"
+            },
+            "example": {
+              "@type": "Atom",
+              "id": "3456789a-bcde-f012-3456-789abcdef012",
+              "cloudId": "23456789-abcd-ef01-2345-6789abcdef01",
+              "name": "Cloud Atom",
+              "status": "ONLINE",
+              "type": "CLOUD",
+              "hostName": "Cloud-WN7X64-9L7K7S2.domain.tld",
+              "dateInstalled": "2016-06-10T16:11:26.749Z",
+              "purgeHistoryDays": 30,
+              "purgeImmediate": false,
+              "forceRestartTime": 0,
+              "instanceId": "account-123456.HP81GZ"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/LogDownload.json"
+            },
+            "example": "<bns:LogDownload statusCode=\"202\" message=\"Beginning download.\" \n             url=\"http://localhost:8081/account/account-123456/api/download/AtomAS2Artifacts-89abcdef-0123-4567-89ab-cdef01234567\"\n     xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>\n"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

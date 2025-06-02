@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./ApiUsageCountSimpleExpression.json"
+    },
+    {
+      "$ref": "./ApiUsageCountGroupingExpression.json"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "required": [
+    "OdetteControlInfo",
+    "OdetteOptions"
+  ],
+  "type": "object",
+  "properties": {
+    "OdetteControlInfo": {
+      "$ref": "./OdetteControlInfo.json"
+    },
+    "OdetteOptions": {
+      "$ref": "./OdetteOptions.json"
+    }
+  }
+}

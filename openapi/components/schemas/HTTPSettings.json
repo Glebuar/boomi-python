@@ -1,0 +1,84 @@
+{
+  "required": [
+    "HTTPAuthSettings",
+    "HTTPSSLOptions"
+  ],
+  "type": "object",
+  "properties": {
+    "HTTPAuthSettings": {
+      "$ref": "./HTTPAuthSettings.json"
+    },
+    "HTTPOAuth2Settings": {
+      "$ref": "./HTTPOAuth2Settings.json"
+    },
+    "HTTPOAuthSettings": {
+      "$ref": "./HTTPOAuthSettings.json"
+    },
+    "HTTPSSLOptions": {
+      "$ref": "./HTTPSSLOptions.json"
+    },
+    "authenticationType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "NONE",
+        "BASIC",
+        "PASSWORD_DIGEST",
+        "CUSTOM",
+        "OAUTH",
+        "OAUTH2"
+      ]
+    },
+    "connectTimeout": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "cookieScope": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "IGNORED",
+        "GLOBAL",
+        "CONNECTOR_SHAPE"
+      ]
+    },
+    "readTimeout": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "url": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "useBasicAuth": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "useCustomAuth": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "useDefaultSettings": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

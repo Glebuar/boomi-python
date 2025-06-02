@@ -1,0 +1,155 @@
+{
+  "post": {
+    "tags": [
+      "Event"
+    ],
+    "summary": "Queries for an Event object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryEvent",
+    "requestBody": {
+      "description": " Possible properties include: eventId, accountId, atomId, atomName, eventLevel, eventDate, status, eventType, executionId, title, updateDate, startTime, endTime, errorDocumentCount, inboundDocumentCount, outboundDocumentCount, processName, recordDate, error, environment, classification",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/EventQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "execution-67008f66-ea50-40f8-8d1f-7a3ebe2c02a5-2024.08.08"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "executionId"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "execution-67008f66-ea50-40f8-8d1f-7a3ebe2c02a5-2024.08.08"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "executionId"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/EventQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n<QueryFilter>\n<expression operator=\"EQUALS\" property=\"executionId\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n    <argument>execution-67008f66-ea50-40f8-8d1f-7a3ebe2c02a5-2024.08.08</argument>\n  </expression>\n</QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"executionId\">\n      <argument>execution-67008f66-ea50-40f8-8d1f-7a3ebe2c02a5-2024.08.08</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/EventQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "Event",
+                  "eventId": "event-1b2871bf-5819-41e1-a215-714c5cce3551",
+                  "accountId": "BoomiAdmin-123",
+                  "atomId": "b829b682-6e6e-4551-b9a3-61dcfa96dffd",
+                  "atomName": "Biggie",
+                  "eventLevel": "ERROR",
+                  "eventDate": "2024-08-08T06:14:42Z",
+                  "status": "ERROR",
+                  "eventType": "process.execution",
+                  "executionId": "execution-67008f66-ea50-40f8-8d1f-7a3ebe2c02a5-2024.08.08",
+                  "updateDate": "2024-08-08T06:14:42Z",
+                  "startTime": "2024-08-08T06:14:42Z",
+                  "endTime": "2024-08-08T06:14:46Z",
+                  "errorDocumentCount": 1,
+                  "inboundDocumentCount": 1,
+                  "outboundDocumentCount": 0,
+                  "processName": "2. (Sched) General: User Notify + Exception (Proc. Call > Data Passthrough Sub-Process) 21 Jun",
+                  "recordDate": "2024-08-08T06:14:57Z",
+                  "error": "T002a Exception (Proc. Call > Data Passthru Sub-Process)\n",
+                  "environment": "ProdEnv",
+                  "classification": "PROD",
+                  "errorType": "DOCUMENT",
+                  "erroredStepLabel": "",
+                  "erroredStepType": "Exception"
+                },
+                {
+                  "@type": "Event",
+                  "eventId": "event-6d71102f-5c82-4206-b88f-081ae4a2a566",
+                  "accountId": "BoomiAdmin-123",
+                  "atomId": "b829b682-6e6e-4551-b9a3-61dcfa96dffd",
+                  "atomName": "Biggie",
+                  "eventLevel": "ERROR",
+                  "eventDate": "2024-08-08T06:14:45Z",
+                  "status": "T002a User Notify (Proc. Call > Data Passthru Sub-Process)",
+                  "eventType": "user.notification",
+                  "executionId": "execution-67008f66-ea50-40f8-8d1f-7a3ebe2c02a5-2024.08.08",
+                  "title": "T002a User Notify",
+                  "updateDate": "2024-08-08T06:14:45Z",
+                  "errorDocumentCount": 0,
+                  "inboundDocumentCount": 0,
+                  "outboundDocumentCount": 0,
+                  "processName": "2. (Sched) General: User Notify + Exception (Proc. Call > Data Passthrough Sub-Process) 21 Jun",
+                  "recordDate": "2024-08-08T06:14:57Z",
+                  "environment": "ProdEnv",
+                  "classification": "PROD",
+                  "topLevelProcessId": "09f94a17-a0ad-4fa9-8423-d01ff6d1e935",
+                  "processId": "609aaa4e-951b-407a-bdd8-9f70b713246a"
+                }
+              ],
+              "numberOfResults": 2
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/EventQueryResponse.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:QueryResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" numberOfResults=\"2\">\n   <bns:result xsi:type=\"Event\">\n       <bns:eventId>event-1b2871bf-5819-41e1-a215-714c5cce3551</bns:eventId>\n       <bns:accountId>BoomiAdmin-123</bns:accountId>\n       <bns:atomId>b829b682-6e6e-4551-b9a3-61dcfa96dffd</bns:atomId>\n       <bns:atomName>Biggie</bns:atomName>\n       <bns:eventLevel>ERROR</bns:eventLevel>\n       <bns:eventDate>2024-08-08T06:14:42Z</bns:eventDate>\n       <bns:status>ERROR</bns:status>\n       <bns:eventType>process.execution</bns:eventType>\n       <bns:executionId>execution-67008f66-ea50-40f8-8d1f-7a3ebe2c02a5-2024.08.08</bns:executionId>\n       <bns:updateDate>2024-08-08T06:14:42Z</bns:updateDate>\n       <bns:startTime>2024-08-08T06:14:42Z</bns:startTime>\n<bns:endTime>2024-08-08T06:14:46Z</bns:endTime>\n       <bns:errorDocumentCount>1</bns:errorDocumentCount>\n       <bns:inboundDocumentCount>1</bns:inboundDocumentCount>\n       <bns:outboundDocumentCount>0</bns:outboundDocumentCount>\n       <bns:processName>2. (Sched) General: User Notify + Exception (Proc. Call &gt; Data Passthrough Sub-Process) 21 Jun</bns:processName>\n       <bns:recordDate>2024-08-08T06:14:57Z</bns:recordDate>\n       <bns:error>T002a Exception (Proc. Call &gt; Data Passthru Sub-Process)\n</bns:error>\n       <bns:environment>ProdEnv</bns:environment>\n       <bns:classification>PROD</bns:classification>\n       <bns:errorType>DOCUMENT</bns:errorType>\n       <bns:erroredStepLabel></bns:erroredStepLabel>\n<bns:erroredStepType>Exception</bns:erroredStepType>\n   </bns:result>\n   <bns:result xsi:type=\"Event\">\n       <bns:eventId>event-6d71102f-5c82-4206-b88f-081ae4a2a566</bns:eventId>\n       <bns:accountId>BoomiAdmin-123</bns:accountId>\n       <bns:atomId>b829b682-6e6e-4551-b9a3-61dcfa96dffd</bns:atomId>\n       <bns:atomName>Biggie</bns:atomName>\n       <bns:eventLevel>ERROR</bns:eventLevel>\n       <bns:eventDate>2024-08-08T06:14:45Z</bns:eventDate>\n       <bns:status>T002a User Notify (Proc. Call &gt; Data Passthru Sub-Process)</bns:status>\n       <bns:eventType>user.notification</bns:eventType>\n       <bns:executionId>execution-67008f66-ea50-40f8-8d1f-7a3ebe2c02a5-2024.08.08</bns:executionId>\n       <bns:title>T002a User Notify</bns:title>\n       <bns:updateDate>2024-08-08T06:14:45Z</bns:updateDate>\n       <bns:errorDocumentCount>0</bns:errorDocumentCount>\n       <bns:inboundDocumentCount>0</bns:inboundDocumentCount>\n       <bns:outboundDocumentCount>0</bns:outboundDocumentCount>\n       <bns:processName>2. (Sched) General: User Notify + Exception (Proc. Call &gt; Data Passthrough Sub-Process) 21 Jun</bns:processName>\n       <bns:recordDate>2024-08-08T06:14:57Z</bns:recordDate>\n       <bns:environment>ProdEnv</bns:environment>\n<bns:classification>PROD</bns:classification>\n       <bns:topLevelProcessId>09f94a17-a0ad-4fa9-8423-d01ff6d1e935</bns:topLevelProcessId>\n       <bns:processId>609aaa4e-951b-407a-bdd8-9f70b713246a</bns:processId>\n   </bns:result>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

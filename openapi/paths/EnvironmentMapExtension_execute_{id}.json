@@ -1,0 +1,384 @@
+{
+  "post": {
+    "tags": [
+      "EnvironmentMapExtension"
+    ],
+    "summary": "Executes an action on an EnvironmentMapExtension object",
+    "description": "Use the EXECUTE operation when you want to customize XML profiles by reimporting them from endpoint applications. The EXECUTE operation returns the current Environment Map Extension configuration similar to the GET operation.\n\n It also accepts connection credentials and automatically connects to the external application to retrieve additional custom fields for that profile. You must have the Runtime Management privilege to perform the EXECUTE operation. If you have the Runtime Management Read Access privilege, you cannot post connection credentials. \n\n For information about using these operations to retrieve or update map functions, refer to [Environment Map Extension functions](/docs/APIs/PlatformAPI/Environment_Map_Extension_functions). \n\n Include the `SourceBrowse` and `DestinationBrowse` sections as appropriate to browse the respective profile and include the required BrowseFields for the given connector. If you need to call the EXECUTE action repeatedly for the same map, you can alternatively use the `sessionId` to avoid having to supply the connector fields in subsequent calls. Session caching lasts about 30 minutes.",
+    "operationId": "ExecuteEnvironmentMapExtension",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentMapExtension.json"
+          },
+          "example": {
+            "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg",
+            "Map": {
+              "BrowseSettings": {
+                "containerId": "1f4adef0-47f1-4129-aed8-1e687ab450c9",
+                "DestinationBrowse": {
+                  "BrowseFields": {
+                    "name": "password",
+                    "value": "supersecretpassword123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentMapExtension.json"
+          },
+          "example": "<bns:EnvironmentMapExtension xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\">\n    <bns:Map>\n      <bns:BrowseSettings containerId=\"1f4adef0-47f1-4129-aed8-1e687ab450c9\">\n        <bns:DestinationBrowse>\n          <bns:BrowseFields name=\"password\" value=\"supersecretpassword123\"/>\n        </bns:DestinationBrowse>\n      </bns:BrowseSettings>\n    </bns:Map>\n  </bns:EnvironmentMapExtension>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentMapExtension.json"
+            },
+            "example": {
+              "@type": "EnvironmentMapExtension",
+              "name": "Account - Customer",
+              "mapId": "01234567890123456789012345",
+              "processId": "789abcde-f012-3456-789a-bcdef0123456",
+              "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg",
+              "extensionGroupId": "",
+              "environmentId": "456789ab-cdef-0123-4567-89abcdef0123",
+              "Map": {
+                "SourceProfile": {
+                  "componentId": "ef012345-6789-abcd-ef01-23456789abcd",
+                  "Node": [
+                    {
+                      "xpath": "",
+                      "name": "Account"
+                    },
+                    {
+                      "xpath": "/CustomerNum",
+                      "name": "CustomerNum"
+                    },
+                    {
+                      "xpath": "/CustomerName",
+                      "name": "CustomerName"
+                    },
+                    {
+                      "xpath": "/Website",
+                      "name": "Website"
+                    },
+                    {
+                      "xpath": "/StreetAddress1",
+                      "name": "StreetAddress1"
+                    },
+                    {
+                      "xpath": "/StreetAddress2",
+                      "name": "StreetAddress2"
+                    },
+                    {
+                      "xpath": "/City",
+                      "name": "City"
+                    },
+                    {
+                      "xpath": "/State",
+                      "name": "State"
+                    },
+                    {
+                      "xpath": "/Zip",
+                      "name": "Zip"
+                    },
+                    {
+                      "xpath": "/Country",
+                      "name": "Country"
+                    },
+                    {
+                      "xpath": "/Phone",
+                      "name": "Phone"
+                    }
+                  ]
+                },
+                "DestinationProfile": {
+                  "componentId": "dcba9876-5432-10fe-dcba-9876543210fe",
+                  "Node": [
+                    {
+                      "xpath": "",
+                      "name": "CustomerAddRq"
+                    },
+                    {
+                      "xpath": "/CustomerAdd",
+                      "name": "CustomerAdd"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/Name",
+                      "name": "Name"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/IsActive",
+                      "name": "IsActive"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/ParentRef",
+                      "name": "ParentRef"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/ParentRef/ListID",
+                      "name": "ListID"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/ParentRef/FullName",
+                      "name": "FullName"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/CompanyName",
+                      "name": "CompanyName"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/Salutation",
+                      "name": "Salutation"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/FirstName",
+                      "name": "FirstName"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/MiddleName",
+                      "name": "MiddleName"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/LastName",
+                      "name": "LastName"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/Suffix",
+                      "name": "Suffix"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/BillAddress",
+                      "name": "BillAddress"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/BillAddress/Addr1",
+                      "name": "Addr1"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/BillAddress/Addr2",
+                      "name": "Addr2"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/BillAddress/City",
+                      "name": "City"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/BillAddress/State",
+                      "name": "State"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/BillAddress/PostalCode",
+                      "name": "PostalCode"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/BillAddress/Country",
+                      "name": "Country"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/BillAddress/Note",
+                      "name": "Note"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/ShipAddress",
+                      "name": "ShipAddress"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/ShipAddress/Addr1",
+                      "name": "Addr1"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/ShipAddress/Addr2",
+                      "name": "Addr2"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/ShipAddress/City",
+                      "name": "City"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/ShipAddress/State",
+                      "name": "State"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/ShipAddress/PostalCode",
+                      "name": "PostalCode"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/ShipAddress/Country",
+                      "name": "Country"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/ShipAddress/Note",
+                      "name": "Note"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/Phone",
+                      "name": "Phone"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/Mobile",
+                      "name": "Mobile"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/Email",
+                      "name": "Email"
+                    },
+                    {
+                      "xpath": "/CustomerAdd/Contact",
+                      "name": "Contact"
+                    }
+                  ]
+                },
+                "ExtendedFunctions": {
+                  "Function": {
+                    "type": "StringAppend",
+                    "id": "FUNCEXT--012345678",
+                    "cacheType": "ByDocument",
+                    "Inputs": {
+                      "Input": [
+                        {
+                          "key": "1",
+                          "name": "Original String",
+                          "default": ""
+                        },
+                        {
+                          "key": "2",
+                          "name": "Fix to Length",
+                          "default": ""
+                        },
+                        {
+                          "key": "3",
+                          "name": "Char to Append",
+                          "default": "-9999"
+                        }
+                      ]
+                    },
+                    "Outputs": {
+                      "Output": {
+                        "key": "1",
+                        "name": "Result"
+                      }
+                    },
+                    "Configuration": null
+                  }
+                },
+                "ExtendedMappings": {
+                  "Mapping": [
+                    {
+                      "fromXPath": "/StreetAddress1",
+                      "toXPath": "/CustomerAdd/ShipAddress/Addr1"
+                    },
+                    {
+                      "fromXPath": "/StreetAddress2",
+                      "toXPath": "/CustomerAdd/ShipAddress/Addr2"
+                    },
+                    {
+                      "fromXPath": "/Zip",
+                      "toXPath": "/CustomerAdd/ShipAddress/PostalCode"
+                    },
+                    {
+                      "toFunction": "FUNCEXT--012345678",
+                      "fromXPath": "/Zip",
+                      "toXPath": "1"
+                    },
+                    {
+                      "fromFunction": "FUNCEXT--012345678",
+                      "fromXPath": "1",
+                      "toXPath": "/CustomerAdd/ShipAddress/PostalCode"
+                    }
+                  ]
+                },
+                "BrowseSettings": {
+                  "containerId": "1f4adef0-47f1-4129-aed8-1e687ab450c9",
+                  "SourceBrowse": {
+                    "sessionId": "f36e10bc-f19e-4cd9-980a-da0495bb16ee"
+                  },
+                  "DestinationBrowse": null
+                },
+                "SourceProfileExtensions": {
+                  "Node": [
+                    {
+                      "xpath": "",
+                      "name": "Account",
+                      "Character": null
+                    },
+                    {
+                      "xpath": "/CustomerNum",
+                      "name": "CustomerNum",
+                      "Character": null
+                    },
+                    {
+                      "xpath": "/CustomerName",
+                      "name": "CustomerName",
+                      "Character": null
+                    },
+                    {
+                      "xpath": "/StreetAddress1",
+                      "name": "StreetAddress1",
+                      "Character": null
+                    },
+                    {
+                      "xpath": "/StreetAddress2",
+                      "name": "StreetAddress2",
+                      "Character": null
+                    },
+                    {
+                      "xpath": "/City",
+                      "name": "City",
+                      "Character": null
+                    },
+                    {
+                      "xpath": "/State",
+                      "name": "State",
+                      "Character": null
+                    },
+                    {
+                      "xpath": "/Zip",
+                      "name": "Zip",
+                      "Character": null
+                    }
+                  ]
+                },
+                "DestinationProfileExtensions": null
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentMapExtension.json"
+            },
+            "example": "<bns:EnvironmentMapExtension name=\"Account - Customer\" mapId=\"01234567890123456789012345\" \n    processId=\"789abcde-f012-3456-789a-bcdef0123456\" \n    id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\" \n    extensionGroupId=\"\" environmentId=\"456789ab-cdef-0123-4567-89abcdef0123\" \n    xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n     <bns:Map>\n        <bns:SourceProfile componentId=\"ef012345-6789-abcd-ef01-23456789abcd\">\n           <bns:Node xpath=\"\" name=\"Account\"/>\n           <bns:Node xpath=\"/CustomerNum\" name=\"CustomerNum\"/>\n           <bns:Node xpath=\"/CustomerName\" name=\"CustomerName\"/>\n           <bns:Node xpath=\"/Website\" name=\"Website\"/>\n           <bns:Node xpath=\"/StreetAddress1\" name=\"StreetAddress1\"/>\n           <bns:Node xpath=\"/StreetAddress2\" name=\"StreetAddress2\"/>\n           <bns:Node xpath=\"/City\" name=\"City\"/>\n           <bns:Node xpath=\"/State\" name=\"State\"/>\n           <bns:Node xpath=\"/Zip\" name=\"Zip\"/>\n           <bns:Node xpath=\"/Country\" name=\"Country\"/>\n           <bns:Node xpath=\"/Phone\" name=\"Phone\"/>\n        </bns:SourceProfile>\n        <bns:DestinationProfile componentId=\"dcba9876-5432-10fe-dcba-9876543210fe\">\n           <bns:Node xpath=\"\" name=\"CustomerAddRq\"/>\n           <bns:Node xpath=\"/CustomerAdd\" name=\"CustomerAdd\"/>\n           <bns:Node xpath=\"/CustomerAdd/Name\" name=\"Name\"/>\n           <bns:Node xpath=\"/CustomerAdd/IsActive\" name=\"IsActive\"/>\n           <bns:Node xpath=\"/CustomerAdd/ParentRef\" name=\"ParentRef\"/>\n           <bns:Node xpath=\"/CustomerAdd/ParentRef/ListID\" name=\"ListID\"/>\n           <bns:Node xpath=\"/CustomerAdd/ParentRef/FullName\" name=\"FullName\"/>\n           <bns:Node xpath=\"/CustomerAdd/CompanyName\" name=\"CompanyName\"/>\n           <bns:Node xpath=\"/CustomerAdd/Salutation\" name=\"Salutation\"/>\n           <bns:Node xpath=\"/CustomerAdd/FirstName\" name=\"FirstName\"/>\n           <bns:Node xpath=\"/CustomerAdd/MiddleName\" name=\"MiddleName\"/>\n           <bns:Node xpath=\"/CustomerAdd/LastName\" name=\"LastName\"/>\n           <bns:Node xpath=\"/CustomerAdd/Suffix\" name=\"Suffix\"/>\n           <bns:Node xpath=\"/CustomerAdd/BillAddress\" name=\"BillAddress\"/>\n           <bns:Node xpath=\"/CustomerAdd/BillAddress/Addr1\" name=\"Addr1\"/>\n           <bns:Node xpath=\"/CustomerAdd/BillAddress/Addr2\" name=\"Addr2\"/>\n           <bns:Node xpath=\"/CustomerAdd/BillAddress/City\"  name=\"City\"/>\n           <bns:Node xpath=\"/CustomerAdd/BillAddress/State\" name=\"State\"/>\n           <bns:Node xpath=\"/CustomerAdd/BillAddress/PostalCode\" name=\"PostalCode\"/>\n           <bns:Node xpath=\"/CustomerAdd/BillAddress/Country\" name=\"Country\"/>\n           <bns:Node xpath=\"/CustomerAdd/BillAddress/Note\" name=\"Note\"/>\n           <bns:Node xpath=\"/CustomerAdd/ShipAddress\" name=\"ShipAddress\"/>\n           <bns:Node xpath=\"/CustomerAdd/ShipAddress/Addr1\" name=\"Addr1\"/>\n           <bns:Node xpath=\"/CustomerAdd/ShipAddress/Addr2\" name=\"Addr2\"/>\n           <bns:Node xpath=\"/CustomerAdd/ShipAddress/City\"  name=\"City\"/>\n           <bns:Node xpath=\"/CustomerAdd/ShipAddress/State\" name=\"State\"/>\n           <bns:Node xpath=\"/CustomerAdd/ShipAddress/PostalCode\" name=\"PostalCode\"/>\n           <bns:Node xpath=\"/CustomerAdd/ShipAddress/Country\" name=\"Country\"/>\n           <bns:Node xpath=\"/CustomerAdd/ShipAddress/Note\" name=\"Note\"/>\n           <bns:Node xpath=\"/CustomerAdd/Phone\" name=\"Phone\"/>\n           <bns:Node xpath=\"/CustomerAdd/Mobile\" name=\"Mobile\"/>\n           <bns:Node xpath=\"/CustomerAdd/Email\" name=\"Email\"/>\n           <bns:Node xpath=\"/CustomerAdd/Contact\" name=\"Contact\"/>\n        </bns:DestinationProfile>\n        <bns:ExtendedFunctions>\n           <bns:Function type=\"StringAppend\" id=\"FUNCEXT--012345678\" cacheType=\"ByDocument\">\n              <bns:Inputs>\n                 <bns:Input key=\"1\" name=\"Original String\" default=\"\"/>\n                 <bns:Input key=\"2\" name=\"Fix to Length\" default=\"\"/>\n                 <bns:Input key=\"3\" name=\"Char to Append\" default=\"-9999\"/>\n              </bns:Inputs>\n              <bns:Outputs>\n                 <bns:Output key=\"1\" name=\"Result\"/>\n              </bns:Outputs>\n              <bns:Configuration/>\n           </bns:Function>\n        </bns:ExtendedFunctions>\n        <bns:ExtendedMappings>\n           <bns:Mapping fromXPath=\"/StreetAddress1\" toXPath=\"/CustomerAdd/ShipAddress/Addr1\"/>\n           <bns:Mapping fromXPath=\"/StreetAddress2\" toXPath=\"/CustomerAdd/ShipAddress/Addr2\"/>\n           <bns:Mapping fromXPath=\"/Zip\" toXPath=\"/CustomerAdd/ShipAddress/PostalCode\"/>\n           <bns:Mapping toFunction=\"FUNCEXT--012345678\" fromXPath=\"/Zip\" toXPath=\"1\"/>\n           <bns:Mapping fromFunction=\"FUNCEXT--012345678\" fromXPath=\"1\" toXPath=\"/CustomerAdd/ShipAddress/PostalCode\"/>\n        </bns:ExtendedMappings>\n        <bns:BrowseSettings containerId=\"1f4adef0-47f1-4129-aed8-1e687ab450c9\">\n           <bns:SourceBrowse sessionId=\"f36e10bc-f19e-4cd9-980a-da0495bb16ee\"/>\n           <bns:DestinationBrowse/>\n        </bns:BrowseSettings>\n        <bns:SourceProfileExtensions>\n           <bns:Node xpath=\"\" name=\"Account\">\n             <bns:Character/>\n           </bns:Node> \n           <bns:Node xpath=\"/CustomerNum\" name=\"CustomerNum\">\n             <bns:Character/>\n           </bns:Node> \n           <bns:Node xpath=\"/CustomerName\" name=\"CustomerName\">\n             <bns:Character/>\n           </bns:Node> \n           <bns:Node xpath=\"/StreetAddress1\" name=\"StreetAddress1\">\n             <bns:Character/>\n           </bns:Node> \n           <bns:Node xpath=\"/StreetAddress2\" name=\"StreetAddress2\">\n             <bns:Character/>\n           </bns:Node> \n           <bns:Node xpath=\"/City\" name=\"City\">\n             <bns:Character/>\n           </bns:Node> \n             <bns:Node xpath=\"/State\" name=\"State\">\n           <bns:Character/>\n           </bns:Node> \n           <bns:Node xpath=\"/Zip\" name=\"Zip\">\n              <bns:Character/>\n           </bns:Node> \n        </bns:SourceProfileExtensions>\n        <bns:DestinationProfileExtensions/>\n     </bns:Map>\n  </bns:EnvironmentMapExtension>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

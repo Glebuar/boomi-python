@@ -1,0 +1,54 @@
+{
+  "type": "object",
+  "properties": {
+    "componentOverride": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "encryptedValueSet": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "key": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "label": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "useDefault": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "usesEncryption": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "validate": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "value": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The value assigned to the persisted process property."
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "required": [
+    "QueryFilter"
+  ],
+  "type": "object",
+  "properties": {
+    "QueryFilter": {
+      "required": [
+        "expression"
+      ],
+      "type": "object",
+      "properties": {
+        "expression": {
+          "$ref": "./ExecutionRecordExpression.json"
+        }
+      },
+      "xml": {
+        "name": "QueryFilter",
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "QuerySort": {
+      "required": [
+        "sortField"
+      ],
+      "type": "object",
+      "properties": {
+        "sortField": {
+          "type": "array",
+          "xml": {
+            "namespace": "http://api.platform.boomi.com/"
+          },
+          "items": {
+            "type": "object",
+            "properties": {
+              "fieldName": {
+                "type": "string",
+                "xml": {
+                  "attribute": true
+                }
+              },
+              "sortOrder": {
+                "type": "string",
+                "xml": {
+                  "attribute": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "xml": {
+    "name": "QueryConfig",
+    "namespace": "http://api.platform.boomi.com/"
+  }
+}

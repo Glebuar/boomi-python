@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "dataType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "CHARACTER",
+        "DATETIME",
+        "FLOAT",
+        "INTEGER"
+      ]
+    },
+    "index": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

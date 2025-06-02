@@ -1,0 +1,176 @@
+{
+  "get": {
+    "tags": [
+      "ComponentDiffRequest"
+    ],
+    "summary": "Retrieves an instance of a ComponentDiffRequest object",
+    "description": "If you use Postman to make API calls, the GET response contains a diff visualization option to help understand the differences between component versions. For more information, refer to the Postman article [Visualize request responses using Postman Visualizer](https://learning.postman.com/docs/sending-requests/response-data/visualizer/). The Postman visualization feature currently supports only JSON responses.",
+    "operationId": "GetComponentDiffRequest",
+    "parameters": [
+      {
+        "name": "componentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ID of the component for which you want to compare versions."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentDiffRequest.json"
+            },
+            "example": {
+              "@type": "ComponentDiffResponse",
+              "GenericDiff": {
+                "@type": "GenericDiff",
+                "addition": {
+                  "@type": "ChangeAggregation",
+                  "change": [
+                    {
+                      "@type": "Change",
+                      "elementKey": {
+                        "@type": "ChangeKey",
+                        "key-part": [
+                          {
+                            "@type": "KeyPair",
+                            "attribute": "name",
+                            "value": "shape5"
+                          }
+                        ],
+                        "elementName": "shape"
+                      },
+                      "newValue": {
+                        "@type": "ChangeValue",
+                        "value": "<shape image=\"documentproperties_icon\" name=\"shape5\" shapetype=\"documentproperties\" x=\"368.0\" y=\"96.0\"><configuration><documentproperties/></configuration><dragpoints><dragpoint name=\"shape5.dragpoint1\" toShape=\"shape6\" x=\"496.0\" y=\"104.0\"/></dragpoints></shape>",
+                        "xpath": "/Component[1]/object[1]/process[1]/shapes[1]/shape[3]"
+                      },
+                      "type": "element",
+                      "changedParticleName": "shape"
+                    },
+                    {
+                      "@type": "Change",
+                      "elementKey": {
+                        "@type": "ChangeKey",
+                        "key-part": [
+                          {
+                            "@type": "KeyPair",
+                            "attribute": "name",
+                            "value": "shape6"
+                          }
+                        ],
+                        "elementName": "shape"
+                      },
+                      "newValue": {
+                        "@type": "ChangeValue",
+                        "value": "<shape image=\"returndocuments_icon\" name=\"shape6\" shapetype=\"returndocuments\" x=\"512.0\" y=\"96.0\"><configuration><returndocuments/></configuration><dragpoints/></shape>",
+                        "xpath": "/Component[1]/object[1]/process[1]/shapes[1]/shape[4]"
+                      },
+                      "type": "element",
+                      "changedParticleName": "shape"
+                    }
+                  ],
+                  "total": 2
+                },
+                "deletion": {
+                  "@type": "ChangeAggregation",
+                  "change": [
+                    {
+                      "@type": "Change",
+                      "elementKey": {
+                        "@type": "ChangeKey",
+                        "key-part": [
+                          {
+                            "@type": "KeyPair",
+                            "attribute": "name",
+                            "value": "shape3"
+                          }
+                        ],
+                        "elementName": "shape"
+                      },
+                      "oldValue": {
+                        "@type": "ChangeValue",
+                        "value": "<shape image=\"message_icon\" name=\"shape3\" shapetype=\"message\" x=\"400.0\" y=\"96.0\"><configuration><message/></configuration><dragpoints><dragpoint name=\"shape3.dragpoint1\" toShape=\"shape4\" x=\"528.0\" y=\"104.0\"/></dragpoints></shape>",
+                        "xpath": "/Component[1]/object[1]/process[1]/shapes[1]/shape[3]"
+                      },
+                      "type": "element",
+                      "changedParticleName": "shape"
+                    },
+                    {
+                      "@type": "Change",
+                      "elementKey": {
+                        "@type": "ChangeKey",
+                        "key-part": [
+                          {
+                            "@type": "KeyPair",
+                            "attribute": "name",
+                            "value": "shape4"
+                          }
+                        ],
+                        "elementName": "shape"
+                      },
+                      "oldValue": {
+                        "@type": "ChangeValue",
+                        "value": "<shape image=\"stop_icon\" name=\"shape4\" shapetype=\"stop\" x=\"544.0\" y=\"96.0\"><configuration><stop continue=\"true\"/></configuration><dragpoints/></shape>",
+                        "xpath": "/Component[1]/object[1]/process[1]/shapes[1]/shape[4]"
+                      },
+                      "type": "element",
+                      "changedParticleName": "shape"
+                    }
+                  ],
+                  "total": 2
+                },
+                "modification": {
+                  "@type": "ChangeAggregation",
+                  "change": [
+                    {
+                      "@type": "Change",
+                      "elementKey": {
+                        "@type": "ChangeKey",
+                        "key-part": [],
+                        "elementName": "dragpoint"
+                      },
+                      "newValue": {
+                        "@type": "ChangeValue",
+                        "value": "shape5",
+                        "xpath": "/Component[1]/object[1]/process[1]/shapes[1]/shape[2]/dragpoints[1]/dragpoint[1]/@toShape"
+                      },
+                      "oldValue": {
+                        "@type": "ChangeValue",
+                        "value": "shape3",
+                        "xpath": "/Component[1]/object[1]/process[1]/shapes[1]/shape[2]/dragpoints[1]/dragpoint[1]/@toShape"
+                      },
+                      "type": "attribute",
+                      "changedParticleName": "toShape"
+                    }
+                  ],
+                  "total": 1
+                }
+              },
+              "message": "Diffed Versions 1 and 2 of Component: New Process 39 (Type = process, ID = cdb127f1-3eaa-49c7-85ef-0e79a68a84e7)"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentDiffRequest.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:ComponentDiffResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\">\n<bns:CompDiffConfig>\n<bns:CompDiffElement name=\"EdiLoop\" parent=\"DataElements\">\n<bns:CompDiffAttribute name=\"key\" idpart=\"true\"/>\n</bns:CompDiffElement>\n<bns:CompDiffElement name=\"EdiSegment\" parent=\"EdiLoop\">\n<bns:CompDiffAttribute name=\"key\" idpart=\"true\"/>\n</bns:CompDiffElement>\n<bns:CompDiffElement name=\"EdiDataElement\" parent=\"EdiSegment\">\n<bns:CompDiffAttribute name=\"key\" idpart=\"true\"/>\n</bns:CompDiffElement>\n<bns:CompDiffElement name=\"TagList\" parent=\"tagLists\">\n<bns:CompDiffAttribute name=\"elementKey\" idpart=\"true\"/>\n<bns:CompDiffAttribute name=\"listKey\" idpart=\"true\"/>\n</bns:CompDiffElement>\n</bns:CompDiffConfig>\n</bns:ComponentDiffResponse>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

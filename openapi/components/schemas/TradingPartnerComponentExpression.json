@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./TradingPartnerComponentSimpleExpression.json"
+    },
+    {
+      "$ref": "./TradingPartnerComponentGroupingExpression.json"
+    }
+  ]
+}

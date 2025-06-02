@@ -1,0 +1,10 @@
+# ProcessId
+
+**Properties**
+
+| Name                | Type | Required | Description                                                                                                                                                                                                                                                                                                                                                               |
+| :------------------ | :--- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| name                | str  | ❌       | The name of the process.                                                                                                                                                                                                                                                                                                                                                  |
+| original_process_id | str  | ❌       | A unique ID assigned by the system when the process is created.                                                                                                                                                                                                                                                                                                           |
+| wrapper_process_id  | str  | ❌       | A unique ID assigned to each process associated with multi-install integration packs. A `wrapperProcessId` is generated when an IntegrationPackInstance is installed or created. \>**Note:** The `wrapperProcessId` will not be returned for the single-install integration pack while making API calls, as it is only generated for the multi-install integration packs. |
+

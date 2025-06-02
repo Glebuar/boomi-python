@@ -1,0 +1,21 @@
+{
+  "required": [
+    "OFTPListenOptions",
+    "OFTPPartnerGroup"
+  ],
+  "type": "object",
+  "properties": {
+    "OFTPListenOptions": {
+      "$ref": "./OFTPListenOptionsInfo.json"
+    },
+    "OFTPPartnerGroup": {
+      "$ref": "./OFTPPartnerGroupType.json"
+    },
+    "partnerGroupId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

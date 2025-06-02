@@ -1,0 +1,70 @@
+{
+  "post": {
+    "tags": [
+      "Deployment"
+    ],
+    "summary": "Creates a Deployment object",
+    "description": "The Deployment object is a deprecated API and should no longer be used. Boomi recommends that you take advantage of the API functionality provided by the [Packaged Component](https://help.boomi.com/docs/Atomsphere/Integration/AtomSphere%20API/r-atm-Packaged_Component_object_66fa92c8-948f-46c6-a521-3927ab431c84) and [Deployed Package objects](https://help.boomi.com/docs/Atomsphere/Integration/AtomSphere%20API/r-atm-Deployed_Package_object_897b5068-6daa-44e4-bf04-7e25385157a8) instead.",
+    "operationId": "CreateDeployment",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/Deployment.json"
+          },
+          "example": {
+            "environmentId": "456789ab-cdef-0123-4567-89abcdef0123",
+            "componentId": "789abcde-f012-3456-789a-bcdef0123456",
+            "notes": "via RESTish request: Re-deployment of version 54"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/Deployment.json"
+          },
+          "example": "<bns:Deployment xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n        <bns:environmentId>456789ab-cdef-0123-4567-89abcdef0123</bns:environmentId>\n        <bns:componentId>789abcde-f012-3456-789a-bcdef0123456</bns:componentId>\n        <bns:notes>via RESTish request: Re-deployment of version 54</bns:notes>\n    </bns:Deployment>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Deployment.json"
+            },
+            "example": {
+              "@type": "Deployment",
+              "id": "89abcdef-0123-4567-89ab-cdef01234567",
+              "environmentId": "456789ab-cdef-0123-4567-89abcdef0123",
+              "processId": "789abcde-f012-3456-789a-bcdef0123456",
+              "componentId": "789abcde-f012-3456-789a-bcdef0123456",
+              "componentType": "process",
+              "current": true,
+              "notes": "via RESTish request: Re-deployment of version 54",
+              "version": 55,
+              "deployedOn": "2013-09-23T16:33:53.413Z",
+              "deployedBy": "user123@company.biz"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Deployment.json"
+            },
+            "example": "<bns:Deployment xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n        <bns:id>89abcdef-0123-4567-89ab-cdef01234567</bns:id>\n        <bns:environmentId>456789ab-cdef-0123-4567-89abcdef0123</bns:environmentId>\n        <bns:processId>789abcde-f012-3456-789a-bcdef0123456</bns:processId>\n        <bns:componentId>789abcde-f012-3456-789a-bcdef0123456</bns:componentId>\n        <bns:componentType>process</bns:componentType>\n        <bns:current>true</bns:current>\n        <bns:notes>via RESTish request: Re-deployment of version 54</bns:notes>\n        <bns:version>55</bns:version>\n        <bns:deployedOn>2013-09-23T16:33:53.413Z</bns:deployedOn>\n        <bns:deployedBy>user123@company.biz</bns:deployedBy>\n    </bns:Deployment>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

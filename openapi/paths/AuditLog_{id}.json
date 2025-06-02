@@ -1,0 +1,71 @@
+{
+  "get": {
+    "tags": [
+      "AuditLog"
+    ],
+    "summary": "Retrieves an instance of an AuditLog object",
+    "description": "Retrieve audit information for a single audit log entry, like the audit logs action message, the audit log type, action, and modifier. For example, you can use the GET operation to retrieve the environment extensions for a certain date using the document ID.",
+    "operationId": "GetAuditLog",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AuditLog.json"
+            },
+            "example": {
+              "@type": "AuditLog",
+              "AuditLogProperty": [
+                {
+                  "@type": "AuditLogProperty",
+                  "name": "NEW_VALUE",
+                  "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><processOverrides xmlns:ns2=\"http://www.boomi.com/connector/annotation\" xmlns:ns3=\"http://exacttarget.com/wsdl/partnerAPI\" xmlns:ns4=\"urn:fault.partner.exacttarget.com\" xmlns:ns5=\"http://schemas.boomi.com/sap/edi_dc40\" xmlns:ns6=\"http://schemas.microsoft.com/2003/10/Serialization/\" internalVersion=\"2\" saveVersion=\"2\"><connections><connection id=\"829ca9e7-c4a5-48ac-a501-499c59f42001\" name=\"connection_to_modify_inextensions\" type=\"boomipartnerapi\"><field id=\"authenticationType\" label=\"Authentication Type\" value=\"APITOKEN\" encryptedValueSet=\"false\" usesEncryption=\"false\" useDefault=\"false\" atomLevelValueSet=\"true\" componentOverride=\"false\"/></connection></connections><operations/><partnerOverrides/><sharedCommOverrides/><properties/><schedules/><mappings/><crossReferences/><pgpCertificates/><definedProcessProperties><definedProcessProperty componentId=\"a90181c0-f513-40ac-b110-646a30d1e4d7\" componentName=\"processproptotest\"><definedProcessPropertyValueExtension key=\"d8e8703b-85cd-4d46-b956-0d5c5f7a615e\"/><componentVersion>1</componentVersion></definedProcessProperty></definedProcessProperties><maps/></processOverrides>"
+                },
+                {
+                  "@type": "AuditLogProperty",
+                  "name": "ENVIRONMENT_ID",
+                  "value": "3fe3d126-8d20-48ba-94d2-4b69752eedd9"
+                }
+              ],
+              "documentId": "XdDAzmwB7C-eRHGS1Oal",
+              "accountId": " account-12345 ",
+              "userId": " user123@company.biz ",
+              "date": "2019-08-26T16:27:19Z",
+              "message": "Environment Extensions saved",
+              "type": "as.extensions",
+              "action": "EDIT",
+              "modifier": "NONE",
+              "level": "INFO",
+              "source": "UNKNOWN"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AuditLog.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:AuditLog accountId=\" account-123456 \" action=\"EDIT\" date=\"2019-08-26T16:27:19Z\" documentId=\"XdDAzmwB7C-eRHGS1Oal\" level=\"INFO\" message=\"Environment Extensions saved\" modifier=\"NONE\" source=\"UNKNOWN\" type=\"as.extensions\" userId=\" user123@company.biz \" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <bns:AuditLogProperty name=\"NEW_VALUE\" value=\"&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;processOverrides            xmlns:ns2=&quot;http://www.boomi.com/connector/annotation&quot; xmlns:ns3=&quot;http://exacttarget.com/wsdl/partnerAPI&quot; xmlns:ns4=&quot;urn:fault.partner.exacttarget.com&quot; xmlns:ns5=&quot;http://schemas.boomi.com/sap/edi_dc40&quot; xmlns:ns6=&quot;http://schemas.microsoft.com/2003/10/Serialization/&quot; internalVersion=&quot;2&quot; saveVersion=&quot;2&quot;&gt;&lt;connections&gt;&lt;connection id=&quot;829ca9e7-c4a5-48ac-a501-499c59f42001&quot; name=&quot;connection_to_modify_inextensions&quot; type=&quot;boomipartnerapi&quot;&gt;&lt;field id=&quot;authenticationType&quot; label=&quot;Authentication Type&quot; value=&quot;APITOKEN&quot; encryptedValueSet=&quot;false&quot; usesEncryption=&quot;false&quot; useDefault=&quot;false&quot; atomLevelValueSet=&quot;true&quot; componentOverride=&quot;false&quot;/&gt;&lt;/connection&gt;&lt;/connections&gt;&lt;operations/&gt;&lt;partnerOverrides/&gt;&lt;sharedCommOverrides/&gt;&lt;properties/&gt;&lt;schedules/&gt;&lt;mappings/&gt;&lt;crossReferences/&gt;&lt;pgpCertificates/&gt;&lt;definedProcessProperties&gt;&lt;definedProcessProperty componentId=&quot;a90181c0-f513-40ac-b110-646a30d1e4d7&quot; componentName=&quot;processproptotest&quot;&gt;&lt;definedProcessPropertyValueExtension key=&quot;d8e8703b-85cd-4d46-b956-0d5c5f7a615e&quot;/&gt;&lt;componentVersion&gt;1&lt;/componentVersion&gt;&lt;/definedProcessProperty&gt;&lt;/definedProcessProperties&gt;&lt;maps/&gt;&lt;/processOverrides&gt;\"/>\n    <bns:AuditLogProperty name=\"ENVIRONMENT_ID\" value=\"3fe3d126-8d20-48ba-94d2-4b69752eedd9\"/>\n</bns:AuditLog>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

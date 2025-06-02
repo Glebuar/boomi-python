@@ -1,0 +1,6 @@
+{
+  "description": "Indicates that the api you are using is deprecated and will be removed at some point. Includes the date that this was initially deprecated.",
+  "schema": {
+    "type": "string"
+  }
+}

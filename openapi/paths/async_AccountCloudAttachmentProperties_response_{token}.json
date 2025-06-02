@@ -1,0 +1,81 @@
+{
+  "get": {
+    "tags": [
+      "AccountCloudAttachmentProperties"
+    ],
+    "summary": "Retrieves an AccountCloudAttachmentProperties object by token",
+    "description": "Send a second GET request with the token returned in the first GET request. The object returns a list of existing property names and values for the given account and Cloud. \n >**Note:** The Cloud and attachments to which you are calling must be online. Cloud owners and users that own the Cloud attachments can use this operation.",
+    "operationId": "AsyncTokenAccountCloudAttachmentProperties",
+    "parameters": [
+      {
+        "name": "token",
+        "in": "path",
+        "description": "Takes in the token from a previous call to return a result.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountCloudAttachmentPropertiesAsyncResponse.json"
+            },
+            "example": {
+              "@type": "AsyncOperationResult",
+              "result": [
+                {
+                  "@type": "AccountCloudAttachmentProperties",
+                  "accountDiskUsage": 4294,
+                  "numberofAtomWorkers": 4,
+                  "atomInputSize": 4131,
+                  "atomOutputOverflowSize": 4213,
+                  "atomWorkingOverflowSize": 413,
+                  "httpRequestRate": 43,
+                  "workerMaxExecutionTime": 322,
+                  "workerMaxGeneralExecutionTime": 322,
+                  "workerMaxRunningExecutions": 40,
+                  "workerMaxQueuedExecutions": 40,
+                  "workerQueuedExecutionTimeout": 401,
+                  "maxConnectorTrackDocs": 40,
+                  "httpWorkload": "LOW_LATENCY_DEBUG",
+                  "as2Workload": "GENERAL",
+                  "cloudAccountExecutionLimit": 415,
+                  "cloudAccountExecutionWarningOffset": 413,
+                  "enableAtomWorkerWarmup": true,
+                  "minNumberofAtomWorkers": 4,
+                  "testModeMaxDocs": 400,
+                  "testModeMaxDocBytes": 304,
+                  "enableAccountDataArchiving": true,
+                  "listenerMaxConcurrentExecutions": 5,
+                  "downloadRunnerlogs": true
+                }
+              ],
+              "responseStatusCode": 200
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountCloudAttachmentPropertiesAsyncResponse.json"
+            },
+            "example": {
+              "$ref": "#/paths/~1async~1AccountCloudAttachmentProperties~1%7Bid%7D/get/responses/200/content/application~1xml/example"
+            }
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "label": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The display name of the custom tracked field.",
+      "example": "Field 1"
+    },
+    "position": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The display position of the custom tracked field.",
+      "example": "1"
+    },
+    "type": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "character",
+        "datetime",
+        "number"
+      ],
+      "description": "The type of custom tracked field. Allowed values include character, datetime, and number.",
+      "example": "character"
+    }
+  }
+}

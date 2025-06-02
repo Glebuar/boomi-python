@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./ProcessEnvironmentAttachmentSimpleExpression.json"
+    },
+    {
+      "$ref": "./ProcessEnvironmentAttachmentGroupingExpression.json"
+    }
+  ]
+}
