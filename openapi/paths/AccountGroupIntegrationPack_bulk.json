@@ -1,0 +1,50 @@
+{
+  "post": {
+    "tags": [
+      "AccountGroupIntegrationPack"
+    ],
+    "summary": "Retrieves multiple AccountGroupIntegrationPack objects by identifier",
+    "description": "The bulk GET operation returns multiple objects based on the supplied account IDs, to a maximum of 100. To learn more about `bulk`, refer to [Bulk GET operations](#section/Introduction/Bulk-GET-operations).",
+    "operationId": "BulkAccountGroupIntegrationPack",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AccountGroupIntegrationPackBulkRequest.json"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AccountGroupIntegrationPackBulkRequest.json"
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroupIntegrationPackBulkResponse.json"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroupIntegrationPackBulkResponse.json"
+            }
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "CommunicationSetting": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "default",
+        "custom",
+        "component"
+      ]
+    },
+    "HTTPGetOptions": {
+      "$ref": "./HTTPGetOptions.json"
+    },
+    "HTTPListenOptions": {
+      "$ref": "./HTTPListenOptions.json"
+    },
+    "HTTPSendOptions": {
+      "$ref": "./HTTPSendOptions.json"
+    },
+    "HTTPSettings": {
+      "$ref": "./HTTPSettings.json"
+    },
+    "SharedCommunicationChannel": {
+      "$ref": "./SharedCommunicationChannel.json"
+    }
+  }
+}

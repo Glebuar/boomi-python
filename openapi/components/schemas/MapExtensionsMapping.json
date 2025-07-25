@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "fromFunction": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "fromXPath": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "toFunction": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "toXPath": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

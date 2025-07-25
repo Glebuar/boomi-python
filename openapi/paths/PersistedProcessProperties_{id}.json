@@ -1,0 +1,138 @@
+{
+  "post": {
+    "tags": [
+      "PersistedProcessProperties"
+    ],
+    "summary": "Modifies or updates a PersistedProcessProperties object",
+    "description": "The UPDATE operation updates Persisted Process Property values for the specified Runtime. Using the UPDATE operation overrides all current property settings. Therefore, strongly recommends that you include a complete list of all Persisted Process properties you want to keep or update. If you do not list a current persisted process property in the Persisted Process properties object, the UPDATE operation deletes those properties.\n\n>**Note:** You can update the Persisted Process properties if you have either the Runtime Management privilege or the Runtime Management Read Access, along with the Persisted Process Property Read and Write Access privilege.",
+    "operationId": "UpdatePersistedProcessProperties",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID assigned by the system to the Runtime."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/PersistedProcessProperties.json"
+          },
+          "example": {
+            "@type": "PersistedProcessProperties",
+            "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+            "Process": [
+              {
+                "@type": "DeployedProcess",
+                "processId": "6841b8e2-755e-4ab1-bd31-fcfc9bf7893d",
+                "ProcessProperties": {
+                  "@type": ""
+                }
+              },
+              {
+                "@type": "DeployedProcess",
+                "processId": "1ebcc68e-a1f6-42f5-95a0-a01635e6e3a4",
+                "ProcessProperties": {
+                  "@type": "",
+                  "ProcessProperty": [
+                    {
+                      "@type": "",
+                      "Name": "property1",
+                      "Value": "157"
+                    },
+                    {
+                      "@type": "",
+                      "Name": "property2",
+                      "Value": "158"
+                    },
+                    {
+                      "@type": "",
+                      "Name": "property3",
+                      "Value": "159"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/PersistedProcessProperties.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:PersistedProcessProperties xmlns:bns=\"http://api.platform.boomi.com/\"\n                              xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n                              atomId=\"f0c11fc5-adeb-4e28-9bf3-681eed4332b8\">\n  <bns:atomId>3456789a-bcde-f012-3456-789abcdef012</bns:atomId>\n  <bns:Process>\n      <bns:processId>6841b8e2-755e-4ab1-bd31-fcfc9bf7893d</bns:processId>\n      <bns:ProcessProperties/>\n  </bns:Process>\n  <bns:Process>\n      <bns:processId>1ebcc68e-a1f6-42f5-95a0-a01635e6e3a4</bns:processId>\n      <bns:ProcessProperties>\n          <bns:ProcessProperty>\n              <bns:Name>property1</bns:Name>\n              <bns:Value>157</bns:Value>\n          </bns:ProcessProperty>\n          <bns:ProcessProperty>\n              <bns:Name>property2</bns:Name>\n              <bns:Value>158</bns:Value>\n          </bns:ProcessProperty>\n          <bns:ProcessProperty>\n              <bns:Name>property3</bns:Name>\n              <bns:Value>159</bns:Value>\n          </bns:ProcessProperty>\n      </bns:ProcessProperties>\n  </bns:Process>\n</bns:PersistedProcessProperties>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PersistedProcessProperties.json"
+            },
+            "example": {
+              "@type": "PersistedProcessProperties",
+              "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+              "Process": [
+                {
+                  "@type": "DeployedProcess",
+                  "processId": "6841b8e2-755e-4ab1-bd31-fcfc9bf7893d",
+                  "ProcessProperties": {
+                    "@type": "",
+                    "ProcessProperty": []
+                  }
+                },
+                {
+                  "@type": "DeployedProcess",
+                  "processId": "1ebcc68e-a1f6-42f5-95a0-a01635e6e3a4",
+                  "ProcessProperties": {
+                    "@type": "",
+                    "ProcessProperty": [
+                      {
+                        "@type": "",
+                        "Name": "property1",
+                        "Value": "157"
+                      },
+                      {
+                        "@type": "",
+                        "Name": "property2",
+                        "Value": "158"
+                      },
+                      {
+                        "@type": "",
+                        "Name": "property3",
+                        "Value": "159"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/PersistedProcessProperties.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:PersistedProcessProperties xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n                              xmlns:bns=\"http://api.platform.boomi.com/\">\n  <bns:atomId>3456789a-bcde-f012-3456-789abcdef012</bns:atomId>\n  <bns:Process>\n      <bns:processId>6841b8e2-755e-4ab1-bd31-fcfc9bf7893d</bns:processId>\n      <bns:ProcessProperties/>\n  </bns:Process>\n  <bns:Process>\n      <bns:processId>1ebcc68e-a1f6-42f5-95a0-a01635e6e3a4</bns:processId>\n      <bns:ProcessProperties>\n          <bns:ProcessProperty>\n              <bns:Name>property1</bns:Name>\n              <bns:Value>157</bns:Value>\n          </bns:ProcessProperty>\n          <bns:ProcessProperty>\n              <bns:Name>property2</bns:Name>\n              <bns:Value>158</bns:Value>\n          </bns:ProcessProperty>\n          <bns:ProcessProperty>\n              <bns:Name>property3</bns:Name>\n              <bns:Value>159</bns:Value>\n          </bns:ProcessProperty>\n      </bns:ProcessProperties>\n  </bns:Process>\n</bns:PersistedProcessProperties>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

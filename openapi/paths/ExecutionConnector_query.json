@@ -1,0 +1,132 @@
+{
+  "post": {
+    "tags": [
+      "ExecutionConnector"
+    ],
+    "summary": "Queries for an ExecutionConnector object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).\n\n- The QUERY operation allows you to query the connectors involved in a process run by filtering on attributes like executionId, actionType, successCount, and so on.\n - Requires one or more execution IDs in the request body.\n - You can filter all fields except executionConnector and id.",
+    "operationId": "QueryExecutionConnector",
+    "requestBody": {
+      "description": " Possible properties include: executionId, connectorType, actionType, errorCount, successCount, size, isStartShape, recordType",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ExecutionConnectorQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "executionId"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "executionId"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ExecutionConnectorQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n        <expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n            <nestedExpression operator=\"EQUALS\" property=\"executionId\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>execution-3456789a-bcde-f012-3456-789abcdef012-2021.01.01</argument>\n            </nestedExpression>\n        </expression>\n    </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"executionId\">\n      <argument>execution-3456789a-bcde-f012-3456-789abcdef012-2021.01.01</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ExecutionConnectorQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "ExecutionConnector",
+                  "id": "ABcDE19FT05GhIJ1KLmno2PqrST6c2uvwXYzA51bCd6EFglH3I0jK9lMNoPqr4StuvWXY3ZABcEFGhIJ1kLMN4OPQ1RsTuVWxyZaBcDe0fGHIjKLmNoP1",
+                  "executionId": "execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01",
+                  "executionConnector": "Start",
+                  "connectorType": "nodata",
+                  "actionType": "nodata",
+                  "errorCount": 0,
+                  "successCount": 1,
+                  "size": 0,
+                  "isStartShape": true,
+                  "recordType": "nodata"
+                },
+                {
+                  "@type": "ExecutionConnector",
+                  "id": "ABcDE19FT05GhaBcd2E6fgHIjKLmNoPlaRStubwxyzABcDEF63I0jK9lMNoPqr4StuvWXY3ZABcEFGhIJ1kLMN4OPQ1RsTuVWxyZaBcDe0fGHIjKLmNoP1",
+                  "executionId": "execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01",
+                  "executionConnector": "shape2",
+                  "connectorType": "return",
+                  "actionType": "return",
+                  "errorCount": 0,
+                  "successCount": 1,
+                  "size": 0,
+                  "isStartShape": false,
+                  "recordType": "return"
+                }
+              ],
+              "numberOfResults": 2
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ExecutionConnectorQueryResponse.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:QueryResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" numberOfResults=\"2\">\n        <bns:result xsi:type=\"ExecutionConnector\" id=\"ABcDE19FT05GhIJ1KLmno2PqrST6c2uvwXYzA51bCd6EFglH3I0jK9lMNoPqr4StuvWXY3ZABcEFGhIJ1kLMN4OPQ1RsTuVWxyZaBcDe0fGHIjKLmNoP1\" executionId=\"execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01\" executionConnector=\"Start\" connectorType=\"nodata\" actionType=\"nodata\" errorCount=\"0\" successCount=\"1\" size=\"0\" isStartShape=\"true\" recordType=\"nodata\"/>\n        <bns:result xsi:type=\"ExecutionConnector\" id=\"ABcDE19FT05GhaBcd2E6fgHIjKLmNoPlaRStubwxyzABcDEF63I0jK9lMNoPqr4StuvWXY3ZABcEFGhIJ1kLMN4OPQ1RsTuVWxyZaBcDe0fGHIjKLmNoP1\" executionId=\"execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01\" executionConnector=\"shape2\" connectorType=\"return\" actionType=\"return\" errorCount=\"0\" successCount=\"1\" size=\"0\" isStartShape=\"false\" recordType=\"return\"/>\n    </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

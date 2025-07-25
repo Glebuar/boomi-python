@@ -1,0 +1,182 @@
+{
+  "get": {
+    "tags": [
+      "ComponentMetadata"
+    ],
+    "summary": "Retrieves an instance of a ComponentMetadata object",
+    "description": "Returns the latest component revision if you do not provide the version. Providing the version in the format of `<componentId>` ~ `<version>`, returns the specific version of the component.",
+    "operationId": "GetComponentMetadata",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Required. Read only. The ID of the component. The component ID is available on the Revision History dialog, which you can access from the Build page in the service."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentMetadata.json"
+            },
+            "example": {
+              "@type": "ComponentMetadata",
+              "componentId": "456789a-bcde-f0123-4567-89abcdef012",
+              "version": 14,
+              "name": "Component123",
+              "type": "process",
+              "createdDate": "2016-11-17T19:30:39Z",
+              "createdBy": "johndoe@boomi.com",
+              "modifiedDate": "2019-04-30T15:03:44Z",
+              "modifiedBy": "janedoe@boomilcom",
+              "deleted": false,
+              "currentVersion": true,
+              "folderName": "Test Folder 1234",
+              "folderId": "PloxRzM5OTk",
+              "copiedFromComponentId": "123456a-bcde-f4567-8901-23abcdef456",
+              "copiedFromComponentVersion": "6",
+              "branchName": "main",
+              "branchId": "QjoxNDMxNg"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentMetadata.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:ComponentMetadata\n\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n\txmlns:bns=\"http://api.boomi.com/\">\n\t<bns:componentId>456789a-bcde-f0123-4567-89abcdef012</bns:componentId>\n\t<bns:version>7</bns:version>\n\t<bns:name>Component123</bns:name>\n\t<bns:type>process</bns:type>\n\t<bns:subType>process</bns:subType>\n\t<bns:createdDate>2019-11-05T20:13:25Z</bns:createdDate>\n\t<bns:createdBy>johndoe@boomi.com</bns:createdBy>\n\t<bns:modifiedDate>2019-11-26T21:23:55Z</bns:modifiedDate>\n\t<bns:modifiedBy>janedoe@boomi.com</bns:modifiedBy>\n\t<bns:deleted>true</bns:deleted>\n\t<bns:currentVersion>false</bns:currentVersion>\n\t<bns:folderName>Boomi</bns:folderName>\n\t<bns:folderId>\"PloxRzM5OTk\"</bns:folderId>\n\t<bns:copiedFromComponentId>123456a-bcde-f4567-8901-23abcdef456</bns:copiedFromComponentId>\n\t<bns:copiedFromComponentVersion>6</bns:copiedFromComponentVersion>\n <bns:branchName>main</bns:branchName>\n <bns:branchId>QjoxNDMxNg</bns:branchId></bns:ComponentMetadata>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "ComponentMetadata"
+    ],
+    "summary": "Modifies or updates a ComponentMetadata object",
+    "description": "Only `name` and `folderId` may be updated. They are optional and will only be modified if included in the UPDATE request. `folderId` must be a valid, non-deleted folder. If `folderId` is included in the request but with a blank value, it defaults to the root folder.",
+    "operationId": "UpdateComponentMetadata",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Required. Read only. The ID of the component. The component ID is available on the Revision History dialog, which you can access from the Build page in the service."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentMetadata.json"
+          },
+          "example": {
+            "componentId": "ae9e0ac0-fbdf-486a-8b27-6702c82dbba0",
+            "name": "New Process Update"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentMetadata.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:ComponentMetadata xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" componentId=\"ae9e0ac0-fbdf-486a-8b27-6702c82dbba0\" name=\"Process2\"/>\n"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentMetadata.json"
+            },
+            "example": {
+              "@type": "Component",
+              "componentId": "ae9e0ac0-fbdf-486a-8b27-6702c82dbba0",
+              "version": "2",
+              "name": "New Process Update",
+              "type": "process",
+              "createdDate": "2023-07-05T15:43:18Z",
+              "createdBy": "admin1@boomi.com",
+              "modifiedDate": "2023-07-05T15:47:26Z",
+              "modifiedBy": "admin1@boomi.com",
+              "deleted": "false",
+              "currentVersion": "true",
+              "folderName": "Admin",
+              "folderId": "RjozMDk2OQ",
+              "copiedFromComponentId": "6ea0e652-5e19-4ba8-8f86-4355adca9942",
+              "copiedFromComponentVersion": "7",
+              "branchName": "main",
+              "branchId": "QjoxNDMxNg"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentMetadata.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:ComponentMetadata\n\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n\txmlns:bns=\"http://api.platform.boomi.com/\" componentId=\"ae9e0ac0-fbdf-486a-8b27-6702c82dbba0\" \n    version=\"2\" name=\"Process2\" type=\"process\" createdDate=\"2023-02-08T18:50:46Z\" createdBy=\"user@boomi.com\" \n    modifiedDate=\"2023-02-08T18:51:20Z\" modifiedBy=\"user@boomi.com\" deleted=\"false\" currentVersion=\"true\" \n    folderName=\"Folder456\" folderId=\"RjoxMDU2NTM5\" \n copiedFromComponentId=\"6ea0e652-5e19-4ba8-8f86-4355adca9942\" \n copiedFromComponentVersion=\"7\" \n branchName=\"main\" branchId=\"QjoxNDMxNg\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "ComponentMetadata"
+    ],
+    "summary": "Deletes a ComponentMetadata object",
+    "description": "Lets you delete required components. Note that deleting a component does NOT delete dependent components.",
+    "operationId": "DeleteComponentMetadata",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Required. Read only. The ID of the component. The component ID is available on the Revision History dialog, which you can access from the Build page in the service."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

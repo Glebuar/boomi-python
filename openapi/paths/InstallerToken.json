@@ -1,0 +1,64 @@
+{
+  "post": {
+    "tags": [
+      "InstallerToken"
+    ],
+    "summary": "Creates an InstallerToken object",
+    "description": "Creates an installer token of a specific type that is valid for a specific number of minutes.",
+    "operationId": "CreateInstallerToken",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/InstallerToken.json"
+          },
+          "example": {
+            "installType": "MOLECULE",
+            "durationMinutes": 30
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/InstallerToken.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:InstallerToken xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" installType=\"MOLECULE\" durationMinutes=\"30\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/InstallerToken.json"
+            },
+            "example": {
+              "@type": "InstallerToken",
+              "installType": "MOLECULE",
+              "token": "molecule-963f3eb3-0eaa-4f5c-8b8b-8bff84343cb5",
+              "expiration": "2017-02-07T23:02:51.207Z",
+              "created": "2017-02-07T22:32:51.207Z",
+              "accountId": "fakeAccountId"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/InstallerToken.json"
+            },
+            "example": "<bns:InstallerToken xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \naccountId=\"fakeAccountId\" created=\"2017-02-07T22:31:10.136Z\" expiration=\"2017-02-07T23:01:10.136Z\" \ntoken=\"molecule-45aa1e3c-499a-4405-9869-51c1914cdfb9\" installType=\"MOLECULE\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

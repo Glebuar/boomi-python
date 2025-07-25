@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "Privilege": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./Privilege.json"
+      }
+    }
+  },
+  "description": "One or more privileges assigned to the role."
+}

@@ -1,0 +1,32 @@
+{
+  "required": [
+    "as2Id",
+    "encryptionPrivateCertificate",
+    "mdnSignaturePrivateCertificate",
+    "signingPrivateCertificate"
+  ],
+  "type": "object",
+  "properties": {
+    "as2Id": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "enabledLegacySMIME": {
+      "type": "boolean",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "encryptionPrivateCertificate": {
+      "$ref": "./PrivateCertificate.json"
+    },
+    "mdnSignaturePrivateCertificate": {
+      "$ref": "./PrivateCertificate.json"
+    },
+    "signingPrivateCertificate": {
+      "$ref": "./PrivateCertificate.json"
+    }
+  }
+}

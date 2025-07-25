@@ -1,0 +1,87 @@
+{
+  "required": [
+    "compositeDelimiter",
+    "elementDelimiter",
+    "segmentTerminator",
+    "subCompositeDelimiter"
+  ],
+  "type": "object",
+  "properties": {
+    "acceptackoption": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "AL",
+        "NE",
+        "ER",
+        "SU",
+        "NOT_DEFINED"
+      ]
+    },
+    "appackoption": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "AL",
+        "NE",
+        "ER",
+        "SU",
+        "NOT_DEFINED"
+      ]
+    },
+    "batchoption": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "none",
+        "batch"
+      ]
+    },
+    "compositeDelimiter": {
+      "$ref": "./EdiDelimiter.json"
+    },
+    "elementDelimiter": {
+      "$ref": "./EdiDelimiter.json"
+    },
+    "filteracknowledgements": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "outboundInterchangeValidation": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "outboundValidationOption": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "filterError",
+        "failAll"
+      ]
+    },
+    "rejectDuplicates": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "segmentTerminator": {
+      "$ref": "./EdiSegmentTerminator.json"
+    },
+    "subCompositeDelimiter": {
+      "$ref": "./EdiDelimiter.json"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "required": [
+    "OFTPPartnerGroup",
+    "OFTPSendOptions"
+  ],
+  "type": "object",
+  "properties": {
+    "OFTPPartnerGroup": {
+      "$ref": "./OFTPPartnerGroupType.json"
+    },
+    "OFTPSendOptions": {
+      "$ref": "./OFTPSendOptionsInfo.json"
+    },
+    "partnerGroupId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

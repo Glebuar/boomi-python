@@ -1,0 +1,243 @@
+{
+  "required": [
+    "account",
+    "actionType",
+    "atomId",
+    "connectorName",
+    "connectorType",
+    "customFields",
+    "dateProcessed",
+    "errorMessage",
+    "executionId",
+    "id",
+    "operationName"
+  ],
+  "type": "object",
+  "properties": {
+    "acceptAckReport": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The Accept Acknowledgment Report.",
+      "example": "Acknowledgment Report for Interchange Control Number 000139776\r  \n         Date: 190914\r\n         Time: 1031\r\n         Acknowledgment Status: Accepted with Errors\r\n         Note: Invalid Interchange Receiver ID"
+    },
+    "acceptAckStatus": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The Accept Acknowledgment status — either *Commit Accept*, *Commit Error*, or *Commit Reject*.",
+      "example": "Commit Error"
+    },
+    "account": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the account in which you ran this record.",
+      "example": "account-123456"
+    },
+    "ackReport": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The acknowledgment report.",
+      "example": "Group Control #: 139776\r Acknowledgement Status: A"
+    },
+    "ackStatus": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The acknowledgment status — either *Application Accept*, *Application Error*, or *Application Reject*.",
+      "example": "Application Error"
+    },
+    "actionType": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The type of action with which this record corresponds — *Send* for an outbound interchange or *Listen* for an inbound interchange.",
+      "example": "Listen"
+    },
+    "atomId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The processing ID of the Runtime for this record.",
+      "example": "3456789a-bcde-f012-3456-789abcdef012"
+    },
+    "connectorName": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The value is *Trading Partner* for an HL7 trading partner Send operation, or *Start* for an HL7 trading partner Listen operation.",
+      "example": "Start"
+    },
+    "connectorType": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "*hl7* is the connector type for any record.",
+      "example": "hl7"
+    },
+    "customFields": {
+      "$ref": "./customFields.json",
+      "description": "Custom fields based on the fields configured on the Document Tracking tab of the Setup page. The names of the fields are dependent upon your account setup.",
+      "example": {
+        "customNumber": "13",
+        "customDate": "2019-09-14T10:53:59-0400",
+        "customCharacter": "sample"
+      }
+    },
+    "dateProcessed": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The processing date and time of this record. The format is yyyy-MM-dd'T'HH:mm:ss'Z', for example 2019-09-14T15:32:00Z.",
+      "example": "2019-09-14T06:24:12Z"
+    },
+    "documentIndex": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The numerical index of this record in the run.",
+      "example": "0"
+    },
+    "errorMessage": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Any error message associated with this record. This field is omitted for a successful interchange."
+    },
+    "executionId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the run.",
+      "example": "execution-01234567-89ab-cdef-0123-456789abcdef-2019.09.14"
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of this record.",
+      "example": "connector-abcdef01-2345-6789-abcd-ef0123456789"
+    },
+    "isValidMessage": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "If the message satisfies the requirements of the referenced profile’s segment and element configuration, including mandatory fields, data types, and minimum and maximum lengths, the value is true. Otherwise, the value is false.",
+      "example": "false"
+    },
+    "messageControlId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The unique identifier for the message.",
+      "example": "1018015"
+    },
+    "messageType": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The code identifying the type of message.",
+      "example": "ADT_A01"
+    },
+    "operationName": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The name of the operation component processing the record.",
+      "example": "Sample HL7 Listen Operation"
+    },
+    "outboundValidationReport": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The outbound validation report. This report contains descriptions of errors present in the outbound interchange. If the outbound validation option is not selected in the sending trading partner, the value is N/A. The API omits this field or an inbound interchange."
+    },
+    "outboundValidationStatus": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The outbound validation status — is either Success, Error-Interchange, Error-Message, or N/A. For an outbound interchange for which you do not select the outbound validation option in the sending trading partner, the value is N/A. This field is omitted for an inbound interchange."
+    },
+    "receiverApplicationId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the receiving application among all other applications within the network enterprise.",
+      "example": "tpapp33382"
+    },
+    "receiverFacilityId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Additional detail regarding the receiving application.",
+      "example": "tpf33382"
+    },
+    "senderApplicationId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the sending application among all other applications within the network enterprise.",
+      "example": "mcapp33382"
+    },
+    "senderFacilityId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Additional detail regarding the sending application.",
+      "example": "mcf33382"
+    },
+    "size": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The size, in bytes, of the document that corresponds to this record.",
+      "example": "3138"
+    },
+    "successful": {
+      "type": "boolean",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Whether the record is a success or error.",
+      "example": "true"
+    },
+    "version": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The applicable HL7 version.",
+      "example": "v27"
+    }
+  }
+}

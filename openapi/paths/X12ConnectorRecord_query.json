@@ -1,0 +1,202 @@
+{
+  "post": {
+    "tags": [
+      "X12ConnectorRecord"
+    ],
+    "summary": "Queries for a X12ConnectorRecord object",
+    "description": "To filter by a custom field, use the format customFields. Use the fieldName as the filter property where fieldName is the element name of the custom field in the X12 Connector Record structure. To get a list of the available custom fields see the [Custom Tracked Field](/api/platformapi#tag/CustomTrackedField) object. \n\n The STARTS_WITH operator only accepts values that do not include spaces. \n\n For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryX12ConnectorRecord",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/X12ConnectorRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "execution-01234567-89ab-cdef-0123-456789abcdef-2016.05.21"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "executionId"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "execution-01234567-89ab-cdef-0123-456789abcdef-2016.05.21"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "executionId"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/X12ConnectorRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n  <QueryFilter>\n    <expression operator=\"EQUALS\" property=\"executionId\"\n      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n      <argument>execution-01234567-89ab-cdef-0123-456789abcdef-2016.05.21</argument>\n    </expression>\n  </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\"><nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"contactName\"><argument>Tom Miller</argument></nestedExpression><nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\"><argument>another-value</argument></nestedExpression></expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/X12ConnectorRecordQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 100,
+              "queryToken": "EXAMPLE_QUERY_TOKEN",
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "X12ConnectorRecord",
+                  "isaAckStatus": "Accepted",
+                  "isaAckReport": "Acknowledgment Report for Interchange Control Number 000000852&#xD;Date: 160528&#xD;Time: 0624&#xD;Acknowledgment Status: Accepted&#xD;Note: No Error",
+                  "ackStatus": "Accepted",
+                  "ackReport": "Group Control #: 852&#xD;Acknowledgement Status: A",
+                  "isaControl": "000000852",
+                  "gsControl": "852",
+                  "stControl": "0001",
+                  "functionalID": "SM",
+                  "transactionSet": "204",
+                  "testIndicator": "P",
+                  "senderIDQualifier": "02",
+                  "senderID": "NDTL",
+                  "receiverIDQualifier": "ZZ",
+                  "receiverID": "D1T1",
+                  "appSenderID": "NDTL",
+                  "appReceiverID": "D1T1",
+                  "standardID": "U",
+                  "standard": "U",
+                  "gsVersion": "003050",
+                  "agencyCode": "X",
+                  "gsDate": "130528",
+                  "gsTime": "0224",
+                  "outboundValidationStatus": "Success",
+                  "outboundValidationReport": "Transaction Set #: 19 Acknowledgement Status: A",
+                  "account": "account-123456",
+                  "executionId": "execution-01234567-89ab-cdef-0123-456789abcdef-2016.05.28",
+                  "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+                  "dateProcessed": "2016-05-28T06:24:12Z",
+                  "id": "connector-abcdef01-2345-6789-abcd-ef0123456789",
+                  "actionType": "Send",
+                  "connectorType": "x12",
+                  "connectorName": "Trading Partner",
+                  "operationName": "Xmit Message",
+                  "documentIndex": 0,
+                  "successful": true,
+                  "size": [
+                    "Long",
+                    654
+                  ],
+                  "customFields": [
+                    {
+                      "field1": 13,
+                      "field2": "ASA"
+                    }
+                  ]
+                },
+                {
+                  "@type": "X12ConnectorRecord",
+                  "isaAckStatus": "Accepted",
+                  "isaAckReport": "Acknowledgment Report for Interchange Control Number 000000913&#xD;Date: 160528&#xD;Time: 0625&#xD;Acknowledgment Status: Accepted&#xD;Note: No Error",
+                  "ackStatus": "Accepted",
+                  "ackReport": "Group Control #: 913&#xD;Acknowledgement Status: A",
+                  "isaControl": "000000913",
+                  "gsControl": "913",
+                  "stControl": "0001",
+                  "functionalID": "SM",
+                  "transactionSet": "253",
+                  "testIndicator": "P",
+                  "senderIDQualifier": "02",
+                  "senderID": "NDTL",
+                  "receiverIDQualifier": "ZZ",
+                  "receiverID": "D1T1",
+                  "appSenderID": "NDTL",
+                  "appReceiverID": "D1T1",
+                  "standardID": "U",
+                  "standard": "U",
+                  "gsVersion": "003050",
+                  "agencyCode": "X",
+                  "gsDate": "130528",
+                  "gsTime": "0225",
+                  "outboundValidationStatus": "Success",
+                  "outboundValidationReport": "Transaction Set #: 19 Acknowledgement Status: A",
+                  "account": "account-123456",
+                  "executionId": "execution-01234567-89ab-cdef-0123-456789abcdef-2016.05.28",
+                  "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+                  "dateProcessed": "2016-05-28T06:25:02Z",
+                  "id": "connector-bcdef012-3456-789a-bcde-f0123456789a",
+                  "actionType": "Send",
+                  "connectorType": "x12",
+                  "connectorName": "Trading Partner",
+                  "operationName": "Xmit Message",
+                  "documentIndex": 49,
+                  "successful": true,
+                  "size": [
+                    "Long",
+                    654
+                  ],
+                  "customFields": [
+                    {
+                      "field1": 55,
+                      "field2": "ASA"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/X12ConnectorRecordQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"100\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n   <bns:queryToken>EXAMPLE_QUERY_TOKEN</bns:queryToken>\n   <bns:result xsi:type=\"X12ConnectorRecord\" >\n      <bns:account>account-123456</bns:account>\n      <bns:executionId>execution-01234567-89ab-cdef-0123-456789abcdef-2016.05.28</bns:executionId>\n      <bns:atomId>3456789a-bcde-f012-3456-789abcdef012</bns:atomId>\n      <bns:dateProcessed>2016-05-28T06:24:12Z</bns:dateProcessed>\n      <bns:id>connector-abcdef01-2345-6789-abcd-ef0123456789</bns:id>\n      <bns:actionType>Send</bns:actionType>\n      <bns:connectorType>x12</bns:connectorType>\n      <bns:connectorName>Trading Partner</bns:connectorName>\n      <bns:operationName>Xmit Message</bns:operationName>\n      <bns:documentIndex>0</bns:documentIndex>\n      <bns:successful>true</bns:successful>\n      <bns:size>654</bns:size>\n      <bns:customFields>\n         <bns:field1>13</bns:field1>\n         <bns:field2>ASA</bns:field2>\n      </bns:customFields>\n      <bns:isaAckStatus>Accepted</bns:isaAckStatus>        \n      <bns:isaAckReport>Acknowledgment Report for Interchange Control Number 000000852&#xD;Date: 160528&#xD;Time: 0624&#xD;Acknowledgment Status: Accepted&#xD;Note: No Error</bns:isaAckReport>\n      <bns:ackStatus>Accepted</bns:ackStatus>\n      <bns:ackReport>Group Control #: 852&#xD;Acknowledgement Status: A</bns:ackReport>\n      <bns:isaControl>000000852</bns:isaControl>\n      <bns:gsControl>852</bns:gsControl>\n      <bns:stControl>0001</bns:stControl>\n      <bns:functionalID>SM</bns:functionalID>\n      <bns:transactionSet>204</bns:transactionSet>\n      <bns:testIndicator>P</bns:testIndicator>\n      <bns:senderIDQualifier>02</bns:senderIDQualifier>\n      <bns:senderID>NDTL</bns:senderID>\n      <bns:receiverIDQualifier>ZZ</bns:receiverIDQualifier>\n      <bns:receiverID>D1T1</bns:receiverID>\n      <bns:appSenderID>NDTL</bns:appSenderID>\n      <bns:appReceiverID>D1T1</bns:appReceiverID>\n      <bns:standardID>U</bns:standardID>\n      <bns:standard>U</bns:standard>\n      <bns:gsVersion>003050</bns:gsVersion>\n      <bns:agencyCode>X</bns:agencyCode>\n      <bns:gsDate>130528</bns:gsDate>\n      <bns:gsTime>0224</bns:gsTime>\n      <bns:outboundValidationStatus>Success</bns:outboundValidationStatus>\n      <bns:outboundValidationReport>Transaction Set #: 19 Acknowledgement Status: A</bns:outboundValidationReport>\n   </bns:result>\n   <bns:result xsi:type=\"X12ConnectorRecord\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n      <bns:account>account-123456</bns:account>\n      <bns:executionId>execution-01234567-89ab-cdef-0123-456789abcdef-2016.05.28</bns:executionId>\n      <bns:atomId>3456789a-bcde-f012-3456-789abcdef012</bns:atomId>\n      <bns:dateProcessed>2016-05-28T06:25:02Z</bns:dateProcessed>\n      <bns:id>connector-bcdef012-3456-789a-bcde-f0123456789a</bns:id>\n      <bns:actionType>Send</bns:actionType>\n      <bns:connectorType>x12</bns:connectorType>\n      <bns:connectorName>Trading Partner</bns:connectorName>\n      <bns:operationName>Xmit Message</bns:operationName>\n      <bns:documentIndex>49</bns:documentIndex>\n      <bns:successful>true</bns:successful>\n      <bns:size>654</bns:size>\n      <bns:customFields>\n         <bns:field1>55</bns:field1>\n         <bns:field2>ASA</bns:field2>\n      </bns:customFields>\n      <bns:isaAckStatus>Accepted</bns:isaAckStatus>        \n      <bns:isaAckReport>Acknowledgment Report for Interchange Control Number 000000913&#xD;Date: 160528&#xD;Time: 0625&#xD;Acknowledgment Status: Accepted&#xD;Note: No Error</bns:isaAckReport>\n      <bns:ackStatus>Accepted</bns:ackStatus>\n      <bns:ackReport>Group Control #: 913&#xD;Acknowledgement Status: A</bns:ackReport>\n      <bns:isaControl>000000913</bns:isaControl>\n      <bns:gsControl>913</bns:gsControl>\n      <bns:stControl>0001</bns:stControl>\n      <bns:functionalID>SM</bns:functionalID>\n      <bns:transactionSet>253</bns:transactionSet>\n      <bns:testIndicator>P</bns:testIndicator>\n      <bns:senderIDQualifier>02</bns:senderIDQualifier>\n      <bns:senderID>NDTL</bns:senderID>\n      <bns:receiverIDQualifier>ZZ</bns:receiverIDQualifier>\n      <bns:receiverID>D1T1</bns:receiverID>\n      <bns:appSenderID>NDTL</bns:appSenderID>\n      <bns:appReceiverID>D1T1</bns:appReceiverID>\n      <bns:standardID>U</bns:standardID>\n      <bns:standard>U</bns:standard>\n      <bns:gsVersion>003050</bns:gsVersion>\n      <bns:agencyCode>X</bns:agencyCode>\n      <bns:gsDate>130528</bns:gsDate>\n      <bns:gsTime>0225</bns:gsTime>\n      <bns:outboundValidationStatus>Success</bns:outboundValidationStatus>\n      <bns:outboundValidationReport>Transaction Set #: 19 Acknowledgement Status: A</bns:outboundValidationReport>\n   </bns:result>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

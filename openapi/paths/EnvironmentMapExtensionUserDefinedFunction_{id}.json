@@ -1,0 +1,447 @@
+{
+  "get": {
+    "tags": [
+      "EnvironmentMapExtensionUserDefinedFunction"
+    ],
+    "summary": "Retrieves an instance of an EnvironmentMapExtensionUserDefinedFunction object",
+    "description": "Retrieves an extensible user-defined function associated with a given environment map extension function ID.",
+    "operationId": "GetEnvironmentMapExtensionUserDefinedFunction",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Represents the unique, system-generated ID of the extended user-defined function."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentMapExtensionUserDefinedFunction.json"
+            },
+            "example": {
+              "@type": "EnvironmentMapExtensionUserDefinedFunction",
+              "Inputs": {
+                "@type": "MapExtensionsInputs",
+                "Input": [
+                  {
+                    "@type": "MapExtensionsInput",
+                    "name": "input",
+                    "key": 1
+                  }
+                ]
+              },
+              "Outputs": {
+                "@type": "MapExtensionsOutputs",
+                "Output": [
+                  {
+                    "@type": "MapExtensionsOutput",
+                    "name": "output",
+                    "key": 1
+                  }
+                ]
+              },
+              "Steps": {
+                "@type": "MapExtensionsFunctionSteps",
+                "Step": [
+                  {
+                    "@type": "MapExtensionsFunctionStep",
+                    "Inputs": {
+                      "@type": "MapExtensionsInputs",
+                      "Input": [
+                        {
+                          "@type": "MapExtensionsInput",
+                          "name": "Value",
+                          "key": 1
+                        }
+                      ]
+                    },
+                    "Outputs": {
+                      "@type": "MapExtensionsOutputs",
+                      "Output": [
+                        {
+                          "@type": "MapExtensionsOutput",
+                          "name": "Result",
+                          "key": 1
+                        }
+                      ]
+                    },
+                    "Configuration": {
+                      "@type": "MapExtensionsConfiguration"
+                    },
+                    "cacheType": "None",
+                    "id": "1",
+                    "type": "MathABS",
+                    "position": 1
+                  }
+                ]
+              },
+              "Mappings": {
+                "@type": "MapExtensionsFunctionMappings",
+                "Mapping": [
+                  {
+                    "@type": "MapExtensionsFunctionMapping",
+                    "fromFunction": "0",
+                    "fromKey": 1,
+                    "toFunction": "1",
+                    "toKey": 1
+                  },
+                  {
+                    "@type": "MapExtensionsFunctionMapping",
+                    "fromFunction": "1",
+                    "fromKey": 1,
+                    "toFunction": "0",
+                    "toKey": 1
+                  }
+                ]
+              },
+              "environmentMapExtensionId": "MWRiZDhk...",
+              "id": "abcd12345-6c78-9012-9eb8-345f6b678901",
+              "name": "My UDF in MapExtension",
+              "deleted": false,
+              "createdDate": "2021-11-10T18:09:39Z",
+              "createdBy": "user@boomi.com",
+              "modifiedDate": "2021-11-10T18:09:39Z",
+              "modifiedBy": "user@boomi.com"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentMapExtensionUserDefinedFunction.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:EnvironmentMapExtensionUserDefinedFunction xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" environmentMapExtensionId=\"MWRiZDhk...\" id=\"abcd12345-6c78-9012-9eb8-345f6b678901\" name=\"My UDF in MapExtension\" deleted=\"false\" createdDate=\"2021-11-10T18:09:39Z\" createdBy=\"user@boomi.com\" modifiedDate=\"2021-11-10T18:09:39Z\" modifiedBy=\"user@boomi.com\">\n       <bns:Inputs>\n           <bns:Input name=\"input\" key=\"1\"/>\n       </bns:Inputs>\n       <bns:Outputs>\n           <bns:Output name=\"output\" key=\"1\"/>\n       </bns:Outputs>\n       <bns:Steps>\n           <bns:Step position=\"1\" cacheType=\"None\" id=\"1\" type=\"MathABS\">\n               <bns:Inputs>\n                   <bns:Input name=\"Value\" key=\"1\"/>\n               </bns:Inputs>\n               <bns:Outputs>\n                   <bns:Output name=\"Result\" key=\"1\"/>\n               </bns:Outputs>\n               <bns:Configuration/>\n           </bns:Step>\n       </bns:Steps>\n       <bns:Mappings>\n           <bns:Mapping fromFunction=\"0\" fromKey=\"1\" toFunction=\"1\" toKey=\"1\"/>\n           <bns:Mapping fromFunction=\"1\" fromKey=\"1\" toFunction=\"0\" toKey=\"1\"/>\n       </bns:Mappings>\n    </bns:EnvironmentMapExtensionUserDefinedFunction>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "EnvironmentMapExtensionUserDefinedFunction"
+    ],
+    "summary": "Modifies or updates an EnvironmentMapExtensionUserDefinedFunction object",
+    "description": "Updates the extended configuration for a single user-defined function. \n\n >**Caution:** Updating functions require all existing input and output values in the request regardless if they are mapped or populated with a default value. Otherwise, it overrides and removes those variables from the function.",
+    "operationId": "UpdateEnvironmentMapExtensionUserDefinedFunction",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Represents the unique, system-generated ID of the extended user-defined function."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentMapExtensionUserDefinedFunction.json"
+          },
+          "example": {
+            "name": "Account - Customer",
+            "mapId": "01234567890123456789012345",
+            "processId": "789abcde-f012-3456-789a-bcdef0123456",
+            "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg",
+            "extensionGroupId": "",
+            "environmentId": "456789ab-cdef-0123-4567-89abcdef0123",
+            "Map": {
+              "ExtendedFunctions": {
+                "Function": {
+                  "type": "StringAppend",
+                  "id": "FUNCEXT--012345678",
+                  "cacheType": "ByDocument",
+                  "Inputs": {
+                    "Input": [
+                      {
+                        "key": "1",
+                        "name": "Original String",
+                        "default": ""
+                      },
+                      {
+                        "key": "2",
+                        "name": "Fix to Length",
+                        "default": ""
+                      },
+                      {
+                        "key": "3",
+                        "name": "Char to Append",
+                        "default": "-0000"
+                      }
+                    ]
+                  },
+                  "Outputs": {
+                    "Output": {
+                      "key": "1",
+                      "name": "Result"
+                    }
+                  },
+                  "Configuration": null
+                }
+              },
+              "ExtendedMappings": {
+                "Mapping": [
+                  {
+                    "fromXPath": "/StreetAddress1",
+                    "toXPath": "/CustomerAdd/ShipAddress/Addr1"
+                  },
+                  {
+                    "fromXPath": "/StreetAddress2",
+                    "toXPath": "/CustomerAdd/ShipAddress/Addr2"
+                  },
+                  {
+                    "fromXPath": "/City",
+                    "toXPath": "/CustomerAdd/ShipAddress/City"
+                  },
+                  {
+                    "fromXPath": "/State",
+                    "toXPath": "/CustomerAdd/ShipAddress/State"
+                  },
+                  {
+                    "fromXPath": "/Zip",
+                    "toXPath": "/CustomerAdd/ShipAddress/PostalCode"
+                  },
+                  {
+                    "fromXPath": "/Country",
+                    "toXPath": "/CustomerAdd/ShipAddress/Country"
+                  },
+                  {
+                    "toFunction": "FUNCEXT--012345678",
+                    "fromXPath": "/Zip",
+                    "toXPath": "1"
+                  },
+                  {
+                    "fromFunction": "FUNCEXT--012345678",
+                    "fromXPath": "1",
+                    "toXPath": "/CustomerAdd/ShipAddress/PostalCode"
+                  }
+                ]
+              },
+              "SourceProfileExtensions": {
+                "Node": [
+                  {
+                    "xpath": "",
+                    "name": "Account",
+                    "Character": null
+                  },
+                  {
+                    "xpath": "/CustomerNum",
+                    "name": "CustomerNum",
+                    "Character": null
+                  },
+                  {
+                    "xpath": "/CustomerName",
+                    "name": "CustomerName",
+                    "Character": null
+                  },
+                  {
+                    "xpath": "/StreetAddress1",
+                    "name": "StreetAddress1",
+                    "Character": null
+                  },
+                  {
+                    "xpath": "/StreetAddress2",
+                    "name": "StreetAddress2",
+                    "Character": null
+                  },
+                  {
+                    "xpath": "/City",
+                    "name": "City",
+                    "Character": null
+                  },
+                  {
+                    "xpath": "/State",
+                    "name": "State",
+                    "Character": null
+                  },
+                  {
+                    "xpath": "/Zip",
+                    "name": "Zip",
+                    "Character": null
+                  }
+                ]
+              },
+              "DestinationProfileExtensions": [
+                null,
+                null
+              ]
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentMapExtensionUserDefinedFunction.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:EnvironmentMapExtensionUserDefinedFunction xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" environmentMapExtensionId=\"MWRiZDhk...\" id=\"abcd12345-6c78-9012-9eb8-345f6b678901\" name=\"My UDF in MapExtension\" deleted=\"false\" createdDate=\"2021-11-03T19:41:44Z\" createdBy=\"user@boomi.com\" modifiedDate=\"2021-12-06T20:10:08.348Z\" modifiedBy=\"user@boomi.com\">\n       <bns:Inputs>\n           <bns:Input name=\"str\" key=\"1\"/>\n           <bns:Input name=\"str2\" key=\"2\"/>\n       </bns:Inputs>\n       <bns:Outputs>\n           <bns:Output name=\"out1\" key=\"1\"/>\n           <bns:Output name=\"out2\" key=\"2\"/>\n       </bns:Outputs>\n       <bns:Steps>\n           <bns:Step position=\"1\" cacheType=\"None\" id=\"5\" type=\"StringPrepend\">\n               <bns:Inputs>\n                   <bns:Input default=\"STRING1\" name=\"Original String\" key=\"1\"/>\n                   <bns:Input default=\"5\" name=\"Fix to Length\" key=\"2\"/>\n                   <bns:Input default=\"_\" name=\"Char to Prepend\" key=\"3\"/>\n               </bns:Inputs>\n               <bns:Outputs>\n                   <bns:Output name=\"Result\" key=\"1\"/>\n               </bns:Outputs>\n               <bns:Configuration/>\n           </bns:Step>\n       </bns:Steps>\n       <bns:Mappings/>\n    </bns:EnvironmentMapExtensionUserDefinedFunction>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentMapExtensionUserDefinedFunction.json"
+            },
+            "example": {
+              "@type": "EnvironmentMapExtensionUserDefinedFunction",
+              "Inputs": {
+                "@type": "MapExtensionsInputs",
+                "Input": [
+                  {
+                    "@type": "MapExtensionsInput",
+                    "name": "str",
+                    "key": 1
+                  },
+                  {
+                    "@type": "MapExtensionsInput",
+                    "name": "str2",
+                    "key": 2
+                  }
+                ]
+              },
+              "Outputs": {
+                "@type": "MapExtensionsOutputs",
+                "Output": [
+                  {
+                    "@type": "MapExtensionsOutput",
+                    "name": "out1",
+                    "key": 1
+                  },
+                  {
+                    "@type": "MapExtensionsOutput",
+                    "name": "out2",
+                    "key": 2
+                  }
+                ]
+              },
+              "Steps": {
+                "@type": "MapExtensionsFunctionSteps",
+                "Step": [
+                  {
+                    "@type": "MapExtensionsFunctionStep",
+                    "Inputs": {
+                      "@type": "MapExtensionsInputs",
+                      "Input": [
+                        {
+                          "@type": "MapExtensionsInput",
+                          "default": "STRING1",
+                          "name": "Original String",
+                          "key": 1
+                        },
+                        {
+                          "@type": "MapExtensionsInput",
+                          "default": "5",
+                          "name": "Fix to Length",
+                          "key": 2
+                        },
+                        {
+                          "@type": "MapExtensionsInput",
+                          "default": "_",
+                          "name": "Char to Prepend",
+                          "key": 3
+                        }
+                      ]
+                    },
+                    "Outputs": {
+                      "@type": "MapExtensionsOutputs",
+                      "Output": [
+                        {
+                          "@type": "MapExtensionsOutput",
+                          "name": "Result",
+                          "key": 1
+                        }
+                      ]
+                    },
+                    "Configuration": {
+                      "@type": "MapExtensionsConfiguration"
+                    },
+                    "cacheType": "None",
+                    "id": "5",
+                    "type": "StringPrepend",
+                    "position": 1
+                  }
+                ]
+              },
+              "Mappings": {
+                "@type": "MapExtensionsFunctionMappings",
+                "Mapping": []
+              },
+              "environmentMapExtensionId": "MWRiZDhk...",
+              "id": "abcd12345-6c78-9012-9eb8-345f6b678901",
+              "name": "My UDF in MapExtension",
+              "deleted": false,
+              "createdDate": "2021-11-03T19:41:44Z",
+              "createdBy": "user@boomi.com",
+              "modifiedDate": "2021-12-06T20:11:55.112Z",
+              "modifiedBy": "user@boomi.com"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentMapExtensionUserDefinedFunction.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:EnvironmentMapExtensionUserDefinedFunction xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" environmentMapExtensionId=\"MWRiZDhk...\" id=\"abcd12345-6c78-9012-9eb8-345f6b678901\" name=\"My UDF in MapExtension\" deleted=\"false\" createdDate=\"2021-11-03T19:41:44Z\" createdBy=\"user@boomi.com\" modifiedDate=\"2021-12-06T20:10:08.348Z\" modifiedBy=\"user@boomi.com\">\n       <bns:Inputs>\n           <bns:Input name=\"str\" key=\"1\"/>\n           <bns:Input name=\"str2\" key=\"2\"/>\n       </bns:Inputs>\n       <bns:Outputs>\n           <bns:Output name=\"out1\" key=\"1\"/>\n           <bns:Output name=\"out2\" key=\"2\"/>\n       </bns:Outputs>\n       <bns:Steps>\n           <bns:Step position=\"1\" cacheType=\"None\" id=\"5\" type=\"StringPrepend\">\n               <bns:Inputs>\n                   <bns:Input default=\"STRING1\" name=\"Original String\" key=\"1\"/>\n                   <bns:Input default=\"5\" name=\"Fix to Length\" key=\"2\"/>\n                   <bns:Input default=\"_\" name=\"Char to Prepend\" key=\"3\"/>\n               </bns:Inputs>\n               <bns:Outputs>\n                   <bns:Output name=\"Result\" key=\"1\"/>\n               </bns:Outputs>\n               <bns:Configuration/>\n           </bns:Step>\n       </bns:Steps>\n       <bns:Mappings/>\n    </bns:EnvironmentMapExtensionUserDefinedFunction>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "EnvironmentMapExtensionUserDefinedFunction"
+    ],
+    "summary": "Deletes an EnvironmentMapExtensionUserDefinedFunction object",
+    "description": "Deletes the specified user-defined function. Deleted user-defined functions return a status of true and are no longer available for use in an API call or on the user interface. \n\n ### Restoring a deleted user-defined function \n\n Reinstate a deleted user-defined function by providing the function's id in a CREATE operation. You cannot make changes to a function during restoration (in other words, you cannot edit its values in a RESTORE request). By restoring a deleted function, it becomes available for use in an API call and in the user interface. After a successful RESTORE operation, the function returns a deleted status of false.",
+    "operationId": "DeleteEnvironmentMapExtensionUserDefinedFunction",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Represents the unique, system-generated ID of the extended user-defined function."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

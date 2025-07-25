@@ -1,0 +1,60 @@
+{
+  "get": {
+    "tags": [
+      "PackagedComponentManifest"
+    ],
+    "summary": "Retrieves an instance of a PackagedComponentManifest object",
+    "description": "Retrieve a list of the included components and their summary metadata for a single version of a packaged component.",
+    "operationId": "GetPackagedComponentManifest",
+    "parameters": [
+      {
+        "name": "packageId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ID of the packaged component."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PackagedComponentManifest.json"
+            },
+            "example": {
+              "@type": "PackagedComponent",
+              "packageId": "e8dbc278-e970-49e5-84bd-af39d7d38140",
+              "packageVersion": "2.0",
+              "componentId": "66d665d1-3ec7-479c-9e24-8df3fa728cf8",
+              "componentVersion": "2.0",
+              "componentType": "process",
+              "createdDate": "2017-03-16T13:34:01Z",
+              "createdBy": "user@boomi.com",
+              "notes": "Created for component publication with GUID f7f6ddb6-9437-4a90-9655-f01970068ca8 and version 2.",
+              "shareable": true,
+              "deleted": false
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/PackagedComponentManifest.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:PackagedComponentManifest xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" packageId=\"123a45e6-789e-1f23-a45d-a6789daebbd9\">\n        <bns:componentInfo id=\"456789a-bcde-f0123-4567-89abcdef012\" version=\"1\"/>\n        <bns:componentInfo id=\"765a432-12ab-0e98-7a66-54d53bf321f87\" version=\"1\"/>\n    </bns:PackagedComponentManifest>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

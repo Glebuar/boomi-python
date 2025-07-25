@@ -1,0 +1,63 @@
+{
+  "post": {
+    "tags": [
+      "ProcessAtomAttachment"
+    ],
+    "summary": "Creates a ProcessAtomAttachment object",
+    "description": "Attaches a process having the specified ID to the Runtime having the specified ID.",
+    "operationId": "CreateProcessAtomAttachment",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ProcessAtomAttachment.json"
+          },
+          "example": {
+            "processId": "56789abc-def0-1234-5678-9abcdef01234",
+            "atomId": "3456789a-bcde-f012-3456-789abcdef012"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ProcessAtomAttachment.json"
+          },
+          "example": "<bns:ProcessAtomAttachment atomId=\"3456789a-bcde-f012-3456-789abcdef012\" \n         processId=\"56789abc-def0-1234-5678-9abcdef01234\" xmlns:bns=\"http://api.platform.boomi.com/\" \n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ProcessAtomAttachment.json"
+            },
+            "example": {
+              "@type": "ProcessAtomAttachment",
+              "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg",
+              "processId": "56789abc-def0-1234-5678-9abcdef01234",
+              "componentType": "process",
+              "atomId": "3456789a-bcde-f012-3456-789abcdef012"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ProcessAtomAttachment.json"
+            },
+            "example": "<bns:ProcessAtomAttachment atomId=\"3456789a-bcde-f012-3456-789abcdef012\" \n         processId=\"56789abc-def0-1234-5678-9abcdef01234\"\n         componentType=\"process\"\n         id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\"\n         xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

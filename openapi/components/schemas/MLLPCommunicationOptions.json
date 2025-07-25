@@ -1,0 +1,8 @@
+{
+  "type": "object",
+  "properties": {
+    "MLLPSendSettings": {
+      "$ref": "./MLLPSendSettings.json"
+    }
+  }
+}

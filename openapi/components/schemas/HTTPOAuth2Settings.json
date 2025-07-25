@@ -1,0 +1,45 @@
+{
+  "required": [
+    "accessTokenEndpoint",
+    "accessTokenParameters",
+    "authorizationParameters",
+    "authorizationTokenEndpoint",
+    "credentials",
+    "scope"
+  ],
+  "type": "object",
+  "properties": {
+    "accessTokenEndpoint": {
+      "$ref": "./HTTPEndpoint.json"
+    },
+    "accessTokenParameters": {
+      "$ref": "./HTTPRequestParameters.json"
+    },
+    "authorizationParameters": {
+      "$ref": "./HTTPRequestParameters.json"
+    },
+    "authorizationTokenEndpoint": {
+      "$ref": "./HTTPEndpoint.json"
+    },
+    "credentials": {
+      "$ref": "./HTTPOAuthCredentials.json"
+    },
+    "grantType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "code",
+        "client_credentials",
+        "password"
+      ]
+    },
+    "scope": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    }
+  }
+}

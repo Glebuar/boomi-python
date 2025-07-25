@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "numberOfResults": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "queryToken": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "result": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./Folder.json"
+      }
+    }
+  },
+  "xml": {
+    "name": "QueryResult",
+    "namespace": "http://api.platform.boomi.com/"
+  }
+}

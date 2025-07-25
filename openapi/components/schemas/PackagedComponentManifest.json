@@ -1,0 +1,34 @@
+{
+  "required": [
+    "packageId"
+  ],
+  "type": "object",
+  "properties": {
+    "componentInfo": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./ComponentInfo.json"
+      },
+      "example": [
+        {
+          "id": "456789a-bcde-f0123-4567-89abcdef012",
+          "version": "1"
+        },
+        {
+          "id": "765a432-12ab-0e98-7a66-54d53bf321f87"
+        }
+      ]
+    },
+    "packageId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the packaged component.",
+      "example": "123a45e6-789e-1f23-a45d-a6789daebbd9"
+    }
+  }
+}

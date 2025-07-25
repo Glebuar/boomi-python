@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "connectorField": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./ConnectorField.json"
+      }
+    }
+  },
+  "description": "Displays all connector-related fields from the connector included in this document."
+}

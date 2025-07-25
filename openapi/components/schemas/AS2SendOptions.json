@@ -1,0 +1,18 @@
+{
+  "required": [
+    "AS2MDNOptions",
+    "AS2MessageOptions"
+  ],
+  "type": "object",
+  "properties": {
+    "AS2MDNOptions": {
+      "$ref": "./AS2MDNOptions.json"
+    },
+    "AS2MessageOptions": {
+      "$ref": "./AS2MessageOptions.json"
+    },
+    "AS2PartnerInfo": {
+      "$ref": "./AS2PartnerInfo.json"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "properties": {
+    "format": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

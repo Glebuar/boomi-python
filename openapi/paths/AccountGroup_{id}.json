@@ -1,0 +1,140 @@
+{
+  "get": {
+    "tags": [
+      "AccountGroup"
+    ],
+    "summary": "Retrieves an instance of an AccountGroup object",
+    "description": "Returns a single Account Group object based on the supplied account group ID. \n\n >**Note:** \n Resources information is returned only for the Get operation, not the Query operation.",
+    "operationId": "GetAccountGroup",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ID of the account group."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroup.json"
+            },
+            "example": {
+              "@type": "AccountGroup",
+              "id": "fedcba98-7654-3210-fedc-ba9876543210",
+              "accountId": "account-123456",
+              "name": "Analyst Accounts",
+              "autoSubscribeAlertLevel": "none",
+              "defaultGroup": false,
+              "Resources": {
+                "@type": "Resources",
+                "Resource": [
+                  {
+                    "@type": "Resource",
+                    "resourceId": "ffd7622d-1f6f-4f08-9bf7-5f2f6eabbf30",
+                    "resourceName": "Test Integration Pack",
+                    "objectType": "Integration Pack"
+                  }
+                ]
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroup.json"
+            },
+            "example": "<bns:AccountGroup defaultGroup=\"false\" autoSubscribeAlertLevel=\"none\" name=\"Analyst Accounts\" accountId=\"account-123456\" id=\"fedcba98-7654-3210-fedc-ba9876543210\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <bns:Resources>\n        <bns:resource resourceId=\"ffd7622d-1f6f-4f08-9bf7-5f2f6eabbf30\" objectType=\"Integration Pack\" resourceName=\"Test Integration Pack\"/>\n    </bns:Resources>\n</bns:AccountGroup>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "AccountGroup"
+    ],
+    "summary": "Modifies or updates an AccountGroup object",
+    "description": "Updates an account group based on the supplied account group ID.",
+    "operationId": "UpdateAccountGroup",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ID of the account group."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AccountGroup.json"
+          },
+          "example": {
+            "id": "fedcba98-7654-3210-fedc-ba9876543210",
+            "name": "TestGroupRenamed",
+            "accountId": "account-123456"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AccountGroup.json"
+          },
+          "example": "<bns:AccountGroup name=\"TestGroupRenamed\" accountId=\"account-123456\" \n  id=\"fedcba98-7654-3210-fedc-ba9876543210\"\n  xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroup.json"
+            },
+            "example": {
+              "@type": "AccountGroup",
+              "id": "fedcba98-7654-3210-fedc-ba9876543210",
+              "accountId": "account-123456",
+              "name": "TestGroupRenamed",
+              "autoSubscribeAlertLevel": "none",
+              "defaultGroup": false
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroup.json"
+            },
+            "example": "<bns:AccountGroup defaultGroup=\"false\" autoSubscribeAlertLevel=\"none\"\n  name=\"TestGroupRenamed\" accountId=\"account-123456\" id=\"fedcba98-7654-3210-fedc-ba9876543210\"\n  xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

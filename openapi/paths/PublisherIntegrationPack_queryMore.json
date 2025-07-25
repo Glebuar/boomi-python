@@ -1,0 +1,93 @@
+{
+  "post": {
+    "tags": [
+      "PublisherIntegrationPack"
+    ],
+    "summary": "Retrieves additional results for a PublisherIntegrationPack query",
+    "description": "To learn about using `queryMore`, refer to [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryMorePublisherIntegrationPack",
+    "requestBody": {
+      "content": {
+        "text/plain": {
+          "schema": {
+            "type": "string"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PublisherIntegrationPackQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "PublisherIntegrationPack",
+                  "Description": "Ipack description",
+                  "PublisherPackagedComponents": {
+                    "@type": "PublisherPackagedComponents",
+                    "PublisherPackagedComponent": []
+                  },
+                  "id": "664cc077-28a8-42cb-ac6e-1cb131c9e0d0",
+                  "name": "IPACK-JSON",
+                  "installationType": "SINGLE"
+                },
+                {
+                  "@type": "PublisherIntegrationPack",
+                  "Description": "",
+                  "PublisherPackagedComponents": {
+                    "@type": "PublisherPackagedComponents",
+                    "PublisherPackagedComponent": [
+                      {
+                        "@type": "PublisherPackagedComponent",
+                        "componentId": "62f7ffb7-5332-4142-893a-8d40d4742ccf",
+                        "componentName": "Rate Limit Test",
+                        "componentType": "process",
+                        "currentVersion": "",
+                        "pendingVersion": "1.0",
+                        "latestVersion": ""
+                      },
+                      {
+                        "@type": "PublisherPackagedComponent",
+                        "componentId": "bb0dae4f-c8f3-47fa-9dee-c3c484f79f71",
+                        "componentName": "New Process 4",
+                        "componentType": "process",
+                        "currentVersion": "",
+                        "pendingVersion": "3.0",
+                        "latestVersion": ""
+                      }
+                    ]
+                  },
+                  "id": "8b80f83b-9836-49a0-8c72-753131a77bae",
+                  "name": "test single",
+                  "installationType": "SINGLE"
+                }
+              ],
+              "numberOfResults": 2
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/PublisherIntegrationPackQueryResponse.json"
+            },
+            "example": "<bns:QueryResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" numberOfResults=\"2\">\n    <bns:result xsi:type=\"bns:PublisherIntegrationPack\" id=\"664cc077-28a8-42cb-ac6e-1cb131c9e0d0\" name=\"IPACK-JSON\" installationType=\"SINGLE\">\n        <bns:Description>Ipack description</bns:Description>\n        <bns:PublisherPackagedComponents/>\n    </bns:result>\n    <bns:result xsi:type=\"bns:PublisherIntegrationPack\" id=\"8b80f83b-9836-49a0-8c72-753131a77bae\" name=\"test single\" installationType=\"SINGLE\">\n        <bns:Description></bns:Description>\n        <bns:PublisherPackagedComponents>\n            <bns:PublisherPackagedComponent componentId=\"bb0dae4f-c8f3-47fa-9dee-c3c484f79f71\" componentName=\"New Process 4\" componentType=\"process\" currentVersion=\"\" pendingVersion=\"3.0\" latestVersion=\"\"/>\n            <bns:PublisherPackagedComponent componentId=\"62f7ffb7-5332-4142-893a-8d40d4742ccf\" componentName=\"Rate Limit Test\" componentType=\"process\" currentVersion=\"\" pendingVersion=\"1.0\" latestVersion=\"\"/>\n        </bns:PublisherPackagedComponents>\n    </bns:result>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

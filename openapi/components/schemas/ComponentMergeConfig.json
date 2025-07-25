@@ -1,0 +1,20 @@
+{
+  "required": [
+    "componentId"
+  ],
+  "type": "object",
+  "properties": {
+    "componentId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "priorityBranch": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

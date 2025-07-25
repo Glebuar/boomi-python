@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "processId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "tradingPartnerId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

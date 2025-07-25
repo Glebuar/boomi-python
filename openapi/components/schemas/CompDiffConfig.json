@@ -1,0 +1,52 @@
+{
+  "type": "object",
+  "properties": {
+    "CompDiffElement": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./CompDiffElement.json"
+      }
+    },
+    "componentType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The type of component that you want to compare.",
+      "enum": [
+        "certificate",
+        "connector-action",
+        "connector-settings",
+        "crossref",
+        "documentcache",
+        "transform.map",
+        "transform.function",
+        "certificate.pgp",
+        "process",
+        "processproperty",
+        "profile.db",
+        "profile.edi",
+        "profile.flatfile",
+        "profile.xml",
+        "profile.json",
+        "queue",
+        "tradingpartner",
+        "tpgroup",
+        "tporganization",
+        "tpcommoptions",
+        "webservice",
+        "webservice.external",
+        "processroute",
+        "customlibrary",
+        "edistandard",
+        "flowservice",
+        "script.processing",
+        "script.mapping",
+        "xslt"
+      ]
+    }
+  }
+}

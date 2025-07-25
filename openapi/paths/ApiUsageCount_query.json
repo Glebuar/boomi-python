@@ -1,0 +1,165 @@
+{
+  "post": {
+    "tags": [
+      "ApiUsageCount"
+    ],
+    "summary": "Queries for an ApiUsageCount object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryApiUsageCount",
+    "requestBody": {
+      "description": " Possible properties include: processDate, classification, successCount, errorCount",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ApiUsageCountQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "TEST"
+                        ],
+                        "operator": "NOT_EQUALS",
+                        "property": "classification"
+                      },
+                      {
+                        "argument": [
+                          "2017-09-01T00:00:00Z",
+                          "2017-09-07T00:00:00Z"
+                        ],
+                        "operator": "BETWEEN",
+                        "property": "processDate"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "and",
+                        "nestedExpression": [
+                          {
+                            "argument": [
+                              "TEST"
+                            ],
+                            "operator": "NOT_EQUALS",
+                            "property": "classification"
+                          },
+                          {
+                            "argument": [
+                              "2017-09-01T00:00:00Z",
+                              "2017-09-07T00:00:00Z"
+                            ],
+                            "operator": "BETWEEN",
+                            "property": "processDate"
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ApiUsageCountQueryConfig.json"
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ApiUsageCountQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "ApiUsageCount",
+                  "classification": "PROD",
+                  "processDate": "2017-09-01T04:00:00Z",
+                  "errorCount": 0,
+                  "successCount": 100
+                },
+                {
+                  "@type": "ApiUsageCount",
+                  "classification": "PROD",
+                  "processDate": "2017-09-02T04:00:00Z",
+                  "errorCount": 0,
+                  "successCount": 4
+                },
+                {
+                  "@type": "ApiUsageCount",
+                  "classification": "PROD",
+                  "processDate": "2017-09-03T04:00:00Z",
+                  "errorCount": 0,
+                  "successCount": 4
+                },
+                {
+                  "@type": "ApiUsageCount",
+                  "classification": "PROD",
+                  "processDate": "2017-09-04T04:00:00Z",
+                  "errorCount": 0,
+                  "successCount": 100
+                },
+                {
+                  "@type": "ApiUsageCount",
+                  "classification": "PROD",
+                  "processDate": "2017-09-05T04:00:00Z",
+                  "errorCount": 0,
+                  "successCount": 100
+                },
+                {
+                  "@type": "ApiUsageCount",
+                  "classification": "PROD",
+                  "processDate": "2017-09-06T04:00:00Z",
+                  "errorCount": 0,
+                  "successCount": 100
+                }
+              ],
+              "numberOfResults": 6
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ApiUsageCountQueryResponse.json"
+            }
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

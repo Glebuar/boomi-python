@@ -1,0 +1,41 @@
+{
+  "required": [
+    "field"
+  ],
+  "type": "object",
+  "properties": {
+    "connectionId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "environmentId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "extensionGroupId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "field": {
+      "$ref": "./FieldSummary.json"
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "processId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

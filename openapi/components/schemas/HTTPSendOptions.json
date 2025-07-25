@@ -1,0 +1,98 @@
+{
+  "required": [
+    "pathElements",
+    "requestHeaders",
+    "responseHeaderMapping"
+  ],
+  "type": "object",
+  "properties": {
+    "dataContentType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "followRedirects": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "methodType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+      ]
+    },
+    "pathElements": {
+      "$ref": "./HTTPPathElements.json"
+    },
+    "reflectHeaders": {
+      "$ref": "./HTTPReflectHeaders.json"
+    },
+    "requestHeaders": {
+      "$ref": "./HTTPRequestHeaders.json"
+    },
+    "requestProfile": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "requestProfileType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "NONE",
+        "XML",
+        "JSON"
+      ]
+    },
+    "responseHeaderMapping": {
+      "$ref": "./HTTPResponseHeaderMapping.json"
+    },
+    "responseProfile": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "responseProfileType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "NONE",
+        "XML",
+        "JSON"
+      ]
+    },
+    "returnErrors": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "returnResponses": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "useDefaultOptions": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "xpath": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "required": [
+    "OdetteUNBControlInfo",
+    "OdetteUNHControlInfo"
+  ],
+  "type": "object",
+  "properties": {
+    "OdetteUNBControlInfo": {
+      "$ref": "./OdetteUNBControlInfo.json"
+    },
+    "OdetteUNHControlInfo": {
+      "$ref": "./OdetteUNHControlInfo.json"
+    }
+  }
+}

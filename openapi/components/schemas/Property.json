@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "Name of property. Refer the Startup Properties Reference table."
+    },
+    "value": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "Value of property."
+    }
+  }
+}

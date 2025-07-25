@@ -1,0 +1,130 @@
+{
+  "post": {
+    "tags": [
+      "Process"
+    ],
+    "summary": "Queries for a Process object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryProcess",
+    "requestBody": {
+      "description": " Possible properties include: name, id, integrationPackId, integrationPackInstanceId",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ProcessQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "Order Intake"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "name"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "Order Intake"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "name"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ProcessQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n      <QueryFilter>\n        <expression operator=\"EQUALS\" property=\"name\"\n               xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n               <argument>Order Intake</argument>\n        </expression>\n      </QueryFilter>\n    </QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"name\">\n      <argument>Order Intake</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ProcessQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 4,
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "Process",
+                  "IntegrationPack": [
+                    {
+                      "@type": "ProcessIntegrationPackInfo",
+                      "integrationPackId": "89abcdef-0123-4567-89ab-cdef01234567",
+                      "integrationPackInstanceId": "76543210FEDCBA9876543210FEDCBA98"
+                    }
+                  ],
+                  "name": "Order Intake",
+                  "id": "56789abc-def0-1234-5678-9abcdef01234"
+                },
+                {
+                  "@type": "Process",
+                  "IntegrationPack": [
+                    {
+                      "@type": "ProcessIntegrationPackInfo",
+                      "integrationPackId": "9abcdef0-1234-5678-9abc-def012345678",
+                      "integrationPackInstanceId": "876543210FEDCBA9876543210FEDCBA9"
+                    }
+                  ],
+                  "name": "Order Intake",
+                  "id": "6789abcd-ef01-2345-6780-abcdef012345"
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ProcessQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"4\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n       <bns:result xsi:type=\"Process\" id=\"56789abc-def0-1234-5678-9abcdef01234\" name=\"Order Intake\">\n          <bns:IntegrationPack integrationPackInstanceId=\"76543210FEDCBA9876543210FEDCBA98\" \n            integrationPackId=\"89abcdef-0123-4567-89ab-cdef01234567\"/>\n       </bns:result>\n       ...\n       <bns:result xsi:type=\"Process\" id=\"6789abcd-ef01-2345-6780-abcdef012345\" name=\"Order Intake\">\n          <bns:IntegrationPack integrationPackInstanceId=\"876543210FEDCBA9876543210FEDCBA9\" \n            integrationPackId=\"9abcdef0-1234-5678-9abc-def012345678\"/>\n       </bns:result>\n    </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

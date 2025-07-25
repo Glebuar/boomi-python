@@ -1,0 +1,49 @@
+{
+  "required": [
+    "SFTPProxySettings",
+    "SFTPSSHOptions",
+    "host",
+    "password",
+    "port",
+    "user"
+  ],
+  "type": "object",
+  "properties": {
+    "SFTPProxySettings": {
+      "$ref": "./SFTPProxySettings.json"
+    },
+    "SFTPSSHOptions": {
+      "$ref": "./SFTPSSHOptions.json"
+    },
+    "host": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "password": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "port": {
+      "type": "integer",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "useDefaultSettings": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "user": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    }
+  }
+}

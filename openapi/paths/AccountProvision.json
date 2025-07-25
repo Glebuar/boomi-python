@@ -1,0 +1,19 @@
+{
+  "post": {
+    "tags": [
+      "AccountProvision"
+    ],
+    "summary": "Provision Partner Customer Account operation",
+    "description": "This API is documented externally. Please visit the following link for full details:",
+    "externalDocs": {
+      "description": "Provision Partner Customer Account operation",
+      "url": "/docs/APIs/PlatformAPI/MissingInOpenAPI/Provision_partner_customer_account_operation"
+    },
+    "responses": {
+      "204": {
+        "description": "Resource deleted",
+        "content": {}
+      }
+    }
+  }
+}

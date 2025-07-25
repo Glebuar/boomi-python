@@ -1,0 +1,27 @@
+{
+  "required": [
+    "QueryFilter"
+  ],
+  "type": "object",
+  "properties": {
+    "QueryFilter": {
+      "required": [
+        "expression"
+      ],
+      "type": "object",
+      "properties": {
+        "expression": {
+          "$ref": "./RoleExpression.json"
+        }
+      },
+      "xml": {
+        "name": "QueryFilter",
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    }
+  },
+  "xml": {
+    "name": "QueryConfig",
+    "namespace": "http://api.platform.boomi.com/"
+  }
+}

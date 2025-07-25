@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "purchased": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "example": 2
+    },
+    "used": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "example": 0
+    }
+  }
+}

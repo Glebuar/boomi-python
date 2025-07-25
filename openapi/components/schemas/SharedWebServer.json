@@ -1,0 +1,36 @@
+{
+  "required": [
+    "atomId",
+    "cloudTennantGeneral",
+    "corsConfiguration",
+    "generalSettings",
+    "userManagement"
+  ],
+  "type": "object",
+  "properties": {
+    "atomId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "cloudTennantGeneral": {
+      "$ref": "./SharedWebServerCloudTennantGeneral.json"
+    },
+    "corsConfiguration": {
+      "$ref": "./SharedWebServerCors.json"
+    },
+    "generalSettings": {
+      "$ref": "./SharedWebServerGeneral.json"
+    },
+    "shouldRestartPlugin": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "userManagement": {
+      "$ref": "./SharedWebServerUserManagement.json"
+    }
+  }
+}

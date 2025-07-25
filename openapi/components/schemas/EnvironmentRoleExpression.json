@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./EnvironmentRoleSimpleExpression.json"
+    },
+    {
+      "$ref": "./EnvironmentRoleGroupingExpression.json"
+    }
+  ]
+}

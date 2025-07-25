@@ -1,0 +1,263 @@
+{
+  "required": [
+    "account",
+    "actionType",
+    "atomId",
+    "connectorName",
+    "connectorType",
+    "customFields",
+    "dateProcessed",
+    "errorMessage",
+    "executionId",
+    "id",
+    "operationName"
+  ],
+  "type": "object",
+  "properties": {
+    "account": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the account from which you ran this record.",
+      "example": "boomi-internal"
+    },
+    "actionType": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The type of action with which this record corresponds - Send, Get or Listen.",
+      "example": "Listen"
+    },
+    "atomId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the Runtime that processed this record.",
+      "example": "92c4bf82-af93-4607-83d8-10a6c7fc7169"
+    },
+    "connectorName": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "For the OFTP2 Client, the value is oftp Connector and for the OFTP2 Server, the value is oftpserver Connector.",
+      "example": "oftpserver Connector"
+    },
+    "connectorType": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The type of connector to which this record corresponds- oftp for OFTP2 Client or oftpserver for OFTP2 Server.",
+      "example": "oftpserver"
+    },
+    "customFields": {
+      "$ref": "./customFields.json",
+      "description": "Custom fields based on the fields configured on the Setup page's **Document Tracking** tab. The names of the fields are dependent on your account setup."
+    },
+    "dateProcessed": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The processing date and time of this record. The format is yyyy-MM-dd'T'HH:mm:ss'Z', for example, 2013-08-08T15:32:00Z.",
+      "example": "2023-06-07T14:09:40Z"
+    },
+    "documentIndex": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The numerical index of this record in the run.",
+      "example": "1"
+    },
+    "errorMessage": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "executionId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the execution run.",
+      "example": "execution-003c07c1-969f-4331-96d3-d7af1ca6e1f7-2023.06.07"
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of this record.",
+      "example": "connector-1ccb87c7-13f7-41f2-be3b-93778837f641"
+    },
+    "initiator_ssidcode": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The Initiator's Identification Code."
+    },
+    "nareas": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Only displays if the transmission failed. The reason numeric code for the failure."
+    },
+    "nareast": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Only displays if the transmission failed. The reason text for the failure."
+    },
+    "objecttype": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "operationName": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The name of the operation component that processed this record.",
+      "example": "OFTP Server Connector Operation"
+    },
+    "responder_ssidcode": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The Responder's Identification Code."
+    },
+    "sfidciph": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Indicates which cipher suite was used to sign or encrypt the file. The cipher suite in this value should also be used when a signed EERP or NERP is requested.<br />-`00` - No security services<br />-`01` - 3DES_EDE_CBC_3KEY<br /> -`02` - AES_256_CBC"
+    },
+    "sfidcomp": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Indicates whether an algorithm was used to compress the file.<br />-`0` - No compression<br />-`1` - Compressed with an algorithm."
+    },
+    "sfiddate": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The date when the virtual file was created. The format is yyyy-MM-dd, for example 2023-06-07.",
+      "example": "2023-06-07"
+    },
+    "sfiddesc": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The description of the virtual file."
+    },
+    "sfiddest": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The destination Odette ID for the virtual file.",
+      "example": "O0166SHAREDSERVER"
+    },
+    "sfiddsn": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The dataset name of the virtual file being transferred.",
+      "example": "SHARED"
+    },
+    "sfidenv": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The enveloping format used in the file.<br />-`0` - No enveloped<br />-`1` - File is enveloped using CMS"
+    },
+    "sfidorig": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The originator of the virtual file."
+    },
+    "sfidosiz": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The size of the original file."
+    },
+    "sfidsec": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Indicates whether the file has been signed or encrypted before transmission. The following values are possible:<br />-`00` - No security services<br />-`01` - Encrypted<br />-`02` - Signed<br />-`03` - Encrypted and signed"
+    },
+    "sfidsign": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Whether the EERP returned for the file must be signed.<br />-`Y` - the EERP must be signed<br />-`N` - The EERP must not be signed"
+    },
+    "sfidtime": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The time when the virtual file was created. The format is HH:mm:ss.SSSX, where X is the ticker, for example 10:06:46.2389.",
+      "example": "10:06:46.2389"
+    },
+    "size": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The size, in bytes, of the document that corresponds to this record.",
+      "example": "6"
+    },
+    "status": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Whether the file transmission is pending an acknowledgment, acknowledged as a success or an error.",
+      "example": "success"
+    },
+    "successful": {
+      "type": "boolean",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Whether the record is a success or error.",
+      "example": "true"
+    },
+    "ticker": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    }
+  }
+}

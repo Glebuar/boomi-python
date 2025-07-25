@@ -1,0 +1,6 @@
+{
+  "description": "A hyperlink indicating a site with more information about the deprecation of this object",
+  "schema": {
+    "type": "string"
+  }
+}

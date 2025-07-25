@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "index": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "refId": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

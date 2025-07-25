@@ -1,0 +1,132 @@
+{
+  "post": {
+    "tags": [
+      "Component"
+    ],
+    "summary": "Creates a Component object",
+    "description": "- Cannot create components for types not eligible for your account. For example, if your account does not have the B2B/EDI feature, you will not be able to create Trading Partner components. \n - Request will not be processed in case if the payload has invalid attributes and tags under the <object> section. \n - Include the `branchId` in the request body to specify a branch on which you want to create the component. \n - >**Note:** To create or update a component, you must supply a valid component XML format for the given type. \n\n The component XML can be rather complex with many optional fields and nested configuration. For this reason we strongly recommend approaching it by first creating the desired component structure/skeleton as you would normally in the Build page UI, then exporting the XML using the Component object GET. This will provide an accurate example or template of the XML you will need to create. You can replace values or continue that pattern as you need for your use case.",
+    "operationId": "CreateComponent",
+    "requestBody": {
+      "content": {
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/Component.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:Component\n\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n\txmlns:bns=\"http://api.platform.boomi.com/\" folderFullPath=\"Boomi/Admin\" version=\"1\" name=\"Process A\" type=\"process\" createdDate=\"2023-07-05T14:06:28Z\" createdBy=\"admin@boomi.com\" modifiedDate=\"2023-07-05T14:06:28Z\" modifiedBy=\"admin@boomi.com\" deleted=\"false\" currentVersion=\"true\" folderName=\"Admin\" folderId=\"RjozMDk2OQ\">\n\t<bns:encryptedValues/>\n\t<bns:description></bns:description>\n\t<bns:object>\n\t\t<process\n\t\t\txmlns=\"\" allowSimultaneous=\"false\" enableUserLog=\"false\" processLogOnErrorOnly=\"false\" purgeDataImmediately=\"false\" updateRunDates=\"true\" workload=\"general\">\n\t\t\t<shapes>\n\t\t\t\t<shape image=\"start\" name=\"shape1\" shapetype=\"start\" userlabel=\"\" x=\"96.0\" y=\"94.0\">\n\t\t\t\t\t<configuration>\n\t\t\t\t\t\t<noaction/>\n\t\t\t\t\t</configuration>\n\t\t\t\t\t<dragpoints>\n\t\t\t\t\t\t<dragpoint name=\"shape1.dragpoint1\" toShape=\"shape2\" x=\"240.0\" y=\"120.0\"/>\n\t\t\t\t\t</dragpoints>\n\t\t\t\t</shape>\n\t\t\t\t<shape image=\"map_icon\" name=\"shape2\" shapetype=\"map\" userlabel=\"\" x=\"256.0\" y=\"112.0\">\n\t\t\t\t\t<configuration>\n\t\t\t\t\t\t<map/>\n\t\t\t\t\t</configuration>\n\t\t\t\t\t<dragpoints>\n\t\t\t\t\t\t<dragpoint name=\"shape2.dragpoint1\" toShape=\"shape3\" x=\"368.0\" y=\"120.0\"/>\n\t\t\t\t\t</dragpoints>\n\t\t\t\t</shape>\n\t\t\t\t<shape image=\"stop_icon\" name=\"shape3\" shapetype=\"stop\" userlabel=\"\" x=\"384.0\" y=\"112.0\">\n\t\t\t\t\t<configuration>\n\t\t\t\t\t\t<stop continue=\"true\"/>\n\t\t\t\t\t</configuration>\n\t\t\t\t\t<dragpoints/>\n\t\t\t\t</shape>\n\t\t\t</shapes>\n\t\t</process>\n\t</bns:object>\n\t<bns:processOverrides/>\n</bns:Component>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Component.json"
+            },
+            "example": {
+              "@type": "Component",
+              "folderFullPath": "Boomi/Admin",
+              "componentId": "bb302dbb-2e30-41a8-9e59-035f491e6da6",
+              "version": "1",
+              "name": "Process A",
+              "type": "process",
+              "createdDate": "2023-07-05T15:43:18Z",
+              "createdBy": "adminboomi.com",
+              "modifiedDate": "2023-07-05T15:43:18Z",
+              "modifiedBy": "adminboomi.com",
+              "deleted": "false",
+              "currentVersion": "true",
+              "folderName": "Admin",
+              "folderId": "RjozMDk2OQ",
+              "encryptedValues": null,
+              "object": {
+                "process": {
+                  "xmlns": "",
+                  "allowSimultaneous": "false",
+                  "enableUserLog": "false",
+                  "processLogOnErrorOnly": "false",
+                  "purgeDataImmediately": "false",
+                  "updateRunDates": "true",
+                  "workload": "general",
+                  "shapes": {
+                    "shape": [
+                      {
+                        "image": "start",
+                        "name": "shape1",
+                        "shapetype": "start",
+                        "userlabel": "",
+                        "x": "96.0",
+                        "y": "94.0",
+                        "configuration": {
+                          "noaction": null
+                        },
+                        "dragpoints": {
+                          "dragpoint": {
+                            "name": "shape1.dragpoint1",
+                            "toShape": "shape2",
+                            "x": "240.0",
+                            "y": "120.0"
+                          }
+                        }
+                      },
+                      {
+                        "image": "map_icon",
+                        "name": "shape2",
+                        "shapetype": "map",
+                        "userlabel": "",
+                        "x": "256.0",
+                        "y": "112.0",
+                        "configuration": {
+                          "map": null
+                        },
+                        "dragpoints": {
+                          "dragpoint": {
+                            "name": "shape2.dragpoint1",
+                            "toShape": "shape3",
+                            "x": "368.0",
+                            "y": "120.0"
+                          }
+                        }
+                      },
+                      {
+                        "image": "stop_icon",
+                        "name": "shape3",
+                        "shapetype": "stop",
+                        "userlabel": "",
+                        "x": "384.0",
+                        "y": "112.0",
+                        "configuration": {
+                          "stop": {
+                            "continue": "true"
+                          }
+                        },
+                        "dragpoints": null
+                      }
+                    ]
+                  }
+                }
+              },
+              "processOverrides": null
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Component.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:Component\n\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n\txmlns:bns=\"http://api.platform.boomi.com/\" folderFullPath=\"Boomi/Admin\" componentId=\"bb302dbb-2e30-41a8-9e59-035f491e6da6\" version=\"1\" name=\"Process A\" type=\"process\" createdDate=\"2023-07-05T15:43:18Z\" createdBy=\"admin@boomi.com\" modifiedDate=\"2023-07-05T15:43:18Z\" modifiedBy=\"admin@boomi.com\" deleted=\"false\" currentVersion=\"true\" folderName=\"Admin\" folderId=\"RjozMDk2OQ\">\n\t<bns:encryptedValues/>\n\t<bns:object>\n\t\t<process\n\t\t\txmlns=\"\" allowSimultaneous=\"false\" enableUserLog=\"false\" processLogOnErrorOnly=\"false\" purgeDataImmediately=\"false\" updateRunDates=\"true\" workload=\"general\">\n\t\t\t<shapes>\n\t\t\t\t<shape image=\"start\" name=\"shape1\" shapetype=\"start\" userlabel=\"\" x=\"96.0\" y=\"94.0\">\n\t\t\t\t\t<configuration>\n\t\t\t\t\t\t<noaction/>\n\t\t\t\t\t</configuration>\n\t\t\t\t\t<dragpoints>\n\t\t\t\t\t\t<dragpoint name=\"shape1.dragpoint1\" toShape=\"shape2\" x=\"240.0\" y=\"120.0\"/>\n\t\t\t\t\t</dragpoints>\n\t\t\t\t</shape>\n\t\t\t\t<shape image=\"map_icon\" name=\"shape2\" shapetype=\"map\" userlabel=\"\" x=\"256.0\" y=\"112.0\">\n\t\t\t\t\t<configuration>\n\t\t\t\t\t\t<map/>\n\t\t\t\t\t</configuration>\n\t\t\t\t\t<dragpoints>\n\t\t\t\t\t\t<dragpoint name=\"shape2.dragpoint1\" toShape=\"shape3\" x=\"368.0\" y=\"120.0\"/>\n\t\t\t\t\t</dragpoints>\n\t\t\t\t</shape>\n\t\t\t\t<shape image=\"stop_icon\" name=\"shape3\" shapetype=\"stop\" userlabel=\"\" x=\"384.0\" y=\"112.0\">\n\t\t\t\t\t<configuration>\n\t\t\t\t\t\t<stop continue=\"true\"/>\n\t\t\t\t\t</configuration>\n\t\t\t\t\t<dragpoints/>\n\t\t\t\t</shape>\n\t\t\t</shapes>\n\t\t</process>\n\t</bns:object>\n\t<bns:processOverrides/>\n</bns:Component>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "CrossReferenceLookup": {
+      "$ref": "./MapExtensionsCrossReferenceLookup.json"
+    },
+    "DocCacheLookup": {
+      "$ref": "./MapExtensionsDocCacheLookup.json"
+    },
+    "DocumentProperty": {
+      "$ref": "./MapExtensionsDocumentProperty.json"
+    },
+    "JapaneseCharacterConversion": {
+      "$ref": "./MapExtensionsJapaneseCharacterConversion.json"
+    },
+    "Scripting": {
+      "$ref": "./MapExtensionsScripting.json"
+    },
+    "SequentialValue": {
+      "$ref": "./MapExtensionsSequentialValue.json"
+    },
+    "SimpleLookup": {
+      "$ref": "./MapExtensionsSimpleLookup.json"
+    },
+    "StringConcat": {
+      "$ref": "./MapExtensionsStringConcat.json"
+    },
+    "StringSplit": {
+      "$ref": "./MapExtensionsStringSplit.json"
+    },
+    "UserDefinedFunction": {
+      "$ref": "./MapExtensionsUserDefinedFunction.json"
+    }
+  }
+}

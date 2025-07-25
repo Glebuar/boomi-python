@@ -1,0 +1,111 @@
+{
+  "type": "object",
+  "properties": {
+    "AuditLogProperty": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./AuditLogProperty.json"
+      },
+      "example": [
+        {
+          "name": "NEW_VALUE",
+          "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><processOverrides            xmlns:ns2=\"http://www.boomi.com/connector/annotation\" xmlns:ns3=\"http://exacttarget.com/wsdl/partnerAPI\" xmlns:ns4=\"urn:fault.partner.exacttarget.com\" xmlns:ns5=\"http://schemas.boomi.com/sap/edi_dc40\" xmlns:ns6=\"http://schemas.microsoft.com/2003/10/Serialization/\" internalVersion=\"2\" saveVersion=\"2\"><connections><connection id=\"829ca9e7-c4a5-48ac-a501-499c59f42001\" name=\"connection_to_modify_inextensions\" type=\"boomipartnerapi\"><field id=\"authenticationType\" label=\"Authentication Type\" value=\"APITOKEN\" encryptedValueSet=\"false\" usesEncryption=\"false\" useDefault=\"false\" atomLevelValueSet=\"true\" componentOverride=\"false\"/></connection></connections><operations/><partnerOverrides/><sharedCommOverrides/><properties/><schedules/><mappings/><crossReferences/><pgpCertificates/><definedProcessProperties><definedProcessProperty componentId=\"a90181c0-f513-40ac-b110-646a30d1e4d7\" componentName=\"processproptotest\"><definedProcessPropertyValueExtension key=\"d8e8703b-85cd-4d46-b956-0d5c5f7a615e\"/><componentVersion>1</componentVersion></definedProcessProperty></definedProcessProperties><maps/></processOverrides>"
+        },
+        {
+          "name": "ENVIRONMENT_ID"
+        }
+      ]
+    },
+    "accountId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The account in which the action occurred.",
+      "example": " account-123456 "
+    },
+    "action": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The action type.",
+      "example": "EDIT"
+    },
+    "containerId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the Runtime, Runtime cluster, or Runtime cloud on which the action occurred."
+    },
+    "date": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The date and time the action occurred.",
+      "example": "2019-08-26T16:27:19Z"
+    },
+    "documentId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID assigned to the Audit Log record.",
+      "example": "XdDAzmwB7C-eRHGS1Oal"
+    },
+    "level": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The severity level of the action: DEBUG, ERROR, INFO, or WARNING.",
+      "example": "INFO"
+    },
+    "message": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "A descriptive message. Not all types of management actions have a message in their audit log entries.",
+      "example": "Environment Extensions saved"
+    },
+    "modifier": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The action type qualifier.",
+      "example": "NONE"
+    },
+    "source": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "Where the action occurred: API, INTERNAL, MOBILE, UI, or UNKNOWN",
+      "example": "UNKNOWN"
+    },
+    "type": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The type of object on which the action occurred.",
+      "example": "as.extensions"
+    },
+    "userId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID \\(email address\\) of the user who performed the action.",
+      "example": " user123company.biz "
+    }
+  }
+}

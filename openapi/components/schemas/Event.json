@@ -1,0 +1,242 @@
+{
+  "required": [
+    "accountId",
+    "atomId",
+    "atomName",
+    "classification",
+    "endTime",
+    "environment",
+    "error",
+    "errorType",
+    "erroredStepLabel",
+    "erroredStepType",
+    "eventDate",
+    "eventId",
+    "eventLevel",
+    "eventType",
+    "executionId",
+    "processId",
+    "processName",
+    "recordDate",
+    "startTime",
+    "status",
+    "title",
+    "topLevelProcessId",
+    "updateDate"
+  ],
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the account in which this event occurred.",
+      "example": "BoomiAdmin-123"
+    },
+    "atomId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the Runtime on which the event occurred.",
+      "example": "b829b682-6e6e-4551-b9a3-61dcfa96dffd"
+    },
+    "atomName": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The name of the Runtime on which the event occurred.",
+      "example": "Biggie"
+    },
+    "classification": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The classification \\(PROD or TEST\\) associated with the environment in which the process ran, or to which the Runtime is attached. The classification PROD is returned in the QUERY result if you do not enable environments in the account.",
+      "example": "PROD"
+    },
+    "endTime": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The end date and time of the run \\(for applicable events\\).",
+      "example": "2024-08-08T06:14:46Z"
+    },
+    "environment": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The name of the environment in which the process ran, or to which the Runtime is attached. If you do not enable environments in the account, the QUERY does not return this field in the QUERY result.",
+      "example": "ProdEnv"
+    },
+    "error": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "he error message \\(for applicable events\\).",
+      "example": "T002a Exception (Proc. Call > Data Passthru Sub-Process)"
+    },
+    "errorDocumentCount": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The number of documents in an error status for the run \\(for applicable events\\).",
+      "example": "1"
+    },
+    "errorType": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "DOCUMENT, if the error applied to one or more documents, or PROCESS, if the error occurred at the process level \\(for applicable events\\).",
+      "example": "DOCUMENT"
+    },
+    "erroredStepLabel": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The label of the step in which the error occurred \\(for applicable events\\).",
+      "example": null
+    },
+    "erroredStepType": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The type of the step in which the error occurred — for example, Start, Connector \\(for applicable events\\).",
+      "example": "Exception"
+    },
+    "eventDate": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The date and time the event occurred.",
+      "example": "2024-08-08T06:14:42Z"
+    },
+    "eventId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the event.",
+      "example": "event-1b2871bf-5819-41e1-a215-714c5cce3551"
+    },
+    "eventLevel": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The notification level of the event \\(INFO, WARNING, ERROR\\).",
+      "example": "ERROR"
+    },
+    "eventType": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The type of the event \\(atom.status, process.execution, process.missedSchedule, user.notification\\).",
+      "example": "process.execution"
+    },
+    "executionId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The run ID of the process \\(for applicable events\\).",
+      "example": "execution-67008f66-ea50-40f8-8d1f-7a3ebe2c02a5-2024.08.08"
+    },
+    "inboundDocumentCount": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The number of inbound documents for the run \\(for applicable events\\).",
+      "example": "1"
+    },
+    "outboundDocumentCount": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The number of outbound documents for the run \\(for applicable events\\).",
+      "example": "0"
+    },
+    "processId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the sub-process ONLY when using the ‘Notify’ shape with the 'Generate Platform Event' option and when the process is executed in the 'General' and 'Bridge' modes."
+    },
+    "processName": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The name of the process \\(for applicable events\\).",
+      "example": "2. (Sched) General: User Notify + Exception (Proc. Call > Data Passthrough Sub-Process) 21 Jun"
+    },
+    "recordDate": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The date and time the event recorded.",
+      "example": "2024-08-08T06:14:57Z"
+    },
+    "startTime": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The start date and time of the run \\(for applicable events\\).",
+      "example": "2024-08-08T06:14:42Z"
+    },
+    "status": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "User-specified message for an event of type user.notification. For other types of events, the event status — for example, COMPLETE, ERROR.",
+      "example": "ERROR"
+    },
+    "title": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "For an event of type user.notification, the title of the originating step."
+    },
+    "topLevelProcessId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the parent process."
+    },
+    "updateDate": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "example": "2024-08-08T06:14:42Z"
+    }
+  }
+}

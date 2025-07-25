@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "file": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "A specific directory within the attachment’s directory for which this size pertains."
+    },
+    "rawSize": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The disk space in bytes that is already consumed within the directory."
+    },
+    "size": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The size of disk space consumed within this directory."
+    }
+  }
+}

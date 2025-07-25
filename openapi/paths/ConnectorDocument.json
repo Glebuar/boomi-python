@@ -1,0 +1,61 @@
+{
+  "post": {
+    "tags": [
+      "ConnectorDocument"
+    ],
+    "summary": "Creates a ConnectorDocument object",
+    "description": "The Connector Document operation allows you to download the raw, document data for a specific Generic Connector Record. This action submits the download request and the call returns a URL used to download the actual document data.",
+    "operationId": "CreateConnectorDocument",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ConnectorDocument.json"
+          },
+          "example": {
+            "genericConnectorRecordId": "A0BCD0EFIj5kLmNO2P4QRS1tUlvwx1yZDlkNWMwZC01N2MzLTQ0MmEtYjVhNS0zM2NiNDM0OTQ0ZjctMjAyMS4wMi4xNzpjb25uZWN0b3ItMTMzN2MyOWYtZDBhZC00Y2Q1LTgxYWEtMjkzNzA2NmJhZTcy"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ConnectorDocument.json"
+          },
+          "example": "<ConnectorDocument xmlns=\"http://api.platform.boomi.com/\"\n    genericConnectorRecordId=\"A0BCD0EFIj5kLmNO2P4QRS1tUlvwx1yZDlkNWMwZC01N2MzLTQ0MmEtYjVhNS0zM2NiNDM0OTQ0ZjctMjAyMS4wMi4xNzpjb25uZWN0b3ItMTMzN2MyOWYtZDBhZC00Y2Q1LTgxYWEtMjkzNzA2NmJhZTcy\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ConnectorDocumentDownload.json"
+            },
+            "example": {
+              "@type": "ConnectorDocumentDownload",
+              "url": "https://api.boomi.com/account/boomiaccount123/api/download/ConnectorDocument-a6bc21d6-94e6-4039-8f29-g4h1094i1802",
+              "message": "Beginning download.",
+              "statusCode": 202
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ConnectorDocument.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:ConnectorDocumentDownload xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" url=\"https://api.platform.boomi.com/account/boomiaccount123/api/download/ConnectorDocument-a6bc21d6-94e6-4039-8f29-g4h1094i1802\" message=\"Beginning download.\" statusCode=\"202\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

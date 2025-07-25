@@ -1,0 +1,44 @@
+{
+  "required": [
+    "Description"
+  ],
+  "type": "object",
+  "properties": {
+    "Description": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "A description of the integration pack.",
+      "example": "Order Intake Ipack"
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "A unique ID assigned by the system to the integration pack.",
+      "example": "89abcdef-0123-4567-89ab-cdef01234567"
+    },
+    "installationType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "SINGLE",
+        "MULTI"
+      ],
+      "description": "The type of integration pack. Possible values:<br />-   SINGLE — single-attach<br />-   MULTI — multi-attach",
+      "example": "SINGLE"
+    },
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The name of the integration pack.",
+      "example": "Order Intake"
+    }
+  }
+}

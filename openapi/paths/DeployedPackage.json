@@ -1,0 +1,72 @@
+{
+  "post": {
+    "tags": [
+      "DeployedPackage"
+    ],
+    "summary": "Creates a DeployedPackage object",
+    "description": "You can use the CREATE operation in two ways: \n - With `environmentId` and `packageId`, CREATE deploys the specified packaged component to the identified environment. \n - With `environmentId` and `componentId`, CREATE packages with the specified component and deploys the package to the specified environment. \n >**Note:** By default, deployment of listener processes are in a running state. To deploy a packaged listener process in a paused state, include the `listenerStatus` field with a value of `PAUSED`.",
+    "operationId": "CreateDeployedPackage",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/DeployedPackage.json"
+          },
+          "example": {
+            "environmentId": "e7fc610a-c1ef-4b66-8bb5-a01a1f8970e2",
+            "packageId": "e5f2896e-5988-4d98-920e-4fb9750b469d",
+            "notes": "Package deployment via Rest request"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/DeployedPackage.json"
+          },
+          "example": "<bns:DeployedPackage xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance/\">\n    <bns:environmentId>e7fc610a-c1ef-4b66-8bb5-a01a1f8970e2</bns:environmentId>\n    <bns:componentId>6023ff5f-f28c-4a83-b714-180649da6c55</bns:componentId>\n    <bns:notes>Create package and deploy via Rest request</bns:notes>\n</bns:DeployedPackage>\n"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/DeployedPackage.json"
+            },
+            "example": {
+              "@type": "DeployedPackage",
+              "deploymentId": "d0340bcd-066f-4ed3-a096-91e96b062d43",
+              "version": 4,
+              "packageId": "f478349c-2974-4795-81ba-e24b0b98975d",
+              "packageVersion": "6.0",
+              "environmentId": "e7fc610a-c1ef-4b66-8bb5-a01a1f8970e2",
+              "componentId": "58c53139-1e34-477f-be05-1ef8e3336adf",
+              "componentVersion": "2.0",
+              "componentType": "webservice",
+              "deployedDate": "2017-11-01T16:44:26Z",
+              "deployedBy": "admin@boomi.com",
+              "notes": "Package deployment via Rest request",
+              "active": true
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/DeployedPackage.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:DeployedPackage xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n       <bns:deploymentId>5c41fbbe-be0b-4b93-95a5-1c9eadd19fac</bns:deploymentId>\n    <bns:version>2</bns:version>\n    <bns:packageId>eca224d9-8382-4c5d-8293-1eb077766f96</bns:packageId>\n    <bns:packageVersion>2.0</bns:packageVersion>\n    <bns:environmentId>e7fc610a-c1ef-4b66-8bb5-a01a1f8970e2</bns:environmentId>\n    <bns:componentId>6023ff5f-f28c-4a83-b714-180649da6c55</bns:componentId> \n    <bns:componentVersion>2.0</bns:componentVersion> \n    <bns:componentType>process</bns:componentType>\n    <bns:deployedDate>2017-11-16T16:10:45Z</bns:deployedDate>\n    <bns:deployedBy>admin@boomi.com</bns:deployedBy>\n    <bns:notes>Create package and deploy via Rest request</bns:notes>\n    <bns:active>true</bns:active>\n</bns:DeployedPackage>\n"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

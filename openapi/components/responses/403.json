@@ -1,0 +1,3 @@
+{
+  "description": "Missing or incorrect authentication credentials. \n To know the action to be taken for this and the other error responses (410, 503, etc), refer to [API Errors](#section/Introduction/API-errors)"
+}

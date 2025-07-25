@@ -1,0 +1,84 @@
+{
+  "post": {
+    "tags": [
+      "Folder"
+    ],
+    "summary": "Creates a Folder object",
+    "description": "- When using the CREATE operation, you can create a new folder within the parent folder.\n\n- When creating a new folder, a name is required but PermittedRoles are optional. Unless it includes a list of UserRoles, in which case the GUID is required for the UserRole.\n\n- `parentId` must be a valid, non-deleted folder. If omitted or blank, it defaults to the root folder.\n\n- To Restore a folder you need to use the CREATE operation call, using a valid GUID for a deleted item. This will also restore any deleted components within that folder.",
+    "operationId": "CreateFolder",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/Folder.json"
+          },
+          "example": {
+            "@type": "Folder",
+            "PermittedRoles": {
+              "@type": "PermittedRoles",
+              "RoleReference": [
+                {
+                  "id": "fcb6dd44-0ca8-11e2-a477-1231381987a5"
+                }
+              ]
+            },
+            "name": "Folder123",
+            "parentId": "Rjo5NjEyNTg"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/Folder.json"
+          },
+          "example": "<bns:Folder xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" name=\"Folder123\"\nId=\"Rjo5NjEyNTg\">\n</bns:Folder>\n"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Folder.json"
+            },
+            "example": {
+              "@type": "Folder",
+              "PermittedRoles": {
+                "@type": "PermittedRoles",
+                "RoleReference": [
+                  {
+                    "@type": "RoleReference",
+                    "id": "fcb6dd44-0ca8-11e2-a477-1231381987a5",
+                    "name": "Administrator"
+                  }
+                ]
+              },
+              "id": "RjoxMDU2NjMx",
+              "name": "Folder123",
+              "fullPath": "User/Folder1/Folder123",
+              "deleted": false,
+              "parentId": "Rjo5NjEyNTg",
+              "parentName": "Folder1"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Folder.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:Folder xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" id=\"RjoxMDU2NTMy\" name=\"Folder123\" fullPath=\"User/Folder123\" deleted=\"false\" parentId=\"Rjo5NTk0OTc\" parentName=\"User\">\n   <bns:PermittedRoles>\n       <bns:RoleReference id=\"fcb6dd44-0ca8-11e2-a477-1231381987a5\" name=\"Administrator\"/>\n   </bns:PermittedRoles>\n</bns:Folder>\n"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

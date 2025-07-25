@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./DeploymentSimpleExpression.json"
+    },
+    {
+      "$ref": "./DeploymentGroupingExpression.json"
+    }
+  ]
+}

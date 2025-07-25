@@ -1,0 +1,175 @@
+{
+  "post": {
+    "tags": [
+      "DeployedPackage"
+    ],
+    "summary": "Queries for a DeployedPackage object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryDeployedPackage",
+    "requestBody": {
+      "description": " Possible properties include: uid, notes, current, packageNotes, active, componentId, componentVersion, componentName, componentType, deployedBy, deployedDate, deploymentId, environmentId, environmentName, packageId, packageVersion, version, accountId, branch",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/DeployedPackageQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "983870bd-3e41-4fcc-a622-c3cb6042d9c2"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "environmentId"
+                      },
+                      {
+                        "argument": [
+                          "process"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "componentType"
+                      },
+                      {
+                        "argument": [
+                          true
+                        ],
+                        "operator": "EQUALS",
+                        "property": "active"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "and",
+                        "nestedExpression": [
+                          {
+                            "argument": [
+                              "983870bd-3e41-4fcc-a622-c3cb6042d9c2"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "environmentId"
+                          },
+                          {
+                            "argument": [
+                              "process"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "componentType"
+                          },
+                          {
+                            "argument": [
+                              true
+                            ],
+                            "operator": "EQUALS",
+                            "property": "active"
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/DeployedPackageQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n        <expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n            <nestedExpression operator=\"EQUALS\" property=\"environmentId\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>983870bd-3e41-4fcc-a622-c3cb6042d9c2</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"EQUALS\" property=\"componentType\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>process</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"EQUALS\" property=\"active\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>true</argument>\n            </nestedExpression>\n        </expression>\n    </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"environmentId\">\n      <argument>983870bd-3e41-4fcc-a622-c3cb6042d9c2</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/DeployedPackageQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "queryToken": "EXAMPLE_QUERY_TOKEN",
+              "result": [
+                {
+                  "@type": "DeployedPackage",
+                  "deploymentId": "8720160b-ad1a-4fcf-a36c-ed9e9a14b626",
+                  "version": 1,
+                  "packageId": "1ee2411e-00b9-4223-9882-b211ec3629f4",
+                  "packageVersion": "6.0",
+                  "environmentId": "983870bd-3e41-4fcc-a622-c3cb6042d9c2",
+                  "componentId": "5b4746bc-6a3e-4b18-838c-57887dae41e3",
+                  "componentVersion": "2.0",
+                  "componentType": "process",
+                  "deployedDate": "2017-04-04T15:20:46Z",
+                  "deployedBy": "admin@boomi.com",
+                  "notes": "Deployment of version 1 from environment Test_acct_envDeployment of version 1 from environment Test_acct_env",
+                  "active": true
+                },
+                {
+                  "@type": "DeployedPackage",
+                  "deploymentId": "90d14e55-fbcc-4121-b8c5-d37bd754abab",
+                  "version": 4,
+                  "packageId": "3a069907-4f55-46b4-90e8-27663d28112c",
+                  "packageVersion": "6.0",
+                  "environmentId": "983870bd-3e41-4fcc-a622-c3cb6042d9c2",
+                  "componentId": "1fa6c6c7-4847-4c57-8db2-587ea53afe33",
+                  "componentVersion": "2.0",
+                  "componentType": "process",
+                  "deployedDate": "2017-11-16T16:04:51Z",
+                  "deployedBy": "admin@boomi.com",
+                  "notes": "Package deployment via Rest request",
+                  "active": true
+                }
+              ],
+              "numberOfResults": 100
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/DeployedPackageQueryResponse.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:QueryResult xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" numberOfResults=\"100\">\n        <queryToken>EXAMPLE_QUERY_TOKEN</queryToken>\n    <bns:result xsi:type=\"DeployedPackage\">\n                   <bns:deploymentId>8720160b-ad1a-4fcf-a36c-ed9e9a14b626</bns:deploymentId>\n                   <bns:version>1</bns:version>\n                   <bns:packageId>1ee2411e-00b9-4223-9882-b211ec3629f4</bns:packageId>\n                   <bns:packageVersion>6.0</bns:packageVersion>\n                   <bns:environmentId>983870bd-3e41-4fcc-a622-c3cb6042d9c2</bns:environmentId>\n                   <bns:componentId>5b4746bc-6a3e-4b18-838c-57887dae41e3</bns:componentId>                                 \n                   <bns:componentVersion>2.0</bns:componentVersion>\n                   <bns:componentType>process</bns:componentType>\n                   <bns:deployedDate>2017-04-04T15:20:46Z</bns:deployedDate>\n                   <bns:deployedBy>admin@boomi.com</bns:deployedBy>\n                   <bns:notes>Deployment of version 1 from environment Test_acct_envDeployment of version 1 from environment Test_acct_env</bns:notes>\n                   <bns:active>true</bns:active>\n                </bns:result>\n        ...\n       <bns:result xsi:type=\"DeployedPackage\">\n                   <bns:deploymentId>90d14e55-fbcc-4121-b8c5-d37bd754abab</bns:deploymentId>\n                   <bns:version>4</bns:version>\n                   <bns:packageId>3a069907-4f55-46b4-90e8-27663d28112c</bns:packageId>\n                   <bns:packageVersion>6.0</bns:packageVersion>\n                   <bns:environmentId>983870bd-3e41-4fcc-a622-c3cb6042d9c2</bns:environmentId>\n                   <bns:componentId>1fa6c6c7-4847-4c57-8db2-587ea53afe33</bns:componentId>\n                   <bns:componentVersion>2.0</bns:componentVersion>\n                   <bns:componentType>process</bns:componentType>\n                   <bns:deployedDate>2017-11-16T16:04:51Z</bns:deployedDate>\n                   <bns:deployedBy>admin@boomi.com</bns:deployedBy>\n                   <bns:notes>Package deployment via Rest request</bns:notes>\n                   <bns:active>true</bns:active>\n                </bns:result>\n    </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

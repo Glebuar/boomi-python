@@ -1,0 +1,69 @@
+{
+  "post": {
+    "tags": [
+      "AccountGroup"
+    ],
+    "summary": "Creates an AccountGroup object",
+    "description": "Creates an account group based on the supplied name.",
+    "operationId": "CreateAccountGroup",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AccountGroup.json"
+          },
+          "example": {
+            "accountId": "*accountId*",
+            "name": "TestGroup",
+            "autoSubscribeAlertLevel": "none",
+            "defaultGroup": false
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AccountGroup.json"
+          },
+          "example": "<bns:AccountGroup defaultGroup=\"false\" autoSubscribeAlertLevel=\"none\"\n  name=\"TestGroup\" accountId=\"*accountId*\"\n  xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroup.json"
+            },
+            "example": {
+              "@type": "Account",
+              "supportLevel": "standard",
+              "supportAccess": "true",
+              "dateCreated": "2015-02-06T15:42:10Z",
+              "status": "active",
+              "expirationDate": "2016-02-13T05:00:00Z",
+              "name": "Test Account",
+              "accountId": "testaccount-W4N2RM",
+              "licensing": null
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountGroup.json"
+            },
+            "example": "<bns:AccountGroup defaultGroup=\"false\" autoSubscribeAlertLevel=\"none\"\n  name=\"TestGroup\" accountId=\"account-123456\" id=\"fedcba98-7654-3210-fedc-ba9876543210\"\n  xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

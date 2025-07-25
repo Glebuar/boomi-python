@@ -1,0 +1,18 @@
+{
+  "required": [
+    "myCompanyInfo",
+    "myPartnerInfo"
+  ],
+  "type": "object",
+  "properties": {
+    "defaultPartnerInfo": {
+      "$ref": "./OFTPPartnerInfo.json"
+    },
+    "myCompanyInfo": {
+      "$ref": "./OFTPLocalInfo.json"
+    },
+    "myPartnerInfo": {
+      "$ref": "./OFTPPartnerInfo.json"
+    }
+  }
+}

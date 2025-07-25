@@ -1,0 +1,62 @@
+{
+  "get": {
+    "tags": [
+      "Cloud"
+    ],
+    "summary": "Retrieves an instance of a Cloud object",
+    "description": "Retrieves the properties of the Runtime cloud having the specified ID.",
+    "operationId": "GetCloud",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID assigned by the system to the Runtime cloud."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Cloud.json"
+            },
+            "example": {
+              "@type": "Cloud",
+              "Atom": [
+                {
+                  "@type": "CloudAtom",
+                  "atomId": "3456789a-bcde-f0123-4567-89abcdef012"
+                },
+                {
+                  "@type": "CloudAtom",
+                  "atomId": "cdef0123-4567-89ab-cdef-0123456789ab"
+                }
+              ],
+              "id": "23456789-abcd-ef01-2345-6789abcdef01",
+              "name": "MyCompany Cloud"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Cloud.json"
+            },
+            "example": "<bns:Cloud name=\"MyCompany Cloud\" id=\"23456789-abcd-ef01-2345-6789abcdef01\" \n       xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n          <bns:Atom atomId=\"3456789a-bcde-f0123-4567-89abcdef012\"/>\n          ...\n          <bns:Atom atomId=\"cdef0123-4567-89ab-cdef-0123456789ab\"/>\n     </bns:Cloud>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

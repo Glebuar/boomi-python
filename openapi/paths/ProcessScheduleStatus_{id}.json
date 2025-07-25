@@ -1,0 +1,170 @@
+{
+  "get": {
+    "tags": [
+      "ProcessScheduleStatus"
+    ],
+    "summary": "Retrieves an instance of a ProcessScheduleStatus object",
+    "description": "Retrieves the Process Schedule Status object with a specified conceptual ID. \n\n The ordinary GET operation retrieves the Process Schedules object with a specific conceptual ID. The bulk GET operation retrieves the Process Schedules objects with specific conceptual IDs to a maximum of 100. In addition, you can obtain conceptual IDs from the QUERY operation.",
+    "operationId": "GetProcessScheduleStatus",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The object’s conceptual ID, which is synthesized from the process and Runtime IDs."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ProcessScheduleStatus.json"
+            },
+            "example": {
+              "@type": "ProcessSchedules",
+              "Schedule": [
+                {
+                  "@type": "Schedule",
+                  "minutes": "0-59/15",
+                  "hours": "8-18",
+                  "daysOfWeek": "2,3,4,5,6",
+                  "daysOfMonth": "*",
+                  "months": "*",
+                  "years": "*"
+                },
+                {
+                  "@type": "Schedule",
+                  "minutes": "0-59/15",
+                  "hours": "19-23",
+                  "daysOfWeek": "1",
+                  "daysOfMonth": "*",
+                  "months": "*",
+                  "years": "*"
+                }
+              ],
+              "Retry": {
+                "@type": "ScheduleRetry",
+                "Schedule": [
+                  {
+                    "@type": "Schedule",
+                    "minutes": "0-10/5",
+                    "hours": "19-23",
+                    "daysOfWeek": "7",
+                    "daysOfMonth": "*",
+                    "months": "*",
+                    "years": "*"
+                  },
+                  {
+                    "@type": "Schedule",
+                    "minutes": "0-59/20",
+                    "hours": "8-18",
+                    "daysOfWeek": "2,3,4,5,6",
+                    "daysOfMonth": "*",
+                    "months": "*",
+                    "years": "*"
+                  }
+                ],
+                "maxRetry": 2
+              },
+              "processId": "789abcde-f012-3456-789a-bcdef0123456",
+              "atomId": "3456789a-bcde-f0123-4567-89abcdef012",
+              "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ProcessScheduleStatus.json"
+            },
+            "example": "<bns:ProcessScheduleStatus xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance/\"\nenabled=\"true\" \nid=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\" \natomId=\"3456789a-bcde-f0123-4567-89abcdef012\" \nprocessId=\"789abcde-f012-3456-789a-bcdef0123456\"  />\n"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "ProcessScheduleStatus"
+    ],
+    "summary": "Modifies or updates a ProcessScheduleStatus object",
+    "description": "Stops or resumes process run schedules for a deployed process. \n\n The body of the request must specify not only the conceptual Process Schedule Status object ID but also the Runtime and process IDs. You can obtain the object ID from a QUERY operation. \n\n You must have the Runtime Management privilege and the Scheduling privilege to perform the UPDATE operation. If you have the Runtime Management Read Accessprivilege, you cannot update the status of process run schedules.",
+    "operationId": "UpdateProcessScheduleStatus",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ProcessScheduleStatus.json"
+          },
+          "example": {
+            "processId": "789abcde-f012-3456-789a-bcdef0123456",
+            "atomId": "3456789a-bcde-f0123-4567-89abcdef012",
+            "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg",
+            "enabled": true
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ProcessScheduleStatus.json"
+          },
+          "example": "<bns:ProcessScheduleStatus enabled=\"true\" id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\"\n  atomId=\"3456789a-bcde-f0123-4567-89abcdef012\" processId=\"789abcde-f012-3456-789a-bcdef0123456\" \n  xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ProcessScheduleStatus.json"
+            },
+            "example": {
+              "@type": "ProcessScheduleStatus",
+              "processId": "789abcde-f012-3456-789a-bcdef0123456",
+              "atomId": "3456789a-bcde-f0123-4567-89abcdef012",
+              "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg",
+              "enabled": true
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ProcessScheduleStatus.json"
+            },
+            "example": "<bns:ProcessScheduleStatus enabled=\"true\" id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\"\n  atomId=\"3456789a-bcde-f0123-4567-89abcdef012\" processId=\"789abcde-f012-3456-789a-bcdef0123456\" \n  xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

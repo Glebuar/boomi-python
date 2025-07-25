@@ -1,0 +1,186 @@
+{
+  "post": {
+    "tags": [
+      "TradacomsConnectorRecord"
+    ],
+    "summary": "Queries for a TradacomsConnectorRecord object(s)",
+    "description": "- To filter by a custom field, use the format `customFields`. Use the `fieldName` as the filter property where `fieldName` is the element name of the custom field in the record structure. To get a list of the available custom fields see the [Custom Tracked Field](#tag/CustomTrackedField) object. \n\n - The STARTS_WITH operator only accepts values that do not include spaces. \n\n For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).\n\n",
+    "operationId": "QueryTradacomsConnectorRecord",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/TradacomsConnectorRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "execution-01234567-89ab-cdef-0123-456789abcdef-2019.08.10"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "executionId"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "execution-01234567-89ab-cdef-0123-456789abcdef-2019.08.10"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "executionId"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/TradacomsConnectorRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n  <QueryFilter>\n    <expression operator=\"EQUALS\" property=\"executionId\"\n      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n      <argument>execution-01234567-89ab-cdef-0123-456789abcdef-2019.08.10</argument>\n    </expression>\n  </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"executionId\">\n      <argument>execution-01234567-89ab-cdef-0123-456789abcdef-2019.08.10</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/TradacomsConnectorRecordQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 100,
+              "queryToken": "EXAMPLE_QUERY_TOKEN",
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "TradacomsConnectorRecord",
+                  "validationStatus": "Errors",
+                  "validationReport": "3 - VALUE_NOT_FOUND",
+                  "senderCode": "XB12",
+                  "senderName": "ka",
+                  "receiverCode": "AB12",
+                  "receiverName": "mow",
+                  "messageType": "INVFIL",
+                  "date": "190810",
+                  "time": "144753",
+                  "senderTransmissionReference": "STXREF",
+                  "receiverTransmissionReference": "rcvref",
+                  "applicationReference": "CAKHDR",
+                  "transmissionPriorityCode": "C",
+                  "fileGenerationNumber": "1",
+                  "fileVersionNumber": "1",
+                  "account": "account-123456",
+                  "executionId": "execution-01234567-89ab-cdef-0123-456789abcdef-2019.08.10",
+                  "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+                  "dateProcessed": "2019-08-10T06:24:12Z",
+                  "id": "connector-abcdef01-2345-6789-abcd-ef0123456789",
+                  "actionType": "Listen",
+                  "connectorType": "Tradacoms",
+                  "connectorName": "Start",
+                  "operationName": "Sample Tradacoms Listen Operation",
+                  "documentIndex": 0,
+                  "successful": true,
+                  "size": [
+                    "Long",
+                    3138
+                  ],
+                  "customFields": [
+                    {
+                      "customNumber": 13,
+                      "customDate": "2019-08-10T10:53:59-0400",
+                      "customCharacter": "sample"
+                    }
+                  ]
+                },
+                {
+                  "@type": "TradacomsConnectorRecord",
+                  "validationStatus": "Success",
+                  "validationReport": "Success",
+                  "senderCode": "XB12",
+                  "senderName": "mc",
+                  "receiverCode": "AB12",
+                  "receiverName": "mow",
+                  "messageType": "INVFIL",
+                  "date": "190810",
+                  "time": "144757",
+                  "senderTransmissionReference": "STXREF",
+                  "receiverTransmissionReference": "rcvref",
+                  "applicationReference": "CAKHDR",
+                  "transmissionPriorityCode": "C",
+                  "fileGenerationNumber": "1",
+                  "fileVersionNumber": "1",
+                  "account": "account-123456",
+                  "executionId": "execution-01234567-89ab-cdef-0123-456789abcdef-2019.08.10",
+                  "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+                  "dateProcessed": "2019-08-10T06:25:02Z",
+                  "id": "connector-bcdef012-3456-789a-bcde-f0123456789a",
+                  "actionType": "Listen",
+                  "connectorType": "Tradacoms",
+                  "connectorName": "Start",
+                  "operationName": "Sample Tradacoms Listen Operation",
+                  "documentIndex": 49,
+                  "successful": true,
+                  "size": [
+                    "Long",
+                    2781
+                  ],
+                  "customFields": [
+                    {
+                      "customNumber": 55,
+                      "customDate": "2019-08-10T10:57:14-0400",
+                      "customCharacter": "sample"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/TradacomsConnectorRecordQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"100\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n   <bns:queryToken>EXAMPLE_QUERY_TOKEN</bns:queryToken>\n   <bns:result xsi:type=\"TradacomsConnectorRecord\">\n      <bns:account>account-123456</bns:account>\n      <bns:executionId>execution-01234567-89ab-cdef-0123-456789abcdef-2019.08.10</bns:executionId>\n      <bns:atomId>3456789a-bcde-f012-3456-789abcdef012</bns:atomId>\n      <bns:dateProcessed>2019-08-10T06:24:12Z</bns:dateProcessed>\n      <bns:id>connector-abcdef01-2345-6789-abcd-ef0123456789</bns:id>\n      <bns:actionType>Listen</bns:actionType>\n      <bns:connectorType>Start</bns:connectorType>\n      <bns:connectorName>Trading Partner</bns:connectorName>\n      <bns:operationName>Sample Tradacoms Listen Operation</bns:operationName>\n      <bns:documentIndex>0</bns:documentIndex>\n      <bns:successful>true</bns:successful>\n      <bns:size>3138</bns:size>\n      <bns:customFields>\n         <bns:customNumber>13</bns:customNumber>\n         <bns:customDate>2019-08-10T10:53:59-0400</bns:customDate>\n         <bns:customCharacter>sample</bns:customCharacter>\n      </bns:customFields>\n      <bns:validationStatus>Errors</bns:validationStatus>\n      <bns:validationReport>Loop Error: 3 - VALUE_NOT_FOUND</bns:validationReport>\n      <bns:senderCode>XB12</bns:senderCode> \n      <bns:senderName>ka</bns:senderName> \n      <bns:receiverCode>AB12</bns:receiverCode>\n      <bns:receiverName>mow</bns:receiverName>\n      <bns:messageType>INVFIL</bns:messageType>\n      <bns:date>190810</bns:date>\n      <bns:time>144753</bns:time>\n      <bns:senderTransmissionReference>STXREF</bns:senderTransmissionReference>\n      <bns:receiverTransmissionReference>rcvref</bns:receiverTransmissionReference>\n      <bns:applicationReference>CAKHDR</bns:applicationReference>\n      <bns:transmissionPriorityCode>C</bns:transmissionPriorityCode>\n      <bns:fileGenerationNumber>1</bns:fileGenerationNumber>\n      <bns:fileVersionNumber>1</bns:fileVersionNumber>\n   </bns:result>\n   <bns:result xsi:type=\"TradacomsConnectorRecord\">\n      <bns:account>account-123456</bns:account>\n      <bns:executionId>execution-01234567-89ab-cdef-0123-456789abcdef-2019.08.10</bns:executionId>\n      <bns:atomId>3456789a-bcde-f012-3456-789abcdef012</bns:atomId>\n      <bns:dateProcessed>2019-08-10T06:25:02Z</bns:dateProcessed>\n      <bns:id>connector-bcdef012-3456-789a-bcde-f0123456789a</bns:id>\n      <bns:actionType>Listen</bns:actionType>\n      <bns:connectorType>Tradacoms</bns:connectorType>\n      <bns:connectorName>Start</bns:connectorName>\n      <bns:operationName>Sample Tradacoms Listen Operation</bns:operationName>\n      <bns:documentIndex>49</bns:documentIndex>\n      <bns:successful>true</bns:successful>\n      <bns:size>2781</bns:size>\n      <bns:customFields>\n         <bns:customNumber>55</bns:customNumber>\n         <bns:customDate>2019-08-10T10:57:14-0400</bns:customDate>\n         <bns:customCharacter>sample</bns:customCharacter>\n      </bns:customFields>\n      <bns:validationStatus>Success</bns:validationStatus>\n      <bns:validationReport>Success</bns:validationReport>\n      <bns:senderCode>XB12</bns:senderCode> \n      <bns:senderName>ka</bns:senderName> \n      <bns:receiverCode>AB12</bns:receiverCode> \n      <bns:receiverName>mow</bns:receiverName>\n      <bns:messageType>INVFIL</bns:messageType>\n      <bns:date>190810</bns:date>\n      <bns:time>144757</bns:time>\n      <bns:senderTransmissionReference>STXREF</bns:senderTransmissionReference>\n      <bns:receiverTransmissionReference>rcvref</bns:receiverTransmissionReference>\n      <bns:applicationReference>CAKHDR</bns:applicationReference>\n      <bns:transmissionPriorityCode>C</bns:transmissionPriorityCode>\n      <bns:fileGenerationNumber>1</bns:fileGenerationNumber>\n      <bns:fileVersionNumber>1</bns:fileVersionNumber>\n   </bns:result>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

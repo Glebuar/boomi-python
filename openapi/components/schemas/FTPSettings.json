@@ -1,0 +1,55 @@
+{
+  "required": [
+    "FTPSSLOptions",
+    "host",
+    "password",
+    "port",
+    "user"
+  ],
+  "type": "object",
+  "properties": {
+    "FTPSSLOptions": {
+      "$ref": "./FTPSSLOptions.json"
+    },
+    "connectionMode": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "active",
+        "passive"
+      ]
+    },
+    "host": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "password": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "port": {
+      "type": "integer",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "useDefaultSettings": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "user": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    }
+  }
+}

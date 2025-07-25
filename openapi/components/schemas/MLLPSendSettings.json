@@ -1,0 +1,91 @@
+{
+  "required": [
+    "MLLPSSLOptions",
+    "endBlock",
+    "endData",
+    "host",
+    "port",
+    "startBlock"
+  ],
+  "type": "object",
+  "properties": {
+    "MLLPSSLOptions": {
+      "$ref": "./MLLPSSLOptions.json"
+    },
+    "endBlock": {
+      "$ref": "./EdiDelimiter.json"
+    },
+    "endData": {
+      "$ref": "./EdiDelimiter.json"
+    },
+    "haltTimeout": {
+      "type": "boolean",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "default": false
+    },
+    "host": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "inactivityTimeout": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "default": 60
+    },
+    "maxConnections": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "default": 10
+    },
+    "maxRetry": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "default": 0
+    },
+    "persistent": {
+      "type": "boolean",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "default": false
+    },
+    "port": {
+      "type": "integer",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "receiveTimeout": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "default": 120
+    },
+    "sendTimeout": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "default": 120
+    },
+    "startBlock": {
+      "$ref": "./EdiDelimiter.json"
+    }
+  }
+}

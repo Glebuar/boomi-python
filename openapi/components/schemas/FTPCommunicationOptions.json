@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "CommunicationSetting": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "default",
+        "custom",
+        "component"
+      ]
+    },
+    "FTPGetOptions": {
+      "$ref": "./FTPGetOptions.json"
+    },
+    "FTPSendOptions": {
+      "$ref": "./FTPSendOptions.json"
+    },
+    "FTPSettings": {
+      "$ref": "./FTPSettings.json"
+    },
+    "SharedCommunicationChannel": {
+      "$ref": "./SharedCommunicationChannel.json"
+    }
+  }
+}

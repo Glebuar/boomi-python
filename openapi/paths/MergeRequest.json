@@ -1,0 +1,74 @@
+{
+  "post": {
+    "tags": [
+      "MergeRequest"
+    ],
+    "summary": "Creates a MergeRequest object",
+    "description": "You can use the Merge Request object to merge a development branch into the main branch. \n\n - To create a merge request, you need the branch IDs for the source and destination branches. The source branch is the branch you want to merge into the destination branch.\n\n- There are two merge request strategies you can choose from: OVERRIDE or CONFLICT_RESOLVE. An override merge automatically resolves any merge conflicts by prioritizing the branch specified in the `priorityBranch` field. If you choose the CONFLICT_RESOLVE strategy, you have the opportunity to review any conflicts and choose which version you want to keep.",
+    "operationId": "CreateMergeRequest",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/MergeRequest.json"
+          },
+          "example": {
+            "sourceBranchId": "QjoyMDI1OTk",
+            "destinationBranchId": "QjoyMDI1OTg",
+            "strategy": "OVERRIDE",
+            "priorityBranch": "SOURCE"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/MergeRequest.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><bns:MergeRequest xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" sourceBranchId=\"QjoyMDI1OTk\" destinationBranchId=\"QjoyMDI1OTg\" strategy=\"OVERRIDE\" priorityBranch=\"SOURCE\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/MergeRequest.json"
+            },
+            "example": {
+              "@type": "MergeRequest",
+              "id": "TVI6NTB9",
+              "sourceBranchId": "QjoyMDI1OTk",
+              "sourceBranchName": "branch-1",
+              "destinationBranchId": "QjoyMDI1OTg",
+              "destinationBranchName": "main",
+              "strategy": "OVERRIDE",
+              "stage": "DRAFTING",
+              "priorityBranch": "SOURCE",
+              "previousStage": "NOT_EXIST",
+              "modifiedBy": "userboomi.com",
+              "modifiedDate": "2024-05-17T19:00:30Z",
+              "createdBy": "userboomi.com",
+              "createdDate": "2024-05-17T19:00:30Z"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/MergeRequest.json"
+            },
+            "example": "<bns:MergeRequest xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" id=\"TVI6NTB9\" sourceBranchId=\"QjoyMDI1OTk\" sourceBranchName=\"branch-1\" destinationBranchId=\"QjoyMDI1OTg\" destinationBranchName=\"main\" strategy=\"OVERRIDE\" stage=\"DRAFTING\" priorityBranch=\"SOURCE\" previousStage=\"NOT_EXIST\" modifiedBy=\"user@boomi.com\" modifiedDate=\"2024-05-17T19:00:30Z\" createdBy=\"user@boomi.com\" createdDate=\"2024-05-17T19:00:30Z\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "post": {
+    "tags": [
+      "Component"
+    ],
+    "summary": "Retrieves multiple Component objects by identifier",
+    "description": "The limit for the BULK GET operation is 5 requests. All other API objects have a limit of 100 BULK GET requests. \n\n To learn more about `bulk`, refer to [Bulk GET operations](#section/Introduction/Bulk-GET-operations).",
+    "operationId": "BulkComponent",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentBulkRequest.json"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentBulkRequest.json"
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentBulkResponse.json"
+            }
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

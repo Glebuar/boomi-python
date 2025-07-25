@@ -1,0 +1,33 @@
+{
+  "delete": {
+    "tags": [
+      "ComponentAtomAttachment"
+    ],
+    "summary": "Deletes a ComponentAtomAttachment object",
+    "description": "Detaches a component from a Runtime where the attachment is specified by the conceptual Component Atom Attachment object ID. This ID is returned by the CREATE operation that originated the attachment and can also be obtained from a QUERY operation. You must have the Runtime Management privilege to perform the DELETE operation.",
+    "operationId": "DeleteComponentAtomAttachment",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

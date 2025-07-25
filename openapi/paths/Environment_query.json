@@ -1,0 +1,118 @@
+{
+  "post": {
+    "tags": [
+      "Environment"
+    ],
+    "summary": "Queries for an Environment object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryEnvironment",
+    "requestBody": {
+      "description": " Possible properties include: name, id, classification",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "PROD"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "classification"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "PROD"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "classification"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n      <QueryFilter>\n        <expression xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\" \n           operator=\"EQUALS\" property=\"classification\">\n           <argument>PROD</argument>\n        </expression>\n      </QueryFilter>\n    </QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"classification\">\n      <argument>PROD</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 4,
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "Environment",
+                  "id": "456789ab-cdef-0123-4567-89abcdef0123",
+                  "name": "My Production Environment",
+                  "classification": "PROD"
+                },
+                {
+                  "@type": "Environment",
+                  "id": "56789abc-def0-1234-5678-9abcdef01234",
+                  "name": "Department Environment",
+                  "classification": "PROD"
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"4\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns=\"http://api.platform.boomi.com/\">\n      <bns:result xsi:type=\"Environment\" classification=\"PROD\" name=\"My Production Environment\" \n         id=\"456789ab-cdef-0123-4567-89abcdef0123\"/>\n      <bns:result xsi:type=\"Environment\" classification=\"PROD\" name=\"Deparment Environment\" \n         id=\"56789abc-def0-1234-5678-9abcdef01234\"/>\n    </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

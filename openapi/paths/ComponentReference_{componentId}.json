@@ -1,0 +1,102 @@
+{
+  "get": {
+    "tags": [
+      "ComponentReference"
+    ],
+    "summary": "Retrieves an instance of a ComponentReference object",
+    "description": "Retrieves the component reference for a component ID. \n\n Send an HTTP GET to `https://api.boomi.com/api/rest/v1/{accountId}/ComponentReference/{componentId}`\n\nwhere `{accountId}` is the ID of the authenticating account for the request and `{componentId}` is the ID of the secondary component whose references you are attempting to GET.\n\nIf you want to specify a branch, send an HTTP GET to `https://api.boomi.com/api/rest/v1/{accountId}/ComponentReference/{componentId}~{branchId}`\n\nwhere `{accountId}` is the ID of the authenticating account for the request and `{componentId}` is the ID of the secondary component whose references you are attempting to GET, and `{branchId}` is the branch on which you want to GET component references.",
+    "operationId": "GetComponentReference",
+    "parameters": [
+      {
+        "name": "componentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ID of the secondary component. The component ID is available in the **Revision History** dialog, which you can access from the **Build** page in the service."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentReference.json"
+            },
+            "example": {
+              "Component": {
+                "folderFullPath": "Platform APIs/Tests/Platform API Connector/AS2 Connector Record",
+                "componentId": "456789a-bcde-f0123-4567-89abcdef012",
+                "version": "1",
+                "name": "Receiver Encryption Public Certificate_2017",
+                "type": "certificate",
+                "createdDate": "2018-05-31T15:12:30Z",
+                "createdBy": "userboomi.com",
+                "modifiedDate": "2018-05-31T15:12:30Z",
+                "modifiedBy": "userboomi.com",
+                "deleted": "false",
+                "currentVersion": "true",
+                "folderName": "Originator",
+                "folderId": "RjoxNjMxNTA",
+                "copiedFromComponentId": "123456a-bcde-f4567-8901-23abcdef456",
+                "copiedFromComponentVersion": "1",
+                "encryptedValues": {
+                  "encryptedValue": {
+                    "path": "//CertificateModel/CertificateData/text()",
+                    "isSet": "true"
+                  }
+                },
+                "description": null,
+                "object": {
+                  "CertificateModel": {
+                    "MD5Fingerprint": "88:44:1A:90:C7:40:DF:A4:2F:95:70:F9:88:7A:76:54",
+                    "SHA1Fingerprint": "4B:2F:1E:A7:3C:DA:AD:F8:F2:86:38:98:25:3E:09:B4:86:5B:11:A9",
+                    "serialNumber": "01",
+                    "signatureAlgorithm": "SHA512withRSA",
+                    "version": "3",
+                    "Type": "public",
+                    "IssuedTo": {
+                      "commonName": "receiver",
+                      "country": "usa",
+                      "fullName": "CN=receiver,OU=boomi,O=dell,L=chesterbrook,ST=pa,C=usa",
+                      "organization": "dell",
+                      "organizationalUnit": "boomi"
+                    },
+                    "Issuer": {
+                      "commonName": "receiver",
+                      "country": "usa",
+                      "fullName": "CN=receiver,OU=boomi,O=dell,L=chesterbrook,ST=pa,C=usa",
+                      "organization": "dell",
+                      "organizationalUnit": "boomi"
+                    },
+                    "Validity": {
+                      "expireDate": "2024-03-12T16:46:57.000Z",
+                      "issueDate": "2017-09-20T16:46:57.000Z"
+                    },
+                    "CertificateData": "12dac3f45bbaf67d89101234a3e1e567f889fcf10abaee1234ed5fab678910e123dec456789f10ddc234cc009b56d7890e1a2e345edd6c78ea9a10b234ea"
+                  }
+                }
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentReference.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:ComponentReference\n    \txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    \txmlns:bns=\"http://api.platform.boomi.com/\">\n    \t<bns:references parentComponentId=\"123456a-bcde-f4567-8901-23abcdef456\" parentVersion=\"7\" componentId=\"456789a-bcde-f0123-4567-89abcdef012\" type=\"DEPENDENT\"/>\n    \t<bns:references parentComponentId=\"9876a543-21ab-0e98-7a65-4d32bf109f87\" parentVersion=\"1\" componentId=\"456789a-bcde-f0123-4567-89abcdef012\" type=\"DEPENDENT\"/>\n    </bns:ComponentReference>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

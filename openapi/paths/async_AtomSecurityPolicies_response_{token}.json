@@ -1,0 +1,80 @@
+{
+  "get": {
+    "tags": [
+      "AtomSecurityPolicies"
+    ],
+    "summary": "Retrieves AtomSecurityPolicies objects by token",
+    "description": "Using the token from the initial GET response, send an HTTP GET where accountId is the account with which you are authenticating. \n\n Custom Java runtime permissions listed in the `<common>` section apply to all High security policy files (procrunner-HIGH.policy, procbrowser-HIGH.policy, and procworker-HIGH.policy). Custom permissions listed in a specific section, such as `<runner>`, apply only to the associated security policy file.",
+    "operationId": "AsyncTokenAtomSecurityPolicies",
+    "parameters": [
+      {
+        "name": "token",
+        "in": "path",
+        "description": "Takes in the token from a previous call to return a result.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AtomSecurityPoliciesAsyncResponse.json"
+            },
+            "example": {
+              "AtomSecurityPolicies": {
+                "atomId": "4ce4a1c2-5bd9-4bd9-9201-46198e2d88db",
+                "common": {
+                  "policies": {
+                    "privilegeType": "RuntimePermission",
+                    "arguments": [
+                      {
+                        "value": "arg1"
+                      },
+                      {
+                        "value": "arg2"
+                      }
+                    ]
+                  }
+                },
+                "runner": null,
+                "worker": null,
+                "browser": {
+                  "policies": {
+                    "privilegeType": "Test",
+                    "arguments": [
+                      {
+                        "value": "arg1"
+                      },
+                      {
+                        "value": "arg2"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AtomSecurityPoliciesAsyncResponse.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<AtomSecurityPolicies xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" atomId=\"4ce4a1c2-5bd9-4bd9-9201-46198e2d88db\">\n  <common>\n    <policies privilegeType=\"RuntimePermission\">\n      <arguments value=\"arg1\"/>\n      <arguments value=\"arg2\"/>\n    </policies>\n  </common>\n  <runner/>\n  <worker/>\n  <browser>\n    <policies privilegeType=\"Test\">\n      <arguments value=\"arg1\"/>\n      <arguments value=\"arg2\"/>\n    </policies>\n  </browser>\n</AtomSecurityPolicies>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

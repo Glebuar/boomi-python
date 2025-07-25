@@ -1,0 +1,171 @@
+{
+  "post": {
+    "tags": [
+      "Deployment"
+    ],
+    "summary": "Queries for a Deployment object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryDeployment",
+    "requestBody": {
+      "description": " Possible properties include: environmentId, processId, componentId, componentType, current",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/DeploymentQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "456789ab-cdef-0123-4567-89abcdef0123"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "environmentId"
+                      },
+                      {
+                        "argument": [
+                          "789abcde-f012-3456-789a-bcdef0123456"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "componentId"
+                      },
+                      {
+                        "argument": [
+                          false
+                        ],
+                        "operator": "EQUALS",
+                        "property": "current"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "and",
+                        "nestedExpression": [
+                          {
+                            "argument": [
+                              "456789ab-cdef-0123-4567-89abcdef0123"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "environmentId"
+                          },
+                          {
+                            "argument": [
+                              "789abcde-f012-3456-789a-bcdef0123456"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "componentId"
+                          },
+                          {
+                            "argument": [
+                              false
+                            ],
+                            "operator": "EQUALS",
+                            "property": "current"
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/DeploymentQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n        <expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n            <nestedExpression operator=\"EQUALS\" property=\"environmentId\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>456789ab-cdef-0123-4567-89abcdef0123</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"EQUALS\" property=\"componentId\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>789abcde-f012-3456-789a-bcdef0123456</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"EQUALS\" property=\"current\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>false</argument>\n            </nestedExpression>\n        </expression>\n    </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"environmentId\">\n      <argument>456789ab-cdef-0123-4567-89abcdef0123</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/DeploymentQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 100,
+              "queryToken": "EXAMPLE_QUERY_TOKEN",
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "Deployment",
+                  "id": "89abcdef-0123-4567-89ab-cdef01234567",
+                  "environmentId": "456789ab-cdef-0123-4567-89abcdef0123",
+                  "processId": "789abcde-f012-3456-789a-bcdef0123456",
+                  "componentId": "789abcde-f012-3456-789a-bcdef0123456",
+                  "componentType": "process",
+                  "current": false,
+                  "notes": "Initial",
+                  "version": 1,
+                  "deployedOn": "2012-09-23T11:48:27Z",
+                  "deployedBy": "user123@company.biz"
+                },
+                {
+                  "@type": "Deployment",
+                  "id": "76543210-fedc-ba98-7654-3210fedcba98",
+                  "environmentId": "456789ab-cdef-0123-4567-89abcdef0123",
+                  "processId": "789abcde-f012-3456-789a-bcdef0123456",
+                  "componentId": "789abcde-f012-3456-789a-bcdef0123456",
+                  "componentType": "process",
+                  "current": false,
+                  "notes": "Added process properties",
+                  "version": 50,
+                  "deployedOn": "2013-07-29T13:01:14Z",
+                  "deployedBy": "user123@company.biz"
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/DeploymentQueryResponse.json"
+            },
+            "example": "<QueryResult numberOfResults=\"100\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns=\"http://api.platform.boomi.com/\">\n       <queryToken>EXAMPLE_QUERY_TOKEN</queryToken>\n       <bns:result xsi:type=\"Deployment\">\n          <bns:id>89abcdef-0123-4567-89ab-cdef01234567</bns:id>\n          <bns:environmentId>456789ab-cdef-0123-4567-89abcdef0123</bns:environmentId>\n          <bns:processId>789abcde-f012-3456-789a-bcdef0123456</bns:processId>\n          <bns:componentId>789abcde-f012-3456-789a-bcdef0123456</bns:componentId>\n          <bns:componentType>process</bns:componentType>\n          <bns:current>false</bns:current>\n          <bns:notes>Initial</bns:notes>\n          <bns:version>1</bns:version>\n          <bns:deployedOn>2012-09-23T11:48:27Z</bns:deployedOn>\n          <bns:deployedBy>user123@company.biz</bns:deployedBy>\n       </bns:result>\n       <bns:result xsi:type=\"Deployment\">\n          <bns:id>76543210-fedc-ba98-7654-3210fedcba98</bns:id>\n          <bns:environmentId>456789ab-cdef-0123-4567-89abcdef0123</bns:environmentId>\n          <bns:processId>789abcde-f012-3456-789a-bcdef0123456</bns:processId>\n          <bns:componentId>789abcde-f012-3456-789a-bcdef0123456</bns:componentId>\n          <bns:componentType>process</bns:componentType>\n          <bns:current>false</bns:current>\n          <bns:notes>Added process properties</bns:notes>\n          <bns:version>50</bns:version>\n          <bns:deployedOn>2013-07-29T13:01:14Z</bns:deployedOn>\n          <bns:deployedBy>user123@company.biz</bns:deployedBy>\n       </bns:result>\n    </QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

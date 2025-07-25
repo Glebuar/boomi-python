@@ -1,0 +1,120 @@
+{
+  "post": {
+    "tags": [
+      "IntegrationPack"
+    ],
+    "summary": "Queries for an IntegrationPack object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryIntegrationPack",
+    "requestBody": {
+      "description": " Possible properties include: name, id, installationType",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/IntegrationPackQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "Single"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "installationType"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "Single"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "installationType"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/IntegrationPackQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n      <QueryFilter>\n        <expression operator=\"EQUALS\" property=\"installationType\"\n               xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n               <argument>SINGLE</argument>\n        </expression>\n      </QueryFilter>\n    </QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"installationType\">\n      <argument>SINGLE</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/IntegrationPackQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 2,
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "IntegrationPack",
+                  "Description": "Order Intake Ipack",
+                  "id": "89abcdef-0123-4567-89ab-cdef01234567",
+                  "name": "Order Intake",
+                  "installationType": "SINGLE"
+                },
+                {
+                  "@type": "IntegrationPack",
+                  "Description": "Order Processing Ipack",
+                  "id": "76543210-fedc-ba98-7654-3210fedcba98",
+                  "name": "Order Processing",
+                  "installationType": "SINGLE"
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/IntegrationPackQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"2\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n       <bns:result xsi:type=\"IntegrationPack\" installationType=\"SINGLE\" name=\"Order Intake\" \n         id=\"89abcdef-0123-4567-89ab-cdef01234567\">\n          <bns:Description>Order Intake Ipack</bns:Description>\n        </bns:result>\n       <bns:result xsi:type=\"IntegrationPack\" installationType=\"SINGLE\" name=\"Order Processing\" \n         id=\"76543210-fedc-ba98-7654-3210fedcba98\">\n          <bns:Description>Order Processing Ipack</bns:Description>\n       </bns:result>\n    </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

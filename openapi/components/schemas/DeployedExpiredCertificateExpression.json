@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./DeployedExpiredCertificateSimpleExpression.json"
+    },
+    {
+      "$ref": "./DeployedExpiredCertificateGroupingExpression.json"
+    }
+  ]
+}

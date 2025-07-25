@@ -1,0 +1,158 @@
+{
+  "get": {
+    "tags": [
+      "AccountCloudAttachmentQuota"
+    ],
+    "summary": "Retrieves an instance of an AccountCloudAttachmentQuota object",
+    "description": "Retrieves the Cloud quota value currently existing for a Cloud ID on a specific account. The GET operation requires an additional ID (id), and differs from the `cloudId` and `accountId`.",
+    "operationId": "GetAccountCloudAttachmentQuota",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID generated for a newly created or recently updated Cloud quota (using the Account Cloud Attachment quota object). You can use this ID to get a Cloud quota for an account's specific Cloud ID."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountCloudAttachmentQuota.json"
+            },
+            "example": {
+              "@type": "AccountCloudAttachmentQuota",
+              "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St",
+              "accountId": "account-123456",
+              "cloudId": "23456789-abcd-ef01-2345-6789abcdef01",
+              "maxAtomAttachment": 5
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountCloudAttachmentQuota.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n  <bns:AccountCloudAttachmentQuota xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \n  xmlns:bns=\"http://api.platform.boomi.com/\" id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St\">\n    <accountId=\"account123456\"/>\n    <cloudId=\"23456789abcdef0123456789abcdef01\"/>\n    <maxAtomAttachment=\"5\"/>\n  </bns:AccountCloudAttachmentQuota>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "AccountCloudAttachmentQuota"
+    ],
+    "summary": "Modifies or updates an AccountCloudAttachmentQuota object",
+    "description": "Edit the number of Runtime attachments that you can create on the given account. Specify the IDs of both the account and the Runtime cloud that you want to update. You cannot set the Cloud quota less than the number of attachments that currently exist on the account, unless you are setting the value to -1 for unlimited. Attempting to do so returns an error.",
+    "operationId": "UpdateAccountCloudAttachmentQuota",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID generated for a newly created or recently updated Cloud quota (using the Account Cloud Attachment quota object). You can use this ID to get a Cloud quota for an account's specific Cloud ID."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AccountCloudAttachmentQuota.json"
+          },
+          "example": {
+            "accountId": "account-123456",
+            "cloudId": "23456789-abcd-ef01-2345-6789abcdef01",
+            "maxAtomAttachment": "8"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AccountCloudAttachmentQuota.json"
+          },
+          "example": "<bns:AccountCloudAttachmentQuota xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \nxmlns:bns=\"http://api.platform.boomi.com/\">\n  <accountId=\"account-123456\"/>\n  <cloudId=\"23456789-abcd-ef01-2345-6789abcdef01\"/>\n  <maxAtomAttachment=\"5\"/>\n</bns:AccountCloudAttachmentQuota>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountCloudAttachmentQuota.json"
+            },
+            "example": {
+              "id": "b0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1HgA",
+              "accountId": "account-123456",
+              "cloudId": "23456789-abcd-ef01-2345-6789abcdef01",
+              "maxAtomAttachment": "8"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountCloudAttachmentQuota.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:AccountCloudAttachmentQuota xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \nxmlns:bns=\"http://api.platform.boomi.com/\"\n  id=\"b0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1HgA\"\n  accountId=\"account-123456\"\n  cloudId=\"23456789-abcd-ef01-2345-6789abcdef01\"\n  maxAtomAttachment=\"5\"/>\n"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "AccountCloudAttachmentQuota"
+    ],
+    "summary": "Deletes an AccountCloudAttachmentQuota object",
+    "description": "Deletes a Cloud quota for a given account.",
+    "operationId": "DeleteAccountCloudAttachmentQuota",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID generated for a newly created or recently updated Cloud quota (using the Account Cloud Attachment quota object). You can use this ID to get a Cloud quota for an account's specific Cloud ID."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

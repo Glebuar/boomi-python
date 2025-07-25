@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "fields": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "xml": {
+    "name": "customFields",
+    "namespace": "http://api.platform.boomi.com/"
+  }
+}

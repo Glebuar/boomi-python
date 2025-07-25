@@ -1,0 +1,73 @@
+{
+  "required": [
+    "apiType",
+    "authentication",
+    "baseUrl",
+    "externalHost",
+    "internalHost",
+    "listenerPorts",
+    "protectedHeaders",
+    "sslCertificate"
+  ],
+  "type": "object",
+  "properties": {
+    "apiType": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "authentication": {
+      "$ref": "./SharedWebServerAuthentication.json"
+    },
+    "baseUrl": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "examineForwardHeaders": {
+      "type": "boolean",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "externalHost": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "internalHost": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "listenerPorts": {
+      "$ref": "./ListenerPortConfiguration.json"
+    },
+    "maxNumberOfThreads": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "overrideUrl": {
+      "type": "boolean",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "protectedHeaders": {
+      "$ref": "./SharedWebServerProtectedHeaders.json"
+    },
+    "sslCertificate": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    }
+  }
+}

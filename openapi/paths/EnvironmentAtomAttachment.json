@@ -1,0 +1,62 @@
+{
+  "post": {
+    "tags": [
+      "EnvironmentAtomAttachment"
+    ],
+    "summary": "Creates an EnvironmentAtomAttachment object",
+    "description": "Attaches a Runtime having the specified ID to the environment having the specified ID. Attaching an already attached Runtime moves the Runtime to the environment specified in the request. \n\n >**Note:** For accounts with Basic environment support, you can attach a single Runtime to each environment. For accounts with Unlimited environment support, you can attach have an unlimited number of Runtimes attached in each environment.",
+    "operationId": "CreateEnvironmentAtomAttachment",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentAtomAttachment.json"
+          },
+          "example": {
+            "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+            "environmentId": "456789ab-cdef-0123-4567-89abcdef0123"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentAtomAttachment.json"
+          },
+          "example": "<bns:EnvironmentAtomAttachment atomId=\"3456789a-bcde-f012-3456-789abcdef012\" \n         environmentId=\"456789ab-cdef-0123-4567-89abcdef0123\" xmlns:bns=\"http://api.platform.boomi.com/\" \n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentAtomAttachment.json"
+            },
+            "example": {
+              "@type": "Environment",
+              "id": "456789ab-cdef-0123-4567-89abcdef0123",
+              "name": "My Production Environment",
+              "classification": "PROD"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentAtomAttachment.json"
+            },
+            "example": "<bns:EnvironmentAtomAttachment atomId=\"3456789a-bcde-f012-3456-789abcdef012\" \n         environmentId=\"456789ab-cdef-0123-4567-89abcdef0123\"\n         id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\"\n         xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

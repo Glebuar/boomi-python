@@ -1,0 +1,151 @@
+{
+  "post": {
+    "tags": [
+      "OrganizationComponent"
+    ],
+    "summary": "Queries for an OrganizationComponent object",
+    "description": "- Only the LIKE operator is allowed with a name filter. Likewise, only the EQUALS operator is permitted with a contactName, email, or phone filter.\n\n -   If the QUERY request includes multiple filters, you can connect the filters with a logical AND operator — the query does not support the logical OR operator .\n\n -   The QUERY results omit the folderName field. \n\n For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryOrganizationComponent",
+    "requestBody": {
+      "description": " Possible properties include: name, contactName, email, phone",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/OrganizationComponentQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "Tom Miller"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "contactName"
+                      },
+                      {
+                        "argument": [
+                          "311 555-3579"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "phone"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "and",
+                        "nestedExpression": [
+                          {
+                            "argument": [
+                              "Tom Miller"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "contactName"
+                          },
+                          {
+                            "argument": [
+                              "311 555-3579"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "phone"
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/OrganizationComponentQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n        <expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n            <nestedExpression operator=\"EQUALS\" property=\"contactName\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>Tom Miller</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"EQUALS\" property=\"phone\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>311 555-3579</argument>\n            </nestedExpression>\n        </expression>\n    </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"contactName\">\n      <argument>Tom Miller</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/OrganizationComponentQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "OrganizationComponent",
+                  "OrganizationContactInfo": {
+                    "@type": "OrganizationContactInfo",
+                    "contactName": "Tom Miller",
+                    "description": "Shared Organization component for Best Wholesaling",
+                    "address1": "127 Comstock Ave.",
+                    "address2": "",
+                    "city": "Philadelphia",
+                    "state": "PA",
+                    "postalcode": "19100",
+                    "country": "US",
+                    "email": "tom@bestwholesaling.biz",
+                    "phone": "311 555-3579",
+                    "contactUrl": "https://www.bestwholesaling.biz",
+                    "fax": "311 555-9753"
+                  },
+                  "componentName": "Best Wholesaling",
+                  "componentId": "89abcdef-0123-4567-89ab-cdef01234567",
+                  "folderId": 11356
+                }
+              ],
+              "numberOfResults": 1
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/OrganizationComponentQueryResponse.json"
+            },
+            "example": "<bns:QueryResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" numberOfResults=\"1\">\n<bns:result xsi:type=\"bns:OrganizationComponent\" componentName=\"Best Wholesaling\" componentId=\"89abcdef-0123-4567-89ab-cdef01234567\" folderId=\"11356\">\n<bns:OrganizationContactInfo>\n<bns:contactName>Tom Miller</bns:contactName>\n<bns:address1>127 Comstock Ave.</bns:address1>\n<bns:address2></bns:address2>\n<bns:city>Philadelphia</bns:city>\n<bns:state>PA</bns:state>\n<bns:postalcode>19100</bns:postalcode>\n<bns:country>US</bns:country>\n<bns:email>tom@bestwholesaling.biz</bns:email>\n<bns:phone>311 555-3579</bns:phone>\n<bns:contactUrl>https://www.bestwholesaling.biz</bns:contactUrl>\n<bns:fax>311 555-9753</bns:fax>\n</bns:OrganizationContactInfo>\n</bns:result>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "PartnerRoute": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./ProcessingGroupDocumentPartnerRoute.json"
+      }
+    },
+    "documentType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "processId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

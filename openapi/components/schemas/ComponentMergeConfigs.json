@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "ComponentMergeConfig": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./ComponentMergeConfig.json"
+      }
+    }
+  }
+}

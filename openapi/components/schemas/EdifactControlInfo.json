@@ -1,0 +1,18 @@
+{
+  "required": [
+    "UNBControlInfo",
+    "UNHControlInfo"
+  ],
+  "type": "object",
+  "properties": {
+    "UNBControlInfo": {
+      "$ref": "./UNBControlInfo.json"
+    },
+    "UNGControlInfo": {
+      "$ref": "./UNGControlInfo.json"
+    },
+    "UNHControlInfo": {
+      "$ref": "./UNHControlInfo.json"
+    }
+  }
+}

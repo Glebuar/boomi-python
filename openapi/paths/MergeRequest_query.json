@@ -1,0 +1,201 @@
+{
+  "post": {
+    "tags": [
+      "MergeRequest"
+    ],
+    "summary": "Queries for a MergeRequest object",
+    "description": "- You can query a branch to retrieve a list of all active merge request IDs.\n  - You must include the destination or source branch as a parameter. Only EQUALS is allowed for these parameters.\n - Optional parameters include: \n  -   `createdDate` \n  -   `createdBy` \n  -   `stage` \n  -   `modifiedDate` \n  -   `modifiedBy` \n-  You can use the `queryMore` request to return more than 100 results.\n\nFor more information about query filters, refer to [Query filters](/api/platformapi#section/Introduction/Query-filters).",
+    "operationId": "QueryMergeRequest",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/MergeRequestQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "MERGED"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "stage"
+                      },
+                      {
+                        "argument": [
+                          "QjoxMDU"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "sourceBranchId"
+                      },
+                      {
+                        "argument": [
+                          "Qjox"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "destinationBranchId"
+                      },
+                      {
+                        "argument": [
+                          "admin@boomi.com"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "createdBy"
+                      },
+                      {
+                        "argument": [
+                          "admin@boomi.com"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "modifiedBy"
+                      },
+                      {
+                        "argument": [
+                          "2024-05-22T15:11:39Z"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "modifiedDate"
+                      },
+                      {
+                        "argument": [
+                          "2024-05-22T15:07:37Z"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "createdDate"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "and",
+                        "nestedExpression": [
+                          {
+                            "argument": [
+                              "MERGED"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "stage"
+                          },
+                          {
+                            "argument": [
+                              "QjoxMDU"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "sourceBranchId"
+                          },
+                          {
+                            "argument": [
+                              "Qjox"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "destinationBranchId"
+                          },
+                          {
+                            "argument": [
+                              "admin@boomi.com"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "createdBy"
+                          },
+                          {
+                            "argument": [
+                              "admin@boomi.com"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "modifiedBy"
+                          },
+                          {
+                            "argument": [
+                              "2024-05-22T15:11:39Z"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "modifiedDate"
+                          },
+                          {
+                            "argument": [
+                              "2024-05-22T15:07:37Z"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "createdDate"
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/MergeRequestQueryConfig.json"
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/MergeRequestQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "MergeRequest",
+                  "id": "TVI6Mg",
+                  "sourceBranchId": "QjoxMDU",
+                  "destinationBranchId": "Qjox",
+                  "stage": "MERGED",
+                  "modifiedBy": "admin@boomi.com",
+                  "modifiedDate": "2024-05-22T15:11:39Z",
+                  "createdBy": "admin@boomi.com",
+                  "createdDate": "2024-05-22T15:07:37Z"
+                }
+              ],
+              "numberOfResults": 1
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/MergeRequestQueryResponse.json"
+            }
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

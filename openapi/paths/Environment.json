@@ -1,0 +1,62 @@
+{
+  "post": {
+    "tags": [
+      "Environment"
+    ],
+    "summary": "Creates an Environment object",
+    "description": "Creates an environment having the specified name. Environment names must be unique.",
+    "operationId": "CreateEnvironment",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/Environment.json"
+          },
+          "example": {
+            "name": "My Production Environment",
+            "classification": "PROD"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/Environment.json"
+          },
+          "example": "<bns:Environment xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"  name=\"My Production Environment\" classification=\"PROD\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Environment.json"
+            },
+            "example": {
+              "@type": "Environment",
+              "id": "456789ab-cdef-0123-4567-89abcdef0123",
+              "name": "My Production Environment",
+              "classification": "PROD"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Environment.json"
+            },
+            "example": "<bns:Environment xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"  name=\"My Production Environment\" classification=\"PROD\" id=\"456789ab-cdef-0123-4567-89abcdef0123\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

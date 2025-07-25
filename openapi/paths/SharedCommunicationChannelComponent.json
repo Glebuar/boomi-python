@@ -1,0 +1,87 @@
+{
+  "post": {
+    "tags": [
+      "SharedCommunicationChannelComponent"
+    ],
+    "summary": "Creates a SharedCommunicationChannelComponent object",
+    "description": "The sample request creates a Shared Communication Component named `Disk Comms Channel`.",
+    "operationId": "CreateSharedCommunicationChannelComponent",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/SharedCommunicationChannelComponent.json"
+          },
+          "example": {
+            "@type": "SharedCommunicationChannelComponent",
+            "PartnerCommunication": {
+              "@type": "PartnerCommunication",
+              "DiskCommunicationOptions": {
+                "@type": "DiskCommunicationOptions",
+                "DiskGetOptions": {
+                  "@type": "DiskGetOptions",
+                  "fileFilter": "*",
+                  "getDirectory": "GetDirectory",
+                  "useDefaultGetOptions": false,
+                  "deleteAfterRead": true,
+                  "maxFileCount": [
+                    "BigInteger",
+                    0
+                  ],
+                  "filterMatchType": "wildcard"
+                },
+                "DiskSendOptions": {
+                  "@type": "DiskSendOptions",
+                  "sendDirectory": "SendDirectory",
+                  "useDefaultSendOptions": false,
+                  "createDirectory": true,
+                  "writeOption": "unique"
+                }
+              }
+            },
+            "PartnerArchiving": {
+              "@type": "PartnerArchiving",
+              "enableArchiving": false
+            },
+            "componentName": "DISK Communication object",
+            "folderName": "Boomi/SampleFolder",
+            "folderId": 922
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/SharedCommunicationChannelComponent.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:SharedCommunicationChannelComponent xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" componentName=\"Disk Comms Channel\" folderName=\"Boomi\" folderId=\"894\">\n<bns:PartnerCommunication>\n<bns:DiskCommunicationOptions>\n<bns:DiskGetOptions useDefaultGetOptions=\"false\" deleteAfterRead=\"false\" maxFileCount=\"0\" filterMatchType=\"wildcard\">\n<bns:fileFilter>*</bns:fileFilter>\n<bns:getDirectory>ExampleGetDirectory</bns:getDirectory>\n</bns:DiskGetOptions>\n<bns:DiskSendOptions useDefaultSendOptions=\"false\" createDirectory=\"true\" writeOption=\"unique\">\n<bns:sendDirectory>ExampleSendDirectory</bns:sendDirectory>\n</bns:DiskSendOptions>\n</bns:DiskCommunicationOptions>\n</bns:PartnerCommunication>\n<bns:PartnerArchiving>\n<bns:enableArchiving>false</bns:enableArchiving>\n</bns:PartnerArchiving>\n</bns:SharedCommunicationChannelComponent>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/SharedCommunicationChannelComponent.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:SharedCommunicationChannelComponent xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" componentName=\"Disk Comms Channel\" folderName=\"Boomi\" folderId=\"894\">\n<bns:PartnerCommunication>\n<bns:DiskCommunicationOptions>\n<bns:DiskGetOptions useDefaultGetOptions=\"false\" deleteAfterRead=\"false\" maxFileCount=\"0\" filterMatchType=\"wildcard\">\n<bns:fileFilter>*</bns:fileFilter>\n<bns:getDirectory>ExampleGetDirectory</bns:getDirectory>\n</bns:DiskGetOptions>\n<bns:DiskSendOptions useDefaultSendOptions=\"false\" createDirectory=\"true\" writeOption=\"unique\">\n<bns:sendDirectory>ExampleSendDirectory</bns:sendDirectory>\n</bns:DiskSendOptions>\n</bns:DiskCommunicationOptions>\n</bns:PartnerCommunication>\n<bns:PartnerArchiving>\n<bns:enableArchiving>false</bns:enableArchiving>\n</bns:PartnerArchiving>\n</bns:SharedCommunicationChannelComponent>"
+          },
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/SharedCommunicationChannelComponent.json"
+            }
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "post": {
+    "tags": [
+      "PublisherIntegrationPack"
+    ],
+    "summary": "Retrieves multiple PublisherIntegrationPack objects by identifier",
+    "description": "The bulk GET operation returns multiple objects based on the supplied account IDs, to a maximum of 100. To learn more about `bulk`, refer to [Bulk GET operations](#section/Introduction/Bulk-GET-operations).",
+    "operationId": "BulkPublisherIntegrationPack",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/PublisherIntegrationPackBulkRequest.json"
+          },
+          "example": {
+            "type": "GET",
+            "request": [
+              {
+                "id": "b9875167-ddbd-4c5f-a77d-327589b52bf8"
+              },
+              {
+                "id": "not_a_real_package_id"
+              }
+            ]
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/PublisherIntegrationPackBulkRequest.json"
+          },
+          "example": "<api:BulkRequest xmlns:api=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" type=\"GET\">\n    <api:request xsi:type=\"api:BulkId\" id=\"b9875167-ddbd-4c5f-a77d-327589b52bf8\"/>\n    <api:request xsi:type=\"api:BulkId\" id=\"8b80f83b-9836-49a0-8c72-753131a77bae\"/>\n    <api:request xsi:type=\"api:BulkId\" id=\"56c08e51-78cb-4df5-9d5c-c55da82eb9dc\"/>\n</api:BulkRequest>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PublisherIntegrationPackBulkResponse.json"
+            },
+            "example": {
+              "@type": "BulkResult",
+              "response": [
+                {
+                  "@type": "BulkResponse",
+                  "Result": {
+                    "@type": "PublisherIntegrationPack",
+                    "Description": "",
+                    "PublisherPackagedComponents": {
+                      "@type": "PublisherPackagedComponents",
+                      "PublisherPackagedComponent": [
+                        {
+                          "@type": "PublisherPackagedComponent",
+                          "componentId": "c7d8653d-81ff-4fcc-b814-49e148fc4024",
+                          "componentName": "Cleanse",
+                          "componentType": "process",
+                          "currentVersion": "",
+                          "pendingVersion": "cleanse process",
+                          "latestVersion": ""
+                        },
+                        {
+                          "@type": "PublisherPackagedComponent",
+                          "componentId": "b2780aad-f5af-44e8-9b5b-f4823b363284",
+                          "componentName": "New Process 3",
+                          "componentType": "process",
+                          "currentVersion": "",
+                          "pendingVersion": "test",
+                          "latestVersion": ""
+                        }
+                      ]
+                    },
+                    "id": "b9875167-ddbd-4c5f-a77d-327589b52bf8",
+                    "name": "test multi",
+                    "installationType": "MULTI"
+                  },
+                  "statusCode": 200
+                },
+                {
+                  "@type": "BulkResponse",
+                  "id": "not_a_real_package_id",
+                  "statusCode": 400,
+                  "errorMessage": "Integration pack ID not_a_real_package_id is invalid. Provide a valid integration pack ID to complete this action."
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/PublisherIntegrationPackBulkResponse.json"
+            }
+          },
+          "example": "<bns:BulkResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\">\n    <bns:response statusCode=\"200\">\n        <bns:Result xsi:type=\"bns:PublisherIntegrationPack\" id=\"b9875167-ddbd-4c5f-a77d-327589b52bf8\" name=\"test multi\" installationType=\"MULTI\">\n            <bns:Description></bns:Description>\n            <bns:PublisherPackagedComponents>\n                <bns:PublisherPackagedComponent componentId=\"b2780aad-f5af-44e8-9b5b-f4823b363284\" componentName=\"New Process 3\" componentType=\"process\" currentVersion=\"\" pendingVersion=\"test\" latestVersion=\"\"/>\n                <bns:PublisherPackagedComponent componentId=\"c7d8653d-81ff-4fcc-b814-49e148fc4024\" componentName=\"Cleanse\" componentType=\"process\" currentVersion=\"\" pendingVersion=\"cleanse process\" latestVersion=\"\"/>\n            </bns:PublisherPackagedComponents>\n        </bns:Result>\n    </bns:response>\n    <bns:response statusCode=\"200\">\n        <bns:Result xsi:type=\"bns:PublisherIntegrationPack\" id=\"8b80f83b-9836-49a0-8c72-753131a77bae\" name=\"test single\" installationType=\"SINGLE\">\n            <bns:Description></bns:Description>\n            <bns:PublisherPackagedComponents>\n                <bns:PublisherPackagedComponent componentId=\"bb0dae4f-c8f3-47fa-9dee-c3c484f79f71\" componentName=\"New Process 4\" componentType=\"process\" currentVersion=\"\" pendingVersion=\"3.0\" latestVersion=\"\"/>\n                <bns:PublisherPackagedComponent componentId=\"62f7ffb7-5332-4142-893a-8d40d4742ccf\" componentName=\"Rate Limit Test\" componentType=\"process\" currentVersion=\"\" pendingVersion=\"1.0\" latestVersion=\"\"/>\n            </bns:PublisherPackagedComponents>\n        </bns:Result>\n    </bns:response>\n    <bns:response id=\"56c08e51-78cb-4df5-9d5c-c55da82eb9dc\" statusCode=\"400\" errorMessage=\"Integration pack ID 56c08e51-78cb-4df5-9d5c-c55da82eb9dc is invalid. Provide a valid integration pack ID to complete this action.\"/>\n</bns:BulkResult>"
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

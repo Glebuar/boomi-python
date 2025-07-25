@@ -1,0 +1,28 @@
+{
+  "required": [
+    "Inputs",
+    "Outputs"
+  ],
+  "type": "object",
+  "properties": {
+    "Inputs": {
+      "$ref": "./DocCacheKeyInputs.json"
+    },
+    "Outputs": {
+      "$ref": "./DocCacheProfileParameters.json"
+    },
+    "cacheIndex": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "docCache": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

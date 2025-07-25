@@ -1,0 +1,33 @@
+{
+  "delete": {
+    "tags": [
+      "AccountUserRole"
+    ],
+    "summary": "Deletes an AccountUserRole object",
+    "description": "Removes the specified user by a specified conceptual Account User Role object ID from an account.",
+    "operationId": "DeleteAccountUserRole",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

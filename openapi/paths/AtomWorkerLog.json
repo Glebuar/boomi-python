@@ -1,0 +1,62 @@
+{
+  "post": {
+    "tags": [
+      "AtomWorkerLog"
+    ],
+    "summary": "Creates an AtomWorkerLog object",
+    "description": "Allows users to programmatically retrieve a link for downloading a given Runtime workers log.",
+    "operationId": "CreateAtomWorkerLog",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AtomWorkerLog.json"
+          },
+          "example": {
+            "workerId": "worker-1c2345c-b6e7-8f9f-01e-2345678ad91-2020.08.31"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AtomWorkerLog.json"
+          },
+          "example": "<AtomWorkerLog xmlns=\"http://api.platform.boomi.com/\" workerId=\"worker-1c2345c-b6e7-8f9f-01e-2345678ad91-2020.08.31\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/LogDownload.json"
+            },
+            "example": {
+              "LogDownload": {
+                "url": "https://api.boomi.com/account/account-123/api/download/SoaWorkerLog-cc12c34d-56e7-89d6-b012-3bb45678a9b",
+                "message": "Beginning download.",
+                "statusCode": "202"
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/LogDownload.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:LogDownload xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" url=\"https://api.boomi.com/account/account-123/api/download/SoaWorkerLog-cc12c34d-56e7-89d6-b012-3bb45678a9b\" message=\"Beginning download.\" statusCode=\"202\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

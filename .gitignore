@@ -1,0 +1,43 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Environments
+.claude
+.env
+.venv
+env/
+venv/
+test_env/
+ENV/
+env.bak/
+venv.bak/
+
+# Devcontainer
+.devcontainer/
+
+dist/
+dist_test/
+build/
+.vscode
+.idea/
+
+# Egg info
+*.egg-info/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+*:Zone.Identifier
+
+# Project-specific files
+CLAUDE.md
+
+# Test files (keep only committed tests)
+test_*.py
+*_test.py

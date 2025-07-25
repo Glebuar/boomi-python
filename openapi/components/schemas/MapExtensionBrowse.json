@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "BrowseFields": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./BrowseField.json"
+      }
+    },
+    "sessionId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}
