@@ -29,7 +29,8 @@ import datetime
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
 
 from boomi import Boomi
-from boomi.models import Environment, EnvironmentClassification
+from boomi.models import Environment as EnvironmentModel
+from boomi.models import EnvironmentClassification
 
 def create_test_environment():
     """Create a test environment and display its details."""
@@ -56,7 +57,7 @@ def create_test_environment():
     
     try:
         # Create the environment request
-        new_environment = Environment(
+        new_environment = EnvironmentModel(
             name=environment_name,
             classification=EnvironmentClassification.TEST  # Can be TEST or PROD
         )
@@ -66,10 +67,26 @@ def create_test_environment():
         
         print("\n✅ Environment created successfully!")
         print("\n📋 Environment Details:")
-        print(f"   ID: {created_environment.id_}")
-        print(f"   Name: {created_environment.name}")
-        print(f"   Classification: {created_environment.classification}")
-        print(f"   Parent Account: {created_environment.parent_account}")
+        
+        # Extract the actual environment data from the response
+        # The response seems to be wrapped in _kwargs['Environment']
+        if hasattr(created_environment, '_kwargs') and 'Environment' in created_environment._kwargs:
+            env_data = created_environment._kwargs['Environment']
+            env_id = env_data.get('@id', 'N/A')
+            env_name = env_data.get('@name', environment_name)
+            env_class = env_data.get('@classification', 'TEST')
+            env_parent = env_data.get('@parentAccount', 'N/A')
+        else:
+            # Fallback to direct attributes
+            env_id = getattr(created_environment, 'id_', getattr(created_environment, 'id', 'N/A'))
+            env_name = getattr(created_environment, 'name', environment_name)
+            env_class = getattr(created_environment, 'classification', 'TEST')
+            env_parent = getattr(created_environment, 'parent_account', 'N/A')
+        
+        print(f"   ID: {env_id}")
+        print(f"   Name: {env_name}")
+        print(f"   Classification: {env_class}")
+        print(f"   Parent Account: {env_parent}")
         
         # Ask user if they want to delete the environment
         print("\n" + "=" * 50)
@@ -77,7 +94,7 @@ def create_test_environment():
         
         if response.lower() == 'y':
             print(f"\n🗑️  Deleting environment {environment_name}...")
-            sdk.environment.delete_environment(id_=created_environment.id_)
+            sdk.environment.delete_environment(id_=env_id)
             print("✅ Environment deleted successfully!")
         else:
             print(f"\n💡 Environment '{environment_name}' has been kept.")
