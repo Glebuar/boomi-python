@@ -6,7 +6,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
 
 from boomi import Boomi
-from boomi.models import Environment, EnvironmentClassification
+from boomi.models import Environment as EnvironmentModel, EnvironmentClassification
 
 # Test credentials
 account_id = "psrisksand-U7OGUC"
@@ -29,16 +29,25 @@ print("\n✅ SDK initialized")
 
 # Try to create environment
 try:
-    new_env = Environment(
+    new_env = EnvironmentModel(
         name="SDK_Debug_Test_Env",
         classification=EnvironmentClassification.TEST
     )
     
     result = sdk.environment.create_environment(new_env)
-    print(f"\n✅ Environment created: {result.id_}")
+    
+    # Extract the environment ID from the response
+    if hasattr(result, '_kwargs') and 'Environment' in result._kwargs:
+        env_data = result._kwargs['Environment']
+        env_id = env_data.get('@id', 'N/A')
+    else:
+        # Fallback to direct attribute access
+        env_id = getattr(result, 'id_', getattr(result, 'id', 'N/A'))
+    
+    print(f"\n✅ Environment created: {env_id}")
     
     # Clean up
-    sdk.environment.delete_environment(id_=result.id_)
+    sdk.environment.delete_environment(id_=env_id)
     print("✅ Environment deleted")
     
 except Exception as e:
