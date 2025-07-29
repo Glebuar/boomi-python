@@ -9,7 +9,7 @@ complex queries, and downloading detailed execution artifacts.
 Available Filter Properties:
 - executionId, originalExecutionId, account, executionTime
 - status, executionType, processName, processId  
-- atomName, atomId, inboundDocumentCount, outboundDocumentCount
+- runtimeName, runtimeId, inboundDocumentCount, outboundDocumentCount
 - executionDuration, message, reportKey, launcherId, nodeId, recordedDate
 
 Available Operators:
@@ -249,7 +249,7 @@ def query_execution_records():
             print(f"  📊 Status: {record.status}")
             print(f"  ⏰ Time: {record.execution_time}")
             print(f"  ⚡ Type: {record.execution_type}")
-            print(f"  🖥️  Atom: {record.atom_name}")
+            print(f"  🖥️  Runtime: {record.atom_name}")
             print(f"  📥 In Docs: {getattr(record, 'inbound_document_count', 'N/A')}")
             print(f"  📤 Out Docs: {getattr(record, 'outbound_document_count', 'N/A')}")
             print(f"  ⏱️  Duration: {getattr(record, 'execution_duration', 'N/A')} ms")
@@ -293,7 +293,7 @@ def query_execution_records():
         print("  • Different query filters might be needed")
         
     print(f"\n📚 Available Query Options:")
-    print("Filter Properties: executionId, status, processName, atomName, executionDuration, etc.")
+    print("Filter Properties: executionId, status, processName, runtimeName, executionDuration, etc.")
     print("Operators: EQUALS, LIKE, GREATER_THAN, BETWEEN, IS_NOT_NULL, etc.")
     print("Complex queries: Use 'and'/'or' with nestedExpression arrays")
 
