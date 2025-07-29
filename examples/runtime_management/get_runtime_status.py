@@ -66,44 +66,44 @@ def get_runtime_status_info(sdk, runtime_id):
         
         return None
 
-def display_status_summary(atom_data):
-    """Display atom status summary."""
+def display_status_summary(runtime_data):
+    """Display runtime status summary."""
     
-    atom_name = atom_data.get('@name', 'N/A')
-    atom_id = atom_data.get('@id', 'N/A')
-    atom_status = atom_data.get('@status', 'N/A')
-    atom_type = atom_data.get('@type', 'N/A')
+    runtime_name = runtime_data.get('@name', 'N/A')
+    runtime_id = runtime_data.get('@id', 'N/A')
+    runtime_status = runtime_data.get('@status', 'N/A')
+    runtime_type = runtime_data.get('@type', 'N/A')
     
-    print(f"\\n🤖 Atom Status Summary")
+    print(f"\\n🤖 Runtime Status Summary")
     print("=" * 70)
-    print(f"📛 Name: {atom_name}")
-    print(f"🆔 ID: {atom_id}")
-    print(f"📦 Type: {atom_type}")
+    print(f"📛 Name: {runtime_name}")
+    print(f"🆔 ID: {runtime_id}")
+    print(f"📦 Type: {runtime_type}")
     
     # Status with icon
-    if atom_status == 'ONLINE':
+    if runtime_status == 'ONLINE':
         status_icon = "🟢"
-        status_msg = "Atom is online and ready to process"
-    elif atom_status == 'OFFLINE':
+        status_msg = "Runtime is online and ready to process"
+    elif runtime_status == 'OFFLINE':
         status_icon = "🔴"
-        status_msg = "Atom is offline and cannot process"
-    elif atom_status == 'STARTING':
+        status_msg = "Runtime is offline and cannot process"
+    elif runtime_status == 'STARTING':
         status_icon = "🟡"
-        status_msg = "Atom is starting up"
-    elif atom_status == 'STOPPING':
+        status_msg = "Runtime is starting up"
+    elif runtime_status == 'STOPPING':
         status_icon = "🟠"
-        status_msg = "Atom is shutting down"
-    elif atom_status == 'ERROR':
+        status_msg = "Runtime is shutting down"
+    elif runtime_status == 'ERROR':
         status_icon = "❌"
-        status_msg = "Atom has encountered an error"
+        status_msg = "Runtime has encountered an error"
     else:
         status_icon = "⚪"
-        status_msg = f"Atom status: {atom_status}"
+        status_msg = f"Runtime status: {runtime_status}"
     
-    print(f"{status_icon} Status: {atom_status}")
+    print(f"{status_icon} Status: {runtime_status}")
     print(f"💬 Message: {status_msg}")
     
-    return atom_status
+    return runtime_status
 
 def display_operational_details(runtime_data):
     """Display detailed operational information."""
@@ -112,43 +112,43 @@ def display_operational_details(runtime_data):
     print("=" * 70)
     
     # System information
-    atom_hostname = atom_data.get('@hostName', 'N/A')
-    atom_version = atom_data.get('@currentVersion', 'N/A')
-    atom_os = atom_data.get('@osName', 'N/A')
-    atom_java = atom_data.get('@javaVersion', 'N/A')
+    runtime_hostname = runtime_data.get('@hostName', 'N/A')
+    runtime_version = runtime_data.get('@currentVersion', 'N/A')
+    runtime_os = runtime_data.get('@osName', 'N/A')
+    runtime_java = runtime_data.get('@javaVersion', 'N/A')
     
-    print(f"🖥️  Hostname: {atom_hostname}")
-    print(f"📦 Version: {atom_version}")
-    print(f"🏗️  Operating System: {atom_os}")
-    print(f"☕ Java Version: {atom_java}")
+    print(f"🖥️  Hostname: {runtime_hostname}")
+    print(f"📦 Version: {runtime_version}")
+    print(f"🏗️  Operating System: {runtime_os}")
+    print(f"☕ Java Version: {runtime_java}")
     
     # Installation details
-    date_installed = atom_data.get('@dateInstalled', 'N/A')
-    created_by = atom_data.get('@createdBy', 'N/A')
-    last_modified = atom_data.get('@lastModifiedDate', 'N/A')
+    date_installed = runtime_data.get('@dateInstalled', 'N/A')
+    created_by = runtime_data.get('@createdBy', 'N/A')
+    last_modified = runtime_data.get('@lastModifiedDate', 'N/A')
     
     print(f"\\n📅 Installation Details")
     print(f"   📅 Installed: {format_date(date_installed)}")
     print(f"   👤 Created by: {created_by}")
     print(f"   🔄 Last modified: {format_date(last_modified)}")
 
-def display_connectivity_info(atom_data):
+def display_connectivity_info(runtime_data):
     """Display connectivity and networking information."""
     
     print("\\n🌐 Connectivity Information")
     print("=" * 70)
     
     # Network details
-    atom_url = atom_data.get('@atomUrl', 'N/A')
-    purge_immediate = atom_data.get('@purgeImmediately', False)
-    force_restart = atom_data.get('@forceRestart', False)
+    runtime_url = runtime_data.get('@atomUrl', 'N/A')
+    purge_immediate = runtime_data.get('@purgeImmediately', False)
+    force_restart = runtime_data.get('@forceRestart', False)
     
-    print(f"🔗 Atom URL: {atom_url}")
+    print(f"🔗 Runtime URL: {runtime_url}")
     print(f"🗑️  Purge Immediately: {purge_immediate}")
     print(f"🔄 Force Restart: {force_restart}")
     
     # Capabilities
-    capabilities = atom_data.get('@capabilities', [])
+    capabilities = runtime_data.get('@capabilities', [])
     if capabilities:
         print(f"\\n🔧 Capabilities:")
         if isinstance(capabilities, list):
@@ -159,16 +159,16 @@ def display_connectivity_info(atom_data):
     else:
         print(f"\\n🔧 Capabilities: None specified")
 
-def display_performance_metrics(atom_data):
+def display_performance_metrics(runtime_data):
     """Display performance and resource information."""
     
     print("\\n📊 Performance Metrics")
     print("=" * 70)
     
     # Memory and resource usage (if available)
-    max_memory = atom_data.get('@maxMemory', 'N/A')
-    used_memory = atom_data.get('@usedMemory', 'N/A')
-    free_memory = atom_data.get('@freeMemory', 'N/A')
+    max_memory = runtime_data.get('@maxMemory', 'N/A')
+    used_memory = runtime_data.get('@usedMemory', 'N/A')
+    free_memory = runtime_data.get('@freeMemory', 'N/A')
     
     if max_memory != 'N/A':
         print(f"💾 Memory - Max: {max_memory}MB, Used: {used_memory}MB, Free: {free_memory}MB")
@@ -176,16 +176,16 @@ def display_performance_metrics(atom_data):
         print(f"💾 Memory information: Not available")
     
     # Process counts (if available)
-    active_processes = atom_data.get('@activeProcesses', 'N/A')
-    queued_processes = atom_data.get('@queuedProcesses', 'N/A')
+    active_processes = runtime_data.get('@activeProcesses', 'N/A')
+    queued_processes = runtime_data.get('@queuedProcesses', 'N/A')
     
     if active_processes != 'N/A':
         print(f"⚙️  Processes - Active: {active_processes}, Queued: {queued_processes}")
     else:
         print(f"⚙️  Process information: Not available")
 
-def check_atom_health(atom_status, atom_data):
-    """Analyze atom health and provide recommendations."""
+def check_runtime_health(runtime_status, runtime_data):
+    """Analyze runtime health and provide recommendations."""
     
     print("\\n🩺 Health Analysis")
     print("=" * 70)
@@ -194,34 +194,34 @@ def check_atom_health(atom_status, atom_data):
     recommendations = []
     
     # Check status
-    if atom_status == 'OFFLINE':
-        health_issues.append("Atom is offline")
-        recommendations.append("Start the atom to enable process execution")
-    elif atom_status == 'ERROR':
-        health_issues.append("Atom is in error state")
-        recommendations.append("Check atom logs and consider restarting")
-    elif atom_status == 'STARTING':
-        health_issues.append("Atom is still starting")
+    if runtime_status == 'OFFLINE':
+        health_issues.append("Runtime is offline")
+        recommendations.append("Start the runtime to enable process execution")
+    elif runtime_status == 'ERROR':
+        health_issues.append("Runtime is in error state")
+        recommendations.append("Check runtime logs and consider restarting")
+    elif runtime_status == 'STARTING':
+        health_issues.append("Runtime is still starting")
         recommendations.append("Wait for startup to complete")
-    elif atom_status == 'STOPPING':
-        health_issues.append("Atom is shutting down")
+    elif runtime_status == 'STOPPING':
+        health_issues.append("Runtime is shutting down")
         recommendations.append("Wait for shutdown to complete or restart if needed")
     
     # Check version (basic check)
-    version = atom_data.get('@currentVersion', '')
+    version = runtime_data.get('@currentVersion', '')
     if version and 'SNAPSHOT' in version:
         health_issues.append("Running development/snapshot version")
         recommendations.append("Consider using a stable release version for production")
     
     # Check last modified date
-    last_modified = atom_data.get('@lastModifiedDate', '')
+    last_modified = runtime_data.get('@lastModifiedDate', '')
     if last_modified:
         try:
             dt = datetime.fromisoformat(last_modified.replace('Z', '+00:00'))
             days_old = (datetime.now(dt.tzinfo) - dt).days
             if days_old > 30:
                 health_issues.append(f"Configuration last modified {days_old} days ago")
-                recommendations.append("Review atom configuration for updates")
+                recommendations.append("Review runtime configuration for updates")
         except:
             pass
     
@@ -236,22 +236,22 @@ def check_atom_health(atom_status, atom_data):
     else:
         print("✅ No major health issues detected")
         print("\\n💡 General Tips:")
-        print("   • Monitor atom status regularly")
-        print("   • Keep atom version updated")
+        print("   • Monitor runtime status regularly")
+        print("   • Keep runtime version updated")
         print("   • Check logs for any error messages")
 
-def restart_atom_option(sdk, atom_id):
-    """Offer atom restart functionality."""
+def restart_runtime_option(sdk, runtime_id):
+    """Offer runtime restart functionality."""
     
     print("\\n🔄 Restart Options")
     print("=" * 70)
-    print("Would you like to restart this atom?")
+    print("Would you like to restart this runtime?")
     print("⚠️  Note: Restarting will interrupt any running processes")
     
-    restart = input("\\nRestart atom? (y/N): ").strip().lower()
+    restart = input("\\nRestart runtime? (y/N): ").strip().lower()
     if restart == 'y':
         try:
-            restart_request = RuntimeRestartRequest(runtime_id=atom_id)
+            restart_request = RuntimeRestartRequest(runtime_id=runtime_id)
             result = sdk.runtime_restart_request.create_runtime_restart_request(restart_request)
             
             if hasattr(result, '_kwargs'):
@@ -266,7 +266,7 @@ def restart_atom_option(sdk, atom_id):
                 print(f"\\n✅ Restart request submitted successfully!")
                 
         except Exception as e:
-            print(f"\\n❌ Error restarting atom: {str(e)}")
+            print(f"\\n❌ Error restarting runtime: {str(e)}")
             if hasattr(e, 'status'):
                 if e.status == 403:
                     print("   • Check if you have Runtime Management privilege")
@@ -284,9 +284,9 @@ def format_date(date_string):
     return date_string or 'N/A'
 
 def main():
-    """Main function to demonstrate atom status checking."""
+    """Main function to demonstrate runtime status checking."""
     
-    print("🚀 Boomi SDK - Get Atom Status and Details")
+    print("🚀 Boomi SDK - Get Runtime Status and Details")
     print("=" * 60)
     
     # Check for required environment variables
@@ -311,44 +311,44 @@ def main():
     print()
     
     try:
-        # Get atom ID from arguments or prompt user
+        # Get runtime ID from arguments or prompt user
         if len(sys.argv) > 1:
-            atom_id = sys.argv[1]
-            print(f"📍 Using provided atom ID: {atom_id}")
+            runtime_id = sys.argv[1]
+            print(f"📍 Using provided runtime ID: {runtime_id}")
         else:
-            print("💡 Usage: python3 get_atom_status.py <atom_id>")
+            print("💡 Usage: python3 get_runtime_status.py <runtime_id>")
             print()
-            print("   You can find atom IDs using list_atoms.py")
-            atom_id = input("Enter atom ID to check status: ").strip()
+            print("   You can find runtime IDs using list_runtimes.py")
+            runtime_id = input("Enter runtime ID to check status: ").strip()
             
-            if not atom_id:
-                print("❌ No atom ID provided")
+            if not runtime_id:
+                print("❌ No runtime ID provided")
                 return
         
         print()
         
-        # Get atom status information
-        atom_data = get_atom_status_info(sdk, atom_id)
-        if not atom_data:
-            print("❌ Could not retrieve atom status information")
+        # Get runtime status information
+        runtime_data = get_runtime_status_info(sdk, runtime_id)
+        if not runtime_data:
+            print("❌ Could not retrieve runtime status information")
             return
         
         # Display comprehensive status information
-        atom_status = display_status_summary(atom_data)
-        display_operational_details(atom_data)
-        display_connectivity_info(atom_data)
-        display_performance_metrics(atom_data)
-        check_atom_health(atom_status, atom_data)
+        runtime_status = display_status_summary(runtime_data)
+        display_operational_details(runtime_data)
+        display_connectivity_info(runtime_data)
+        display_performance_metrics(runtime_data)
+        check_runtime_health(runtime_status, runtime_data)
         
-        # Offer restart option if atom has issues
-        if atom_status in ['OFFLINE', 'ERROR', 'STOPPING']:
-            restart_atom_option(sdk, atom_id)
+        # Offer restart option if runtime has issues
+        if runtime_status in ['OFFLINE', 'ERROR', 'STOPPING']:
+            restart_runtime_option(sdk, runtime_id)
         
         print("\\n🎯 Status Check Complete!")
         print("\\n💡 Next Steps:")
-        print("   • Monitor atom status regularly")
-        print("   • Check atom logs if issues are found")
-        print("   • Update atom version if outdated")
+        print("   • Monitor runtime status regularly")
+        print("   • Check runtime logs if issues are found")
+        print("   • Update runtime version if outdated")
         print("   • Verify environment attachments are working")
         
     except KeyboardInterrupt:
