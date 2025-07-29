@@ -66,7 +66,7 @@ def check_environment_attachments(sdk, atom_id):
         # Query for attachments with this atom ID
         simple_expression = EnvironmentAtomAttachmentSimpleExpression(
             operator=EnvironmentAtomAttachmentSimpleExpressionOperator.EQUALS,
-            property=EnvironmentAtomAttachmentSimpleExpressionProperty.ATOM_ID,
+            property=EnvironmentAtomAttachmentSimpleExpressionProperty.ATOMID,
             argument=[atom_id]
         )
         
