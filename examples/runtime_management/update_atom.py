@@ -61,7 +61,7 @@ def create_atom_update(current_atom):
     # Extract current values
     atom_id = current_atom.get('@id')
     current_name = current_atom.get('@name', 'Unknown Atom')
-    current_purge = current_atom.get('@purgeImmediately', False)
+    current_purge = current_atom.get('@purgeImmediate', False)
     current_purge_history_days = int(current_atom.get('@purgeHistoryDays', 30))
     current_force_restart_ms = int(current_atom.get('@forceRestartTime', 0))
     current_force_restart_minutes = current_force_restart_ms / 60000 if current_force_restart_ms > 0 else 0
@@ -116,14 +116,14 @@ def create_atom_update(current_atom):
     else:
         new_force_restart_minutes = current_force_restart_minutes
     
-    # Convert minutes to milliseconds for API (1 minute = 60,000 milliseconds)
-    new_force_restart_time = int(new_force_restart_minutes * 60 * 1000)
+    # API expects force restart time in minutes (not milliseconds as documented)
+    new_force_restart_time = int(new_force_restart_minutes)
     
-    # Check if any changes were made
+    # Check if any changes were made (compare force restart in minutes)
     if (new_name == current_name and 
         new_purge == current_purge and 
         new_purge_history_days == current_purge_history_days and
-        new_force_restart_time == current_force_restart_ms):
+        new_force_restart_minutes == current_force_restart_minutes):
         print("\n⚠️  No changes specified")
         return None
     
@@ -134,7 +134,7 @@ def create_atom_update(current_atom):
         name=new_name,
         purge_immediate=new_purge,  # Use purge_immediate, not purge_immediately
         purge_history_days=new_purge_history_days,  # Days to keep history (0-9999)
-        force_restart_time=new_force_restart_time  # Time in milliseconds
+        force_restart_time=new_force_restart_time  # Time in minutes (API expectation)
     )
     
     print("\n📝 Changes to apply:")
@@ -144,8 +144,8 @@ def create_atom_update(current_atom):
         print(f"   Purge Immediately: {current_purge} → {new_purge}")
     if new_purge_history_days != current_purge_history_days:
         print(f"   Purge History Days: {current_purge_history_days} → {new_purge_history_days} days")
-    if new_force_restart_time != current_force_restart_ms:
-        print(f"   Force Restart Time: {current_force_restart_minutes:.1f} min → {new_force_restart_minutes:.1f} min ({new_force_restart_time}ms)")
+    if new_force_restart_minutes != current_force_restart_minutes:
+        print(f"   Force Restart Time: {current_force_restart_minutes:.1f} min → {new_force_restart_minutes:.1f} min")
     
     return atom_update
 
@@ -210,7 +210,7 @@ def display_update_result(updated_atom):
         name = updated_atom.get('@name', 'N/A')
         atom_id = updated_atom.get('@id', 'N/A')
         last_modified = updated_atom.get('@lastModifiedDate', 'N/A')
-        purge_immediate = updated_atom.get('@purgeImmediately', False)
+        purge_immediate = updated_atom.get('@purgeImmediate', False)
         purge_history_days = updated_atom.get('@purgeHistoryDays', 30)
         force_restart_time = updated_atom.get('@forceRestartTime', 0)
         status = updated_atom.get('@status', 'N/A')
@@ -241,7 +241,7 @@ def demonstrate_programmatic_update():
         name="Production Atom - Updated",
         purge_immediate=True,
         purge_history_days=90,     # Keep history for 90 days
-        force_restart_time=60000   # 1 minute = 60,000 milliseconds
+        force_restart_time=1       # 1 minute (API expects minutes, not milliseconds)
     )
     
     # Apply the update
