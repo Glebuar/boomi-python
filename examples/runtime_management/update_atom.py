@@ -195,7 +195,8 @@ def display_update_result(updated_atom):
     print(f"🆔 ID: {atom_id}")
     print(f"📅 Last Modified: {last_modified}")
     print(f"⚙️  Purge Immediately: {purge_immediate}")
-    force_restart_minutes = force_restart_time / 60000 if force_restart_time > 0 else 0
+    force_restart_time_int = int(force_restart_time) if force_restart_time else 0
+    force_restart_minutes = force_restart_time_int / 60000 if force_restart_time_int > 0 else 0
     print(f"🔄 Force Restart Time: {force_restart_minutes:.1f} minutes ({force_restart_time}ms)")
     
     # Status check
