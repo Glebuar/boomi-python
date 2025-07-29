@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Boomi SDK Example: Detach Atom from Environment
-===============================================
+Boomi SDK Example: Detach Runtime from Environment
+===================================================
 
-This example demonstrates how to detach an atom from an environment using 
+This example demonstrates how to detach a runtime from an environment using 
 the attachment ID.
 
 Requirements:
@@ -13,10 +13,10 @@ Requirements:
 
 Usage:
     cd examples/environment_management
-    PYTHONPATH=../../src python3 detach_atom_from_environment.py [attachment_id]
+    PYTHONPATH=../../src python3 detach_runtime_from_environment.py [attachment_id]
 
 Features:
-- Detaches atom from environment using attachment ID
+- Detaches runtime from environment using attachment ID
 - Shows confirmation of successful detachment
 - Verifies detachment by checking if environment can be deleted
 """
@@ -29,10 +29,10 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
 
 from boomi import Boomi
 
-def detach_atom_from_environment(sdk, attachment_id):
-    """Detach the atom using the attachment ID."""
+def detach_runtime_from_environment(sdk, attachment_id):
+    """Detach the runtime using the attachment ID."""
     
-    print(f"🔓 Detaching atom from environment...")
+    print(f"🔓 Detaching runtime from environment...")
     print(f"   Attachment ID: {attachment_id}")
     
     try:
@@ -50,7 +50,7 @@ def detach_atom_from_environment(sdk, attachment_id):
         return True
         
     except Exception as e:
-        print(f"❌ Error detaching atom: {str(e)}")
+        print(f"❌ Error detaching runtime: {str(e)}")
         
         if hasattr(e, 'status'):
             if e.status == 403:
@@ -73,7 +73,7 @@ def verify_detachment(sdk, environment_id):
     print(f"   Environment ID: {environment_id}")
     
     try:
-        # Try to delete the environment - this should work if atom is detached
+        # Try to delete the environment - this should work if runtime is detached
         sdk.environment.delete_environment(id_=environment_id)
         print("✅ Environment deleted successfully - detachment verified!")
         return True
@@ -91,9 +91,9 @@ def verify_detachment(sdk, environment_id):
         return False
 
 def main():
-    """Main function to demonstrate atom detachment."""
+    """Main function to demonstrate runtime detachment."""
     
-    print("🚀 Boomi SDK - Detach Atom from Environment")
+    print("🚀 Boomi SDK - Detach Runtime from Environment")
     print("=" * 55)
     
     # Check for required environment variables
@@ -123,7 +123,7 @@ def main():
             attachment_id = sys.argv[1]
             print(f"📍 Using provided attachment ID: {attachment_id}")
         else:
-            print("💡 Usage: python3 detach_atom_from_environment.py <attachment_id>")
+            print("💡 Usage: python3 detach_runtime_from_environment.py <attachment_id>")
             print("\n   Example from earlier test:")
             example_id = "RU5WX0NPTlRfQVRUQUNIYWZlZWI0ZWEtM2JiOS00NjQwLWI0MWUtZjZhYmEwOGQzYzQxOjA0ZGZhNDQ3LWJmMzktNDVhZi04ZDYzLTllODQzZTJiYjI4NQ"
             print(f"   {example_id}")
@@ -141,10 +141,10 @@ def main():
         print()
         
         # Perform the detachment
-        success = detach_atom_from_environment(sdk, attachment_id)
+        success = detach_runtime_from_environment(sdk, attachment_id)
         
         if success:
-            print(f"\n🎉 Atom successfully detached from environment!")
+            print(f"\n🎉 Runtime successfully detached from environment!")
             
             # If we know the environment ID, try to verify by deleting it
             # The example attachment ID contains the environment ID: 04dfa447-bf39-45af-8d63-9e843e2bb285

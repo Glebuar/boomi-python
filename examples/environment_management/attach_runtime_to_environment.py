@@ -1,23 +1,23 @@
 #!/usr/bin/env python3
 """
-Boomi SDK Example: Attach Atom to Environment
-==============================================
+Boomi SDK Example: Attach Runtime to Environment
+===============================================
 
-This example demonstrates how to attach a runtime (Atom/Molecule) to an environment
+This example demonstrates how to attach a runtime to an environment
 using the Boomi SDK. This is essential for deployment and execution of processes.
 
 Requirements:
 - Set environment variables: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET
-- Account must have appropriate permissions to manage environments and atoms
-- At least one atom must be available in the account
+- Account must have appropriate permissions to manage environments and runtimes
+- At least one runtime must be available in the account
 
 Usage:
     cd examples/environment_management
-    PYTHONPATH=../../src python3 attach_atom_to_environment.py [atom_id] [environment_id]
+    PYTHONPATH=../../src python3 attach_runtime_to_environment.py [runtime_id] [environment_id]
 
 Features:
-- Lists available atoms and environments
-- Creates attachment between atom and environment
+- Lists available runtimes and environments
+- Creates attachment between runtime and environment
 - Shows attachment details and verification
 - Creates test environment if none provided
 - Handles account type limitations (Basic vs Unlimited environment support)
@@ -47,14 +47,14 @@ from boomi.models import (
 )
 import datetime
 
-def list_available_atoms(sdk):
-    """List all available atoms in the account."""
+def list_available_runtimes(sdk):
+    """List all available runtimes in the account."""
     
-    print("🔍 Retrieving available atoms (runtimes)...")
+    print("🔍 Retrieving available runtimes...")
     
     try:
-        # Create a query to get atoms - filter by type containing "ATOM"
-        # This should match most atom types (ATOM, GATEWAY, etc.)
+        # Create a query to get runtimes - filter by type containing "ATOM"
+        # This should match most runtime types (ATOM, GATEWAY, etc.)
         simple_expression = AtomSimpleExpression(
             operator=AtomSimpleExpressionOperator.CONTAINS,
             property=AtomSimpleExpressionProperty.TYPE,
@@ -66,38 +66,38 @@ def list_available_atoms(sdk):
         query_response = sdk.atom.query_atom(query_config)
         
         # Use modern SDK response format
-        atoms = []
+        runtimes = []
         if hasattr(query_response, 'result') and query_response.result:
-            atoms = query_response.result if isinstance(query_response.result, list) else [query_response.result]
+            runtimes = query_response.result if isinstance(query_response.result, list) else [query_response.result]
         
-        if not atoms:
-            print("❌ No atoms found in the account")
-            print("   • Make sure you have at least one installed atom")
-            print("   • Check if your account has permission to view atoms")
+        if not runtimes:
+            print("❌ No runtimes found in the account")
+            print("   • Make sure you have at least one installed runtime")
+            print("   • Check if your account has permission to view runtimes")
             return []
         
-        print(f"\n✅ Found {len(atoms)} atom(s):")
+        print(f"\n✅ Found {len(runtimes)} runtime(s):")
         print("-" * 80)
         
-        for i, atom in enumerate(atoms, 1):
-            atom_id = atom.get('@id', 'N/A')
-            atom_name = atom.get('@name', 'N/A')
-            atom_type = atom.get('@type', 'N/A')
-            atom_status = atom.get('@status', 'N/A')
+        for i, runtime in enumerate(runtimes, 1):
+            runtime_id = runtime.get('@id', 'N/A')
+            runtime_name = runtime.get('@name', 'N/A')
+            runtime_type = runtime.get('@type', 'N/A')
+            runtime_status = runtime.get('@status', 'N/A')
             
-            print(f"{i:2}. {atom_name}")
-            print(f"    ID: {atom_id}")
-            print(f"    Type: {atom_type}")
-            print(f"    Status: {atom_status}")
+            print(f"{i:2}. {runtime_name}")
+            print(f"    ID: {runtime_id}")
+            print(f"    Type: {runtime_type}")
+            print(f"    Status: {runtime_status}")
             print()
         
-        return atoms
+        return runtimes
         
     except Exception as e:
-        print(f"❌ Error querying atoms: {str(e)}")
+        print(f"❌ Error querying runtimes: {str(e)}")
         if hasattr(e, 'status'):
             if e.status == 403:
-                print("   Permission denied - check if your account can read atoms")
+                print("   Permission denied - check if your account can read runtimes")
         return []
 
 def list_available_environments(sdk):
@@ -141,10 +141,10 @@ def list_available_environments(sdk):
         print(f"❌ Error querying environments: {str(e)}")
         return []
 
-def check_existing_attachments(sdk, atom_id=None, environment_id=None):
-    """Check for existing atom-environment attachments."""
+def check_existing_attachments(sdk, runtime_id=None, environment_id=None):
+    """Check for existing runtime-environment attachments."""
     
-    print("🔗 Checking existing atom-environment attachments...")
+    print("🔗 Checking existing runtime-environment attachments...")
     
     try:
         # Query existing attachments - use a filter to get all attachments
@@ -175,13 +175,13 @@ def check_existing_attachments(sdk, atom_id=None, environment_id=None):
                 att_env_id = getattr(attachment, 'environment_id', 'N/A')
                 
                 print(f"  Attachment ID: {att_id}")
-                print(f"  Atom ID: {att_atom_id}")
+                print(f"  Runtime ID: {att_atom_id}")
                 print(f"  Environment ID: {att_env_id}")
                 
                 # Check if this is the combination we're trying to create
-                if atom_id and environment_id:
-                    if att_atom_id == atom_id and att_env_id == environment_id:
-                        print("  ⚠️  This atom is already attached to this environment!")
+                if runtime_id and environment_id:
+                    if att_atom_id == runtime_id and att_env_id == environment_id:
+                        print("  ⚠️  This runtime is already attached to this environment!")
                         return True, attachments
                 
                 print()
@@ -194,17 +194,17 @@ def check_existing_attachments(sdk, atom_id=None, environment_id=None):
         print(f"❌ Error checking attachments: {str(e)}")
         return False, []
 
-def create_atom_environment_attachment(sdk, atom_id, environment_id):
-    """Create the attachment between atom and environment."""
+def create_runtime_environment_attachment(sdk, runtime_id, environment_id):
+    """Create the attachment between runtime and environment."""
     
     print(f"🔗 Creating attachment...")
-    print(f"   Atom ID: {atom_id}")
+    print(f"   Runtime ID: {runtime_id}")
     print(f"   Environment ID: {environment_id}")
     
     try:
         # Create the attachment request
         attachment_request = EnvironmentAtomAttachment(
-            atom_id=atom_id,
+            atom_id=runtime_id,
             environment_id=environment_id
         )
         
@@ -222,7 +222,7 @@ def create_atom_environment_attachment(sdk, atom_id, environment_id):
             print("\n📋 Attachment Details:")
             print("=" * 50)
             print(f"  🆔 Attachment ID: {attachment_data.get('@id', 'N/A')}")
-            print(f"  🤖 Atom ID: {attachment_data.get('@atomId', 'N/A')}")
+            print(f"  🤖 Runtime ID: {attachment_data.get('@atomId', 'N/A')}")
             print(f"  🌍 Environment ID: {attachment_data.get('@environmentId', 'N/A')}")
             print("=" * 50)
             
@@ -243,12 +243,12 @@ def create_atom_environment_attachment(sdk, atom_id, environment_id):
                 print("   • Verify you have the correct role assignments")
             elif e.status == 409:
                 print("\n   Conflict (409):")
-                print("   • The atom may already be attached to this environment")
+                print("   • The runtime may already be attached to this environment")
                 print("   • For Basic accounts: only one runtime per environment allowed")
             elif e.status == 404:
                 print("\n   Not found (404):")
-                print("   • Verify the atom ID and environment ID are correct")
-                print("   • Check if the atom and environment exist")
+                print("   • Verify the runtime ID and environment ID are correct")
+                print("   • Check if the runtime and environment exist")
             elif e.status == 400:
                 print("\n   Bad request (400):")
                 print("   • Check the request format and IDs")
@@ -288,9 +288,9 @@ def create_test_environment(sdk):
         return None, None
 
 def main():
-    """Main function to demonstrate atom-environment attachment."""
+    """Main function to demonstrate runtime-environment attachment."""
     
-    print("🚀 Boomi SDK - Attach Atom to Environment Example")
+    print("🚀 Boomi SDK - Attach Runtime to Environment Example")
     print("=" * 60)
     
     # Check for required environment variables
@@ -316,21 +316,21 @@ def main():
     print()
     
     try:
-        atom_id = None
+        runtime_id = None
         environment_id = None
         created_test_env = False
         
         # Parse command line arguments
         if len(sys.argv) >= 3:
-            atom_id = sys.argv[1]
+            runtime_id = sys.argv[1]
             environment_id = sys.argv[2]
-            print(f"📍 Using provided Atom ID: {atom_id}")
+            print(f"📍 Using provided Runtime ID: {runtime_id}")
             print(f"📍 Using provided Environment ID: {environment_id}")
         else:
-            # Step 1: List available atoms
-            atoms = list_available_atoms(sdk)
-            if not atoms:
-                print("❌ No atoms available for attachment")
+            # Step 1: List available runtimes
+            runtimes = list_available_runtimes(sdk)
+            if not runtimes:
+                print("❌ No runtimes available for attachment")
                 return
             
             # Step 2: List available environments
@@ -347,26 +347,26 @@ def main():
                 environment_id = environments[0].get('@id')
                 print(f"📍 Using first environment: {environments[0].get('@name', 'Unknown')}")
             
-            # Use the first atom for demonstration
-            atom_id = atoms[0].get('@id')
-            print(f"📍 Using first atom: {atoms[0].get('@name', 'Unknown')}")
+            # Use the first runtime for demonstration
+            runtime_id = runtimes[0].get('@id')
+            print(f"📍 Using first runtime: {runtimes[0].get('@name', 'Unknown')}")
         
         print()
         
         # Step 3: Check for existing attachments
-        already_attached, existing = check_existing_attachments(sdk, atom_id, environment_id)
+        already_attached, existing = check_existing_attachments(sdk, runtime_id, environment_id)
         
         if already_attached:
-            print("⚠️  Atom is already attached to this environment!")
-            print("   Note: Attachment will move the atom if it's attached elsewhere")
+            print("⚠️  Runtime is already attached to this environment!")
+            print("   Note: Attachment will move the runtime if it's attached elsewhere")
         
         print()
         
         # Step 4: Create the attachment
-        attachment = create_atom_environment_attachment(sdk, atom_id, environment_id)
+        attachment = create_runtime_environment_attachment(sdk, runtime_id, environment_id)
         
         if attachment:
-            print(f"\n🎉 Successfully attached atom to environment!")
+            print(f"\n🎉 Successfully attached runtime to environment!")
             
             # Step 5: Verify the attachment was created
             print("\n🔍 Verifying attachment...")
@@ -384,7 +384,7 @@ def main():
                 print("✅ Test environment deleted successfully!")
             else:
                 print(f"💡 Test environment kept with ID: {environment_id}")
-                print("   Remember: The atom is now attached to this environment")
+                print("   Remember: The runtime is now attached to this environment")
         
     except KeyboardInterrupt:
         print("\n❌ Operation cancelled by user")

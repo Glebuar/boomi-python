@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Boomi SDK Example: Query Environment-Atom Attachments
-=====================================================
+Boomi SDK Example: Query Environment-Runtime Attachments
+=========================================================
 
-This example demonstrates how to query existing environment-atom attachments
+This example demonstrates how to query existing environment-runtime attachments
 using the Boomi SDK.
 
 Requirements:
@@ -12,13 +12,13 @@ Requirements:
 
 Usage:
     cd examples/environment_management
-    PYTHONPATH=../../src python3 query_environment_atom_attachments.py
+    PYTHONPATH=../../src python3 query_environment_runtime_attachments.py
 
 Features:
-- Lists all environment-atom attachments in the account
-- Shows attachment details (ID, atom ID, environment ID)
+- Lists all environment-runtime attachments in the account
+- Shows attachment details (ID, runtime ID, environment ID)
 - Groups attachments by environment
-- Shows atom and environment names when available
+- Shows runtime and environment names when available
 """
 
 import os
@@ -32,7 +32,7 @@ from boomi import Boomi
 def query_all_attachments_direct(sdk):
     """Query attachments using direct API call approach."""
     
-    print("🔍 Querying all environment-atom attachments...")
+    print("🔍 Querying all environment-runtime attachments...")
     
     try:
         # Use a direct approach - make a raw query call
@@ -118,14 +118,14 @@ def get_environment_name(sdk, env_id):
         pass
     return 'Unknown'
 
-def get_atom_name(sdk, atom_id):
-    """Get atom name from ID (this would require atom query which we know has issues)."""
-    # For now, return the known atom names from our investigation
-    known_atoms = {
+def get_runtime_name(sdk, runtime_id):
+    """Get runtime name from ID (this would require runtime query which we know has issues)."""
+    # For now, return the known runtime names from our investigation
+    known_runtimes = {
         'afeeb4ea-3bb9-4640-b41e-f6aba08d3c41': 'PROD-On-Prem (ONLINE)',
         'dd5a0c41-3911-46a0-9ff0-3f5c2a69c8b8': 'On-Prem-Local-VM-DESKTOP-DB18NJD (OFFLINE)'
     }
-    return known_atoms.get(atom_id, f'Unknown Atom ({atom_id[:8]}...)')
+    return known_runtimes.get(runtime_id, f'Unknown Runtime ({runtime_id[:8]}...)')
 
 def display_attachments(sdk, attachments):
     """Display attachment information."""
@@ -133,7 +133,7 @@ def display_attachments(sdk, attachments):
     if not attachments:
         print("   No attachments found")
         print("\n💡 This could mean:")
-        print("   • No atoms are currently attached to environments")
+        print("   • No runtimes are currently attached to environments")
         print("   • There are permission issues reading attachments") 
         print("   • The query filter needs adjustment")
         return
@@ -154,16 +154,16 @@ def display_attachments(sdk, attachments):
         
         print(f"\n🌍 Environment: {env_name}")
         print(f"   ID: {env_id}")
-        print(f"   Attached Atoms: {len(env_attachments)}")
+        print(f"   Attached Runtimes: {len(env_attachments)}")
         print("   " + "-" * 60)
         
         for i, attachment in enumerate(env_attachments, 1):
             att_id = attachment.get('@id', 'N/A')
-            atom_id = attachment.get('@atomId', 'N/A')
-            atom_name = get_atom_name(sdk, atom_id)
+            runtime_id = attachment.get('@atomId', 'N/A')
+            runtime_name = get_runtime_name(sdk, runtime_id)
             
-            print(f"   {i}. 🤖 {atom_name}")
-            print(f"      Atom ID: {atom_id}")
+            print(f"   {i}. 🤖 {runtime_name}")
+            print(f"      Runtime ID: {runtime_id}")
             print(f"      Attachment ID: {att_id}")
             print()
 
@@ -181,7 +181,7 @@ def demonstrate_direct_api_call():
 def main():
     """Main function to demonstrate attachment querying."""
     
-    print("🚀 Boomi SDK - Query Environment-Atom Attachments")
+    print("🚀 Boomi SDK - Query Environment-Runtime Attachments")
     print("=" * 65)
     
     # Check for required environment variables
@@ -216,7 +216,7 @@ def main():
         demonstrate_direct_api_call()
         
         print("\n💡 Use Cases for Attachment Queries:")
-        print("   • Check which atoms are attached to which environments")
+        print("   • Check which runtimes are attached to which environments")
         print("   • Verify deployment readiness before process execution")
         print("   • Audit runtime distribution across environments")
         print("   • Troubleshoot deployment and execution issues")

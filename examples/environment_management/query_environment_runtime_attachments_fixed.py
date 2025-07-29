@@ -1,24 +1,24 @@
 #!/usr/bin/env python3
 """
-Boomi SDK Example: Query Environment-Atom Attachments (Fixed Version)
-===================================================================
+Boomi SDK Example: Query Environment-Runtime Attachments (Fixed Version)
+========================================================================
 
-This example demonstrates how to query environment-atom attachments using the Boomi SDK.
-It shows which atoms are attached to which environments.
+This example demonstrates how to query environment-runtime attachments using the Boomi SDK.
+It shows which runtimes are attached to which environments.
 
 Requirements:
 - Set environment variables: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET
 - Account must have appropriate permissions to read attachments
-- At least one atom should be attached to an environment
+- At least one runtime should be attached to an environment
 
 Usage:
     cd examples/environment_management
-    PYTHONPATH=../../src python3 query_environment_atom_attachments_fixed.py
+    PYTHONPATH=../../src python3 query_environment_runtime_attachments_fixed.py
 
 Features:
-- Lists all environment-atom attachments
-- Shows which atoms are attached to which environments
-- Displays attachment details (atom ID, environment ID, attachment ID)
+- Lists all environment-runtime attachments
+- Shows which runtimes are attached to which environments
+- Displays attachment details (runtime ID, environment ID, attachment ID)
 - Uses working query approach that gets results
 """
 
@@ -43,9 +43,9 @@ from boomi.models import (
 )
 
 def query_all_attachments(sdk):
-    """Query all environment-atom attachments by checking each environment."""
+    """Query all environment-runtime attachments by checking each environment."""
     
-    print("🔍 Querying all environment-atom attachments...")
+    print("🔍 Querying all environment-runtime attachments...")
     
     try:
         # Step 1: Get all environments (TEST and PROD)
@@ -127,35 +127,35 @@ def query_all_attachments(sdk):
         print(f"❌ Error querying attachments: {str(e)}")
         return []
 
-def get_atom_name(sdk, atom_id):
-    """Get atom name from ID."""
+def get_runtime_name(sdk, runtime_id):
+    """Get runtime name from ID."""
     try:
-        atom = sdk.atom.get_atom(id_=atom_id)
-        if hasattr(atom, '_kwargs') and 'Atom' in atom._kwargs:
-            return atom._kwargs['Atom'].get('@name', 'Unknown')
-        elif hasattr(atom, 'name'):
-            return atom.name
+        runtime = sdk.atom.get_atom(id_=runtime_id)
+        if hasattr(runtime, '_kwargs') and 'Atom' in runtime._kwargs:
+            return runtime._kwargs['Atom'].get('@name', 'Unknown')
+        elif hasattr(runtime, 'name'):
+            return runtime.name
     except:
         pass
-    return f"Atom-{atom_id[:8]}..."
+    return f"Runtime-{runtime_id[:8]}..."
 
 def display_attachments(sdk, attachments):
     """Display attachment information in a formatted way."""
     
     if not attachments:
-        print("\n❌ No environment-atom attachments found")
+        print("\n❌ No environment-runtime attachments found")
         print("\n💡 This could mean:")
-        print("   • No atoms are currently attached to environments")
+        print("   • No runtimes are currently attached to environments")
         print("   • There are permission issues reading attachments")
-        print("   • All atoms are running without environment attachments")
+        print("   • All runtimes are running without environment attachments")
         return
     
-    print(f"\n✅ Found {len(attachments)} environment-atom attachment(s):")
+    print(f"\n✅ Found {len(attachments)} environment-runtime attachment(s):")
     print("=" * 100)
     
     for i, attachment in enumerate(attachments, 1):
         # Get attachment details
-        atom_id = getattr(attachment, 'atom_id', 'N/A')
+        runtime_id = getattr(attachment, 'atom_id', 'N/A')
         env_id = getattr(attachment, 'environment_id', 'N/A')
         attachment_id = getattr(attachment, 'id_', 'N/A')
         
@@ -163,15 +163,15 @@ def display_attachments(sdk, attachments):
         env_name = getattr(attachment, '_environment_name', 'Unknown')
         env_class = getattr(attachment, '_environment_class', 'Unknown')
         
-        # Get atom name
-        atom_name = get_atom_name(sdk, atom_id)
+        # Get runtime name
+        runtime_name = get_runtime_name(sdk, runtime_id)
         
         # Status icon based on classification
         class_icon = "🔴" if env_class == "PROD" else "🟡" if env_class == "TEST" else "⚪"
         
         print(f"{i:2}. {class_icon} Attachment: {attachment_id[:30]}...")
-        print(f"     🤖 Atom: {atom_name}")
-        print(f"        🆔 Atom ID: {atom_id}")
+        print(f"     🤖 Runtime: {runtime_name}")
+        print(f"        🆔 Runtime ID: {runtime_id}")
         print(f"     📂 Environment: {env_name} ({env_class})")
         print(f"        🆔 Environment ID: {env_id}")
         print()
@@ -188,7 +188,7 @@ def display_attachments(sdk, attachments):
 def main():
     """Main function to demonstrate attachment querying."""
     
-    print("🚀 Boomi SDK - Query Environment-Atom Attachments (Fixed)")
+    print("🚀 Boomi SDK - Query Environment-Runtime Attachments (Fixed)")
     print("=" * 70)
     
     # Check for required environment variables
@@ -224,13 +224,13 @@ def main():
             print("   • Verify deployment targets before process execution")
             print("   • Audit runtime distribution across environments")
             print("   • Troubleshoot deployment and execution issues")
-            print("   • Plan atom resource allocation")
-            print("   • Monitor environment-atom relationships")
+            print("   • Plan runtime resource allocation")
+            print("   • Monitor environment-runtime relationships")
         else:
             print("\n💡 Next Steps:")
-            print("   • Attach atoms to environments for process deployment")
-            print("   • Use simple_attach_atom.py to create attachments")
-            print("   • Ensure atoms are online and environments exist")
+            print("   • Attach runtimes to environments for process deployment")
+            print("   • Use simple_attach_runtime.py to create attachments")
+            print("   • Ensure runtimes are online and environments exist")
         
     except Exception as e:
         print(f"❌ Example failed: {str(e)}")

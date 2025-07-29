@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
 """
-Boomi SDK Example: Simple Atom-Environment Attachment
-=====================================================
+Boomi SDK Example: Simple Runtime-Environment Attachment
+=========================================================
 
-This example demonstrates attaching an atom to an environment using known IDs.
+This example demonstrates attaching a runtime to an environment using known IDs.
 This is a simplified version that bypasses complex querying issues.
 
 Requirements:
 - Set environment variables: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET
-- Provide atom ID and environment ID as arguments or it will create a test environment
+- Provide runtime ID and environment ID as arguments or it will create a test environment
 
 Usage:
     cd examples/environment_management
-    PYTHONPATH=../../src python3 simple_attach_atom.py [atom_id] [environment_id]
+    PYTHONPATH=../../src python3 simple_attach_runtime.py [runtime_id] [environment_id]
 
 Example:
-    PYTHONPATH=../../src python3 simple_attach_atom.py afeeb4ea-3bb9-4640-b41e-f6aba08d3c41 74851c30-98b2-4a6f-838b-61eee5627b13
+    PYTHONPATH=../../src python3 simple_attach_runtime.py afeeb4ea-3bb9-4640-b41e-f6aba08d3c41 74851c30-98b2-4a6f-838b-61eee5627b13
 """
 
 import os
@@ -64,17 +64,17 @@ def create_test_environment(sdk):
         print(f"❌ Error creating test environment: {str(e)}")
         return None, None
 
-def create_attachment(sdk, atom_id, environment_id):
-    """Create the atom-environment attachment."""
+def create_attachment(sdk, runtime_id, environment_id):
+    """Create the runtime-environment attachment."""
     
     print(f"🔗 Creating attachment...")
-    print(f"   Atom ID: {atom_id}")
+    print(f"   Runtime ID: {runtime_id}")
     print(f"   Environment ID: {environment_id}")
     
     try:
         # Create the attachment request
         attachment_request = EnvironmentAtomAttachment(
-            atom_id=atom_id,
+            atom_id=runtime_id,
             environment_id=environment_id
         )
         
@@ -104,11 +104,11 @@ def create_attachment(sdk, atom_id, environment_id):
             # Handle different response formats
             if isinstance(attachment_data, dict):
                 att_id = attachment_data.get('@id', attachment_data.get('id', 'N/A'))
-                att_atom_id = attachment_data.get('@atomId', attachment_data.get('atomId', 'N/A'))
+                att_runtime_id = attachment_data.get('@atomId', attachment_data.get('atomId', 'N/A'))
                 att_env_id = attachment_data.get('@environmentId', attachment_data.get('environmentId', 'N/A'))
                 
                 print(f"  🆔 Attachment ID: {att_id}")
-                print(f"  🤖 Atom ID: {att_atom_id}")
+                print(f"  🤖 Runtime ID: {att_runtime_id}")
                 print(f"  🌍 Environment ID: {att_env_id}")
             else:
                 print(f"  Raw data: {attachment_data}")
@@ -129,11 +129,11 @@ def create_attachment(sdk, atom_id, environment_id):
                 print("   • Check if your account can manage environment attachments")
             elif e.status == 409:
                 print("\n   Conflict (409)")
-                print("   • The atom may already be attached to this environment")
+                print("   • The runtime may already be attached to this environment")
                 print("   • Check existing attachments first")
             elif e.status == 404:
                 print("\n   Not found (404)")
-                print("   • Verify the atom ID and environment ID are correct")
+                print("   • Verify the runtime ID and environment ID are correct")
             elif e.status == 400:
                 print("\n   Bad request (400)")
                 print("   • Check the request format and IDs")
@@ -143,7 +143,7 @@ def create_attachment(sdk, atom_id, environment_id):
 def main():
     """Main function."""
     
-    print("🚀 Boomi SDK - Simple Atom-Environment Attachment")
+    print("🚀 Boomi SDK - Simple Runtime-Environment Attachment")
     print("=" * 60)
     
     # Check for required environment variables
@@ -170,40 +170,40 @@ def main():
     try:
         # Parse arguments
         if len(sys.argv) >= 3:
-            atom_id = sys.argv[1]
+            runtime_id = sys.argv[1]
             environment_id = sys.argv[2]
-            print(f"📍 Using provided Atom ID: {atom_id}")
+            print(f"📍 Using provided Runtime ID: {runtime_id}")
             print(f"📍 Using provided Environment ID: {environment_id}")
             created_test_env = False
         else:
-            print("💡 Usage: python3 simple_attach_atom.py <atom_id> <environment_id>")
+            print("💡 Usage: python3 simple_attach_runtime.py <runtime_id> <environment_id>")
             print("   No IDs provided - will create a test environment")
-            print("   You need to provide an atom ID that exists in your account")
+            print("   You need to provide a runtime ID that exists in your account")
             
-            # Create test environment but still need atom ID
+            # Create test environment but still need runtime ID
             environment_id, env_name = create_test_environment(sdk)
             if not environment_id:
                 print("❌ Could not create test environment")
                 return
             created_test_env = True
             
-            # Ask for atom ID
-            print(f"\n💡 Known atom IDs from earlier investigation:")
+            # Ask for runtime ID
+            print(f"\n💡 Known runtime IDs from earlier investigation:")
             print(f"   • afeeb4ea-3bb9-4640-b41e-f6aba08d3c41 (PROD-On-Prem - ONLINE)")
             print(f"   • dd5a0c41-3911-46a0-9ff0-3f5c2a69c8b8 (On-Prem-Local-VM - OFFLINE)")
             
-            atom_id = input("\nEnter atom ID to attach: ").strip()
-            if not atom_id:
-                print("❌ No atom ID provided")
+            runtime_id = input("\nEnter runtime ID to attach: ").strip()
+            if not runtime_id:
+                print("❌ No runtime ID provided")
                 return
         
         print()
         
         # Create the attachment
-        attachment = create_attachment(sdk, atom_id, environment_id)
+        attachment = create_attachment(sdk, runtime_id, environment_id)
         
         if attachment:
-            print(f"\n🎉 Successfully attached atom to environment!")
+            print(f"\n🎉 Successfully attached runtime to environment!")
         
         # Clean up if we created test environment
         if 'created_test_env' in locals() and created_test_env:
