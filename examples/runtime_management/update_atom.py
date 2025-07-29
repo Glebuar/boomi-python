@@ -62,12 +62,14 @@ def create_atom_update(current_atom):
     atom_id = current_atom.get('@id')
     current_name = current_atom.get('@name', 'Unknown Atom')
     current_purge = current_atom.get('@purgeImmediately', False)
+    current_purge_history_days = int(current_atom.get('@purgeHistoryDays', 30))
     current_force_restart_ms = int(current_atom.get('@forceRestartTime', 0))
     current_force_restart_minutes = current_force_restart_ms / 60000 if current_force_restart_ms > 0 else 0
     
     print("\n📋 Current Configuration:")
     print(f"   Name: {current_name}")
     print(f"   Purge Immediately: {current_purge}")
+    print(f"   Purge History Days: {current_purge_history_days} days")
     print(f"   Force Restart Time: {current_force_restart_minutes:.1f} minutes ({current_force_restart_ms}ms)")
     
     # Prompt for changes
@@ -84,6 +86,22 @@ def create_atom_update(current_atom):
         new_purge = False
     else:
         new_purge = current_purge
+    
+    purge_days_input = input(f"   Purge history days (0-9999, 0=disabled) [{current_purge_history_days}]: ").strip()
+    if purge_days_input:
+        try:
+            new_purge_history_days = int(purge_days_input)
+            if new_purge_history_days < 0:
+                print("   ⚠️  Purge history days cannot be negative, using 0")
+                new_purge_history_days = 0
+            elif new_purge_history_days > 9999:
+                print("   ⚠️  Purge history days cannot exceed 9999, using 9999")
+                new_purge_history_days = 9999
+        except ValueError:
+            print("   ⚠️  Invalid number, keeping current value")
+            new_purge_history_days = current_purge_history_days
+    else:
+        new_purge_history_days = current_purge_history_days
     
     force_restart_input = input(f"   Force restart time in minutes (0 to disable) [{current_force_restart_minutes:.1f}]: ").strip()
     if force_restart_input:
@@ -104,6 +122,7 @@ def create_atom_update(current_atom):
     # Check if any changes were made
     if (new_name == current_name and 
         new_purge == current_purge and 
+        new_purge_history_days == current_purge_history_days and
         new_force_restart_time == current_force_restart_ms):
         print("\n⚠️  No changes specified")
         return None
@@ -114,6 +133,7 @@ def create_atom_update(current_atom):
         id_=atom_id,
         name=new_name,
         purge_immediate=new_purge,  # Use purge_immediate, not purge_immediately
+        purge_history_days=new_purge_history_days,  # Days to keep history (0-9999)
         force_restart_time=new_force_restart_time  # Time in milliseconds
     )
     
@@ -122,6 +142,8 @@ def create_atom_update(current_atom):
         print(f"   Name: {current_name} → {new_name}")
     if new_purge != current_purge:
         print(f"   Purge Immediately: {current_purge} → {new_purge}")
+    if new_purge_history_days != current_purge_history_days:
+        print(f"   Purge History Days: {current_purge_history_days} → {new_purge_history_days} days")
     if new_force_restart_time != current_force_restart_ms:
         print(f"   Force Restart Time: {current_force_restart_minutes:.1f} min → {new_force_restart_minutes:.1f} min ({new_force_restart_time}ms)")
     
@@ -181,6 +203,7 @@ def display_update_result(updated_atom):
         atom_id = getattr(updated_atom, 'id_', 'N/A')
         last_modified = getattr(updated_atom, 'last_modified_date', 'N/A')
         purge_immediate = getattr(updated_atom, 'purge_immediate', False)
+        purge_history_days = getattr(updated_atom, 'purge_history_days', 30)
         force_restart_time = getattr(updated_atom, 'force_restart_time', 0)
         status = getattr(updated_atom, 'status', 'N/A')
     else:
@@ -188,6 +211,7 @@ def display_update_result(updated_atom):
         atom_id = updated_atom.get('@id', 'N/A')
         last_modified = updated_atom.get('@lastModifiedDate', 'N/A')
         purge_immediate = updated_atom.get('@purgeImmediately', False)
+        purge_history_days = updated_atom.get('@purgeHistoryDays', 30)
         force_restart_time = updated_atom.get('@forceRestartTime', 0)
         status = updated_atom.get('@status', 'N/A')
     
@@ -195,6 +219,7 @@ def display_update_result(updated_atom):
     print(f"🆔 ID: {atom_id}")
     print(f"📅 Last Modified: {last_modified}")
     print(f"⚙️  Purge Immediately: {purge_immediate}")
+    print(f"📋 Purge History Days: {purge_history_days} days")
     force_restart_time_int = int(force_restart_time) if force_restart_time else 0
     force_restart_minutes = force_restart_time_int / 60000 if force_restart_time_int > 0 else 0
     print(f"🔄 Force Restart Time: {force_restart_minutes:.1f} minutes ({force_restart_time}ms)")
@@ -215,6 +240,7 @@ def demonstrate_programmatic_update():
         id_=atom_id,
         name="Production Atom - Updated",
         purge_immediate=True,
+        purge_history_days=90,     # Keep history for 90 days
         force_restart_time=60000   # 1 minute = 60,000 milliseconds
     )
     
@@ -297,6 +323,7 @@ def main():
             print("\n💡 Update Notes:")
             print("   • Name changes take effect immediately")
             print("   • Purge settings affect execution history retention")
+            print("   • Purge history days: 0=disabled, 1-9999=days to keep data")
             print("   • Force restart may interrupt running processes")
             print("   • Force restart time changes take effect on next restart")
             print("   • Some properties may require atom restart")
