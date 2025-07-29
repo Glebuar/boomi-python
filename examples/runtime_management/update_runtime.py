@@ -1,28 +1,28 @@
 #!/usr/bin/env python3
 """
-Boomi SDK Example: Update Atom Configuration
+Boomi SDK Example: Update Runtime Configuration
 =============================================
 
-This example demonstrates how to update atom (runtime) configuration
-using the Boomi SDK. It shows how to modify atom properties like name,
+This example demonstrates how to update runtime configuration
+using the Boomi SDK. It shows how to modify runtime properties like name,
 purge settings, and force restart options.
 
 Requirements:
 - Set environment variables: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET
-- Account must have appropriate permissions to modify atoms
-- Need a valid atom ID to update
+- Account must have appropriate permissions to modify runtimes
+- Need a valid runtime ID to update
 
 Usage:
-    cd examples/atom_management
-    PYTHONPATH=../../src python3 update_atom.py [atom_id]
+    cd examples/runtime_management
+    PYTHONPATH=../../src python3 update_runtime.py [runtime_id]
 
 Features:
-- Updates atom configuration properties
+- Updates runtime configuration properties
 - Demonstrates safe update patterns
-- Shows how to change atom name and settings
+- Shows how to change runtime name and settings
 - Handles update validation and error cases
 
-IMPORTANT: This example updates real atom configurations. Use with caution
+IMPORTANT: This example updates real runtime configurations. Use with caution
 in production environments.
 """
 
@@ -36,13 +36,13 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
 from boomi import Boomi
 from boomi.models import Atom
 
-def get_current_atom(sdk, atom_id):
-    """Get current atom configuration before updating."""
+def get_current_runtime(sdk, runtime_id):
+    """Get current runtime configuration before updating."""
     
-    print(f"🔍 Retrieving current atom configuration...")
+    print(f"🔍 Retrieving current runtime configuration...")
     
     try:
-        result = sdk.atom.get_atom(id_=atom_id)
+        result = sdk.atom.get_atom(id_=runtime_id)
         
         if hasattr(result, '_kwargs') and 'Atom' in result._kwargs:
             return result._kwargs['Atom']
@@ -52,18 +52,18 @@ def get_current_atom(sdk, atom_id):
         return None
         
     except Exception as e:
-        print(f"❌ Error retrieving atom: {str(e)}")
+        print(f"❌ Error retrieving runtime: {str(e)}")
         return None
 
-def create_atom_update(current_atom):
-    """Create an atom update object based on current configuration."""
+def create_runtime_update(current_runtime):
+    """Create a runtime update object based on current configuration."""
     
     # Extract current values
-    atom_id = current_atom.get('@id')
-    current_name = current_atom.get('@name', 'Unknown Atom')
-    current_purge = current_atom.get('@purgeImmediate', False)
-    current_purge_history_days = int(current_atom.get('@purgeHistoryDays', 30))
-    current_force_restart_ms = int(current_atom.get('@forceRestartTime', 0))
+    runtime_id = current_runtime.get('@id')
+    current_name = current_runtime.get('@name', 'Unknown Runtime')
+    current_purge = current_runtime.get('@purgeImmediate', False)
+    current_purge_history_days = int(current_runtime.get('@purgeHistoryDays', 30))
+    current_force_restart_ms = int(current_runtime.get('@forceRestartTime', 0))
     current_force_restart_minutes = current_force_restart_ms / 60000 if current_force_restart_ms > 0 else 0
     
     print("\n📋 Current Configuration:")
@@ -128,10 +128,10 @@ def create_atom_update(current_atom):
         print("\n⚠️  No changes specified")
         return None
     
-    # Create atom update object
+    # Create runtime update object
     # Note: Only name, purgeHistoryDays, purgeImmediate, forceRestartTime can be updated
-    atom_update = Atom(
-        id_=atom_id,
+    runtime_update = Atom(
+        id_=runtime_id,
         name=new_name,
         purge_immediate=new_purge,  # Use purge_immediate, not purge_immediately
         purge_history_days=new_purge_history_days,  # Days to keep history (0-9999)
@@ -148,76 +148,76 @@ def create_atom_update(current_atom):
     if new_force_restart_minutes != current_force_restart_minutes:
         print(f"   Force Restart Time: {current_force_restart_minutes:.1f} min → {new_force_restart_minutes:.1f} min")
     
-    return atom_update
+    return runtime_update
 
-def update_atom(sdk, atom_id, atom_update):
-    """Update atom configuration."""
+def update_runtime(sdk, runtime_id, runtime_update):
+    """Update runtime configuration."""
     
-    print(f"\n📤 Updating atom configuration...")
+    print(f"\n📤 Updating runtime configuration...")
     
     try:
-        # Call the update atom API
-        result = sdk.atom.update_atom(id_=atom_id, request_body=atom_update)
+        # Call the update runtime API
+        result = sdk.atom.update_atom(id_=runtime_id, request_body=runtime_update)
         
-        print("✅ Atom updated successfully!")
+        print("✅ Runtime updated successfully!")
         
         # Parse the response
-        updated_atom = None
+        updated_runtime = None
         if hasattr(result, '_kwargs') and 'Atom' in result._kwargs:
-            updated_atom = result._kwargs['Atom']
+            updated_runtime = result._kwargs['Atom']
         elif hasattr(result, '_kwargs'):
-            updated_atom = result._kwargs
+            updated_runtime = result._kwargs
         
-        return updated_atom
+        return updated_runtime
         
     except Exception as e:
-        print(f"❌ Error updating atom: {str(e)}")
+        print(f"❌ Error updating runtime: {str(e)}")
         
         if hasattr(e, 'status'):
             if e.status == 403:
                 print("\n   Permission denied (403)")
-                print("   • Check if your account can modify atoms")
+                print("   • Check if your account can modify runtimes")
                 print("   • Some properties may be read-only")
             elif e.status == 404:
                 print("\n   Not found (404)")
-                print("   • The atom ID may not exist")
+                print("   • The runtime ID may not exist")
             elif e.status == 400:
                 print("\n   Bad request (400)")
                 print("   • Check the update data format")
                 print("   • Some properties may have validation rules")
             elif e.status == 409:
                 print("\n   Conflict (409)")
-                print("   • The atom may be in use or locked")
+                print("   • The runtime may be in use or locked")
                 print("   • Try again later")
         
         return None
 
-def display_update_result(updated_atom):
-    """Display the updated atom configuration."""
+def display_update_result(updated_runtime):
+    """Display the updated runtime configuration."""
     
-    print("\n✅ Updated Atom Configuration:")
+    print("\n✅ Updated Runtime Configuration:")
     print("=" * 60)
     
     # Handle both dict and object formats
-    if hasattr(updated_atom, 'name'):
-        name = getattr(updated_atom, 'name', 'N/A')
-        atom_id = getattr(updated_atom, 'id_', 'N/A')
-        last_modified = getattr(updated_atom, 'last_modified_date', 'N/A')
-        purge_immediate = getattr(updated_atom, 'purge_immediate', False)
-        purge_history_days = getattr(updated_atom, 'purge_history_days', 30)
-        force_restart_time = getattr(updated_atom, 'force_restart_time', 0)
-        status = getattr(updated_atom, 'status', 'N/A')
+    if hasattr(updated_runtime, 'name'):
+        name = getattr(updated_runtime, 'name', 'N/A')
+        runtime_id = getattr(updated_runtime, 'id_', 'N/A')
+        last_modified = getattr(updated_runtime, 'last_modified_date', 'N/A')
+        purge_immediate = getattr(updated_runtime, 'purge_immediate', False)
+        purge_history_days = getattr(updated_runtime, 'purge_history_days', 30)
+        force_restart_time = getattr(updated_runtime, 'force_restart_time', 0)
+        status = getattr(updated_runtime, 'status', 'N/A')
     else:
-        name = updated_atom.get('@name', 'N/A')
-        atom_id = updated_atom.get('@id', 'N/A')
-        last_modified = updated_atom.get('@lastModifiedDate', 'N/A')
-        purge_immediate = updated_atom.get('@purgeImmediate', False)
-        purge_history_days = updated_atom.get('@purgeHistoryDays', 30)
-        force_restart_time = updated_atom.get('@forceRestartTime', 0)
-        status = updated_atom.get('@status', 'N/A')
+        name = updated_runtime.get('@name', 'N/A')
+        runtime_id = updated_runtime.get('@id', 'N/A')
+        last_modified = updated_runtime.get('@lastModifiedDate', 'N/A')
+        purge_immediate = updated_runtime.get('@purgeImmediate', False)
+        purge_history_days = updated_runtime.get('@purgeHistoryDays', 30)
+        force_restart_time = updated_runtime.get('@forceRestartTime', 0)
+        status = updated_runtime.get('@status', 'N/A')
     
     print(f"🤖 Name: {name}")
-    print(f"🆔 ID: {atom_id}")
+    print(f"🆔 ID: {runtime_id}")
     print(f"📅 Last Modified: {last_modified}")
     print(f"⚙️  Purge Immediately: {purge_immediate}")
     print(f"📋 Purge History Days: {purge_history_days} days")
@@ -230,32 +230,32 @@ def display_update_result(updated_atom):
     print(f"{status_icon} Status: {status}")
 
 def demonstrate_programmatic_update():
-    """Show example of programmatic atom update."""
+    """Show example of programmatic runtime update."""
     
     print("\n📚 Programmatic Update Example:")
     print("=" * 60)
-    print("To update an atom programmatically without user input:")
+    print("To update a runtime programmatically without user input:")
     print("""
-    # Create atom update object (only these fields can be updated)
-    atom_update = Atom(
-        id_=atom_id,
-        name="Production Atom - Updated",
+    # Create runtime update object (only these fields can be updated)
+    runtime_update = Atom(
+        id_=runtime_id,
+        name="Production Runtime - Updated",
         purge_immediate=True,
         purge_history_days=90,     # Keep history for 90 days
         force_restart_time=1       # 1 minute (API expects minutes)
     )
     
     # Apply the update
-    updated_atom = sdk.atom.update_atom(
-        id_=atom_id,
-        request_body=atom_update
+    updated_runtime = sdk.atom.update_atom(
+        id_=runtime_id,
+        request_body=runtime_update
     )
     """)
 
 def main():
-    """Main function to demonstrate atom updating."""
+    """Main function to demonstrate runtime updating."""
     
-    print("🚀 Boomi SDK - Update Atom Configuration")
+    print("🚀 Boomi SDK - Update Runtime Configuration")
     print("=" * 55)
     
     # Check for required environment variables
@@ -280,31 +280,31 @@ def main():
     print()
     
     try:
-        # Get atom ID from arguments or prompt user
+        # Get runtime ID from arguments or prompt user
         if len(sys.argv) > 1:
-            atom_id = sys.argv[1]
-            print(f"📍 Using provided atom ID: {atom_id}")
+            runtime_id = sys.argv[1]
+            print(f"📍 Using provided runtime ID: {runtime_id}")
         else:
-            print("💡 Usage: python3 update_atom.py <atom_id>")
+            print("💡 Usage: python3 update_runtime.py <runtime_id>")
             print()
-            print("   You can find atom IDs using list_atoms.py")
-            atom_id = input("Enter atom ID to update: ").strip()
+            print("   You can find runtime IDs using list_runtimes.py")
+            runtime_id = input("Enter runtime ID to update: ").strip()
             
-            if not atom_id:
-                print("❌ No atom ID provided")
+            if not runtime_id:
+                print("❌ No runtime ID provided")
                 return
         
         print()
         
-        # Get current atom configuration
-        current_atom = get_current_atom(sdk, atom_id)
-        if not current_atom:
-            print("❌ Could not retrieve atom configuration")
+        # Get current runtime configuration
+        current_runtime = get_current_runtime(sdk, runtime_id)
+        if not current_runtime:
+            print("❌ Could not retrieve runtime configuration")
             return
         
         # Create update object with user input
-        atom_update = create_atom_update(current_atom)
-        if not atom_update:
+        runtime_update = create_runtime_update(current_runtime)
+        if not runtime_update:
             print("ℹ️  No update performed")
             return
         
@@ -314,12 +314,12 @@ def main():
             print("❌ Update cancelled")
             return
         
-        # Update the atom
-        updated_atom = update_atom(sdk, atom_id, atom_update)
+        # Update the runtime
+        updated_runtime = update_runtime(sdk, runtime_id, runtime_update)
         
-        if updated_atom:
+        if updated_runtime:
             # Display results
-            display_update_result(updated_atom)
+            display_update_result(updated_runtime)
             
             print("\n💡 Update Notes:")
             print("   • Name changes take effect immediately")
@@ -327,7 +327,7 @@ def main():
             print("   • Purge history days: 0=disabled, 1-9999=days to keep data")
             print("   • Force restart may interrupt running processes")
             print("   • Force restart time changes take effect on next restart")
-            print("   • Some properties may require atom restart")
+            print("   • Some properties may require runtime restart")
             print("   ⚠️  Note: Force restart time may take a moment to reflect correctly")
             
             # Show programmatic example

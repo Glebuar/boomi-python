@@ -1,30 +1,30 @@
 #!/usr/bin/env python3
 """
-Boomi SDK Example: Get Atom Status and Details
+Boomi SDK Example: Get Runtime Status and Details
 ==============================================
 
-This example demonstrates how to retrieve atom (runtime) status and detailed
-information using the Boomi SDK. It shows how to check atom health, status,
+This example demonstrates how to retrieve runtime (runtime) status and detailed
+information using the Boomi SDK. It shows how to check runtime health, status,
 and operational details.
 
 Requirements:
 - Set environment variables: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET
-- Account must have appropriate permissions to read atoms
-- Need a valid atom ID to check status
+- Account must have appropriate permissions to read runtimes
+- Need a valid runtime ID to check status
 
 Usage:
-    cd examples/atom_management
-    PYTHONPATH=../../src python3 get_atom_status.py [atom_id]
+    cd examples/runtime_management
+    PYTHONPATH=../../src python3 get_runtime_status.py [runtime_id]
 
 Features:
-- Retrieves comprehensive atom status information
+- Retrieves comprehensive runtime status information
 - Shows operational details (online/offline, version, capabilities)
 - Displays connectivity and performance metrics
-- Monitors atom health indicators
+- Monitors runtime health indicators
 - Provides restart functionality using RuntimeRestartRequest service
 
-Note: This example uses the standard Atom GET endpoint to retrieve status
-information. The atom status is part of the atom object data.
+Note: This example uses the standard Runtime GET endpoint to retrieve status
+information. The runtime status is part of the runtime object data.
 """
 
 import os
@@ -37,13 +37,13 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
 from boomi import Boomi
 from boomi.models import RuntimeRestartRequest
 
-def get_atom_status_info(sdk, atom_id):
-    """Get comprehensive atom status information."""
+def get_runtime_status_info(sdk, runtime_id):
+    """Get comprehensive runtime status information."""
     
-    print(f"🔍 Retrieving atom status information...")
+    print(f"🔍 Retrieving runtime status information...")
     
     try:
-        result = sdk.atom.get_atom(id_=atom_id)
+        result = sdk.atom.get_atom(id_=runtime_id)
         
         if hasattr(result, '_kwargs') and 'Atom' in result._kwargs:
             return result._kwargs['Atom']
@@ -53,7 +53,7 @@ def get_atom_status_info(sdk, atom_id):
         return None
         
     except Exception as e:
-        print(f"❌ Error retrieving atom status: {str(e)}")
+        print(f"❌ Error retrieving runtime status: {str(e)}")
         
         if hasattr(e, 'status'):
             if e.status == 403:
@@ -61,8 +61,8 @@ def get_atom_status_info(sdk, atom_id):
                 print("   • Check if you have Runtime Management privilege")
             elif e.status == 404:
                 print("\\n   Not found (404)")
-                print("   • The atom ID may not exist")
-                print("   • Verify the atom ID is correct")
+                print("   • The runtime ID may not exist")
+                print("   • Verify the runtime ID is correct")
         
         return None
 
@@ -105,7 +105,7 @@ def display_status_summary(atom_data):
     
     return atom_status
 
-def display_operational_details(atom_data):
+def display_operational_details(runtime_data):
     """Display detailed operational information."""
     
     print("\\n🔧 Operational Details")

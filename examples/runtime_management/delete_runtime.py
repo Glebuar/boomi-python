@@ -3,25 +3,25 @@
 Boomi SDK Example: Delete Atom
 ===============================
 
-This example demonstrates how to delete an atom (runtime) using the Boomi SDK.
+This example demonstrates how to delete an runtime (runtime) using the Boomi SDK.
 It includes safety checks, confirmation prompts, and proper error handling.
 
-⚠️  WARNING: This operation permanently deletes an atom from your account.
+⚠️  WARNING: This operation permanently deletes an runtime from your account.
    Use with extreme caution, especially in production environments.
 
 Requirements:
 - Set environment variables: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET
 - Account must have Runtime Management privilege (not just read access)
-- Atom should be OFFLINE before deletion (recommended)
+- Runtime should be OFFLINE before deletion (recommended)
 
 Usage:
-    cd examples/atom_management
-    PYTHONPATH=../../src python3 delete_atom.py [atom_id]
+    cd examples/runtime_management
+    PYTHONPATH=../../src python3 delete_runtime.py [runtime_id]
 
 Features:
 - Safety checks before deletion
-- Shows atom details before deletion
-- Confirms atom is offline (recommended)
+- Shows runtime details before deletion
+- Confirms runtime is offline (recommended)
 - Multiple confirmation prompts
 - Checks for environment attachments
 - Comprehensive error handling
@@ -36,11 +36,11 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
 
 from boomi import Boomi
 
-def get_atom_details(sdk, atom_id):
-    """Get atom details for safety checks."""
+def get_runtime_details(sdk, runtime_id):
+    """Get runtime details for safety checks."""
     
     try:
-        result = sdk.atom.get_atom(id_=atom_id)
+        result = sdk.atom.get_atom(id_=runtime_id)
         
         if hasattr(result, '_kwargs') and 'Atom' in result._kwargs:
             return result._kwargs['Atom']
@@ -48,11 +48,11 @@ def get_atom_details(sdk, atom_id):
         return None
         
     except Exception as e:
-        print(f"❌ Error retrieving atom: {str(e)}")
+        print(f"❌ Error retrieving runtime: {str(e)}")
         return None
 
-def check_environment_attachments(sdk, atom_id):
-    """Check if atom is attached to any environments."""
+def check_environment_attachments(sdk, runtime_id):
+    """Check if runtime is attached to any environments."""
     
     try:
         from boomi.models import (
@@ -63,11 +63,11 @@ def check_environment_attachments(sdk, atom_id):
             EnvironmentAtomAttachmentSimpleExpressionProperty
         )
         
-        # Query for attachments with this atom ID
+        # Query for attachments with this runtime ID
         simple_expression = EnvironmentAtomAttachmentSimpleExpression(
             operator=EnvironmentAtomAttachmentSimpleExpressionOperator.EQUALS,
             property=EnvironmentAtomAttachmentSimpleExpressionProperty.ATOMID,
-            argument=[atom_id]
+            argument=[runtime_id]
         )
         
         query_filter = EnvironmentAtomAttachmentQueryConfigQueryFilter(expression=simple_expression)
@@ -86,46 +86,46 @@ def check_environment_attachments(sdk, atom_id):
         print(f"⚠️  Could not check environment attachments: {str(e)}")
         return []
 
-def display_atom_summary(atom_data):
-    """Display atom summary for confirmation."""
+def display_runtime_summary(runtime_data):
+    """Display runtime summary for confirmation."""
     
-    print("\n📋 Atom to be deleted:")
+    print("\n📋 Runtime to be deleted:")
     print("=" * 70)
     
-    atom_name = atom_data.get('@name', 'N/A')
-    atom_id = atom_data.get('@id', 'N/A')
-    atom_status = atom_data.get('@status', 'N/A')
-    atom_type = atom_data.get('@type', 'N/A')
-    atom_hostname = atom_data.get('@hostName', 'N/A')
-    atom_version = atom_data.get('@currentVersion', 'N/A')
-    date_installed = atom_data.get('@dateInstalled', 'N/A')
-    created_by = atom_data.get('@createdBy', 'N/A')
+    runtime_name = runtime_data.get('@name', 'N/A')
+    runtime_id = runtime_data.get('@id', 'N/A')
+    runtime_status = runtime_data.get('@status', 'N/A')
+    runtime_type = runtime_data.get('@type', 'N/A')
+    runtime_hostname = runtime_data.get('@hostName', 'N/A')
+    runtime_version = runtime_data.get('@currentVersion', 'N/A')
+    date_installed = runtime_data.get('@dateInstalled', 'N/A')
+    created_by = runtime_data.get('@createdBy', 'N/A')
     
     # Status icon
-    if atom_status == 'ONLINE':
+    if runtime_status == 'ONLINE':
         status_icon = "🟢"
-        status_warning = "⚠️  ATOM IS ONLINE - Consider stopping it first!"
-    elif atom_status == 'OFFLINE':
+        status_warning = "⚠️  RUNTIME IS ONLINE - Consider stopping it first!"
+    elif runtime_status == 'OFFLINE':
         status_icon = "🔴"
-        status_warning = "✅ Atom is offline (safe to delete)"
+        status_warning = "✅ Runtime is offline (safe to delete)"
     else:
         status_icon = "⚪"
-        status_warning = f"⚠️  Atom status: {atom_status}"
+        status_warning = f"⚠️  Runtime status: {runtime_status}"
     
-    print(f"🤖 Name: {atom_name}")
-    print(f"🆔 ID: {atom_id}")
-    print(f"📦 Type: {atom_type}")
-    print(f"{status_icon} Status: {atom_status}")
-    print(f"🖥️  Hostname: {atom_hostname}")
-    print(f"📦 Version: {atom_version}")
+    print(f"🤖 Name: {runtime_name}")
+    print(f"🆔 ID: {runtime_id}")
+    print(f"📦 Type: {runtime_type}")
+    print(f"{status_icon} Status: {runtime_status}")
+    print(f"🖥️  Hostname: {runtime_hostname}")
+    print(f"📦 Version: {runtime_version}")
     print(f"📅 Installed: {date_installed}")
     print(f"👤 Created by: {created_by}")
     
     print(f"\n{status_warning}")
     
-    return atom_status
+    return runtime_status
 
-def perform_safety_checks(sdk, atom_id, atom_data):
+def perform_safety_checks(sdk, runtime_id, runtime_data):
     """Perform safety checks before deletion."""
     
     print("\n🔍 Performing safety checks...")
@@ -133,17 +133,17 @@ def perform_safety_checks(sdk, atom_id, atom_data):
     safety_issues = []
     warnings = []
     
-    # Check 1: Atom status
-    atom_status = atom_data.get('@status', 'UNKNOWN')
-    if atom_status == 'ONLINE':
-        safety_issues.append("Atom is currently ONLINE")
-        warnings.append("⚠️  Deleting an online atom may disrupt running processes")
+    # Check 1: Runtime status
+    runtime_status = runtime_data.get('@status', 'UNKNOWN')
+    if runtime_status == 'ONLINE':
+        safety_issues.append("Runtime is currently ONLINE")
+        warnings.append("⚠️  Deleting an online runtime may disrupt running processes")
     
     # Check 2: Environment attachments
-    attachments = check_environment_attachments(sdk, atom_id)
+    attachments = check_environment_attachments(sdk, runtime_id)
     if attachments:
         env_count = len(attachments)
-        safety_issues.append(f"Atom is attached to {env_count} environment(s)")
+        safety_issues.append(f"Runtime is attached to {env_count} environment(s)")
         warnings.append(f"⚠️  You may need to detach from environments first")
         
         print(f"   Found {env_count} environment attachment(s):")
@@ -154,11 +154,11 @@ def perform_safety_checks(sdk, atom_id, atom_data):
         if len(attachments) > 3:
             print(f"     ... and {len(attachments) - 3} more")
     
-    # Check 3: Atom type
-    atom_type = atom_data.get('@type', 'UNKNOWN')
-    if atom_type == 'CLOUD':
-        safety_issues.append("This is a Cloud atom")
-        warnings.append("⚠️  Cloud atoms may have different deletion requirements")
+    # Check 3: Runtime type
+    runtime_type = runtime_data.get('@type', 'UNKNOWN')
+    if runtime_type == 'CLOUD':
+        safety_issues.append("This is a Cloud runtime")
+        warnings.append("⚠️  Cloud runtimes may have different deletion requirements")
     
     # Display results
     if safety_issues:
@@ -175,21 +175,21 @@ def perform_safety_checks(sdk, atom_id, atom_data):
     
     return len(safety_issues) == 0
 
-def delete_atom_with_confirmation(sdk, atom_id, atom_data):
-    """Delete atom with multiple confirmations."""
+def delete_runtime_with_confirmation(sdk, runtime_id, runtime_data):
+    """Delete runtime with multiple confirmations."""
     
-    atom_name = atom_data.get('@name', 'N/A')
+    runtime_name = runtime_data.get('@name', 'N/A')
     
     print(f"\n🚨 FINAL CONFIRMATION")
     print("=" * 50)
-    print(f"You are about to PERMANENTLY DELETE atom:")
-    print(f"   Name: {atom_name}")
-    print(f"   ID: {atom_id}")
+    print(f"You are about to PERMANENTLY DELETE runtime:")
+    print(f"   Name: {runtime_name}")
+    print(f"   ID: {runtime_id}")
     print()
     print("This action:")
     print("   • CANNOT be undone")
-    print("   • Will remove the atom from your account")
-    print("   • May affect running processes if atom is online")
+    print("   • Will remove the runtime from your account")
+    print("   • May affect running processes if runtime is online")
     print("   • May affect environment deployments")
     
     # First confirmation
@@ -198,10 +198,10 @@ def delete_atom_with_confirmation(sdk, atom_id, atom_data):
         print("❌ Deletion cancelled - confirmation failed")
         return False
     
-    # Second confirmation with atom name
-    confirm2 = input(f"Type the atom name '{atom_name}' to confirm: ").strip()
-    if confirm2 != atom_name:
-        print("❌ Deletion cancelled - atom name mismatch")
+    # Second confirmation with runtime name
+    confirm2 = input(f"Type the runtime name '{runtime_name}' to confirm: ").strip()
+    if confirm2 != runtime_name:
+        print("❌ Deletion cancelled - runtime name mismatch")
         return False
     
     # Final yes/no
@@ -211,24 +211,24 @@ def delete_atom_with_confirmation(sdk, atom_id, atom_data):
         return False
     
     # Perform deletion
-    print("\n🗑️  Deleting atom...")
+    print("\n🗑️  Deleting runtime...")
     
     try:
-        sdk.atom.delete_atom(id_=atom_id)
-        print("✅ Atom deleted successfully!")
+        sdk.atom.delete_atom(id_=runtime_id)
+        print("✅ Runtime deleted successfully!")
         
         # Verify deletion
         print("🔍 Verifying deletion...")
         try:
-            sdk.atom.get_atom(id_=atom_id)
-            print("⚠️  Atom still exists - deletion may not have completed")
+            sdk.atom.get_atom(id_=runtime_id)
+            print("⚠️  Runtime still exists - deletion may not have completed")
             return False
         except Exception:
-            print("✅ Deletion verified - atom no longer exists")
+            print("✅ Deletion verified - runtime no longer exists")
             return True
             
     except Exception as e:
-        print(f"❌ Error deleting atom: {str(e)}")
+        print(f"❌ Error deleting runtime: {str(e)}")
         
         if hasattr(e, 'status'):
             if e.status == 403:
@@ -237,24 +237,24 @@ def delete_atom_with_confirmation(sdk, atom_id, atom_data):
                 print("   • Runtime Management Read Access is not sufficient")
             elif e.status == 404:
                 print("\n   Not found (404)")
-                print("   • The atom may have already been deleted")
+                print("   • The runtime may have already been deleted")
             elif e.status == 409:
                 print("\n   Conflict (409)")
-                print("   • Atom may be in use or have dependencies")
-                print("   • Try stopping the atom first")
+                print("   • Runtime may be in use or have dependencies")
+                print("   • Try stopping the runtime first")
                 print("   • Check for environment attachments")
             elif e.status == 400:
                 print("\n   Bad request (400)")
-                print("   • Check the atom ID format")
+                print("   • Check the runtime ID format")
         
         return False
 
 def main():
-    """Main function to demonstrate atom deletion."""
+    """Main function to demonstrate runtime deletion."""
     
-    print("🚀 Boomi SDK - Delete Atom")
+    print("🚀 Boomi SDK - Delete Runtime")
     print("=" * 40)
-    print("⚠️  WARNING: This permanently deletes an atom!")
+    print("⚠️  WARNING: This permanently deletes a runtime!")
     print()
     
     # Check for required environment variables
@@ -279,37 +279,37 @@ def main():
     print()
     
     try:
-        # Get atom ID from arguments or prompt user
+        # Get runtime ID from arguments or prompt user
         if len(sys.argv) > 1:
-            atom_id = sys.argv[1]
-            print(f"📍 Using provided atom ID: {atom_id}")
+            runtime_id = sys.argv[1]
+            print(f"📍 Using provided runtime ID: {runtime_id}")
         else:
-            print("💡 Usage: python3 delete_atom.py <atom_id>")
+            print("💡 Usage: python3 delete_runtime.py <runtime_id>")
             print()
-            print("⚠️  Only provide atoms you are sure you want to delete!")
-            print("   You can find atom IDs using list_atoms.py")
+            print("⚠️  Only provide runtimes you are sure you want to delete!")
+            print("   You can find runtime IDs using list_runtimes.py")
             print()
-            atom_id = input("Enter atom ID to delete (or 'cancel' to exit): ").strip()
+            runtime_id = input("Enter runtime ID to delete (or 'cancel' to exit): ").strip()
             
-            if not atom_id or atom_id.lower() == 'cancel':
+            if not runtime_id or runtime_id.lower() == 'cancel':
                 print("❌ Operation cancelled")
                 return
         
         print()
         
-        # Get atom details
-        print("🔍 Retrieving atom details...")
-        atom_data = get_atom_details(sdk, atom_id)
+        # Get runtime details
+        print("🔍 Retrieving runtime details...")
+        runtime_data = get_runtime_details(sdk, runtime_id)
         
-        if not atom_data:
-            print("❌ Could not retrieve atom details - atom may not exist")
+        if not runtime_data:
+            print("❌ Could not retrieve runtime details - runtime may not exist")
             return
         
-        # Display atom summary
-        atom_status = display_atom_summary(atom_data)
+        # Display runtime summary
+        runtime_status = display_runtime_summary(runtime_data)
         
         # Perform safety checks
-        is_safe = perform_safety_checks(sdk, atom_id, atom_data)
+        is_safe = perform_safety_checks(sdk, runtime_id, runtime_data)
         
         if not is_safe:
             print("\n⚠️  Safety issues detected!")
@@ -319,16 +319,16 @@ def main():
                 return
         
         # Perform deletion with confirmations
-        success = delete_atom_with_confirmation(sdk, atom_id, atom_data)
+        success = delete_runtime_with_confirmation(sdk, runtime_id, runtime_data)
         
         if success:
-            print("\n🎉 Atom deletion completed successfully!")
+            print("\n🎉 Runtime deletion completed successfully!")
             print("\n💡 Next steps:")
             print("   • Verify no processes were disrupted")
             print("   • Check environment deployments if needed")
-            print("   • Update any documentation that referenced this atom")
+            print("   • Update any documentation that referenced this runtime")
         else:
-            print("\n❌ Atom deletion failed or was cancelled")
+            print("\n❌ Runtime deletion failed or was cancelled")
         
     except KeyboardInterrupt:
         print("\n❌ Operation cancelled by user")
