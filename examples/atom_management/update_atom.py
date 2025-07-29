@@ -101,7 +101,7 @@ def create_atom_update(current_atom):
     else:
         new_force_restart_minutes = current_force_restart_minutes
     
-    # Convert minutes to milliseconds for API
+    # Convert minutes to milliseconds for API (1 minute = 60,000 milliseconds)
     new_force_restart_time = int(new_force_restart_minutes * 60 * 1000)
     
     # Check if any changes were made
@@ -217,7 +217,7 @@ def demonstrate_programmatic_update():
         id_=atom_id,
         name="Production Atom - Updated",
         purge_immediate=True,
-        force_restart_time=60000   # 1 minute in milliseconds (minutes * 60 * 1000)
+        force_restart_time=60000   # 1 minute = 60,000 milliseconds
     )
     
     # Apply the update
