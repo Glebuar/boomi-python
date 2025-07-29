@@ -116,7 +116,8 @@ def create_atom_update(current_atom):
     else:
         new_force_restart_minutes = current_force_restart_minutes
     
-    # API expects force restart time in minutes (not milliseconds as documented)
+    # Send the minute value directly to API (no conversion)
+    # Based on testing: API expects minutes and converts internally to milliseconds
     new_force_restart_time = int(new_force_restart_minutes)
     
     # Check if any changes were made (compare force restart in minutes)
@@ -134,7 +135,7 @@ def create_atom_update(current_atom):
         name=new_name,
         purge_immediate=new_purge,  # Use purge_immediate, not purge_immediately
         purge_history_days=new_purge_history_days,  # Days to keep history (0-9999)
-        force_restart_time=new_force_restart_time  # Time in minutes (API expectation)
+        force_restart_time=new_force_restart_time  # Minutes (API converts to milliseconds internally)
     )
     
     print("\n📝 Changes to apply:")
@@ -241,7 +242,7 @@ def demonstrate_programmatic_update():
         name="Production Atom - Updated",
         purge_immediate=True,
         purge_history_days=90,     # Keep history for 90 days
-        force_restart_time=1       # 1 minute (API expects minutes, not milliseconds)
+        force_restart_time=1       # 1 minute (API expects minutes)
     )
     
     # Apply the update
@@ -327,6 +328,7 @@ def main():
             print("   • Force restart may interrupt running processes")
             print("   • Force restart time changes take effect on next restart")
             print("   • Some properties may require atom restart")
+            print("   ⚠️  Note: Force restart time may take a moment to reflect correctly")
             
             # Show programmatic example
             demonstrate_programmatic_update()
