@@ -29,17 +29,18 @@ class AtomQueryConfigQueryFilter(BaseModel):
 class AtomQueryConfig(BaseModel):
     """AtomQueryConfig
 
-    :param query_filter: query_filter
+    :param query_filter: query_filter (optional)
     :type query_filter: AtomQueryConfigQueryFilter
     """
 
-    def __init__(self, query_filter: AtomQueryConfigQueryFilter, **kwargs):
+    def __init__(self, query_filter: AtomQueryConfigQueryFilter = None, **kwargs):
         """AtomQueryConfig
 
-        :param query_filter: query_filter
+        :param query_filter: query_filter (optional)
         :type query_filter: AtomQueryConfigQueryFilter
         """
-        self.query_filter = self._define_object(
-            query_filter, AtomQueryConfigQueryFilter
-        )
+        if query_filter is not None:
+            self.query_filter = self._define_object(
+                query_filter, AtomQueryConfigQueryFilter
+            )
         self._kwargs = kwargs

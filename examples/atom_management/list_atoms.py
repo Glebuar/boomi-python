@@ -38,40 +38,65 @@ from boomi.models import (
     AtomSimpleExpressionProperty
 )
 
-def list_atoms_by_type(sdk, atom_type):
-    """List atoms by type (ATOM, GATEWAY, etc.)."""
+def list_all_atoms_sdk(sdk):
+    """List all atoms using SDK with no query filter (works best for atoms)."""
     
-    print(f"🔍 Querying {atom_type} runtimes...")
+    print(f"🔍 Querying all runtimes using SDK...")
     
     try:
-        # Create a query to get atoms of specific type
-        simple_expression = AtomSimpleExpression(
-            operator=AtomSimpleExpressionOperator.EQUALS,
-            property=AtomSimpleExpressionProperty.TYPE,
-            argument=[atom_type]
-        )
-        
-        query_filter = AtomQueryConfigQueryFilter(expression=simple_expression)
-        query_config = AtomQueryConfig(query_filter=query_filter)
+        # Create empty query config - no filter needed for atoms
+        query_config = AtomQueryConfig()
         query_response = sdk.atom.query_atom(query_config)
         
-        # Parse the response
+        # Parse the response - it's an AtomQueryResponse object with 'result' attribute
         atoms = []
-        if hasattr(query_response, '_kwargs') and 'AtomQueryResponse' in query_response._kwargs:
-            query_data = query_response._kwargs['AtomQueryResponse']
-            
-            if 'Atom' in query_data:
-                atom_data = query_data['Atom']
-                if isinstance(atom_data, list):
-                    atoms = atom_data
-                else:
-                    atoms = [atom_data]
+        
+        if hasattr(query_response, 'number_of_results'):
+            num_results = query_response.number_of_results or 0
+            print(f"   Found {num_results} atoms in account")
+        
+        if hasattr(query_response, 'result') and query_response.result:
+            result_data = query_response.result
+            if isinstance(result_data, list):
+                atoms = result_data
+            else:
+                atoms = [result_data]
+                
+            # Show what we found
+            for atom in atoms:
+                name = getattr(atom, 'name', 'N/A')
+                atom_type = getattr(atom, 'type_', 'N/A')  
+                status = getattr(atom, 'status', 'N/A')
+                print(f"     - {name} ({atom_type}, {status})")
+        else:
+            print(f"   No result data found in response")
         
         return atoms
         
     except Exception as e:
-        print(f"❌ Error querying {atom_type} atoms: {str(e)}")
+        print(f"❌ Error querying atoms with SDK: {str(e)}")
+        if hasattr(e, 'status'):
+            print(f"   Status code: {e.status}")
         return []
+
+def list_atoms_by_type(atoms, atom_type):
+    """Filter atoms by type from the full list."""
+    
+    filtered_atoms = []
+    for atom in atoms:
+        # Handle both dict format (for backward compatibility) and object format
+        if hasattr(atom, 'type_'):
+            current_type = getattr(atom, 'type_', '')
+        elif hasattr(atom, 'get'):
+            current_type = atom.get('@type', '')
+        else:
+            # For objects without get method, try direct attribute access with fallback
+            current_type = getattr(atom, 'type_', '')
+            
+        if current_type == atom_type:
+            filtered_atoms.append(atom)
+    
+    return filtered_atoms
 
 def format_date(date_string):
     """Format ISO date string to readable format."""
@@ -97,14 +122,25 @@ def display_atoms(atoms, atom_type):
     offline_count = 0
     
     for i, atom in enumerate(atoms, 1):
-        atom_id = atom.get('@id', 'N/A')
-        atom_name = atom.get('@name', 'N/A')
-        atom_status = atom.get('@status', 'N/A')
-        atom_hostname = atom.get('@hostName', 'N/A')
-        atom_version = atom.get('@currentVersion', 'N/A')
-        atom_installed = atom.get('@dateInstalled', 'N/A')
-        atom_created_by = atom.get('@createdBy', 'N/A')
-        atom_capabilities = atom.get('@capabilities', [])
+        # Handle both dict format (for backward compatibility) and object format
+        if hasattr(atom, 'id_'):
+            atom_id = getattr(atom, 'id_', 'N/A')
+            atom_name = getattr(atom, 'name', 'N/A')
+            atom_status = getattr(atom, 'status', 'N/A')
+            atom_hostname = getattr(atom, 'host_name', 'N/A')
+            atom_version = getattr(atom, 'current_version', 'N/A')
+            atom_installed = getattr(atom, 'date_installed', 'N/A')
+            atom_created_by = getattr(atom, 'created_by', 'N/A')
+            atom_capabilities = getattr(atom, 'capabilities', [])
+        else:
+            atom_id = atom.get('@id', 'N/A')
+            atom_name = atom.get('@name', 'N/A')
+            atom_status = atom.get('@status', 'N/A')
+            atom_hostname = atom.get('@hostName', 'N/A')
+            atom_version = atom.get('@currentVersion', 'N/A')
+            atom_installed = atom.get('@dateInstalled', 'N/A')
+            atom_created_by = atom.get('@createdBy', 'N/A')
+            atom_capabilities = atom.get('@capabilities', [])
         
         # Count status
         if atom_status == 'ONLINE':
@@ -164,16 +200,17 @@ def main():
     print()
     
     try:
-        all_atoms = []
+        # Get all atoms using SDK
+        all_atoms = list_all_atoms_sdk(sdk)
         
-        # Query different types of atoms
-        atom_types = ["ATOM", "GATEWAY", "MOLECULE"]
-        
-        for atom_type in atom_types:
-            atoms = list_atoms_by_type(sdk, atom_type)
-            if atoms:
-                display_atoms(atoms, atom_type)
-                all_atoms.extend(atoms)
+        if all_atoms:
+            # Group atoms by type and display
+            atom_types = ["ATOM", "CLOUD", "MOLECULE", "GATEWAY"]
+            
+            for atom_type in atom_types:
+                filtered_atoms = list_atoms_by_type(all_atoms, atom_type)
+                if filtered_atoms:
+                    display_atoms(filtered_atoms, atom_type)
         
         # Overall summary
         if all_atoms:
@@ -182,8 +219,18 @@ def main():
             print(f"   Total runtimes: {len(all_atoms)}")
             
             # Count by status
-            online = sum(1 for atom in all_atoms if atom.get('@status') == 'ONLINE')
-            offline = sum(1 for atom in all_atoms if atom.get('@status') == 'OFFLINE')
+            online = 0
+            offline = 0
+            for atom in all_atoms:
+                if hasattr(atom, 'status'):
+                    status = atom.status
+                else:
+                    status = atom.get('@status', '')
+                    
+                if status == 'ONLINE':
+                    online += 1
+                elif status == 'OFFLINE':
+                    offline += 1
             
             print(f"   🟢 Online runtimes: {online}")
             print(f"   🔴 Offline runtimes: {offline}")
@@ -191,7 +238,10 @@ def main():
             # Count by type
             type_counts = {}
             for atom in all_atoms:
-                atom_type = atom.get('@type', 'Unknown')
+                if hasattr(atom, 'type_'):
+                    atom_type = atom.type_
+                else:
+                    atom_type = atom.get('@type', 'Unknown')
                 type_counts[atom_type] = type_counts.get(atom_type, 0) + 1
             
             print(f"\n   📋 By Type:")
@@ -209,6 +259,11 @@ def main():
             print("   • Install at least one Atom (runtime)")
             print("   • Atoms can be downloaded from the Boomi platform")
             print("   • Cloud atoms are also available as an alternative")
+        
+        print("\n🔧 Technical Note:")
+        print("   Uses SDK with empty AtomQueryConfig (no filter needed for atom queries)")  
+        print("   Fixed SDK issue: AtomQueryConfig.query_filter is now optional")
+        print("   Atoms are grouped by type (ATOM, CLOUD, MOLECULE, GATEWAY) for display")
         
     except Exception as e:
         print(f"❌ Example failed: {str(e)}")
