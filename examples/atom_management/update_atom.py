@@ -67,7 +67,7 @@ def create_atom_update(current_atom):
     print("\n📋 Current Configuration:")
     print(f"   Name: {current_name}")
     print(f"   Purge Immediately: {current_purge}")
-    print(f"   Force Restart: {current_force_restart}")
+    print(f"   Force Restart Time: {current_force_restart_minutes:.1f} minutes ({current_force_restart_ms}ms)")
     
     # Prompt for changes
     print("\n✏️  Enter new values (press Enter to keep current):")
@@ -84,18 +84,30 @@ def create_atom_update(current_atom):
     else:
         new_purge = current_purge
     
-    force_restart_input = input(f"   Force restart (true/false) [{current_force_restart}]: ").strip().lower()
-    if force_restart_input in ['true', 't', 'yes', 'y', '1']:
-        new_force_restart = True
-    elif force_restart_input in ['false', 'f', 'no', 'n', '0']:
-        new_force_restart = False
+    # Get current force restart time in minutes (convert from milliseconds)
+    current_force_restart_ms = current_atom.get('@forceRestartTime', 0)
+    current_force_restart_minutes = current_force_restart_ms / 60000 if current_force_restart_ms > 0 else 0
+    
+    force_restart_input = input(f"   Force restart time in minutes (0 to disable) [{current_force_restart_minutes:.1f}]: ").strip()
+    if force_restart_input:
+        try:
+            new_force_restart_minutes = float(force_restart_input)
+            if new_force_restart_minutes < 0:
+                print("   ⚠️  Force restart time cannot be negative, using 0")
+                new_force_restart_minutes = 0
+        except ValueError:
+            print("   ⚠️  Invalid number, keeping current value")
+            new_force_restart_minutes = current_force_restart_minutes
     else:
-        new_force_restart = current_force_restart
+        new_force_restart_minutes = current_force_restart_minutes
+    
+    # Convert minutes to milliseconds for API
+    new_force_restart_time = int(new_force_restart_minutes * 60 * 1000)
     
     # Check if any changes were made
     if (new_name == current_name and 
         new_purge == current_purge and 
-        new_force_restart == current_force_restart):
+        new_force_restart_time == current_force_restart_ms):
         print("\n⚠️  No changes specified")
         return None
     
@@ -105,7 +117,7 @@ def create_atom_update(current_atom):
         id_=atom_id,
         name=new_name,
         purge_immediate=new_purge,  # Use purge_immediate, not purge_immediately
-        force_restart_time=0 if not new_force_restart else 180000  # Default restart time
+        force_restart_time=new_force_restart_time  # Time in milliseconds
     )
     
     print("\n📝 Changes to apply:")
@@ -113,8 +125,8 @@ def create_atom_update(current_atom):
         print(f"   Name: {current_name} → {new_name}")
     if new_purge != current_purge:
         print(f"   Purge Immediately: {current_purge} → {new_purge}")
-    if new_force_restart != current_force_restart:
-        print(f"   Force Restart: {current_force_restart} → {new_force_restart}")
+    if new_force_restart_time != current_force_restart_ms:
+        print(f"   Force Restart Time: {current_force_restart_minutes:.1f} min → {new_force_restart_minutes:.1f} min ({new_force_restart_time}ms)")
     
     return atom_update
 
@@ -179,14 +191,15 @@ def display_update_result(updated_atom):
         atom_id = updated_atom.get('@id', 'N/A')
         last_modified = updated_atom.get('@lastModifiedDate', 'N/A')
         purge_immediate = updated_atom.get('@purgeImmediately', False)
-        force_restart_time = updated_atom.get('@forceRestart', 0)
+        force_restart_time = updated_atom.get('@forceRestartTime', 0)
         status = updated_atom.get('@status', 'N/A')
     
     print(f"🤖 Name: {name}")
     print(f"🆔 ID: {atom_id}")
     print(f"📅 Last Modified: {last_modified}")
     print(f"⚙️  Purge Immediately: {purge_immediate}")
-    print(f"🔄 Force Restart Time: {force_restart_time}ms")
+    force_restart_minutes = force_restart_time / 60000 if force_restart_time > 0 else 0
+    print(f"🔄 Force Restart Time: {force_restart_minutes:.1f} minutes ({force_restart_time}ms)")
     
     # Status check
     status_icon = "🟢" if status == "ONLINE" else "🔴" if status == "OFFLINE" else "⚪"
@@ -204,7 +217,7 @@ def demonstrate_programmatic_update():
         id_=atom_id,
         name="Production Atom - Updated",
         purge_immediate=True,
-        force_restart_time=180000  # 3 minutes in milliseconds
+        force_restart_time=60000   # 1 minute in milliseconds (minutes * 60 * 1000)
     )
     
     # Apply the update
@@ -287,6 +300,7 @@ def main():
             print("   • Name changes take effect immediately")
             print("   • Purge settings affect execution history retention")
             print("   • Force restart may interrupt running processes")
+            print("   • Force restart time changes take effect on next restart")
             print("   • Some properties may require atom restart")
             
             # Show programmatic example
