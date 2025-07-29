@@ -62,7 +62,8 @@ def create_atom_update(current_atom):
     atom_id = current_atom.get('@id')
     current_name = current_atom.get('@name', 'Unknown Atom')
     current_purge = current_atom.get('@purgeImmediately', False)
-    current_force_restart = current_atom.get('@forceRestart', False)
+    current_force_restart_ms = int(current_atom.get('@forceRestartTime', 0))
+    current_force_restart_minutes = current_force_restart_ms / 60000 if current_force_restart_ms > 0 else 0
     
     print("\n📋 Current Configuration:")
     print(f"   Name: {current_name}")
@@ -83,10 +84,6 @@ def create_atom_update(current_atom):
         new_purge = False
     else:
         new_purge = current_purge
-    
-    # Get current force restart time in minutes (convert from milliseconds)
-    current_force_restart_ms = current_atom.get('@forceRestartTime', 0)
-    current_force_restart_minutes = current_force_restart_ms / 60000 if current_force_restart_ms > 0 else 0
     
     force_restart_input = input(f"   Force restart time in minutes (0 to disable) [{current_force_restart_minutes:.1f}]: ").strip()
     if force_restart_input:
