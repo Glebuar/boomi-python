@@ -75,16 +75,10 @@ def check_environment_attachments(sdk, atom_id):
         
         result = sdk.environment_atom_attachment.query_environment_atom_attachment(query_config)
         
+        # Use modern SDK response format
         attachments = []
-        if hasattr(result, '_kwargs') and 'EnvironmentAtomAttachmentQueryResponse' in result._kwargs:
-            query_data = result._kwargs['EnvironmentAtomAttachmentQueryResponse']
-            
-            if 'EnvironmentAtomAttachment' in query_data:
-                attachment_data = query_data['EnvironmentAtomAttachment']
-                if isinstance(attachment_data, list):
-                    attachments = attachment_data
-                else:
-                    attachments = [attachment_data]
+        if hasattr(result, 'result') and result.result:
+            attachments = result.result if isinstance(result.result, list) else [result.result]
         
         return attachments
         
@@ -154,7 +148,8 @@ def perform_safety_checks(sdk, atom_id, atom_data):
         
         print(f"   Found {env_count} environment attachment(s):")
         for attachment in attachments[:3]:  # Show first 3
-            env_id = attachment.get('@environmentId', 'N/A')
+            # Use object attributes for EnvironmentAtomAttachment objects
+            env_id = getattr(attachment, 'environment_id', 'N/A')
             print(f"     - Environment ID: {env_id}")
         if len(attachments) > 3:
             print(f"     ... and {len(attachments) - 3} more")

@@ -207,13 +207,15 @@ def get_sample_atom_id(sdk):
         
         result = sdk.atom.query_atom(query_config)
         
-        if hasattr(result, '_kwargs') and 'AtomQueryResponse' in result._kwargs:
-            query_data = result._kwargs['AtomQueryResponse']
-            if 'Atom' in query_data:
-                atom_data = query_data['Atom']
-                atoms = atom_data if isinstance(atom_data, list) else [atom_data]
-                if atoms:
-                    return atoms[0].get('@id'), atoms[0].get('@name')
+        # Use modern SDK response format
+        if hasattr(result, 'result') and result.result:
+            atoms = result.result if isinstance(result.result, list) else [result.result]
+            if atoms:
+                # Use object attributes instead of dict access
+                first_atom = atoms[0]
+                atom_id = getattr(first_atom, 'id_', 'N/A')
+                atom_name = getattr(first_atom, 'name', 'N/A')
+                return atom_id, atom_name
         
     except Exception as e:
         print(f"   Could not retrieve sample atom: {str(e)}")

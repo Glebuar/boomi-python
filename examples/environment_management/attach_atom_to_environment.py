@@ -65,17 +65,10 @@ def list_available_atoms(sdk):
         query_config = AtomQueryConfig(query_filter=query_filter)
         query_response = sdk.atom.query_atom(query_config)
         
+        # Use modern SDK response format
         atoms = []
-        if hasattr(query_response, '_kwargs') and 'AtomQueryResponse' in query_response._kwargs:
-            query_data = query_response._kwargs['AtomQueryResponse']
-            
-            # Handle single atom vs multiple atoms
-            if 'Atom' in query_data:
-                atom_data = query_data['Atom']
-                if isinstance(atom_data, list):
-                    atoms = atom_data
-                else:
-                    atoms = [atom_data]
+        if hasattr(query_response, 'result') and query_response.result:
+            atoms = query_response.result if isinstance(query_response.result, list) else [query_response.result]
         
         if not atoms:
             print("❌ No atoms found in the account")
@@ -119,16 +112,10 @@ def list_available_environments(sdk):
         query_config = EnvironmentQueryConfig()
         query_response = sdk.environment.query_environment(query_config)
         
+        # Use modern SDK response format
         environments = []
-        if hasattr(query_response, '_kwargs') and 'EnvironmentQueryResponse' in query_response._kwargs:
-            query_data = query_response._kwargs['EnvironmentQueryResponse']
-            
-            if 'Environment' in query_data:
-                env_data = query_data['Environment']
-                if isinstance(env_data, list):
-                    environments = env_data
-                else:
-                    environments = [env_data]
+        if hasattr(query_response, 'result') and query_response.result:
+            environments = query_response.result if isinstance(query_response.result, list) else [query_response.result]
         
         if not environments:
             print("❌ No environments found")
@@ -138,9 +125,10 @@ def list_available_environments(sdk):
         print("-" * 80)
         
         for i, env in enumerate(environments, 1):
-            env_id = env.get('@id', 'N/A')
-            env_name = env.get('@name', 'N/A')
-            env_class = env.get('@classification', 'N/A')
+            # Use object attributes for Environment objects
+            env_id = getattr(env, 'id_', 'N/A')
+            env_name = getattr(env, 'name', 'N/A')
+            env_class = getattr(env, 'classification', 'N/A')
             
             print(f"{i:2}. {env_name}")
             print(f"    ID: {env_id}")
@@ -171,25 +159,20 @@ def check_existing_attachments(sdk, atom_id=None, environment_id=None):
         query_config = EnvironmentAtomAttachmentQueryConfig(query_filter=query_filter)
         query_response = sdk.environment_atom_attachment.query_environment_atom_attachment(query_config)
         
+        # Use modern SDK response format
         attachments = []
-        if hasattr(query_response, '_kwargs') and 'EnvironmentAtomAttachmentQueryResponse' in query_response._kwargs:
-            query_data = query_response._kwargs['EnvironmentAtomAttachmentQueryResponse']
-            
-            if 'EnvironmentAtomAttachment' in query_data:
-                attachment_data = query_data['EnvironmentAtomAttachment']
-                if isinstance(attachment_data, list):
-                    attachments = attachment_data
-                else:
-                    attachments = [attachment_data]
+        if hasattr(query_response, 'result') and query_response.result:
+            attachments = query_response.result if isinstance(query_response.result, list) else [query_response.result]
         
         if attachments:
             print(f"\n📋 Found {len(attachments)} existing attachment(s):")
             print("-" * 60)
             
             for attachment in attachments:
-                att_id = attachment.get('@id', 'N/A')
-                att_atom_id = attachment.get('@atomId', 'N/A')
-                att_env_id = attachment.get('@environmentId', 'N/A')
+                # Use object attributes for EnvironmentAtomAttachment objects
+                att_id = getattr(attachment, 'id_', 'N/A')
+                att_atom_id = getattr(attachment, 'atom_id', 'N/A')
+                att_env_id = getattr(attachment, 'environment_id', 'N/A')
                 
                 print(f"  Attachment ID: {att_id}")
                 print(f"  Atom ID: {att_atom_id}")
