@@ -100,11 +100,12 @@ def create_atom_update(current_atom):
         return None
     
     # Create atom update object
+    # Note: Only name, purgeHistoryDays, purgeImmediate, forceRestartTime can be updated
     atom_update = Atom(
         id_=atom_id,
         name=new_name,
-        purge_immediately=new_purge,
-        force_restart=new_force_restart
+        purge_immediate=new_purge,  # Use purge_immediate, not purge_immediately
+        force_restart_time=0 if not new_force_restart else 180000  # Default restart time
     )
     
     print("\n📝 Changes to apply:")
@@ -124,7 +125,7 @@ def update_atom(sdk, atom_id, atom_update):
     
     try:
         # Call the update atom API
-        result = sdk.atom.update_atom(id_=atom_id, atom=atom_update)
+        result = sdk.atom.update_atom(id_=atom_id, request_body=atom_update)
         
         print("✅ Atom updated successfully!")
         
@@ -165,14 +166,29 @@ def display_update_result(updated_atom):
     print("\n✅ Updated Atom Configuration:")
     print("=" * 60)
     
-    print(f"🤖 Name: {updated_atom.get('@name', 'N/A')}")
-    print(f"🆔 ID: {updated_atom.get('@id', 'N/A')}")
-    print(f"📅 Last Modified: {updated_atom.get('@lastModifiedDate', 'N/A')}")
-    print(f"⚙️  Purge Immediately: {updated_atom.get('@purgeImmediately', False)}")
-    print(f"🔄 Force Restart: {updated_atom.get('@forceRestart', False)}")
+    # Handle both dict and object formats
+    if hasattr(updated_atom, 'name'):
+        name = getattr(updated_atom, 'name', 'N/A')
+        atom_id = getattr(updated_atom, 'id_', 'N/A')
+        last_modified = getattr(updated_atom, 'last_modified_date', 'N/A')
+        purge_immediate = getattr(updated_atom, 'purge_immediate', False)
+        force_restart_time = getattr(updated_atom, 'force_restart_time', 0)
+        status = getattr(updated_atom, 'status', 'N/A')
+    else:
+        name = updated_atom.get('@name', 'N/A')
+        atom_id = updated_atom.get('@id', 'N/A')
+        last_modified = updated_atom.get('@lastModifiedDate', 'N/A')
+        purge_immediate = updated_atom.get('@purgeImmediately', False)
+        force_restart_time = updated_atom.get('@forceRestart', 0)
+        status = updated_atom.get('@status', 'N/A')
+    
+    print(f"🤖 Name: {name}")
+    print(f"🆔 ID: {atom_id}")
+    print(f"📅 Last Modified: {last_modified}")
+    print(f"⚙️  Purge Immediately: {purge_immediate}")
+    print(f"🔄 Force Restart Time: {force_restart_time}ms")
     
     # Status check
-    status = updated_atom.get('@status', 'N/A')
     status_icon = "🟢" if status == "ONLINE" else "🔴" if status == "OFFLINE" else "⚪"
     print(f"{status_icon} Status: {status}")
 
@@ -183,18 +199,18 @@ def demonstrate_programmatic_update():
     print("=" * 60)
     print("To update an atom programmatically without user input:")
     print("""
-    # Create atom update object
+    # Create atom update object (only these fields can be updated)
     atom_update = Atom(
         id_=atom_id,
         name="Production Atom - Updated",
-        purge_immediately=True,
-        force_restart=False
+        purge_immediate=True,
+        force_restart_time=180000  # 3 minutes in milliseconds
     )
     
     # Apply the update
     updated_atom = sdk.atom.update_atom(
         id_=atom_id,
-        atom=atom_update
+        request_body=atom_update
     )
     """)
 

@@ -54,17 +54,15 @@ def list_all_environments(sdk):
         query_config = EnvironmentQueryConfig(query_filter=query_filter)
         query_response = sdk.environment.query_environment(query_config)
         
-        # Parse the response
+        # Parse the response - use modern SDK response format
         environments = []
-        if hasattr(query_response, '_kwargs') and 'EnvironmentQueryResponse' in query_response._kwargs:
-            query_data = query_response._kwargs['EnvironmentQueryResponse']
-            
-            if 'Environment' in query_data:
-                env_data = query_data['Environment']
-                if isinstance(env_data, list):
-                    environments = env_data
-                else:
-                    environments = [env_data]
+        if hasattr(query_response, 'result') and query_response.result:
+            # Direct access to result attribute (modern SDK format)
+            result_data = query_response.result
+            if isinstance(result_data, list):
+                environments = result_data
+            else:
+                environments = [result_data]
         
         return environments
         
@@ -89,17 +87,15 @@ def list_prod_environments(sdk):
         query_config = EnvironmentQueryConfig(query_filter=query_filter)
         query_response = sdk.environment.query_environment(query_config)
         
-        # Parse the response
+        # Parse the response - use modern SDK response format
         environments = []
-        if hasattr(query_response, '_kwargs') and 'EnvironmentQueryResponse' in query_response._kwargs:
-            query_data = query_response._kwargs['EnvironmentQueryResponse']
-            
-            if 'Environment' in query_data:
-                env_data = query_data['Environment']
-                if isinstance(env_data, list):
-                    environments = env_data
-                else:
-                    environments = [env_data]
+        if hasattr(query_response, 'result') and query_response.result:
+            # Direct access to result attribute (modern SDK format)
+            result_data = query_response.result
+            if isinstance(result_data, list):
+                environments = result_data
+            else:
+                environments = [result_data]
         
         return environments
         
@@ -118,10 +114,12 @@ def display_environments(environments, env_type):
     print("=" * 80)
     
     for i, env in enumerate(environments, 1):
-        env_id = env.get('@id', 'N/A')
-        env_name = env.get('@name', 'N/A')
-        env_class = env.get('@classification', 'N/A')
-        env_type_attr = env.get('@type', 'N/A')
+        # Handle Environment objects with proper attributes
+        env_id = getattr(env, 'id_', 'N/A')
+        env_name = getattr(env, 'name', 'N/A')
+        env_class = getattr(env, 'classification', 'N/A')
+        # Environment objects don't have type_ attribute, get from _kwargs if needed
+        env_type_attr = env._kwargs.get('@type', 'Environment') if hasattr(env, '_kwargs') else 'Environment'
         
         print(f"{i:2}. 📂 {env_name}")
         print(f"     🆔 ID: {env_id}")

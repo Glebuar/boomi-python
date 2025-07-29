@@ -59,37 +59,48 @@ def query_all_attachments_direct(sdk):
             )
             
             # Create a simple query for all attachments
-            # Use atom ID contains empty string to get all attachments
+            # Note: CONTAINS with empty string doesn't work reliably for attachments
+            # Instead, query for a broad pattern or use ENVIRONMENTID property
             simple_expression = EnvironmentAtomAttachmentSimpleExpression(
                 operator=EnvironmentAtomAttachmentSimpleExpressionOperator.CONTAINS,
-                property=EnvironmentAtomAttachmentSimpleExpressionProperty.ATOM_ID,
-                argument=[""]  # Empty string should match all
+                property=EnvironmentAtomAttachmentSimpleExpressionProperty.ENVIRONMENTID,
+                argument=[""]  # Query by environment ID instead
             )
             
             query_filter = EnvironmentAtomAttachmentQueryConfigQueryFilter(expression=simple_expression)
             query_config = EnvironmentAtomAttachmentQueryConfig(query_filter=query_filter)
             
             query_response = attachment_service.query_environment_atom_attachment(query_config)
+            print(f"   Query executed successfully")
             
         except Exception as query_error:
             print(f"   Query filter error: {str(query_error)}")
             # If complex query fails, we'll show this is the expected approach
             query_response = None
         
-        # Parse response if we got one
+        # Parse response using modern SDK format
         attachments = []
-        if query_response and hasattr(query_response, '_kwargs'):
-            print(f"   Response keys: {list(query_response._kwargs.keys())}")
-            
-            if 'EnvironmentAtomAttachmentQueryResponse' in query_response._kwargs:
-                query_data = query_response._kwargs['EnvironmentAtomAttachmentQueryResponse']
+        if query_response:
+            print(f"   Query response type: {type(query_response)}")
+            print(f"   Has result: {hasattr(query_response, 'result')}")
+            if hasattr(query_response, 'number_of_results'):
+                print(f"   Number of results: {query_response.number_of_results}")
+            if hasattr(query_response, 'result'):
+                print(f"   Result value: {query_response.result}")
                 
-                if 'EnvironmentAtomAttachment' in query_data:
-                    attachment_data = query_data['EnvironmentAtomAttachment']
-                    if isinstance(attachment_data, list):
-                        attachments = attachment_data
-                    else:
-                        attachments = [attachment_data]
+            if hasattr(query_response, 'result') and query_response.result:
+                print(f"   Found {query_response.number_of_results or 0} attachment(s)")
+                
+                # Direct access to result attribute (modern SDK format)
+                result_data = query_response.result
+                if isinstance(result_data, list):
+                    attachments = result_data
+                else:
+                    attachments = [result_data]
+            else:
+                print(f"   No result data in response")
+        else:
+            print(f"   No query response received")
         
         return attachments
         
