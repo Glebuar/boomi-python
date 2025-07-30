@@ -44,14 +44,14 @@ def find_component_by_type(sdk, component_type):
         # Find first current version, non-deleted component
         for comp in components.result:
             if comp.deleted == 'false' and comp.current_version == 'true':
-                return comp.component_id, comp.name
-    return None, None
+                return comp.component_id, comp.name, comp.folder_id
+    return None, None, None
 
 # Process Component Update
 def update_process():
     """Update a process component with enhanced functionality"""
     sdk = get_sdk()
-    component_id, original_name = find_component_by_type(sdk, "process")
+    component_id, original_name, folder_id = find_component_by_type(sdk, "process")
     if not component_id:
         print("❌ No suitable process component found")
         return False
@@ -59,7 +59,8 @@ def update_process():
     xml = f'''<Component xmlns="http://api.platform.boomi.com/"
            componentId="{component_id}"
            name="Updated {original_name}"
-           type="process">
+           type="process"
+           folderId="{folder_id}">
       <description>Updated process with enhanced logging via Python SDK</description>
       <object>
         <process xmlns="" allowSimultaneous="false" enableUserLog="true">
@@ -89,6 +90,7 @@ def update_process():
     try:
         result = sdk.component.update_component(component_id=component_id, request_body=xml)
         print(f"✅ Process updated: {getattr(result, 'name', 'Success')} (v{getattr(result, 'version', '?')})")
+        print(f"📁 Folder preserved: {getattr(result, 'folder_name', 'Unknown')}")
         return True
     except Exception as e:
         print(f"❌ Process update failed: {e}")
@@ -98,7 +100,7 @@ def update_process():
 def update_map():
     """Update a map transform component"""
     sdk = get_sdk()
-    component_id, original_name = find_component_by_type(sdk, "transform.map")
+    component_id, original_name, folder_id = find_component_by_type(sdk, "transform.map")
     if not component_id:
         print("❌ No suitable map component found")
         return False
@@ -107,13 +109,15 @@ def update_map():
     xml = f'''<Component xmlns="http://api.platform.boomi.com/"
            componentId="{component_id}"
            name="Updated {original_name}"
-           type="transform.map">
+           type="transform.map"
+           folderId="{folder_id}">
       <description>Updated data mapping transformation via Python SDK</description>
     </Component>'''
     
     try:
         result = sdk.component.update_component(component_id=component_id, request_body=xml)
         print(f"✅ Map updated: {getattr(result, 'name', 'Success')} (v{getattr(result, 'version', '?')})")
+        print(f"📁 Folder preserved: {getattr(result, 'folder_name', 'Unknown')}")
         return True
     except Exception as e:
         print(f"❌ Map update failed: {e}")
@@ -123,7 +127,7 @@ def update_map():
 def update_db_profile():
     """Update a database profile component"""
     sdk = get_sdk()
-    component_id, original_name = find_component_by_type(sdk, "profile.db")
+    component_id, original_name, folder_id = find_component_by_type(sdk, "profile.db")
     if not component_id:
         print("❌ No suitable database profile found")
         return False
@@ -131,13 +135,15 @@ def update_db_profile():
     xml = f'''<Component xmlns="http://api.platform.boomi.com/"
            componentId="{component_id}"
            name="Updated {original_name}"
-           type="profile.db">
+           type="profile.db"
+           folderId="{folder_id}">
       <description>Updated database profile via Python SDK</description>
     </Component>'''
     
     try:
         result = sdk.component.update_component(component_id=component_id, request_body=xml)
         print(f"✅ DB Profile updated: {getattr(result, 'name', 'Success')} (v{getattr(result, 'version', '?')})")
+        print(f"📁 Folder preserved: {getattr(result, 'folder_name', 'Unknown')}")
         return True
     except Exception as e:
         print(f"❌ DB Profile update failed: {e}")
@@ -147,7 +153,7 @@ def update_db_profile():
 def update_xml_profile():
     """Update an XML profile component"""
     sdk = get_sdk()
-    component_id, original_name = find_component_by_type(sdk, "profile.xml")
+    component_id, original_name, folder_id = find_component_by_type(sdk, "profile.xml")
     if not component_id:
         print("❌ No suitable XML profile found")
         return False
@@ -155,13 +161,15 @@ def update_xml_profile():
     xml = f'''<Component xmlns="http://api.platform.boomi.com/"
            componentId="{component_id}"
            name="Updated {original_name}"
-           type="profile.xml">
+           type="profile.xml"
+           folderId="{folder_id}">
       <description>Updated XML profile via Python SDK</description>
     </Component>'''
     
     try:
         result = sdk.component.update_component(component_id=component_id, request_body=xml)
         print(f"✅ XML Profile updated: {getattr(result, 'name', 'Success')} (v{getattr(result, 'version', '?')})")
+        print(f"📁 Folder preserved: {getattr(result, 'folder_name', 'Unknown')}")
         return True
     except Exception as e:
         print(f"❌ XML Profile update failed: {e}")
@@ -171,7 +179,7 @@ def update_xml_profile():
 def update_json_profile():
     """Update a JSON profile component"""
     sdk = get_sdk()
-    component_id, original_name = find_component_by_type(sdk, "profile.json")
+    component_id, original_name, folder_id = find_component_by_type(sdk, "profile.json")
     if not component_id:
         print("❌ No suitable JSON profile found")
         return False
@@ -179,13 +187,15 @@ def update_json_profile():
     xml = f'''<Component xmlns="http://api.platform.boomi.com/"
            componentId="{component_id}"
            name="Updated {original_name}"
-           type="profile.json">
+           type="profile.json"
+           folderId="{folder_id}">
       <description>Updated JSON profile via Python SDK</description>
     </Component>'''
     
     try:
         result = sdk.component.update_component(component_id=component_id, request_body=xml)
         print(f"✅ JSON Profile updated: {getattr(result, 'name', 'Success')} (v{getattr(result, 'version', '?')})")
+        print(f"📁 Folder preserved: {getattr(result, 'folder_name', 'Unknown')}")
         return True
     except Exception as e:
         print(f"❌ JSON Profile update failed: {e}")

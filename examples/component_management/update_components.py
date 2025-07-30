@@ -44,13 +44,13 @@ def find_component_by_type(sdk, component_type):
         # Find first current version, non-deleted component
         for comp in components.result:
             if comp.deleted == 'false' and comp.current_version == 'true':
-                return comp.component_id, comp.name
-    return None, None
+                return comp.component_id, comp.name, comp.folder_id
+    return None, None, None
 
 # 1. Process Component
 def update_process():
     sdk = get_sdk()
-    component_id, original_name = find_component_by_type(sdk, "process")
+    component_id, original_name, folder_id = find_component_by_type(sdk, "process")
     if not component_id:
         print("❌ No suitable process component found")
         return
@@ -58,7 +58,8 @@ def update_process():
     xml = f'''<Component xmlns="http://api.platform.boomi.com/"
            componentId="{component_id}"
            name="Updated {original_name}"
-           type="process">
+           type="process"
+           folderId="{folder_id}">
       <description>Updated process with enhanced logging via Python SDK</description>
       <object>
         <process xmlns="" allowSimultaneous="false" enableUserLog="true">
@@ -78,6 +79,7 @@ def update_process():
     
     result = sdk.component.update_component(component_id=component_id, request_body=xml)
     print(f"✅ Process updated: {getattr(result, 'name', 'Success')} (v{getattr(result, 'version', '?')})")
+    print(f"📁 Folder preserved: {getattr(result, 'folder_name', 'Unknown')}")
 
 # 2. Map Transform Component  
 def update_map():
