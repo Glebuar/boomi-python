@@ -117,7 +117,7 @@ def get_detailed_component(component_id):
         print("-" * 40)
         print(f"  Name: {getattr(component, 'name', 'N/A')}")
         print(f"  ID: {getattr(component, 'component_id', 'N/A')}")
-        print(f"  Type: {getattr(component, 'type', 'N/A')}")
+        print(f"  Type: {getattr(component, 'type_', 'N/A')}")
         print(f"  Version: {getattr(component, 'version', 'N/A')}")
         print(f"  Folder: {getattr(component, 'folder_full_path', 'N/A')}")
         

@@ -55,7 +55,7 @@ def print_component_details(component, index):
     """Print detailed information for a single component"""
     print(f"   {index:2d}. {getattr(component, 'name', 'N/A')}")
     print(f"       Component ID: {getattr(component, 'component_id', 'N/A')}")
-    print(f"       Type: {getattr(component, 'type', 'N/A')}")
+    print(f"       Type: {getattr(component, 'type_', 'N/A')}")
     print(f"       Version: {getattr(component, 'version', 'N/A')}")
     
     # Show version status
@@ -181,7 +181,7 @@ def query_all_components(show_all=False, component_type=None):
             for component in sorted_components:
                 folder = (getattr(component, 'folder_full_path', None) or 
                          getattr(component, 'folder_name', None) or 'Root')
-                comp_type = getattr(component, 'type', 'Unknown')
+                comp_type = getattr(component, 'type_', 'Unknown')
                 
                 # Print folder header when it changes
                 if folder != current_folder:
@@ -216,7 +216,7 @@ def query_all_components(show_all=False, component_type=None):
             for component in components:
                 folder = (getattr(component, 'folder_full_path', None) or 
                          getattr(component, 'folder_name', None) or 'Root')
-                comp_type = getattr(component, 'type', 'Unknown')
+                comp_type = getattr(component, 'type_', 'Unknown')
                 
                 folder_counts[folder] = folder_counts.get(folder, 0) + 1
                 type_counts[comp_type] = type_counts.get(comp_type, 0) + 1
