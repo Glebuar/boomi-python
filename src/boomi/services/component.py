@@ -1,5 +1,5 @@
 
-from typing import Union
+from typing import Union, Any
 from xml.etree import ElementTree as ET
 from .utils.validator import Validator
 from .utils.base_service import BaseService
@@ -89,7 +89,7 @@ class ComponentService(BaseService):
 
     @cast_models
     def update_component(
-        self, component_id: str, request_body = None
+        self, component_id: str, request_body: Any = None
     ) -> Union[Component, str]:
         """- Full updates only. No partial updates. If part of the object's configuration is omitted, the component will be updated without that configuration.
            - The only exception is for encrypted fields such as passwords. Omitting an encrypted field from the update request will NOT impact the saved value.
