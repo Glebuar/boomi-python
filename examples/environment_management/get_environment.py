@@ -28,7 +28,20 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
 
 from boomi import Boomi
-from boomi.models import EnvironmentQueryConfig
+from boomi.models import (
+    EnvironmentQueryConfig,
+    EnvironmentQueryConfigQueryFilter,
+    EnvironmentSimpleExpression,
+    EnvironmentSimpleExpressionOperator,
+    EnvironmentSimpleExpressionProperty
+)
+
+# Load environment variables from .env file if dotenv is available
+try:
+    from dotenv import load_dotenv
+    load_dotenv('../../.env')
+except ImportError:
+    pass  # dotenv is optional
 
 def list_environments(sdk):
     """List all environments in the account and return them."""
@@ -36,8 +49,13 @@ def list_environments(sdk):
     print("📋 Retrieving all environments in the account...")
     
     try:
-        # Query all environments (no filters = get all)
-        query_config = EnvironmentQueryConfig()
+        # Query all environments - use ISNOTNULL on ID to get all environments
+        expression = EnvironmentSimpleExpression(
+            operator=EnvironmentSimpleExpressionOperator.ISNOTNULL,
+            property=EnvironmentSimpleExpressionProperty.ID
+        )
+        query_filter = EnvironmentQueryConfigQueryFilter(expression=expression)
+        query_config = EnvironmentQueryConfig(query_filter=query_filter)
         query_response = sdk.environment.query_environment(query_config)
         
         # Parse the response to get the list of environments
