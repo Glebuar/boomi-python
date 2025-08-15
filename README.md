@@ -138,19 +138,21 @@ The SDK provides access to all major Boomi Platform API services:
 ```python
 # Query all processes
 processes = sdk.component.query_component(
-    query_filter={
-        "property": "type",
-        "operator": "EQUALS", 
-        "value": "process"
+    request_body={
+        "query_filter": {
+            "property": "type",
+            "operator": "EQUALS", 
+            "value": "process"
+        }
     }
 )
 
 # Get a specific component
-component = sdk.component.get_component(id_="component-id")
+component = sdk.component.get_component(component_id="component-id")
 
 # Update component
 updated = sdk.component.update_component(
-    id_="component-id",
+    component_id="component-id",
     request_body=component_data
 )
 ```

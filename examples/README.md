@@ -21,43 +21,38 @@ PYTHONPATH=../src python sample.py
 **Requirements**: Environment variables for Boomi credentials (see below)
 
 
-### 2. `list_process_components.py` - List Process Components (Build View)
-**Purpose**: Displays all process components in your Boomi account from the Build/development perspective.
+### 2. Component Management Examples
+**Location**: `component_management/` directory
 
-**What it does**:
-- Queries all process components using ComponentMetadata API
-- Shows Build view of processes (not deployment/execution status)
-- Organizes results by folder structure with detailed metadata
-- Filters to current active versions by default, option to show all
-- Provides comprehensive statistics and component information
+**Available Scripts**:
+- `get_component.py` - Retrieve component details and XML configuration
+- `update_component.py` - Update component metadata and configuration
+- `update_component_xml.py` - Update component XML with raw XML approach
+- Various working examples for component operations
 
 **Usage**:
 ```bash
-cd examples
-PYTHONPATH=../src python list_process_components.py [--all]
+cd examples/component_management
+PYTHONPATH=../../src python get_component.py COMPONENT_ID
+PYTHONPATH=../../src python update_component.py COMPONENT_ID
 ```
-
-**Options**:
-- `--all`: Show all versions including deleted and non-current versions
 
 **Requirements**: Environment variables for Boomi credentials
 
-### 3. `create_process.py` - Standalone Process Creation
-**Purpose**: Self-contained example that creates a process with inline XML (no external files needed).
+### 3. Component Metadata Examples  
+**Location**: `component_metadata/` directory
 
-**What it does**:
-- Defines process XML inline within the script
-- Creates a demo process: Start → Message → Stop
-- Demonstrates complete component creation workflow
-- Perfect for distribution and testing
+**Available Scripts**:
+- `list_all_components.py` - List all components with metadata
+- `query_process_components.py` - Query specific process components
 
 **Usage**:
 ```bash
-cd examples
-PYTHONPATH=../src python create_process.py
+cd examples/component_metadata
+PYTHONPATH=../../src python list_all_components.py
 ```
 
-**Requirements**: Only needs environment variables (no external files)
+**Requirements**: Environment variables for Boomi credentials
 
 ---
 
@@ -96,40 +91,36 @@ pip install python-dotenv
 🎉 SUCCESS: Boomi SDK is working correctly!
 ```
 
-### Process Creation Success:
+### Component Management Success:
 ```
-🚀 Boomi Python SDK - Process Creation Demo  
-✅ SDK initialized successfully!
-🔄 Creating process via Component API...
-✅ Process creation successful!
+🚀 Boomi SDK Example: Get Component
+✅ Component retrieved successfully!
+📋 Component Metadata:
+  Name: Sample Process
+  Component ID: 112b4efe-b173-4258-9492-613ead7d52ce
+  Type: process
+  Version: 1
+  Status: CURRENT
 🎉 SUCCESS!
-📍 Check your Boomi Build page to see the new process
 ```
 
-### Process Components Listing:
+### Component Listing Success:
 ```
-🚀 Boomi SDK Example: List Process Components
-🔍 Mode: Showing CURRENT ACTIVE process components only
-🏢 Account: your-account-id
-👤 User: your-username
-📋 Mode: current active versions only
+🚀 Boomi SDK Example: List All Components
+🔍 Querying all components...
+✅ Found 45 total components
+📊 Component Summary:
+  • Processes: 25
+  • Connectors: 15
+  • Maps: 5
 
-🔍 Querying process components...
-✅ Found 33 total process component version(s)
-📊 Showing 19 current active component versions
-💡 14 historical/deleted versions hidden (use --all to show)
-
-📂 Process Components by Folder:
+📂 Components by Folder:
 📁 Folder: Production
-   1. Customer Data Sync Process
-      Component ID: abc123-def456-ghi789
-      Version: 3
-      Status: CURRENT
-      Created: 2025-01-15 by developer@company.com
-      Modified: 2025-01-20 by developer@company.com
+   1. Customer Data Sync Process (process)
+   2. Order Integration Connector (connector)
 
 📊 Summary Statistics:
-  • Total component versions shown: 19
-  • Unique components: 19
-  • Folders with processes: 5
+  • Total components: 45
+  • Active components: 42
+  • Folders: 8
 ```

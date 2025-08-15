@@ -32,13 +32,15 @@ environments = client.environment.query_environment()
 print(f"Found {len(environments.result)} environments")
 
 # Get a specific process component
-process = client.component.get_component(id_="your-process-id")
+process = client.component.get_component(component_id="your-process-id")
 print(f"Process: {process.name}")
 
 # Execute a process
 execution = client.execution_request.execute_process(
-    process_id="your-process-id",
-    atom_id="your-atom-id"
+    request_body={
+        "processId": "your-process-id",
+        "atomId": "your-atom-id"
+    }
 )
 print(f"Execution ID: {execution.execution_id}")
 ```
@@ -98,15 +100,15 @@ client = Boomi(
 ### Async Support
 ```python
 import asyncio
-from boomi import AsyncBoomi
+from boomi import BoomiAsync
 
 async def main():
-    async with AsyncBoomi(
+    client = BoomiAsync(
         account_id="your-account-id",
         access_token="your-api-token"
-    ) as client:
-        environments = await client.environment.query_environment()
-        print(f"Found {len(environments.result)} environments")
+    )
+    environments = await client.environment.query_environment()
+    print(f"Found {len(environments.result)} environments")
 
 asyncio.run(main())
 ```
@@ -122,12 +124,12 @@ client = Boomi(
 
 ### Error Handling
 ```python
-from boomi.exceptions import BoomiAPIError
+from boomi.net.transport.api_error import ApiError
 
 try:
-    process = client.component.get_component(id_="invalid-id")
-except BoomiAPIError as e:
-    print(f"API Error: {e.status_code} - {e.message}")
+    process = client.component.get_component(component_id="invalid-id")
+except ApiError as e:
+    print(f"API Error: {e.status} - {e.message}")
 ```
 
 ## 📚 Common Use Cases
@@ -136,9 +138,11 @@ except BoomiAPIError as e:
 ```python
 # Create a deployment
 deployment = client.deployment.create_deployment(
-    component_id="your-process-id",
-    environment_id="your-environment-id",
-    packaged_component_id="your-package-id"
+    request_body={
+        "componentId": "your-process-id",
+        "environmentId": "your-environment-id",
+        "packagedComponentId": "your-package-id"
+    }
 )
 
 print(f"Deployment created: {deployment.deployment_id}")
@@ -148,10 +152,12 @@ print(f"Deployment created: {deployment.deployment_id}")
 ```python
 # Query recent executions
 executions = client.execution_record.query_execution_record(
-    query_filter={
-        "property": "executionTime",
-        "operator": "GREATER_THAN",
-        "value": "2024-01-01T00:00:00Z"
+    request_body={
+        "query_filter": {
+            "property": "executionTime",
+            "operator": "GREATER_THAN",
+            "value": "2024-01-01T00:00:00Z"
+        }
     }
 )
 
