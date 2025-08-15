@@ -1,5 +1,6 @@
 
 from typing import Union
+from xml.etree import ElementTree as ET
 from .utils.validator import Validator
 from .utils.base_service import BaseService
 from ..net.transport.serializer import Serializer
@@ -158,3 +159,132 @@ class ComponentService(BaseService):
 
         response, status, content = self.send_request(serialized_request)
         return ComponentBulkResponse._unmap(response)
+
+    # ========== Phase 1: Raw XML Support ==========
+    # These methods provide direct XML access without any dict conversion
+    # This preserves XML structure exactly for complex components
+    
+    def get_component_raw(self, component_id: str) -> str:
+        """Get component as raw XML string without any parsing or conversion.
+        
+        This method preserves the exact XML structure returned by the API,
+        including namespaces, element order, and attributes. Use this when
+        you need full control over the XML or when dealing with complex
+        components that fail with dict-based approaches.
+        
+        :param component_id: The ID of the component
+        :type component_id: str
+        :return: Raw XML string exactly as returned by the API
+        :rtype: str
+        """
+        Validator(str).validate(component_id)
+        
+        serialized_request = (
+            Serializer(
+                f"{self.base_url or Environment.DEFAULT.url}/Component/{{componentId}}",
+                [self.get_access_token(), self.get_basic_auth()],
+            )
+            .add_path("componentId", component_id)
+            .serialize()
+            .set_method("GET")
+        )
+        
+        # Return raw response without any parsing
+        response, status, content = self.send_request(serialized_request)
+        if status >= 200 and status < 300:
+            return response  # Return raw XML string
+        raise ApiError(f"Failed to get component: HTTP {status}", status, response)
+    
+    def update_component_raw(self, component_id: str, xml: str) -> str:
+        """Update component with raw XML string.
+        
+        This method sends the XML directly to the API without any conversion,
+        preserving the exact structure you provide. Use this when you need
+        full control over the XML or when dealing with complex components.
+        
+        :param component_id: The ID of the component
+        :type component_id: str
+        :param xml: Raw XML string to send to the API
+        :type xml: str
+        :return: Raw XML response from the API
+        :rtype: str
+        """
+        Validator(str).validate(component_id)
+        Validator(str).validate(xml)
+        
+        serialized_request = (
+            Serializer(
+                f"{self.base_url or Environment.DEFAULT.url}/Component/{{componentId}}",
+                [self.get_access_token(), self.get_basic_auth()],
+            )
+            .add_path("componentId", component_id)
+            .serialize()
+            .set_method("POST")
+            .set_body(xml, "application/xml")
+        )
+        
+        response, status, content = self.send_request(serialized_request)
+        if status >= 200 and status < 300:
+            return response  # Return raw XML response
+        raise ApiError(f"Failed to update component: HTTP {status}", status, response)
+    
+    def get_component_etree(self, component_id: str) -> ET.Element:
+        """Get component as ElementTree for DOM manipulation.
+        
+        This method returns an ElementTree Element that you can manipulate
+        using standard XML DOM methods while preserving structure.
+        
+        :param component_id: The ID of the component
+        :type component_id: str
+        :return: ElementTree Element root
+        :rtype: xml.etree.ElementTree.Element
+        """
+        xml = self.get_component_raw(component_id)
+        root = ET.fromstring(xml)
+        
+        # Register namespaces to preserve them on serialization
+        ns = self._get_default_namespace(root)
+        if ns:
+            ET.register_namespace("", ns)  # Register default namespace
+        
+        # Also register bns namespace
+        ET.register_namespace("bns", "http://api.platform.boomi.com/")
+        
+        return root
+    
+    def update_component_etree(self, component_id: str, element: ET.Element) -> str:
+        """Update component from ElementTree Element.
+        
+        This method serializes the ElementTree back to XML and sends it to
+        the API, preserving the structure of your DOM manipulations.
+        
+        :param component_id: The ID of the component
+        :type component_id: str
+        :param element: ElementTree Element to serialize and send
+        :type element: xml.etree.ElementTree.Element
+        :return: Raw XML response from the API
+        :rtype: str
+        """
+        # Ensure namespaces are registered
+        ns = self._get_default_namespace(element)
+        if ns:
+            ET.register_namespace("", ns)
+        ET.register_namespace("bns", "http://api.platform.boomi.com/")
+        
+        # Convert Element to XML string
+        xml = ET.tostring(element, encoding='unicode', xml_declaration=True)
+        
+        # Update using raw XML method
+        return self.update_component_raw(component_id, xml)
+    
+    @staticmethod
+    def _get_default_namespace(element: ET.Element) -> str:
+        """Extract default namespace from an element.
+        
+        :param element: ElementTree Element
+        :return: Default namespace URI or None
+        """
+        tag = element.tag
+        if tag.startswith("{") and "}" in tag:
+            return tag[1:tag.index("}")]
+        return None

@@ -52,7 +52,14 @@ def format_date(date_str):
     return date_str or 'N/A'
 
 def dict_to_xml(obj, indent=0):
-    """Convert dictionary/object structure to XML string with proper attribute handling"""
+    """Convert dictionary to XML matching Boomi's exact format.
+    
+    Key rules:
+    1. Elements with only attributes and no children are self-closing
+    2. Simple values at dict level become attributes  
+    3. Complex values (dict/list) become child elements
+    4. None/null values become self-closing empty elements
+    """
     if obj is None:
         return ""
     
@@ -65,49 +72,69 @@ def dict_to_xml(obj, indent=0):
                 continue
                 
             if isinstance(value, dict):
-                if value:
-                    # Check if this dict has attributes (string/number values) vs child elements
-                    attrs = []
-                    children = []
-                    
-                    for k, v in value.items():
-                        if isinstance(v, (str, int, float, bool)) and v is not None:
-                            attrs.append(f'{k}="{v}"')
+                # Separate attributes from child elements
+                attrs = []
+                children = {}
+                
+                for k, v in value.items():
+                    if k.startswith('_'):
+                        continue
+                    # Simple values become attributes
+                    if isinstance(v, (str, int, float, bool)) and v is not None:
+                        if isinstance(v, bool):
+                            attrs.append(f'{k}="{str(v).lower()}"')
                         else:
-                            children.append((k, v))
-                    
-                    # Build the element
-                    if attrs and not children:
-                        # All attributes, no children - self-closing tag
-                        xml_parts.append(f"{indent_str}<{key} {' '.join(attrs)}/>")
-                    elif attrs and children:
-                        # Has both attributes and children
-                        xml_parts.append(f"{indent_str}<{key} {' '.join(attrs)}>")
-                        for child_key, child_value in children:
-                            xml_parts.append(dict_to_xml({child_key: child_value}, indent + 1))
-                        xml_parts.append(f"{indent_str}</{key}>")
-                    elif children:
-                        # Only children, no attributes
-                        xml_parts.append(f"{indent_str}<{key}>")
-                        xml_parts.append(dict_to_xml(value, indent + 1))
-                        xml_parts.append(f"{indent_str}</{key}>")
+                            # Escape quotes and ampersands in attribute values
+                            escaped = str(v).replace('&', '&amp;').replace('"', '&quot;')
+                            attrs.append(f'{k}="{escaped}"')
                     else:
-                        # Empty dict
-                        xml_parts.append(f"{indent_str}<{key}/>")
-                else:
-                    # Empty dict
+                        # Complex values become child elements
+                        children[k] = v
+                
+                # Build the element
+                if not children and attrs:
+                    # Only attributes, no children - self-closing tag
+                    xml_parts.append(f"{indent_str}<{key} {' '.join(attrs)}/>")
+                elif children:
+                    # Has children (with or without attributes)
+                    if attrs:
+                        xml_parts.append(f"{indent_str}<{key} {' '.join(attrs)}>")
+                    else:
+                        xml_parts.append(f"{indent_str}<{key}>")
+                    
+                    # Add child elements
+                    child_xml = dict_to_xml(children, indent + 1)
+                    if child_xml:
+                        xml_parts.append(child_xml)
+                    
+                    # Closing tag
+                    xml_parts.append(f"{indent_str}</{key}>")
+                elif not value:
+                    # Empty dict, no attributes
                     xml_parts.append(f"{indent_str}<{key}/>")
+                else:
+                    # Has no attrs and no children but is not empty (edge case)
+                    xml_parts.append(f"{indent_str}<{key}/>")
+                    
             elif isinstance(value, list):
+                # Each list item becomes a separate element
                 for item in value:
                     if isinstance(item, dict):
-                        xml_parts.append(dict_to_xml({key: item}, indent))
+                        # Recursively process dict items in list
+                        item_xml = dict_to_xml({key: item}, indent)
+                        if item_xml:
+                            xml_parts.append(item_xml)
                     else:
+                        # Simple values in list
                         escaped_item = str(item).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
                         xml_parts.append(f"{indent_str}<{key}>{escaped_item}</{key}>")
+                        
             elif value is None:
+                # None becomes self-closing tag
                 xml_parts.append(f"{indent_str}<{key}/>")
+                
             else:
-                # Escape XML special characters
+                # Simple values at root level become elements
                 escaped_value = str(value).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
                 xml_parts.append(f"{indent_str}<{key}>{escaped_value}</{key}>")
     
@@ -165,10 +192,17 @@ def update_component(component_id, new_name=None, new_description=None):
         print(f"📁 Folder: {folder_name} (ID: {folder_id})")
         
         # Build the update XML in the exact format that works (based on OpenAPI spec)
+        # Include branch attributes if they exist
+        branch_attrs = ""
+        if hasattr(existing, 'branch_name') and existing.branch_name:
+            branch_attrs += f' branchName="{existing.branch_name}"'
+        if hasattr(existing, 'branch_id') and existing.branch_id:
+            branch_attrs += f' branchId="{existing.branch_id}"'
+            
         xml = f'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <bns:Component
 \txmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-\txmlns:bns="http://api.platform.boomi.com/" folderFullPath="{getattr(existing, 'folder_full_path', '')}" componentId="{component_id}" version="{getattr(existing, 'version', '')}" name="{updated_name}" type="{component_type}" createdDate="{getattr(existing, 'created_date', '')}" createdBy="{getattr(existing, 'created_by', '')}" modifiedDate="{getattr(existing, 'modified_date', '')}" modifiedBy="{getattr(existing, 'modified_by', '')}" deleted="{str(getattr(existing, 'deleted', False)).lower()}" currentVersion="{str(getattr(existing, 'current_version', False)).lower()}" folderName="{folder_name}" folderId="{folder_id}">
+\txmlns:bns="http://api.platform.boomi.com/" folderFullPath="{getattr(existing, 'folder_full_path', '')}" componentId="{component_id}" version="{getattr(existing, 'version', '')}" name="{updated_name}" type="{component_type}" createdDate="{getattr(existing, 'created_date', '')}" createdBy="{getattr(existing, 'created_by', '')}" modifiedDate="{getattr(existing, 'modified_date', '')}" modifiedBy="{getattr(existing, 'modified_by', '')}" deleted="{str(getattr(existing, 'deleted', False)).lower()}" currentVersion="{str(getattr(existing, 'current_version', False)).lower()}" folderName="{folder_name}" folderId="{folder_id}"{branch_attrs}>
 \t<bns:encryptedValues/>'''
         
         # Add description if provided
@@ -179,13 +213,37 @@ def update_component(component_id, new_name=None, new_description=None):
         if hasattr(existing, 'object') and existing.object:
             xml += '\n\t<bns:object>'
             
-            # Convert the object structure to XML
+            # Get the object dict
             obj_dict = existing.object if isinstance(existing.object, dict) else {}
             
-            # Add the object content with proper indentation
-            object_xml = dict_to_xml(obj_dict, 2)
+            # Generate XML with correct format
+            object_xml = dict_to_xml(obj_dict, 0)
+            
+            # Add xmlns="" to the root element of the object content
             if object_xml:
-                xml += '\n' + object_xml
+                lines = object_xml.split('\n')
+                if lines and lines[0].startswith('<'):
+                    first_line = lines[0]
+                    # Insert xmlns="" after the element name
+                    if ' ' in first_line and not '>' in first_line.split(' ', 1)[0]:
+                        # Has attributes - insert after element name
+                        parts = first_line.split(' ', 1)
+                        lines[0] = parts[0] + ' xmlns=""' + ' ' + parts[1]
+                    elif first_line.endswith('/>'):
+                        # Self-closing with no attributes
+                        lines[0] = first_line.replace('/>', ' xmlns=""/>', 1)
+                    else:
+                        # Opening tag with no attributes
+                        lines[0] = first_line.replace('>', ' xmlns="">', 1)
+                    object_xml = '\n'.join(lines)
+            
+            # Indent the object content properly
+            if object_xml:
+                indented_lines = []
+                for line in object_xml.split('\n'):
+                    if line.strip():  # Skip empty lines
+                        indented_lines.append('\t\t' + line)
+                xml += '\n' + '\n'.join(indented_lines)
             
             xml += '\n\t</bns:object>'
         
