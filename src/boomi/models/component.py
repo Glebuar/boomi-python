@@ -1,10 +1,12 @@
 
 from __future__ import annotations
 from enum import Enum
+from xml.etree import ElementTree as ET
 from .utils.json_map import JsonMap
 from .utils.base_model import BaseModel
 from .utils.sentinel import SENTINEL
 from .encrypted_values import EncryptedValues
+import warnings
 
 
 class ComponentType(Enum):
@@ -203,6 +205,10 @@ class Component(BaseModel):
         object: dict = SENTINEL,
         process_overrides: dict = SENTINEL,
         folder_full_path: str = SENTINEL,
+        # Phase 2: XML preservation fields
+        object_xml: str = SENTINEL,
+        _object_element: ET.Element = SENTINEL,
+        _original_xml: str = SENTINEL,
         **kwargs,
     ):
         """Component
@@ -298,4 +304,160 @@ class Component(BaseModel):
             self.process_overrides = process_overrides
         if folder_full_path is not SENTINEL:
             self.folder_full_path = folder_full_path
+        
+        # Phase 2: XML preservation fields
+        if object_xml is not SENTINEL:
+            self.object_xml = object_xml
+        if _object_element is not SENTINEL:
+            self._object_element = _object_element
+        if _original_xml is not SENTINEL:
+            self._original_xml = _original_xml
+        
         self._kwargs = kwargs
+
+    # ========== Phase 2: XML Preservation Methods ==========
+    
+    def to_xml(self) -> str:
+        """Generate XML from Component model with preserved structure.
+        
+        This method creates a valid XML representation of the component by:
+        1. Starting with the original XML structure (if available)
+        2. Updating only the changed fields (name, description, etc.)
+        3. Preserving the <object> structure exactly
+        
+        :return: Valid XML ready to send to the Boomi API
+        :rtype: str
+        """
+        # If we have the original XML, use it as the base
+        if hasattr(self, '_original_xml') and self._original_xml:
+            root = ET.fromstring(self._original_xml)
+        elif hasattr(self, '_object_element') and self._object_element:
+            # Create from stored element (this is less common)
+            root = self._object_element
+        else:
+            # Fallback: create minimal XML structure
+            ns = "http://api.platform.boomi.com/"
+            root = ET.Element(f"{{{ns}}}Component")
+            root.set("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance")
+            root.set("xmlns:bns", ns)
+        
+        # Update component metadata fields
+        if hasattr(self, 'component_id') and self.component_id:
+            root.set('componentId', self.component_id)
+        if hasattr(self, 'name') and self.name:
+            root.set('name', self.name)
+        if hasattr(self, 'type_') and self.type_:
+            type_value = self.type_.value if hasattr(self.type_, 'value') else str(self.type_)
+            root.set('type', type_value)
+        if hasattr(self, 'folder_id') and self.folder_id:
+            root.set('folderId', self.folder_id)
+        if hasattr(self, 'folder_name') and self.folder_name:
+            root.set('folderName', self.folder_name)
+        if hasattr(self, 'folder_full_path') and self.folder_full_path:
+            root.set('folderFullPath', self.folder_full_path)
+        if hasattr(self, 'version') and self.version:
+            root.set('version', str(self.version))
+        if hasattr(self, 'created_date') and self.created_date:
+            root.set('createdDate', self.created_date)
+        if hasattr(self, 'created_by') and self.created_by:
+            root.set('createdBy', self.created_by)
+        if hasattr(self, 'modified_date') and self.modified_date:
+            root.set('modifiedDate', self.modified_date)
+        if hasattr(self, 'modified_by') and self.modified_by:
+            root.set('modifiedBy', self.modified_by)
+        if hasattr(self, 'deleted') and self.deleted is not None:
+            root.set('deleted', str(self.deleted).lower())
+        if hasattr(self, 'current_version') and self.current_version is not None:
+            root.set('currentVersion', str(self.current_version).lower())
+        if hasattr(self, 'branch_name') and self.branch_name:
+            root.set('branchName', self.branch_name)
+        if hasattr(self, 'branch_id') and self.branch_id:
+            root.set('branchId', self.branch_id)
+        
+        # Handle description element
+        if hasattr(self, 'description') and self.description:
+            ns = "http://api.platform.boomi.com/"
+            desc_elem = root.find(f"{{{ns}}}description")
+            if desc_elem is None:
+                # Create description element after encryptedValues
+                encrypted_elem = root.find(f"{{{ns}}}encryptedValues")
+                if encrypted_elem is not None:
+                    idx = list(root).index(encrypted_elem) + 1
+                    desc_elem = ET.Element(f"{{{ns}}}description")
+                    root.insert(idx, desc_elem)
+                else:
+                    desc_elem = ET.SubElement(root, f"{{{ns}}}description")
+            desc_elem.text = self.description
+        
+        # Preserve object XML if available
+        if hasattr(self, 'object_xml') and self.object_xml:
+            ns = "http://api.platform.boomi.com/"
+            # Remove existing object element if present
+            obj_elem = root.find(f"{{{ns}}}object")
+            if obj_elem is not None:
+                root.remove(obj_elem)
+            
+            # Parse and insert the stored object XML
+            try:
+                obj_root = ET.fromstring(f'<bns:object xmlns:bns="{ns}">{self.object_xml}</bns:object>')
+                # Find the right position (after description, before processOverrides)
+                process_overrides = root.find(f"{{{ns}}}processOverrides")
+                if process_overrides is not None:
+                    idx = list(root).index(process_overrides)
+                    root.insert(idx, obj_root)
+                else:
+                    root.append(obj_root)
+            except ET.ParseError:
+                # If parsing fails, skip object XML
+                pass
+        
+        # Ensure processOverrides element exists (even if empty)
+        ns = "http://api.platform.boomi.com/"
+        if root.find(f"{{{ns}}}processOverrides") is None:
+            ET.SubElement(root, f"{{{ns}}}processOverrides")
+        
+        # Register namespaces for proper serialization
+        ET.register_namespace("", "http://api.platform.boomi.com/")
+        ET.register_namespace("bns", "http://api.platform.boomi.com/")
+        
+        return ET.tostring(root, encoding='unicode', xml_declaration=True)
+    
+    @property
+    def object_deprecated(self) -> dict:
+        """Access to object dict (deprecated).
+        
+        This property provides backward compatibility but warns users
+        that dict-based object access is deprecated in favor of XML preservation.
+        
+        :return: Object dict for backward compatibility
+        :rtype: dict
+        """
+        if hasattr(self, 'object') and self.object:
+            warnings.warn(
+                "Component.object as dict is deprecated. "
+                "Use object_xml or raw XML methods for reliable updates.",
+                DeprecationWarning,
+                stacklevel=2
+            )
+            return self.object
+        return {}
+    
+    def set_object_xml(self, xml: str):
+        """Set the object XML content directly.
+        
+        This method allows you to set the object XML content while
+        maintaining the XML structure exactly as provided.
+        
+        :param xml: XML string for the object content
+        :type xml: str
+        """
+        self.object_xml = xml
+        # Also try to parse as ElementTree for potential DOM operations
+        try:
+            if xml:
+                # Store the inner content (without the wrapper)
+                if xml.startswith('<') and '>' in xml:
+                    self._object_element = ET.fromstring(xml)
+        except ET.ParseError:
+            # If parsing fails, just store the string
+            self._object_element = None

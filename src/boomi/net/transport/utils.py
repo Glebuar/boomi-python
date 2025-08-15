@@ -233,3 +233,45 @@ def parse_xml_to_dict(xml_string: str) -> dict:
     cleaned = _remove_namespaces(parsed)
     return _extract_component_data(cleaned)
 
+
+def parse_xml_to_dict_with_preservation(xml_string: str) -> dict:
+    """Parse XML to dict while preserving original XML for round-tripping.
+    
+    This function works like parse_xml_to_dict but also stores the original
+    XML and object element for perfect round-trip preservation. Used by
+    Component model to enable lossless XML updates.
+    
+    :param xml_string: The XML string to parse
+    :type xml_string: str
+    :return: Dict with additional XML preservation fields
+    :rtype: dict
+    """
+    from xml.etree import ElementTree as ET
+    
+    # First, do the normal parsing for backward compatibility
+    result = parse_xml_to_dict(xml_string)
+    
+    # Now add XML preservation data
+    try:
+        root = ET.fromstring(xml_string)
+        
+        # Store the original XML
+        result['_original_xml'] = xml_string
+        
+        # Extract and store the object element as raw XML
+        ns = "http://api.platform.boomi.com/"
+        obj_elem = root.find(f"{{{ns}}}object")
+        if obj_elem is not None:
+            # Store the inner XML (the content inside <bns:object>)
+            inner_xml = ""
+            for child in obj_elem:
+                inner_xml += ET.tostring(child, encoding='unicode')
+            result['object_xml'] = inner_xml
+            result['_object_element'] = obj_elem
+        
+    except ET.ParseError:
+        # If XML parsing fails, just use the regular result
+        pass
+    
+    return result
+

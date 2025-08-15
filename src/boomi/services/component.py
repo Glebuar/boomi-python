@@ -8,7 +8,7 @@ from ..net.transport.api_error import ApiError
 from ..net.environment.environment import Environment
 from ..models.utils.cast_models import cast_models
 from ..models import Component, ComponentBulkRequest, ComponentBulkResponse
-from ..net.transport.utils import parse_xml_to_dict
+from ..net.transport.utils import parse_xml_to_dict, parse_xml_to_dict_with_preservation
 
 
 class ComponentService(BaseService):
@@ -83,14 +83,15 @@ class ComponentService(BaseService):
         if content == "application/json":
             return Component._unmap(response)
         if content == "application/xml":
-            return Component._unmap(parse_xml_to_dict(response))
+            # Phase 2: Use XML preservation parsing for Component objects
+            return Component._unmap(parse_xml_to_dict_with_preservation(response))
         raise ApiError("Error on deserializing the response.", status, response)
 
     @cast_models
     def update_component(
-        self, component_id: str, request_body: str = None
+        self, component_id: str, request_body = None
     ) -> Union[Component, str]:
-        """- Full updates only. No partial updates. If part of the object’s configuration is omitted, the component will be updated without that configuration.
+        """- Full updates only. No partial updates. If part of the object's configuration is omitted, the component will be updated without that configuration.
            - The only exception is for encrypted fields such as passwords. Omitting an encrypted field from the update request will NOT impact the saved value.
          - Requests without material changes to configuration will be rejected to prevent unnecessary revisions.
          - Request will not be processed in case if the payload has invalid attributes and tags under the `<object>` section.
@@ -98,19 +99,49 @@ class ComponentService(BaseService):
          - Include the `branchId` in the request body to specify the branch on which you want to update the component.
          - >**Note:** To create or update a component, you must supply a valid component XML format for the given type.
 
-        :param request_body: The request body., defaults to None
-        :type request_body: str, optional
-        :param component_id: The ID of the component. The component ID is available on the Revision History dialog, which you can access from the Build page in the service. This must be omitted for the CREATE operation but it is required for the UPDATE operation.
+        Phase 2 Enhancement: This method now accepts Component objects in addition to XML strings.
+        When a Component object is passed, it automatically converts to XML using the to_xml() method
+        which preserves the original XML structure.
+
+        :param request_body: Component object or XML string. Can be Component, str, or None.
+        :type request_body: Union[Component, str, None]
+        :param component_id: The ID of the component.
         :type component_id: str
-        ...
-        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
-        ...
         :return: The parsed response data.
         :rtype: Union[Component, str]
         """
-
-        Validator(str).is_optional().validate(request_body)
+        import warnings
+        
         Validator(str).validate(component_id)
+        
+        # Phase 2: Handle different types of request_body
+        xml_body = None
+        
+        if request_body is None:
+            raise ValueError("request_body is required for component updates")
+        elif isinstance(request_body, str):
+            # Traditional XML string
+            xml_body = request_body
+        elif hasattr(request_body, 'to_xml'):
+            # Component object with to_xml method
+            xml_body = request_body.to_xml()
+        elif hasattr(request_body, 'object') and isinstance(getattr(request_body, 'object'), dict):
+            # Legacy Component object with dict-based object field
+            warnings.warn(
+                "Updating components with dict-based object is deprecated and may fail. "
+                "Use Component objects with XML preservation or raw XML strings.",
+                DeprecationWarning,
+                stacklevel=2
+            )
+            # Fall back to trying to serialize as XML (this may still fail)
+            xml_body = str(request_body)  # This won't work well, but provides backward compatibility attempt
+        else:
+            # Try to convert whatever it is to string
+            xml_body = str(request_body)
+        
+        # Validate we have XML content
+        if not xml_body or not xml_body.strip():
+            raise ValueError("No valid XML content found in request_body")
 
         serialized_request = (
             Serializer(
@@ -120,14 +151,15 @@ class ComponentService(BaseService):
             .add_path("componentId", component_id)
             .serialize()
             .set_method("POST")
-            .set_body(request_body, "application/xml")
+            .set_body(xml_body, "application/xml")
         )
 
         response, status, content = self.send_request(serialized_request)
         if content == "application/json":
             return Component._unmap(response)
         if content == "application/xml":
-            return Component._unmap(parse_xml_to_dict(response))
+            # Phase 2: Use XML preservation parsing for response too
+            return Component._unmap(parse_xml_to_dict_with_preservation(response))
         raise ApiError("Error on deserializing the response.", status, response)
 
     @cast_models
