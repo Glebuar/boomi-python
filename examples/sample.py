@@ -1,8 +1,12 @@
 import os
-from dotenv import load_dotenv
 from boomi import Boomi
 
-load_dotenv()
+# Load environment variables from .env file if dotenv is available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
 
 print("🚀 Boomi Python SDK - Sample Application")
 print("=" * 45)

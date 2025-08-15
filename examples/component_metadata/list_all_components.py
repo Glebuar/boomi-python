@@ -127,11 +127,11 @@ def query_all_components(show_all=False, component_type=None):
             query_filter = ComponentMetadataQueryConfigQueryFilter(expression=expression)
             query_config = ComponentMetadataQueryConfig(query_filter=query_filter)
         else:
-            # Query for all components - create a dummy filter that matches everything
+            # Query for all components - use a filter that matches all components
             expression = ComponentMetadataSimpleExpression(
-                operator=ComponentMetadataSimpleExpressionOperator.CONTAINS,
+                operator=ComponentMetadataSimpleExpressionOperator.LIKE,
                 property=ComponentMetadataSimpleExpressionProperty.NAME,
-                argument=[""]  # Empty string should match all names
+                argument=["%"]  # Wildcard that matches all names
             )
             query_filter = ComponentMetadataQueryConfigQueryFilter(expression=expression)
             query_config = ComponentMetadataQueryConfig(query_filter=query_filter)
