@@ -1,4 +1,5 @@
 
+from typing import List
 from .utils.json_map import JsonMap
 from .utils.base_model import BaseModel
 from .utils.sentinel import SENTINEL
@@ -114,23 +115,23 @@ class Addition(BaseModel):
     :param total: Total number of additions, defaults to None
     :type total: int, optional
     :param change: change, defaults to None
-    :type change: AdditionChange, optional
+    :type change: List[AdditionChange], optional
     """
 
     def __init__(
-        self, total: int = SENTINEL, change: AdditionChange = SENTINEL, **kwargs
+        self, total: int = SENTINEL, change: List[AdditionChange] = SENTINEL, **kwargs
     ):
         """Addition
 
         :param total: Total number of additions, defaults to None
         :type total: int, optional
         :param change: change, defaults to None
-        :type change: AdditionChange, optional
+        :type change: List[AdditionChange], optional
         """
         if total is not SENTINEL:
             self.total = total
         if change is not SENTINEL:
-            self.change = self._define_object(change, AdditionChange)
+            self.change = self._define_list(change, AdditionChange)
         self._kwargs = kwargs
 
 
@@ -219,23 +220,101 @@ class Modification(BaseModel):
     :param total: Total number of modifications, defaults to None
     :type total: int, optional
     :param change: change, defaults to None
-    :type change: ModificationChange, optional
+    :type change: List[ModificationChange], optional
     """
 
     def __init__(
-        self, total: int = SENTINEL, change: ModificationChange = SENTINEL, **kwargs
+        self, total: int = SENTINEL, change: List[ModificationChange] = SENTINEL, **kwargs
     ):
         """Modification
 
         :param total: Total number of modifications, defaults to None
         :type total: int, optional
         :param change: change, defaults to None
-        :type change: ModificationChange, optional
+        :type change: List[ModificationChange], optional
         """
         if total is not SENTINEL:
             self.total = total
         if change is not SENTINEL:
-            self.change = self._define_object(change, ModificationChange)
+            self.change = self._define_list(change, ModificationChange)
+        self._kwargs = kwargs
+
+
+@JsonMap(
+    {
+        "type_": "type",
+        "changed_particle_name": "changedParticleName",
+        "element_key": "elementKey",
+        "old_value": "oldValue",
+    }
+)
+class DeletionChange(BaseModel):
+    """DeletionChange
+
+    :param type_: Type of change (e.g., element), defaults to None
+    :type type_: str, optional
+    :param changed_particle_name: Name of the particle that changed, defaults to None
+    :type changed_particle_name: str, optional
+    :param element_key: element_key, defaults to None
+    :type element_key: ChangeElementKey1, optional
+    :param old_value: Old value of the element in the diff, defaults to None
+    :type old_value: str, optional
+    """
+
+    def __init__(
+        self,
+        type_: str = SENTINEL,
+        changed_particle_name: str = SENTINEL,
+        element_key: ChangeElementKey1 = SENTINEL,
+        old_value: str = SENTINEL,
+        **kwargs
+    ):
+        """DeletionChange
+
+        :param type_: Type of change (e.g., element), defaults to None
+        :type type_: str, optional
+        :param changed_particle_name: Name of the particle that changed, defaults to None
+        :type changed_particle_name: str, optional
+        :param element_key: element_key, defaults to None
+        :type element_key: ChangeElementKey1, optional
+        :param old_value: Old value of the element in the diff, defaults to None
+        :type old_value: str, optional
+        """
+        if type_ is not SENTINEL:
+            self.type_ = type_
+        if changed_particle_name is not SENTINEL:
+            self.changed_particle_name = changed_particle_name
+        if element_key is not SENTINEL:
+            self.element_key = self._define_object(element_key, ChangeElementKey1)
+        if old_value is not SENTINEL:
+            self.old_value = old_value
+        self._kwargs = kwargs
+
+
+@JsonMap({})
+class Deletion(BaseModel):
+    """Deletion
+
+    :param total: Total number of deletions, defaults to None
+    :type total: int, optional
+    :param change: change, defaults to None
+    :type change: List[DeletionChange], optional
+    """
+
+    def __init__(
+        self, total: int = SENTINEL, change: List[DeletionChange] = SENTINEL, **kwargs
+    ):
+        """Deletion
+
+        :param total: Total number of deletions, defaults to None
+        :type total: int, optional
+        :param change: change, defaults to None
+        :type change: List[DeletionChange], optional
+        """
+        if total is not SENTINEL:
+            self.total = total
+        if change is not SENTINEL:
+            self.change = self._define_list(change, DeletionChange)
         self._kwargs = kwargs
 
 
@@ -245,6 +324,8 @@ class GenericDiff(BaseModel):
 
     :param addition: addition, defaults to None
     :type addition: Addition, optional
+    :param deletion: deletion, defaults to None
+    :type deletion: Deletion, optional
     :param modification: modification, defaults to None
     :type modification: Modification, optional
     """
@@ -252,6 +333,7 @@ class GenericDiff(BaseModel):
     def __init__(
         self,
         addition: Addition = SENTINEL,
+        deletion: Deletion = SENTINEL,
         modification: Modification = SENTINEL,
         **kwargs
     ):
@@ -259,11 +341,15 @@ class GenericDiff(BaseModel):
 
         :param addition: addition, defaults to None
         :type addition: Addition, optional
+        :param deletion: deletion, defaults to None
+        :type deletion: Deletion, optional
         :param modification: modification, defaults to None
         :type modification: Modification, optional
         """
         if addition is not SENTINEL:
             self.addition = self._define_object(addition, Addition)
+        if deletion is not SENTINEL:
+            self.deletion = self._define_object(deletion, Deletion)
         if modification is not SENTINEL:
             self.modification = self._define_object(modification, Modification)
         self._kwargs = kwargs

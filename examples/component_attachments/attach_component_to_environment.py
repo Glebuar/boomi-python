@@ -23,7 +23,7 @@ Usage:
     ENVIRONMENT_ID   The environment ID to attach to
     
     Examples:
-    python attach_component_to_environment.py 112b4efe-b173-4258-9492-613ead7d52ce afeeb4ea-3bb9-4640-b41e-f6aba08d3c41
+    python attach_component_to_environment.py 112b4efe-b173-4258-9492-613ead7d52ce 74851c30-98b2-4a6f-838b-61eee5627b13
 """
 
 import os
@@ -83,7 +83,7 @@ def attach_component_to_environment(component_id, environment_id):
         
         # Verify environment exists  
         print("🌍 Checking environment...")
-        environment = sdk.environment.get_environment(environment_id=environment_id)
+        environment = sdk.environment.get_environment(id_=environment_id)
         env_name = getattr(environment, 'name', 'N/A')
         env_classification = getattr(environment, 'classification', 'N/A')
         print(f"✅ Environment found: {env_name} ({env_classification})")
@@ -170,7 +170,7 @@ def main():
         print("\nUsage:")
         print(f"  {sys.argv[0]} COMPONENT_ID ENVIRONMENT_ID")
         print("\nExamples:")
-        print(f"  {sys.argv[0]} 112b4efe-b173-4258-9492-613ead7d52ce afeeb4ea-3bb9-4640-b41e-f6aba08d3c41")
+        print(f"  {sys.argv[0]} 112b4efe-b173-4258-9492-613ead7d52ce 74851c30-98b2-4a6f-838b-61eee5627b13")
         print("\n💡 Use list_all_components.py to find component IDs")
         print("💡 Use list_environments.py to find environment IDs")
         return

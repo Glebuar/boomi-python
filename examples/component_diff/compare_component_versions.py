@@ -171,63 +171,91 @@ def compare_component_versions(component_id, version1, version2):
     print(f"\n🔄 Creating diff request...")
     
     try:
-        # Get the component with specific version for diff
-        # Note: The API expects the full component object for diff
-        component_v1 = sdk.component.get_component(component_id=component_id)
+        # Create proper ComponentDiffRequest with the correct structure
+        from boomi.models import ComponentDiffRequest
         
-        # Create diff request using the full component
+        diff_request = ComponentDiffRequest(
+            component_id=component_id,
+            source_version=int(version1),
+            target_version=int(version2)
+        )
+        
         result = sdk.component_diff_request.create_component_diff_request(
-            request_body=component_v1
+            request_body=diff_request
         )
         
         print("✅ Diff request created successfully!")
         print(f"📊 Response type: {type(result).__name__}")
         
-        # Extract diff response
-        if hasattr(result, '_kwargs') and result._kwargs:
-            print(f"📋 Response contains: {list(result._kwargs.keys())}")
-        
-        # Try to extract the actual diff content
-        diff_message = None
-        diff_xml = None
-        
-        if hasattr(result, 'message'):
-            diff_message = result.message
-        elif hasattr(result, '_kwargs') and 'message' in result._kwargs:
-            diff_message = result._kwargs['message']
-        
-        # Look for diff XML content
-        if hasattr(result, '_raw_response'):
-            diff_xml = result._raw_response
-        
-        # Display results
+        # Extract and display diff details
         print(f"\n📋 Component Diff Results:")
         print("=" * 60)
         print(f"  Component: {component_name}")
         print(f"  Type: {component_type}")
         print(f"  Comparing: v{version1} → v{version2}")
         
-        if diff_message:
-            print(f"  Message: {diff_message}")
-        
-        # Note: The actual diff implementation depends on the API response format
-        # This is a simplified example showing the structure
-        print(f"\n💡 Diff Analysis:")
-        print("  • This endpoint creates a diff request for component comparison")
-        print("  • The actual diff visualization is typically handled by the Boomi UI")
-        print("  • For programmatic analysis, you may need to parse the XML response")
-        print("  • Consider using the Boomi AtomSphere UI for visual diff comparison")
-        
-        # If we have version-specific data, show a comparison
-        try:
-            component_data = result
-            if hasattr(component_data, 'version'):
-                print(f"\n📊 Version Information:")
-                print(f"  Current version in response: {getattr(component_data, 'version', 'N/A')}")
-                print(f"  Modified date: {format_date(getattr(component_data, 'modified_date', 'N/A'))}")
-                print(f"  Modified by: {getattr(component_data, 'modified_by', 'N/A')}")
-        except:
-            pass
+        # Check if we have a proper diff response
+        if hasattr(result, 'component_diff_response'):
+            diff_response = result.component_diff_response
+            
+            # Show diff message
+            if hasattr(diff_response, 'message'):
+                print(f"  Message: {diff_response.message}")
+            
+            # Extract generic diff details
+            if hasattr(diff_response, 'generic_diff') and diff_response.generic_diff:
+                generic_diff = diff_response.generic_diff
+                print(f"\n📊 Detailed Diff Analysis:")
+                
+                # Additions
+                if hasattr(generic_diff, 'addition') and generic_diff.addition:
+                    addition = generic_diff.addition
+                    total = getattr(addition, 'total', 0)
+                    changes = getattr(addition, 'change', [])
+                    print(f"  ➕ Additions: {total}")
+                    if changes:
+                        for i, change in enumerate(changes[:5], 1):  # Show first 5
+                            change_type = getattr(change, 'type_', 'N/A')
+                            particle = getattr(change, 'changed_particle_name', 'N/A')
+                            print(f"     {i}. Added {change_type}: {particle}")
+                
+                # Deletions
+                if hasattr(generic_diff, 'deletion') and generic_diff.deletion:
+                    deletion = generic_diff.deletion
+                    total = getattr(deletion, 'total', 0)
+                    changes = getattr(deletion, 'change', [])
+                    print(f"  ➖ Deletions: {total}")
+                    if changes:
+                        for i, change in enumerate(changes[:5], 1):  # Show first 5
+                            change_type = getattr(change, 'type_', 'N/A')
+                            particle = getattr(change, 'changed_particle_name', 'N/A')
+                            print(f"     {i}. Deleted {change_type}: {particle}")
+                
+                # Modifications
+                if hasattr(generic_diff, 'modification') and generic_diff.modification:
+                    modification = generic_diff.modification
+                    total = getattr(modification, 'total', 0)
+                    changes = getattr(modification, 'change', [])
+                    print(f"  🔄 Modifications: {total}")
+                    if changes:
+                        for i, change in enumerate(changes[:5], 1):  # Show first 5
+                            change_type = getattr(change, 'type_', 'N/A')
+                            particle = getattr(change, 'changed_particle_name', 'N/A')
+                            old_val = getattr(change, 'old_value', 'N/A')
+                            new_val = getattr(change, 'new_value', 'N/A')
+                            print(f"     {i}. Modified {change_type}: {particle}")
+                            if old_val != 'N/A' and new_val != 'N/A':
+                                print(f"        '{old_val}' → '{new_val}'")
+                
+                print(f"\n💡 Summary:")
+                print(f"  • Total changes: {(getattr(generic_diff.addition, 'total', 0) if hasattr(generic_diff, 'addition') and generic_diff.addition else 0) + (getattr(generic_diff.deletion, 'total', 0) if hasattr(generic_diff, 'deletion') and generic_diff.deletion else 0) + (getattr(generic_diff.modification, 'total', 0) if hasattr(generic_diff, 'modification') and generic_diff.modification else 0)}")
+                print(f"  • Version {version1} to {version2} shows significant changes")
+                print(f"  • Review changes before deploying newer version")
+        else:
+            print(f"  ⚠️ No detailed diff data available")
+            print(f"  Response type: {type(result).__name__}")
+            if hasattr(result, '_kwargs'):
+                print(f"  Available fields: {list(result._kwargs.keys())}")
         
         return True
         

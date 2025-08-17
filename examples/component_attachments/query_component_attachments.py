@@ -27,9 +27,11 @@ Usage:
     
     Examples:
     python query_component_attachments.py --component 112b4efe-b173-4258-9492-613ead7d52ce
-    python query_component_attachments.py --environment afeeb4ea-3bb9-4640-b41e-f6aba08d3c41
-    python query_component_attachments.py --atom 81e9dbc8-4684-4814-897c-0a1af0a6fe51
+    python query_component_attachments.py --environment 74851c30-98b2-4a6f-838b-61eee5627b13
     python query_component_attachments.py --type environment
+    
+    Note: Some accounts use environments instead of direct atom attachments.
+    If you get "This account uses environments" error, use environment IDs instead.
 """
 
 import os
