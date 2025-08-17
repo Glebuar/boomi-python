@@ -1,44 +1,36 @@
 #!/usr/bin/env python3
 """
-Boomi SDK Example: Create Environment
-=====================================
+Create Environment
 
-This example demonstrates how to create a new environment using the Boomi SDK.
-Environments are used to organize and deploy components in Boomi.
+This example demonstrates how to create an environment using the Boomi SDK.
 
 Requirements:
 - Set environment variables: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET
-- Account must have appropriate permissions to create environments
 
 Usage:
-    cd examples/environment_management
-    PYTHONPATH=../../src python3 create_environment.py
+    python create_environment_single.py ENVIRONMENT_NAME [CLASSIFICATION]
 
-Features:
-- Creates a TEST environment with unique name
-- Shows how to set classification (TEST vs PROD)
-- Displays created environment details
-- Optional cleanup to delete the environment after creation
+Endpoint:
+- environment.create_environment
 """
 
 import os
 import sys
 import datetime
-
-# Add the src directory to the path to import the SDK
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
 
 from boomi import Boomi
-from boomi.models import Environment as EnvironmentModel
-from boomi.models import EnvironmentClassification
+from boomi.models import Environment as EnvironmentModel, EnvironmentClassification
 
-def create_test_environment():
-    """Create a test environment and display its details."""
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: python create_environment_single.py ENVIRONMENT_NAME [CLASSIFICATION]")
+        sys.exit(1)
     
-    print("🚀 Boomi SDK - Create Environment Example")
-    print("=" * 50)
+    env_name = sys.argv[1]
+    classification = sys.argv[2] if len(sys.argv) > 2 else "TEST"
     
-    # Initialize the Boomi SDK
+    # Initialize SDK
     sdk = Boomi(
         account_id=os.getenv("BOOMI_ACCOUNT"),
         username=os.getenv("BOOMI_USER"),
@@ -46,116 +38,32 @@ def create_test_environment():
         timeout=30000,
     )
     
-    print("✅ SDK initialized successfully!")
-    
-    # Generate a unique environment name using timestamp
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    environment_name = f"SDK_Test_Environment_{timestamp}"
-    
-    print(f"\n📝 Creating environment: {environment_name}")
-    print("   Classification: TEST")
+    print(f"🏗️  Creating environment: {env_name}")
+    print(f"   Classification: {classification}")
     
     try:
-        # Create the environment request
+        # Create the environment
         new_environment = EnvironmentModel(
-            name=environment_name,
-            classification=EnvironmentClassification.TEST  # Can be TEST or PROD
+            name=env_name,
+            classification=getattr(EnvironmentClassification, classification.upper(), EnvironmentClassification.TEST)
         )
         
-        # Make the API call to create the environment
         created_environment = sdk.environment.create_environment(new_environment)
         
-        print("\n✅ Environment created successfully!")
-        print("\n📋 Environment Details:")
+        print("✅ Environment created successfully!")
         
-        # Extract the actual environment data from the response
-        # The response seems to be wrapped in _kwargs['Environment']
+        # Parse the response
         if hasattr(created_environment, '_kwargs') and 'Environment' in created_environment._kwargs:
             env_data = created_environment._kwargs['Environment']
-            env_id = env_data.get('@id', 'N/A')
-            env_name = env_data.get('@name', environment_name)
-            env_class = env_data.get('@classification', 'TEST')
-            env_parent = env_data.get('@parentAccount', 'N/A')
-        else:
-            # Fallback to direct attributes
-            env_id = getattr(created_environment, 'id_', getattr(created_environment, 'id', 'N/A'))
-            env_name = getattr(created_environment, 'name', environment_name)
-            env_class = getattr(created_environment, 'classification', 'TEST')
-            env_parent = getattr(created_environment, 'parent_account', 'N/A')
-        
-        print(f"   ID: {env_id}")
-        print(f"   Name: {env_name}")
-        print(f"   Classification: {env_class}")
-        print(f"   Parent Account: {env_parent}")
-        
-        # Ask user if they want to delete the environment
-        print("\n" + "=" * 50)
-        response = input("Would you like to delete this test environment? (y/n): ")
-        
-        if response.lower() == 'y':
-            print(f"\n🗑️  Deleting environment {environment_name}...")
-            sdk.environment.delete_environment(id_=env_id)
-            print("✅ Environment deleted successfully!")
-        else:
-            print(f"\n💡 Environment '{environment_name}' has been kept.")
-            print(f"   You can use it for testing and deployments.")
-            print(f"   Remember to delete it when no longer needed.")
             
-        return created_environment
-        
+            print(f"  🆔 ID: {env_data.get('@id', 'N/A')}")
+            print(f"  📛 Name: {env_data.get('@name', 'N/A')}")
+            print(f"  🏷️  Classification: {env_data.get('@classification', 'N/A')}")
+        else:
+            print("⚠️  Unexpected response format")
+            
     except Exception as e:
-        print(f"\n❌ Error creating environment: {str(e)}")
-        
-        # Handle specific error cases
-        if hasattr(e, 'status'):
-            if e.status == 403:
-                print("\n⚠️  Permission denied (403)")
-                print("   Your account may not have permission to create environments.")
-                print("   This could be due to:")
-                print("   - Account role restrictions")
-                print("   - License limitations (e.g., Basic vs Unlimited environment support)")
-                print("   - Test Connection Licensing not enabled (for TEST environments)")
-            elif e.status == 409:
-                print("\n⚠️  Conflict (409)")
-                print("   An environment with this name may already exist.")
-            elif e.status == 400:
-                print("\n⚠️  Bad Request (400)")
-                print("   Check that the environment name is valid.")
-        
-        if hasattr(e, 'response') and hasattr(e.response, 'text'):
-            print(f"\n   Response details: {e.response.text}")
-        
-        raise
-
-
-def demonstrate_environment_classifications():
-    """Show the different environment classifications available."""
-    
-    print("\n📚 Environment Classifications:")
-    print("   - PROD: Production environment (default)")
-    print("   - TEST: Test environment (requires Test Connection Licensing)")
-    print("\nNote: Classification cannot be changed after creation.")
-
+        print(f"❌ Error creating environment: {str(e)}")
 
 if __name__ == "__main__":
-    # Check for required environment variables
-    required_vars = ["BOOMI_ACCOUNT", "BOOMI_USER", "BOOMI_SECRET"]
-    missing_vars = [var for var in required_vars if not os.getenv(var)]
-    
-    if missing_vars:
-        print("❌ Missing required environment variables:")
-        for var in missing_vars:
-            print(f"   - {var}")
-        print("\nPlease set these variables in your environment or .env file")
-        sys.exit(1)
-    
-    try:
-        # Show classification options
-        demonstrate_environment_classifications()
-        
-        # Create the environment
-        created_env = create_test_environment()
-        
-    except Exception as e:
-        print(f"\n❌ Example failed: {str(e)}")
-        sys.exit(1)
+    main()
