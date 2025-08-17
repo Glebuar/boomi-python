@@ -83,7 +83,7 @@ def attach_component_to_atom(component_id, atom_id):
         
         # Verify atom exists  
         print("⚛️ Checking atom...")
-        atom = sdk.atom.get_atom(atom_id=atom_id)
+        atom = sdk.atom.get_atom(id_=atom_id)
         atom_name = getattr(atom, 'name', 'N/A')
         atom_status = getattr(atom, 'status', 'N/A')
         print(f"✅ Atom found: {atom_name} ({atom_status})")

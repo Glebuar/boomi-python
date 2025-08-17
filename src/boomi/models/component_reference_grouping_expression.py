@@ -60,7 +60,7 @@ class ComponentReferenceGroupingExpression(BaseModel):
         """
         if nested_expression is not SENTINEL:
             self.nested_expression = self._define_list(
-                nested_expression, ComponentReferenceExpression
+                nested_expression, ComponentReferenceSimpleExpression
             )
         self.operator = self._enum_matching(
             operator, ComponentReferenceGroupingExpressionOperator.list(), "operator"

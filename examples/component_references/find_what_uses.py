@@ -43,8 +43,7 @@ from boomi.models import (
     ComponentReferenceSimpleExpressionOperator,
     ComponentReferenceSimpleExpressionProperty,
     ComponentReferenceGroupingExpression,
-    ComponentReferenceGroupingExpressionOperator,
-    ComponentReferenceExpression
+    ComponentReferenceGroupingExpressionOperator
 )
 
 # Load environment variables
@@ -134,19 +133,12 @@ def find_what_uses(component_id, version=None, component_type=None):
         )
         expressions.append(parent_version_expr)
         
-        # For now, only support simple queries without type filter to avoid complexity
+        # For now, only support simple queries without type filter to avoid SDK complexity
         if component_type:
             print("⚠️ Type filtering not yet supported in this example")
         
-        # Use simple query with just parent component ID and version
-        if len(expressions) == 2:  # parentComponentId and parentVersion
-            grouping_expr = ComponentReferenceGroupingExpression(
-                operator=ComponentReferenceGroupingExpressionOperator.AND,
-                nested_expression=expressions
-            )
-            query_filter = ComponentReferenceQueryConfigQueryFilter(expression=grouping_expr)
-        else:
-            query_filter = ComponentReferenceQueryConfigQueryFilter(expression=expressions[0])
+        # Use simple query with just parent component ID (avoid grouping expressions due to SDK bug)
+        query_filter = ComponentReferenceQueryConfigQueryFilter(expression=expressions[0])
         
         query_config = ComponentReferenceQueryConfig(query_filter=query_filter)
         
