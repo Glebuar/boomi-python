@@ -149,7 +149,6 @@ Most examples support standard options:
 
 ## 📚 Additional Documentation
 
-- `README_LIFECYCLE.md` - Detailed lifecycle documentation with implementation status
 - Individual file docstrings - Specific usage and requirements
 - CLAUDE.md - Development guidelines and testing requirements
 
@@ -160,4 +159,4 @@ Most examples support standard options:
 3. **Discover**: Use `01_discover_analyze/` examples to explore your account
 4. **Build**: Follow the lifecycle stages for complete integration development
 
-For detailed implementation status and priorities, see `README_LIFECYCLE.md`.
+For specific implementation details, see individual file documentation.
