@@ -39,16 +39,20 @@ Required Endpoints:
 import os
 import sys
 import argparse
-import requests
-from requests.auth import HTTPBasicAuth
 import json
 import time
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, Tuple
 
 
+# Add parent directory to path for imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+from src.boomi import Boomi
+
+
 class ExecutionStatusPoller:
-    """Poll execution status and wait for completion"""
+    """Poll execution status and wait for completion using SDK"""
     
     def __init__(self):
         self.account_id = os.getenv('BOOMI_ACCOUNT')
@@ -58,45 +62,69 @@ class ExecutionStatusPoller:
         if not all([self.account_id, self.username, self.password]):
             raise ValueError("Environment variables BOOMI_ACCOUNT, BOOMI_USER, and BOOMI_SECRET must be set")
         
-        self.base_url = f"https://api.boomi.com/api/rest/v1/{self.account_id}"
-        self.auth = HTTPBasicAuth(self.username, self.password)
-        self.headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
+        # Initialize Boomi SDK
+        self.sdk = Boomi(
+            account_id=self.account_id,
+            username=self.username,
+            password=self.password,
+            timeout=30000
+        )
 
     def get_execution_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get current execution status and details"""
-        url = f"{self.base_url}/ExecutionRecord/query"
-        
-        query_payload = {
-            "QueryFilter": {
-                "expression": {
-                    "argument": [execution_id],
-                    "operator": "EQUALS",
-                    "property": "executionId"
-                }
-            }
-        }
-        
+        """Get current execution status and details using SDK"""
         try:
-            response = requests.post(url, json=query_payload, auth=self.auth, headers=self.headers, timeout=30)
+            # Import SDK models
+            from src.boomi.models import (
+                ExecutionRecordQueryConfig,
+                ExecutionRecordQueryConfigQueryFilter,
+                ExecutionRecordSimpleExpression,
+                ExecutionRecordSimpleExpressionOperator,
+                ExecutionRecordSimpleExpressionProperty
+            )
             
-            if response.status_code == 200:
-                result = response.json()
-                executions = result.get('result', [])
-                
-                if executions:
-                    return executions[0]  # Return first (should be only) matching execution
-                else:
-                    return None
+            # Create query expression for the specific execution ID
+            query_expression = ExecutionRecordSimpleExpression(
+                operator=ExecutionRecordSimpleExpressionOperator.EQUALS,
+                property=ExecutionRecordSimpleExpressionProperty.EXECUTIONID,
+                argument=[execution_id]
+            )
+            
+            # Create query filter
+            query_filter = ExecutionRecordQueryConfigQueryFilter(
+                expression=query_expression
+            )
+            
+            # Create query config
+            query_config = ExecutionRecordQueryConfig(
+                query_filter=query_filter
+            )
+            
+            # Execute query using SDK
+            result = self.sdk.execution_record.query_execution_record(
+                request_body=query_config
+            )
+            
+            if result and hasattr(result, 'result') and result.result:
+                # Convert SDK model to dict for backward compatibility
+                execution = result.result[0]
+                execution_dict = {
+                    'executionId': execution.execution_id,
+                    'status': execution.status,
+                    'processName': getattr(execution, 'process_name', 'Unknown'),
+                    'atomName': getattr(execution, 'atom_name', 'Unknown'),
+                    'executionTime': getattr(execution, 'execution_time', 'Unknown'),
+                    'executionDuration': getattr(execution, 'execution_duration', None),
+                    'inboundDocumentCount': getattr(execution, 'inbound_document_count', 0),
+                    'outboundDocumentCount': getattr(execution, 'outbound_document_count', 0),
+                    'inboundErrorDocumentCount': getattr(execution, 'inbound_error_document_count', 0),
+                    'error': getattr(execution, 'error', None)
+                }
+                return execution_dict
             else:
-                print(f"❌ Error querying execution status: {response.status_code}")
-                print(f"Response: {response.text}")
                 return None
                 
-        except requests.exceptions.RequestException as e:
-            print(f"❌ Request failed: {str(e)}")
+        except Exception as e:
+            print(f"❌ Failed to get execution status: {e}")
             return None
 
     def is_execution_complete(self, status: str) -> Tuple[bool, bool]:
@@ -279,34 +307,44 @@ class ExecutionStatusPoller:
         print("🔍 ExecutionStatusPoller - Examples and Testing")
         print("=" * 50)
         
-        # Try to find a recent execution to use as an example
-        url = f"{self.base_url}/ExecutionRecord/query"
-        
-        query_payload = {
-            "QuerySort": {
-                "sortField": [{
-                    "fieldName": "executionTime",
-                    "sortOrder": "DESC"
-                }]
-            }
-        }
-        
+        # Try to find a recent execution to use as an example using SDK
         try:
-            response = requests.post(url, json=query_payload, auth=self.auth, headers=self.headers, timeout=30)
+            # Import SDK models
+            from src.boomi.models import (
+                ExecutionRecordQueryConfig,
+                QuerySort,
+                SortField
+            )
             
-            if response.status_code == 200:
-                result = response.json()
-                executions = result.get('result', [])
+            # Create sort configuration to get recent executions
+            sort_field = SortField(
+                field_name="executionTime",
+                sort_order="DESC"
+            )
+            query_sort = QuerySort(sort_field=[sort_field])
+            
+            # Create query config with just sorting (no filter to get all recent)
+            query_config = ExecutionRecordQueryConfig(
+                query_sort=query_sort
+            )
+            
+            # Execute query using SDK
+            result = self.sdk.execution_record.query_execution_record(
+                request_body=query_config
+            )
+            
+            if result and hasattr(result, 'result') and result.result:
+                executions = result.result
                 
                 if executions:
                     print(f"Found {len(executions)} recent execution(s)")
                     print("\nRecent executions available for polling:")
                     
                     for i, execution in enumerate(executions[:5]):
-                        execution_id = execution.get('executionId', 'Unknown')
-                        process_name = execution.get('processName', 'Unknown')
-                        status = execution.get('status', 'Unknown')
-                        execution_time = execution.get('executionTime', 'Unknown')
+                        execution_id = getattr(execution, 'execution_id', 'Unknown')
+                        process_name = getattr(execution, 'process_name', 'Unknown')
+                        status = getattr(execution, 'status', 'Unknown')
+                        execution_time = getattr(execution, 'execution_time', 'Unknown')
                         
                         print(f"  {i+1}. {execution_id}")
                         print(f"     Process: {process_name}")
@@ -315,7 +353,7 @@ class ExecutionStatusPoller:
                         print()
                     
                     # Test with the most recent execution
-                    latest_execution_id = executions[0].get('executionId')
+                    latest_execution_id = getattr(executions[0], 'execution_id', None)
                     if latest_execution_id:
                         print(f"Testing status polling with: {latest_execution_id}")
                         success, final_data = self.poll_execution(latest_execution_id, timeout_seconds=30, verbose=True)
@@ -327,7 +365,7 @@ class ExecutionStatusPoller:
                 else:
                     print("No recent executions found to test with")
             else:
-                print(f"❌ Error querying recent executions: {response.status_code}")
+                print("❌ Error querying recent executions")
                 
         except Exception as e:
             print(f"❌ Error during examples: {str(e)}")

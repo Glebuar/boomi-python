@@ -54,8 +54,6 @@ Required Endpoints:
 import os
 import sys
 import argparse
-import requests
-from requests.auth import HTTPBasicAuth
 import json
 import csv
 from datetime import datetime, timedelta, timezone
@@ -64,8 +62,14 @@ from collections import Counter
 import re
 
 
+# Add parent directory to path for imports
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
+
+from boomi import Boomi
+
+
 class EventQueryManager:
-    """Query and analyze Boomi platform events"""
+    """Query and analyze Boomi platform events using SDK"""
     
     def __init__(self):
         self.account_id = os.getenv('BOOMI_ACCOUNT')
@@ -75,12 +79,13 @@ class EventQueryManager:
         if not all([self.account_id, self.username, self.password]):
             raise ValueError("Environment variables BOOMI_ACCOUNT, BOOMI_USER, and BOOMI_SECRET must be set")
         
-        self.base_url = f"https://api.boomi.com/api/rest/v1/{self.account_id}"
-        self.auth = HTTPBasicAuth(self.username, self.password)
-        self.headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
+        # Initialize Boomi SDK
+        self.sdk = Boomi(
+            account_id=self.account_id,
+            username=self.username,
+            password=self.password,
+            timeout=30000
+        )
 
     def query_events(
         self,
@@ -94,105 +99,154 @@ class EventQueryManager:
         environment: Optional[str] = None,
         limit: Optional[int] = None
     ) -> List[Dict[str, Any]]:
-        """Query events based on criteria"""
-        url = f"{self.base_url}/Event/query"
-        
-        query_payload = {}
-        expressions = []
-        
-        # Time range filter
-        if days_back or hours_back:
-            end_date = datetime.now(timezone.utc)
-            if days_back:
-                start_date = end_date - timedelta(days=days_back)
-            else:
-                start_date = end_date - timedelta(hours=hours_back)
-            
-            expressions.append({
-                "argument": [
-                    start_date.strftime('%Y-%m-%dT%H:%M:%SZ'),
-                    end_date.strftime('%Y-%m-%dT%H:%M:%SZ')
-                ],
-                "operator": "BETWEEN",
-                "property": "eventDate"
-            })
-        
-        # Event level filter (ERROR, WARN, INFO)
-        if event_level:
-            expressions.append({
-                "argument": [event_level.upper()],
-                "operator": "EQUALS",
-                "property": "eventLevel"
-            })
-        
-        # Event type filter
-        if event_type:
-            expressions.append({
-                "argument": [event_type],
-                "operator": "EQUALS",
-                "property": "eventType"
-            })
-        
-        # Process name filter (use LIKE for partial match)
-        if process_name:
-            expressions.append({
-                "argument": [f"%{process_name}%"],
-                "operator": "LIKE",
-                "property": "processName"
-            })
-        
-        # Atom name filter
-        if atom_name:
-            expressions.append({
-                "argument": [atom_name],
-                "operator": "EQUALS",
-                "property": "atomName"
-            })
-        
-        # Execution ID filter
-        if execution_id:
-            expressions.append({
-                "argument": [execution_id],
-                "operator": "EQUALS",
-                "property": "executionId"
-            })
-        
-        # Environment filter
-        if environment:
-            expressions.append({
-                "argument": [environment],
-                "operator": "EQUALS",
-                "property": "environment"
-            })
-        
-        # Build query filter
-        if expressions:
-            if len(expressions) == 1:
-                query_payload["QueryFilter"] = {
-                    "expression": expressions[0]
-                }
-            else:
-                query_payload["QueryFilter"] = {
-                    "expression": {
-                        "operator": "and",
-                        "nestedExpression": expressions
-                    }
-                }
-        
-        # Add sorting
-        query_payload["QuerySort"] = {
-            "sortField": [{
-                "fieldName": "eventDate",
-                "sortOrder": "DESC"
-            }]
-        }
-        
+        """Query events based on criteria using SDK"""
         try:
-            response = requests.post(url, json=query_payload, auth=self.auth, headers=self.headers, timeout=30)
+            # Import SDK models
+            from boomi.models import (
+                EventQueryConfig,
+                EventQueryConfigQueryFilter,
+                EventSimpleExpression,
+                EventSimpleExpressionOperator,
+                EventSimpleExpressionProperty,
+                EventGroupingExpression,
+                QuerySort,
+                SortField
+            )
             
-            if response.status_code == 200:
-                result = response.json()
-                events = result.get('result', [])
+            expressions = []
+            
+            # Time range filter
+            if days_back or hours_back:
+                end_date = datetime.now(timezone.utc)
+                if days_back:
+                    start_date = end_date - timedelta(days=days_back)
+                else:
+                    start_date = end_date - timedelta(hours=hours_back)
+                
+                date_expression = EventSimpleExpression(
+                    operator=EventSimpleExpressionOperator.BETWEEN,
+                    property=EventSimpleExpressionProperty.EVENTDATE,
+                    argument=[
+                        start_date.strftime('%Y-%m-%dT%H:%M:%SZ'),
+                        end_date.strftime('%Y-%m-%dT%H:%M:%SZ')
+                    ]
+                )
+                expressions.append(date_expression)
+            
+            # Event level filter (ERROR, WARN, INFO)
+            if event_level:
+                level_expression = EventSimpleExpression(
+                    operator=EventSimpleExpressionOperator.EQUALS,
+                    property=EventSimpleExpressionProperty.EVENTLEVEL,
+                    argument=[event_level.upper()]
+                )
+                expressions.append(level_expression)
+            
+            # Event type filter
+            if event_type:
+                type_expression = EventSimpleExpression(
+                    operator=EventSimpleExpressionOperator.EQUALS,
+                    property=EventSimpleExpressionProperty.EVENTTYPE,
+                    argument=[event_type]
+                )
+                expressions.append(type_expression)
+            
+            # Process name filter (use LIKE for partial match)
+            if process_name:
+                process_expression = EventSimpleExpression(
+                    operator=EventSimpleExpressionOperator.LIKE,
+                    property=EventSimpleExpressionProperty.PROCESSNAME,
+                    argument=[f"%{process_name}%"]
+                )
+                expressions.append(process_expression)
+            
+            # Atom name filter
+            if atom_name:
+                atom_expression = EventSimpleExpression(
+                    operator=EventSimpleExpressionOperator.EQUALS,
+                    property=EventSimpleExpressionProperty.ATOMNAME,
+                    argument=[atom_name]
+                )
+                expressions.append(atom_expression)
+            
+            # Execution ID filter
+            if execution_id:
+                execution_expression = EventSimpleExpression(
+                    operator=EventSimpleExpressionOperator.EQUALS,
+                    property=EventSimpleExpressionProperty.EXECUTIONID,
+                    argument=[execution_id]
+                )
+                expressions.append(execution_expression)
+            
+            # Environment filter - Note: Environment might not be available in Event properties
+            # We'll skip this filter as it's not in the available properties
+            
+            # Create query config
+            query_config = None
+            
+            if expressions:
+                # Create query filter
+                if len(expressions) == 1:
+                    query_filter = EventQueryConfigQueryFilter(
+                        expression=expressions[0]
+                    )
+                else:
+                    grouping_expression = EventGroupingExpression(
+                        operator="and",
+                        nested_expression=expressions
+                    )
+                    query_filter = EventQueryConfigQueryFilter(
+                        expression=grouping_expression
+                    )
+                
+                # Create sort configuration
+                sort_field = SortField(
+                    field_name="eventDate",
+                    sort_order="DESC"
+                )
+                query_sort = QuerySort(sort_field=[sort_field])
+                
+                query_config = EventQueryConfig(
+                    query_filter=query_filter,
+                    query_sort=query_sort
+                )
+            else:
+                # No filters, just sorting
+                sort_field = SortField(
+                    field_name="eventDate",
+                    sort_order="DESC"
+                )
+                query_sort = QuerySort(sort_field=[sort_field])
+                query_config = EventQueryConfig(
+                    query_sort=query_sort
+                )
+            
+            # Execute query using SDK
+            result = self.sdk.event.query_event(
+                request_body=query_config
+            )
+            
+            if result and hasattr(result, 'result') and result.result:
+                # Convert SDK models to dicts for backward compatibility
+                events = []
+                for event in result.result:
+                    event_dict = {
+                        'eventId': getattr(event, 'event_id', 'Unknown'),
+                        'eventLevel': getattr(event, 'event_level', 'Unknown'),
+                        'eventType': getattr(event, 'event_type', 'Unknown'),
+                        'eventDate': getattr(event, 'event_date', 'Unknown'),
+                        'processName': getattr(event, 'process_name', 'Unknown'),
+                        'atomName': getattr(event, 'atom_name', 'Unknown'),
+                        'executionId': getattr(event, 'execution_id', ''),
+                        'error': getattr(event, 'error', ''),
+                        'status': getattr(event, 'status', 'Unknown'),
+                        'environment': getattr(event, 'environment', 'Unknown'),
+                        'classification': getattr(event, 'classification', 'Unknown'),
+                        'title': getattr(event, 'title', ''),
+                        'errorType': getattr(event, 'error_type', ''),
+                        'erroredStepType': getattr(event, 'errored_step_type', '')
+                    }
+                    events.append(event_dict)
                 
                 # Apply limit if specified
                 if limit and len(events) > limit:
@@ -200,12 +254,11 @@ class EventQueryManager:
                 
                 return events
             else:
-                print(f"❌ Error querying events: {response.status_code}")
-                print(f"Response: {response.text}")
+                print("No events found matching criteria")
                 return []
                 
-        except requests.exceptions.RequestException as e:
-            print(f"❌ Request failed: {str(e)}")
+        except Exception as e:
+            print(f"❌ Failed to query events: {e}")
             return []
 
     def analyze_events(self, events: List[Dict[str, Any]]) -> Dict[str, Any]:

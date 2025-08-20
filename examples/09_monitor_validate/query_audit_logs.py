@@ -74,91 +74,121 @@ class AuditLogAnalyzer:
                         type_filter: Optional[str] = None,
                         level_filter: Optional[str] = None,
                         limit: Optional[int] = None) -> List[Dict[str, Any]]:
-        """Query audit logs with optional filters"""
+        """Query audit logs with optional filters using SDK"""
         print(f"\n🔍 Querying audit logs from {start_date} to {end_date}")
         
         try:
-            import requests
-            from requests.auth import HTTPBasicAuth
-            
-            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/AuditLog/query"
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
+            # Import SDK models
+            from src.boomi.models import (
+                AuditLogQueryConfig,
+                AuditLogQueryConfigQueryFilter,
+                AuditLogSimpleExpression,
+                AuditLogSimpleExpressionOperator,
+                AuditLogSimpleExpressionProperty,
+                AuditLogGroupingExpression,
+                QuerySort,
+                SortField
+            )
             
             # Build filter expressions
             expressions = []
             
             # Add date range filter
-            expressions.append({
-                "operator": "BETWEEN",
-                "property": "date",
-                "argument": [start_date, end_date]
-            })
+            date_expression = AuditLogSimpleExpression(
+                operator=AuditLogSimpleExpressionOperator.BETWEEN,
+                property=AuditLogSimpleExpressionProperty.DATE,
+                argument=[start_date, end_date]
+            )
+            expressions.append(date_expression)
             
             # Add optional filters
             if user_filter:
-                expressions.append({
-                    "operator": "EQUALS",
-                    "property": "userId",
-                    "argument": [user_filter]
-                })
+                user_expression = AuditLogSimpleExpression(
+                    operator=AuditLogSimpleExpressionOperator.EQUALS,
+                    property=AuditLogSimpleExpressionProperty.USERID,
+                    argument=[user_filter]
+                )
+                expressions.append(user_expression)
                 print(f"   📧 Filtering by user: {user_filter}")
             
             if action_filter:
-                expressions.append({
-                    "operator": "EQUALS",
-                    "property": "action",
-                    "argument": [action_filter]
-                })
+                action_expression = AuditLogSimpleExpression(
+                    operator=AuditLogSimpleExpressionOperator.EQUALS,
+                    property=AuditLogSimpleExpressionProperty.ACTION,
+                    argument=[action_filter]
+                )
+                expressions.append(action_expression)
                 print(f"   ⚡ Filtering by action: {action_filter}")
             
             if type_filter:
-                expressions.append({
-                    "operator": "EQUALS",
-                    "property": "type",
-                    "argument": [type_filter]
-                })
+                type_expression = AuditLogSimpleExpression(
+                    operator=AuditLogSimpleExpressionOperator.EQUALS,
+                    property=AuditLogSimpleExpressionProperty.TYPE,
+                    argument=[type_filter]
+                )
+                expressions.append(type_expression)
                 print(f"   🏷️ Filtering by type: {type_filter}")
             
             if level_filter:
-                expressions.append({
-                    "operator": "EQUALS",
-                    "property": "level",
-                    "argument": [level_filter]
-                })
+                level_expression = AuditLogSimpleExpression(
+                    operator=AuditLogSimpleExpressionOperator.EQUALS,
+                    property=AuditLogSimpleExpressionProperty.LEVEL,
+                    argument=[level_filter]
+                )
+                expressions.append(level_expression)
                 print(f"   📊 Filtering by level: {level_filter}")
             
-            # Build query payload
+            # Create query filter
             if len(expressions) == 1:
-                query_filter = {"expression": expressions[0]}
+                query_filter = AuditLogQueryConfigQueryFilter(
+                    expression=expressions[0]
+                )
             else:
-                query_filter = {
-                    "expression": {
-                        "operator": "and",
-                        "nestedExpression": expressions
+                grouping_expression = AuditLogGroupingExpression(
+                    operator="and",
+                    nested_expression=expressions
+                )
+                query_filter = AuditLogQueryConfigQueryFilter(
+                    expression=grouping_expression
+                )
+            
+            # Create sort configuration
+            sort_field = SortField(
+                field_name="date",
+                sort_order="DESC"
+            )
+            query_sort = QuerySort(sort_field=[sort_field])
+            
+            # Create query config
+            query_config = AuditLogQueryConfig(
+                query_filter=query_filter,
+                query_sort=query_sort
+            )
+            
+            # Execute query using SDK
+            result = self.sdk.audit_log.query_audit_log(
+                request_body=query_config
+            )
+            
+            if result and hasattr(result, 'result') and result.result:
+                # Convert SDK models to dicts for backward compatibility
+                audit_logs = []
+                for log_entry in result.result:
+                    log_dict = {
+                        'userId': getattr(log_entry, 'user_id', 'Unknown'),
+                        'action': getattr(log_entry, 'action', 'Unknown'),
+                        'type': getattr(log_entry, 'type', 'Unknown'),
+                        'level': getattr(log_entry, 'level', 'Unknown'),
+                        'modifier': getattr(log_entry, 'modifier', 'Unknown'),
+                        'source': getattr(log_entry, 'source', 'Unknown'),
+                        'date': getattr(log_entry, 'date', ''),
+                        'containerId': getattr(log_entry, 'container_id', 'N/A'),
+                        'accountId': getattr(log_entry, 'account_id', 'N/A')
                     }
-                }
-            
-            query_payload = {
-                "QueryFilter": query_filter,
-                "QuerySort": {
-                    "sortField": [
-                        {
-                            "fieldName": "date",
-                            "sortOrder": "DESC"
-                        }
-                    ]
-                }
-            }
-            
-            # Execute query
-            response = requests.post(url, json=query_payload, auth=auth, headers=headers)
-            
-            if response.status_code == 200:
-                result = response.json()
-                audit_logs = result.get('result', [])
-                total_count = result.get('numberOfResults', len(audit_logs))
-                query_token = result.get('queryToken')
+                    audit_logs.append(log_dict)
+                
+                total_count = getattr(result, 'number_of_results', len(audit_logs))
+                query_token = getattr(result, 'query_token', None)
                 
                 print(f"✅ Found {total_count} audit log entries")
                 
@@ -174,9 +204,7 @@ class AuditLogAnalyzer:
                 
                 return audit_logs
             else:
-                print(f"❌ Failed to query audit logs: HTTP {response.status_code}")
-                if response.text:
-                    print(f"   Error: {response.text[:200]}...")
+                print("✅ No audit logs found matching criteria")
                 return []
                 
         except Exception as e:

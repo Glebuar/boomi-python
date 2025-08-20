@@ -68,30 +68,44 @@ class ProcessScheduleManager:
         print("✅ SDK initialized successfully")
     
     def query_all_schedules(self) -> List[Dict[str, Any]]:
-        """Query all process schedules using direct API call"""
+        """Query all process schedules using SDK"""
         print("\n🔍 Querying all process schedules...")
         
         try:
-            # Use direct HTTP call to avoid SDK model mapping issues
-            import requests
-            from requests.auth import HTTPBasicAuth
+            # Query all schedules using SDK with empty query config
+            from src.boomi.models import ProcessSchedulesQueryConfig
             
-            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/ProcessSchedules/query"
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
+            # Empty query config to get all schedules
+            query_config = ProcessSchedulesQueryConfig()
             
-            # Empty query body to get all schedules
-            response = requests.post(url, json={}, auth=auth, headers=headers)
+            result = self.sdk.process_schedules.query_process_schedules(request_body=query_config)
             
-            if response.status_code == 200:
-                result_data = response.json()
-                schedules = result_data.get('result', [])
-                total_count = result_data.get('numberOfResults', len(schedules))
+            if hasattr(result, 'result') and result.result:
+                schedules = []
+                for schedule in result.result:
+                    # Convert SDK model to dict for backward compatibility
+                    schedule_dict = {
+                        'id': schedule.id_,
+                        'processId': schedule.process_id,
+                        'atomId': schedule.atom_id,
+                        'Schedule': [{
+                            'minutes': s.minutes,
+                            'hours': s.hours,
+                            'daysOfMonth': s.days_of_month,
+                            'months': s.months,
+                            'daysOfWeek': s.days_of_week
+                        } for s in schedule.schedule] if schedule.schedule else [],
+                        'Retry': {
+                            'maxRetry': schedule.retry.max_retry if schedule.retry else 5
+                        }
+                    }
+                    schedules.append(schedule_dict)
                 
+                total_count = getattr(result, 'number_of_results', len(schedules))
                 print(f"✅ Found {total_count} process schedule(s)")
                 return schedules
             else:
-                print(f"❌ Failed to query schedules: HTTP {response.status_code}")
+                print("✅ No schedules found")
                 return []
                 
         except Exception as e:
@@ -99,7 +113,7 @@ class ProcessScheduleManager:
             return []
     
     def get_schedule(self, process_id: str, atom_id: str) -> Optional[Dict[str, Any]]:
-        """Get specific process schedule"""
+        """Get specific process schedule using SDK"""
         print(f"\n🔍 Getting schedule for process {process_id} on atom {atom_id}")
         
         try:
@@ -107,34 +121,44 @@ class ProcessScheduleManager:
             import base64
             schedule_id = base64.b64encode(f"CPS{atom_id}:{process_id}".encode()).decode()
             
-            # Use direct HTTP call
-            import requests
-            from requests.auth import HTTPBasicAuth
+            # Use SDK to get schedule
+            result = self.sdk.process_schedules.get_process_schedules(id_=schedule_id)
             
-            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/ProcessSchedules/{schedule_id}"
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-            headers = {'Accept': 'application/json'}
-            
-            response = requests.get(url, auth=auth, headers=headers)
-            
-            if response.status_code == 200:
-                schedule_data = response.json()
+            if result and hasattr(result, 'id_'):
+                # Convert SDK model to dict for backward compatibility
+                schedule_data = {
+                    'id': result.id_,
+                    'processId': result.process_id,
+                    'atomId': result.atom_id,
+                    'Schedule': [{
+                        'minutes': s.minutes,
+                        'hours': s.hours,
+                        'daysOfMonth': s.days_of_month,
+                        'months': s.months,
+                        'daysOfWeek': s.days_of_week
+                    } for s in result.schedule] if result.schedule else [],
+                    'Retry': {
+                        'maxRetry': result.retry.max_retry if result.retry else 5
+                    }
+                }
                 print("✅ Schedule retrieved successfully")
                 return schedule_data
-            elif response.status_code == 404:
-                print("❌ Schedule not found")
-                return None
             else:
-                print(f"❌ Failed to get schedule: HTTP {response.status_code}")
+                print("❌ Schedule not found")
                 return None
                 
         except Exception as e:
-            print(f"❌ Failed to get schedule: {e}")
-            return None
+            error_msg = str(e)
+            if "404" in error_msg or "Not Found" in error_msg:
+                print("❌ Schedule not found")
+                return None
+            else:
+                print(f"❌ Failed to get schedule: {e}")
+                return None
     
     def update_schedule(self, process_id: str, atom_id: str, cron_expression: str, 
                        max_retry: int = 5) -> bool:
-        """Update/create process schedule with cron expression"""
+        """Update/create process schedule with cron expression using SDK"""
         print(f"\n🔧 Updating schedule for process {process_id} on atom {atom_id}")
         print(f"   Schedule: {cron_expression}")
         
@@ -149,49 +173,57 @@ class ProcessScheduleManager:
             import base64
             schedule_id = base64.b64encode(f"CPS{atom_id}:{process_id}".encode()).decode()
             
-            # Create schedule payload
-            schedule_payload = {
-                "@type": "ProcessSchedules",
-                "id": schedule_id,
-                "processId": process_id,
-                "atomId": atom_id,
-                "Schedule": [
-                    {
-                        "@type": "Schedule",
-                        "minutes": schedule_parts['minutes'],
-                        "hours": schedule_parts['hours'],
-                        "daysOfMonth": schedule_parts['day_of_month'],
-                        "months": schedule_parts['month'],
-                        "daysOfWeek": schedule_parts['day_of_week']
-                    }
-                ],
-                "Retry": {
-                    "@type": "ScheduleRetry",
-                    "Schedule": [],
-                    "maxRetry": max_retry
-                }
-            }
+            # Import SDK models
+            from src.boomi.models import ProcessSchedules, Schedule, ScheduleRetry
             
-            # Use direct HTTP call
-            import requests
-            from requests.auth import HTTPBasicAuth
+            # Create schedule object
+            schedule = Schedule(
+                minutes=schedule_parts['minutes'],
+                hours=schedule_parts['hours'],
+                days_of_month=schedule_parts['day_of_month'],
+                months=schedule_parts['month'],
+                days_of_week=schedule_parts['day_of_week']
+            )
             
-            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/ProcessSchedules/{schedule_id}"
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
+            # Create retry object
+            retry = ScheduleRetry(
+                max_retry=max_retry
+            )
             
-            response = requests.post(url, json=schedule_payload, auth=auth, headers=headers)
+            # Create process schedule object
+            process_schedule = ProcessSchedules(
+                id_=schedule_id,
+                process_id=process_id,
+                atom_id=atom_id,
+                schedule=[schedule],
+                retry=retry
+            )
             
-            if response.status_code == 200:
+            # Update schedule using SDK
+            result = self.sdk.process_schedules.update_process_schedules(
+                id_=schedule_id, 
+                request_body=process_schedule
+            )
+            
+            if result:
                 print("✅ Schedule updated successfully")
                 
                 # Display the created schedule
-                self._display_schedule_details(schedule_payload)
+                schedule_data = {
+                    'processId': process_id,
+                    'atomId': atom_id,
+                    'Schedule': [{
+                        'minutes': schedule_parts['minutes'],
+                        'hours': schedule_parts['hours'],
+                        'daysOfMonth': schedule_parts['day_of_month'],
+                        'months': schedule_parts['month'],
+                        'daysOfWeek': schedule_parts['day_of_week']
+                    }]
+                }
+                self._display_schedule_details(schedule_data)
                 return True
             else:
-                print(f"❌ Failed to update schedule: HTTP {response.status_code}")
-                if response.text:
-                    print(f"   Error: {response.text}")
+                print("❌ Failed to update schedule: No result returned")
                 return False
                 
         except Exception as e:
@@ -199,7 +231,7 @@ class ProcessScheduleManager:
             return False
     
     def clear_schedule(self, process_id: str, atom_id: str) -> bool:
-        """Clear/disable process schedule"""
+        """Clear/disable process schedule using SDK"""
         print(f"\n🗑️ Clearing schedule for process {process_id} on atom {atom_id}")
         
         try:
@@ -207,35 +239,34 @@ class ProcessScheduleManager:
             import base64
             schedule_id = base64.b64encode(f"CPS{atom_id}:{process_id}".encode()).decode()
             
-            # Create empty schedule payload
-            schedule_payload = {
-                "@type": "ProcessSchedules",
-                "id": schedule_id,
-                "processId": process_id,
-                "atomId": atom_id,
-                "Schedule": [],  # Empty schedule array disables scheduling
-                "Retry": {
-                    "@type": "ScheduleRetry",
-                    "Schedule": [],
-                    "maxRetry": 5
-                }
-            }
+            # Import SDK models
+            from src.boomi.models import ProcessSchedules, ScheduleRetry
             
-            # Use direct HTTP call
-            import requests
-            from requests.auth import HTTPBasicAuth
+            # Create retry object
+            retry = ScheduleRetry(
+                max_retry=5
+            )
             
-            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/ProcessSchedules/{schedule_id}"
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
+            # Create empty process schedule object (empty schedule array disables scheduling)
+            process_schedule = ProcessSchedules(
+                id_=schedule_id,
+                process_id=process_id,
+                atom_id=atom_id,
+                schedule=[],  # Empty schedule array disables scheduling
+                retry=retry
+            )
             
-            response = requests.post(url, json=schedule_payload, auth=auth, headers=headers)
+            # Update schedule using SDK
+            result = self.sdk.process_schedules.update_process_schedules(
+                id_=schedule_id, 
+                request_body=process_schedule
+            )
             
-            if response.status_code == 200:
+            if result:
                 print("✅ Schedule cleared successfully")
                 return True
             else:
-                print(f"❌ Failed to clear schedule: HTTP {response.status_code}")
+                print("❌ Failed to clear schedule: No result returned")
                 return False
                 
         except Exception as e:

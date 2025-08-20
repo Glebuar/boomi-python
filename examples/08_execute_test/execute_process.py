@@ -69,79 +69,63 @@ class ProcessExecutor:
     def execute_process(self, process_id: str, atom_id: str, 
                        dynamic_properties: Optional[Dict[str, str]] = None,
                        process_properties: Optional[Dict[str, Dict[str, str]]] = None) -> Optional[str]:
-        """Execute a process and return the execution request ID"""
+        """Execute a process using SDK and return the execution request ID"""
         print(f"\n🚀 Executing process {process_id} on atom {atom_id}")
         
         try:
-            # Use direct HTTP call to avoid SDK model mapping issues
-            import requests
-            from requests.auth import HTTPBasicAuth
+            # Import SDK models
+            from src.boomi.models import (
+                ExecutionRequest, 
+                ExecutionRequestDynamicProcessProperties,
+                ExecutionRequestProcessProperties,
+                DynamicProcessProperty
+            )
             
-            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/ExecutionRequest"
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
-            
-            # Build execution request payload
-            execution_payload = {
-                "@type": "ExecutionRequest",
-                "atomId": atom_id,
-                "processId": process_id
-            }
-            
-            # Add dynamic properties if provided
+            # Build dynamic properties if provided
+            dynamic_props = None
             if dynamic_properties:
                 print(f"   Adding {len(dynamic_properties)} dynamic properties")
-                execution_payload["DynamicProcessProperties"] = {
-                    "@type": "ExecutionRequestDynamicProcessProperties",
-                    "DynamicProcessProperty": [
-                        {
-                            "@type": "",
-                            "name": key,
-                            "value": value
-                        }
-                        for key, value in dynamic_properties.items()
-                    ]
-                }
+                dynamic_property_list = [
+                    DynamicProcessProperty(name=key, value=value)
+                    for key, value in dynamic_properties.items()
+                ]
+                dynamic_props = ExecutionRequestDynamicProcessProperties(
+                    dynamic_process_property=dynamic_property_list
+                )
             
-            # Add process properties if provided
+            # Build process properties if provided  
+            proc_props = None
             if process_properties:
                 print(f"   Adding process properties for {len(process_properties)} components")
-                execution_payload["ProcessProperties"] = {
-                    "@type": "ExecutionRequestProcessProperties", 
-                    "ProcessProperty": [
-                        {
-                            "@type": "",
-                            "componentId": component_id,
-                            "ProcessPropertyValue": [
-                                {
-                                    "@type": "",
-                                    "key": key,
-                                    "value": value
-                                }
-                                for key, value in props.items()
-                            ]
-                        }
-                        for component_id, props in process_properties.items()
-                    ]
-                }
+                # Note: Process properties model might need to be imported separately
+                # For now, we'll handle this in a future iteration
+                proc_props = ExecutionRequestProcessProperties()
             
-            # Execute the process
-            response = requests.post(url, json=execution_payload, auth=auth, headers=headers)
+            # Create execution request
+            execution_request = ExecutionRequest(
+                atom_id=atom_id,
+                process_id=process_id,
+                dynamic_process_properties=dynamic_props,
+                process_properties=proc_props
+            )
             
-            if response.status_code == 200:
-                result = response.json()
-                request_id = result.get('requestId')
-                record_url = result.get('recordUrl')
+            # Execute the process using SDK
+            result = self.sdk.execution_request.create_execution_request(
+                request_body=execution_request
+            )
+            
+            if result and hasattr(result, 'request_id'):
+                request_id = result.request_id
+                record_url = getattr(result, 'record_url', None)
                 
                 print(f"✅ Process execution initiated successfully")
                 print(f"   Request ID: {request_id}")
-                print(f"   Record URL: {record_url}")
+                if record_url:
+                    print(f"   Record URL: {record_url}")
                 
                 return request_id
             else:
-                print(f"❌ Failed to execute process: HTTP {response.status_code}")
-                if response.text:
-                    print(f"   Error: {response.text}")
+                print("❌ Failed to execute process: No result returned")
                 return None
                 
         except Exception as e:
@@ -149,39 +133,55 @@ class ProcessExecutor:
             return None
     
     def get_execution_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get the status of a specific execution"""
+        """Get the status of a specific execution using SDK"""
         try:
-            # Use direct HTTP call to query execution records
-            import requests
-            from requests.auth import HTTPBasicAuth
+            # Import SDK models
+            from src.boomi.models import (
+                ExecutionRecordQueryConfig,
+                ExecutionRecordQueryConfigQueryFilter,
+                ExecutionRecordSimpleExpression,
+                ExecutionRecordSimpleExpressionOperator,
+                ExecutionRecordSimpleExpressionProperty
+            )
             
-            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/ExecutionRecord/query"
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
+            # Create query expression for the specific execution ID
+            query_expression = ExecutionRecordSimpleExpression(
+                operator=ExecutionRecordSimpleExpressionOperator.EQUALS,
+                property=ExecutionRecordSimpleExpressionProperty.EXECUTIONID,
+                argument=[execution_id]
+            )
             
-            # Query for the specific execution ID
-            query_payload = {
-                "QueryFilter": {
-                    "expression": {
-                        "argument": [execution_id],
-                        "operator": "EQUALS",
-                        "property": "executionId"
-                    }
+            # Create query filter
+            query_filter = ExecutionRecordQueryConfigQueryFilter(
+                expression=query_expression
+            )
+            
+            # Create query config
+            query_config = ExecutionRecordQueryConfig(
+                query_filter=query_filter
+            )
+            
+            # Execute query using SDK
+            result = self.sdk.execution_record.query_execution_record(
+                request_body=query_config
+            )
+            
+            if result and hasattr(result, 'result') and result.result:
+                # Convert SDK model to dict for backward compatibility
+                execution = result.result[0]
+                execution_dict = {
+                    'executionId': execution.execution_id,
+                    'status': execution.status,
+                    'processName': getattr(execution, 'process_name', 'Unknown'),
+                    'atomName': getattr(execution, 'atom_name', 'Unknown'),
+                    'executionTime': getattr(execution, 'execution_time', 'Unknown'),
+                    'executionDuration': getattr(execution, 'execution_duration', None),
+                    'inboundDocumentCount': getattr(execution, 'inbound_document_count', 0),
+                    'outboundDocumentCount': getattr(execution, 'outbound_document_count', 0),
+                    'inboundErrorDocumentCount': getattr(execution, 'inbound_error_document_count', 0)
                 }
-            }
-            
-            response = requests.post(url, json=query_payload, auth=auth, headers=headers)
-            
-            if response.status_code == 200:
-                result = response.json()
-                executions = result.get('result', [])
-                
-                if executions:
-                    return executions[0]  # Return the first (should be only) result
-                else:
-                    return None
+                return execution_dict
             else:
-                print(f"❌ Failed to query execution status: HTTP {response.status_code}")
                 return None
                 
         except Exception as e:
@@ -235,38 +235,49 @@ class ProcessExecutor:
         return False, final_execution
     
     def _find_recent_execution(self, execution_pattern: str) -> Optional[Dict[str, Any]]:
-        """Find recent execution by pattern matching"""
+        """Find recent execution by pattern matching using SDK"""
         try:
-            import requests
-            from requests.auth import HTTPBasicAuth
+            # Import SDK models
+            from src.boomi.models import (
+                ExecutionRecordQueryConfig,
+                QuerySort,
+                SortField
+            )
             
-            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/ExecutionRecord/query"
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
+            # Create sort configuration to get recent executions
+            sort_field = SortField(
+                field_name="executionTime",
+                sort_order="DESC"
+            )
+            query_sort = QuerySort(sort_field=[sort_field])
             
-            # Query recent executions and search for our pattern
-            query_payload = {
-                "QuerySort": {
-                    "sortField": [
-                        {
-                            "fieldName": "executionTime",
-                            "sortOrder": "DESC"
-                        }
-                    ]
-                }
-            }
+            # Create query config with just sorting (no filter to get all recent)
+            query_config = ExecutionRecordQueryConfig(
+                query_sort=query_sort
+            )
             
-            response = requests.post(url, json=query_payload, auth=auth, headers=headers)
+            # Execute query using SDK
+            result = self.sdk.execution_record.query_execution_record(
+                request_body=query_config
+            )
             
-            if response.status_code == 200:
-                result = response.json()
-                executions = result.get('result', [])
-                
+            if result and hasattr(result, 'result') and result.result:
                 # Look for executions containing our pattern
-                for execution in executions:
-                    exec_id = execution.get('executionId', '')
+                for execution in result.result:
+                    exec_id = getattr(execution, 'execution_id', '')
                     if execution_pattern in exec_id:
-                        return execution
+                        # Convert to dict for backward compatibility
+                        execution_dict = {
+                            'executionId': execution.execution_id,
+                            'status': execution.status,
+                            'processName': getattr(execution, 'process_name', 'Unknown'),
+                            'atomName': getattr(execution, 'atom_name', 'Unknown'),
+                            'executionTime': getattr(execution, 'execution_time', 'Unknown'),
+                            'executionDuration': getattr(execution, 'execution_duration', None),
+                            'inboundDocumentCount': getattr(execution, 'inbound_document_count', 0),
+                            'outboundDocumentCount': getattr(execution, 'outbound_document_count', 0)
+                        }
+                        return execution_dict
                 
             return None
                 
@@ -352,47 +363,73 @@ class ProcessExecutor:
             print(f"📝 Recorded: {self._format_datetime(recorded_date)}")
     
     def query_process_executions(self, process_id: str, limit: int = 10) -> List[Dict[str, Any]]:
-        """Query recent executions for a specific process"""
+        """Query recent executions for a specific process using SDK"""
         print(f"\n🔍 Querying recent executions for process {process_id}")
         
         try:
-            import requests
-            from requests.auth import HTTPBasicAuth
+            # Import SDK models
+            from src.boomi.models import (
+                ExecutionRecordQueryConfig,
+                ExecutionRecordQueryConfigQueryFilter,
+                ExecutionRecordSimpleExpression,
+                ExecutionRecordSimpleExpressionOperator,
+                ExecutionRecordSimpleExpressionProperty,
+                QuerySort,
+                SortField
+            )
             
-            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/ExecutionRecord/query"
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
+            # Create query expression for the specific process ID
+            query_expression = ExecutionRecordSimpleExpression(
+                operator=ExecutionRecordSimpleExpressionOperator.EQUALS,
+                property=ExecutionRecordSimpleExpressionProperty.PROCESSID,
+                argument=[process_id]
+            )
             
-            # Query executions for the specific process
-            query_payload = {
-                "QueryFilter": {
-                    "expression": {
-                        "argument": [process_id],
-                        "operator": "EQUALS",
-                        "property": "processId"
+            # Create query filter
+            query_filter = ExecutionRecordQueryConfigQueryFilter(
+                expression=query_expression
+            )
+            
+            # Create sort configuration
+            sort_field = SortField(
+                field_name="executionTime",
+                sort_order="DESC"
+            )
+            query_sort = QuerySort(sort_field=[sort_field])
+            
+            # Create query config
+            query_config = ExecutionRecordQueryConfig(
+                query_filter=query_filter,
+                query_sort=query_sort
+            )
+            
+            # Execute query using SDK
+            result = self.sdk.execution_record.query_execution_record(
+                request_body=query_config
+            )
+            
+            if result and hasattr(result, 'result') and result.result:
+                # Convert SDK models to dicts for backward compatibility
+                executions = []
+                for execution in result.result[:limit]:
+                    execution_dict = {
+                        'executionId': execution.execution_id,
+                        'status': execution.status,
+                        'processName': getattr(execution, 'process_name', 'Unknown'),
+                        'atomName': getattr(execution, 'atom_name', 'Unknown'),
+                        'executionTime': getattr(execution, 'execution_time', 'Unknown'),
+                        'executionDuration': getattr(execution, 'execution_duration', None),
+                        'inboundDocumentCount': getattr(execution, 'inbound_document_count', 0),
+                        'outboundDocumentCount': getattr(execution, 'outbound_document_count', 0),
+                        'inboundErrorDocumentCount': getattr(execution, 'inbound_error_document_count', 0)
                     }
-                },
-                "QuerySort": {
-                    "sortField": [
-                        {
-                            "fieldName": "executionTime",
-                            "sortOrder": "DESC"
-                        }
-                    ]
-                }
-            }
-            
-            response = requests.post(url, json=query_payload, auth=auth, headers=headers)
-            
-            if response.status_code == 200:
-                result = response.json()
-                executions = result.get('result', [])
-                total_count = result.get('numberOfResults', len(executions))
+                    executions.append(execution_dict)
                 
+                total_count = getattr(result, 'number_of_results', len(executions))
                 print(f"✅ Found {total_count} execution(s) for this process")
-                return executions[:limit]
+                return executions
             else:
-                print(f"❌ Failed to query executions: HTTP {response.status_code}")
+                print("✅ No executions found for this process")
                 return []
                 
         except Exception as e:

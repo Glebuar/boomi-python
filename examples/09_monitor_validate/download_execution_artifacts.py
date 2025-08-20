@@ -71,33 +71,55 @@ class ArtifactDownloader:
         print("✅ SDK initialized successfully")
     
     def get_execution_details(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get details about a specific execution"""
+        """Get details about a specific execution using SDK"""
         try:
-            import requests
-            from requests.auth import HTTPBasicAuth
+            # Import SDK models
+            from src.boomi.models import (
+                ExecutionRecordQueryConfig,
+                ExecutionRecordQueryConfigQueryFilter,
+                ExecutionRecordSimpleExpression,
+                ExecutionRecordSimpleExpressionOperator,
+                ExecutionRecordSimpleExpressionProperty
+            )
             
-            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/ExecutionRecord/query"
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
+            # Create query expression for the specific execution ID
+            query_expression = ExecutionRecordSimpleExpression(
+                operator=ExecutionRecordSimpleExpressionOperator.EQUALS,
+                property=ExecutionRecordSimpleExpressionProperty.EXECUTIONID,
+                argument=[execution_id]
+            )
             
-            query_payload = {
-                "QueryFilter": {
-                    "expression": {
-                        "argument": [execution_id],
-                        "operator": "EQUALS",
-                        "property": "executionId"
-                    }
+            # Create query filter
+            query_filter = ExecutionRecordQueryConfigQueryFilter(
+                expression=query_expression
+            )
+            
+            # Create query config
+            query_config = ExecutionRecordQueryConfig(
+                query_filter=query_filter
+            )
+            
+            # Execute query using SDK
+            result = self.sdk.execution_record.query_execution_record(
+                request_body=query_config
+            )
+            
+            if result and hasattr(result, 'result') and result.result:
+                # Convert SDK model to dict for backward compatibility
+                execution = result.result[0]
+                execution_dict = {
+                    'executionId': execution.execution_id,
+                    'status': execution.status,
+                    'processName': getattr(execution, 'process_name', 'Unknown'),
+                    'atomName': getattr(execution, 'atom_name', 'Unknown'),
+                    'executionTime': getattr(execution, 'execution_time', 'Unknown'),
+                    'executionDuration': getattr(execution, 'execution_duration', None),
+                    'inboundDocumentCount': getattr(execution, 'inbound_document_count', 0),
+                    'outboundDocumentCount': getattr(execution, 'outbound_document_count', 0),
+                    'inboundErrorDocumentCount': getattr(execution, 'inbound_error_document_count', 0)
                 }
-            }
-            
-            response = requests.post(url, json=query_payload, auth=auth, headers=headers)
-            
-            if response.status_code == 200:
-                result = response.json()
-                executions = result.get('result', [])
-                return executions[0] if executions else None
+                return execution_dict
             else:
-                print(f"❌ Failed to get execution details: HTTP {response.status_code}")
                 return None
                 
         except Exception as e:
@@ -107,76 +129,105 @@ class ArtifactDownloader:
     def get_process_executions(self, process_id: str, limit: int = 10, 
                              status_filter: Optional[str] = None,
                              since_date: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Get recent executions for a specific process"""
+        """Get recent executions for a specific process using SDK"""
         print(f"\n🔍 Querying executions for process {process_id}")
         
         try:
-            import requests
-            from requests.auth import HTTPBasicAuth
-            
-            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/ExecutionRecord/query"
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
+            # Import SDK models
+            from src.boomi.models import (
+                ExecutionRecordQueryConfig,
+                ExecutionRecordQueryConfigQueryFilter,
+                ExecutionRecordSimpleExpression,
+                ExecutionRecordSimpleExpressionOperator,
+                ExecutionRecordSimpleExpressionProperty,
+                ExecutionRecordGroupingExpression,
+                QuerySort,
+                SortField
+            )
             
             # Build query expressions
-            expressions = [
-                {
-                    "argument": [process_id],
-                    "operator": "EQUALS",
-                    "property": "processId"
-                }
-            ]
+            expressions = []
+            
+            # Add process ID filter
+            process_expression = ExecutionRecordSimpleExpression(
+                operator=ExecutionRecordSimpleExpressionOperator.EQUALS,
+                property=ExecutionRecordSimpleExpressionProperty.PROCESSID,
+                argument=[process_id]
+            )
+            expressions.append(process_expression)
             
             # Add status filter if specified
             if status_filter:
-                expressions.append({
-                    "argument": [status_filter],
-                    "operator": "EQUALS",
-                    "property": "status"
-                })
+                status_expression = ExecutionRecordSimpleExpression(
+                    operator=ExecutionRecordSimpleExpressionOperator.EQUALS,
+                    property=ExecutionRecordSimpleExpressionProperty.STATUS,
+                    argument=[status_filter]
+                )
+                expressions.append(status_expression)
             
             # Add date filter if specified
             if since_date:
-                expressions.append({
-                    "argument": [since_date],
-                    "operator": "GREATER_THAN_OR_EQUAL",
-                    "property": "executionTime"
-                })
+                date_expression = ExecutionRecordSimpleExpression(
+                    operator=ExecutionRecordSimpleExpressionOperator.GREATER_THAN_OR_EQUAL,
+                    property=ExecutionRecordSimpleExpressionProperty.EXECUTIONTIME,
+                    argument=[since_date]
+                )
+                expressions.append(date_expression)
             
-            # Build query payload
+            # Create query filter
             if len(expressions) == 1:
-                query_filter = {"expression": expressions[0]}
+                query_filter = ExecutionRecordQueryConfigQueryFilter(
+                    expression=expressions[0]
+                )
             else:
-                query_filter = {
-                    "expression": {
-                        "operator": "and",
-                        "nestedExpression": expressions
+                grouping_expression = ExecutionRecordGroupingExpression(
+                    operator="and",
+                    nested_expression=expressions
+                )
+                query_filter = ExecutionRecordQueryConfigQueryFilter(
+                    expression=grouping_expression
+                )
+            
+            # Create sort configuration
+            sort_field = SortField(
+                field_name="executionTime",
+                sort_order="DESC"
+            )
+            query_sort = QuerySort(sort_field=[sort_field])
+            
+            # Create query config
+            query_config = ExecutionRecordQueryConfig(
+                query_filter=query_filter,
+                query_sort=query_sort
+            )
+            
+            # Execute query using SDK
+            result = self.sdk.execution_record.query_execution_record(
+                request_body=query_config
+            )
+            
+            if result and hasattr(result, 'result') and result.result:
+                # Convert SDK models to dicts for backward compatibility
+                executions = []
+                for execution in result.result[:limit]:
+                    execution_dict = {
+                        'executionId': execution.execution_id,
+                        'status': execution.status,
+                        'processName': getattr(execution, 'process_name', 'Unknown'),
+                        'atomName': getattr(execution, 'atom_name', 'Unknown'),
+                        'executionTime': getattr(execution, 'execution_time', 'Unknown'),
+                        'executionDuration': getattr(execution, 'execution_duration', None),
+                        'inboundDocumentCount': getattr(execution, 'inbound_document_count', 0),
+                        'outboundDocumentCount': getattr(execution, 'outbound_document_count', 0),
+                        'inboundErrorDocumentCount': getattr(execution, 'inbound_error_document_count', 0)
                     }
-                }
-            
-            query_payload = {
-                "QueryFilter": query_filter,
-                "QuerySort": {
-                    "sortField": [
-                        {
-                            "fieldName": "executionTime",
-                            "sortOrder": "DESC"
-                        }
-                    ]
-                }
-            }
-            
-            response = requests.post(url, json=query_payload, auth=auth, headers=headers)
-            
-            if response.status_code == 200:
-                result = response.json()
-                executions = result.get('result', [])
-                total_count = result.get('numberOfResults', len(executions))
+                    executions.append(execution_dict)
                 
+                total_count = getattr(result, 'number_of_results', len(executions))
                 print(f"✅ Found {total_count} execution(s) for this process")
-                return executions[:limit]
+                return executions
             else:
-                print(f"❌ Failed to query executions: HTTP {response.status_code}")
+                print("✅ No executions found for this process")
                 return []
                 
         except Exception as e:
@@ -184,36 +235,38 @@ class ArtifactDownloader:
             return []
     
     def request_artifact_download(self, execution_id: str) -> Optional[str]:
-        """Request download URL for execution artifacts"""
+        """Request download URL for execution artifacts using SDK"""
         print(f"🔄 Requesting artifacts for execution {execution_id[:30]}...")
         
         try:
-            import requests
-            from requests.auth import HTTPBasicAuth
+            # Import SDK models
+            from src.boomi.models import ExecutionArtifacts
             
-            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/ExecutionArtifacts"
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
+            # Create execution artifacts request
+            artifacts_request = ExecutionArtifacts(
+                execution_id=execution_id
+            )
             
-            payload = {"executionId": execution_id}
+            # Request artifacts using SDK
+            result = self.sdk.execution_artifacts.create_execution_artifacts(
+                request_body=artifacts_request
+            )
             
-            response = requests.post(url, json=payload, auth=auth, headers=headers)
-            
-            if response.status_code in [200, 202]:
-                result = response.json()
-                download_url = result.get('url')
-                status_code = result.get('statusCode')
-                message = result.get('message', '')
+            if result:
+                # Extract URL and status from result
+                download_url = getattr(result, 'url', None)
+                status_code = getattr(result, 'status_code', None)
+                message = getattr(result, 'message', '')
                 
-                print(f"✅ Artifact request successful (status: {status_code})")
+                print(f"✅ Artifact request successful")
+                if status_code:
+                    print(f"   Status: {status_code}")
                 if message:
                     print(f"   Message: {message}")
                 
                 return download_url
             else:
-                print(f"❌ Failed to request artifacts: HTTP {response.status_code}")
-                if response.text:
-                    print(f"   Error: {response.text}")
+                print("❌ Failed to request artifacts: No result returned")
                 return None
                 
         except Exception as e:

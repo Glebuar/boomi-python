@@ -42,8 +42,10 @@ Required Endpoints:
 import os
 import sys
 import argparse
-import requests
-from requests.auth import HTTPBasicAuth
+# Add parent directory to path for imports
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
+
+from boomi import Boomi
 import json
 import csv
 from datetime import datetime, timedelta, timezone
@@ -63,12 +65,13 @@ class ExecutionSummaryAnalyzer:
         if not all([self.account_id, self.username, self.password]):
             raise ValueError("Environment variables BOOMI_ACCOUNT, BOOMI_USER, and BOOMI_SECRET must be set")
         
-        self.base_url = f"https://api.boomi.com/api/rest/v1/{self.account_id}"
-        self.auth = HTTPBasicAuth(self.username, self.password)
-        self.headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
+        # Initialize Boomi SDK
+        self.sdk = Boomi(
+            account_id=self.account_id,
+            username=self.username,
+            password=self.password,
+            timeout=30000
+        )
 
     def query_executions(
         self, 
@@ -77,68 +80,114 @@ class ExecutionSummaryAnalyzer:
         days_back: Optional[int] = None,
         limit: Optional[int] = None
     ) -> List[Dict[str, Any]]:
-        """Query execution records based on criteria"""
-        url = f"{self.base_url}/ExecutionRecord/query"
-        
-        query_payload = {}
-        
-        # Build query filter
-        expressions = []
-        
-        if execution_id:
-            expressions.append({
-                "argument": [execution_id],
-                "operator": "EQUALS",
-                "property": "executionId"
-            })
-        
-        if process_id:
-            expressions.append({
-                "argument": [process_id],
-                "operator": "EQUALS", 
-                "property": "processId"
-            })
-        
-        if days_back:
-            end_date = datetime.now(timezone.utc)
-            start_date = end_date - timedelta(days=days_back)
-            expressions.append({
-                "argument": [
-                    start_date.strftime('%Y-%m-%dT%H:%M:%SZ'),
-                    end_date.strftime('%Y-%m-%dT%H:%M:%SZ')
-                ],
-                "operator": "BETWEEN",
-                "property": "executionTime"
-            })
-        
-        # Build query filter
-        if expressions:
-            if len(expressions) == 1:
-                query_payload["QueryFilter"] = {
-                    "expression": expressions[0]
-                }
-            else:
-                query_payload["QueryFilter"] = {
-                    "expression": {
-                        "operator": "and",
-                        "nestedExpression": expressions
-                    }
-                }
-        
-        # Add sorting
-        query_payload["QuerySort"] = {
-            "sortField": [{
-                "fieldName": "executionTime",
-                "sortOrder": "DESC"
-            }]
-        }
-        
+        """Query execution records based on criteria using SDK"""
         try:
-            response = requests.post(url, json=query_payload, auth=self.auth, headers=self.headers, timeout=30)
+            # Import SDK models
+            from boomi.models import (
+                ExecutionRecordQueryConfig,
+                ExecutionRecordQueryConfigQueryFilter,
+                ExecutionRecordSimpleExpression,
+                ExecutionRecordSimpleExpressionOperator,
+                ExecutionRecordSimpleExpressionProperty,
+                ExecutionRecordGroupingExpression,
+                QuerySort,
+                SortField
+            )
             
-            if response.status_code == 200:
-                result = response.json()
-                executions = result.get('result', [])
+            expressions = []
+            
+            if execution_id:
+                execution_expression = ExecutionRecordSimpleExpression(
+                    operator=ExecutionRecordSimpleExpressionOperator.EQUALS,
+                    property=ExecutionRecordSimpleExpressionProperty.EXECUTIONID,
+                    argument=[execution_id]
+                )
+                expressions.append(execution_expression)
+            
+            if process_id:
+                process_expression = ExecutionRecordSimpleExpression(
+                    operator=ExecutionRecordSimpleExpressionOperator.EQUALS,
+                    property=ExecutionRecordSimpleExpressionProperty.PROCESSID,
+                    argument=[process_id]
+                )
+                expressions.append(process_expression)
+            
+            if days_back:
+                end_date = datetime.now(timezone.utc)
+                start_date = end_date - timedelta(days=days_back)
+                date_expression = ExecutionRecordSimpleExpression(
+                    operator=ExecutionRecordSimpleExpressionOperator.BETWEEN,
+                    property=ExecutionRecordSimpleExpressionProperty.EXECUTIONTIME,
+                    argument=[
+                        start_date.strftime('%Y-%m-%dT%H:%M:%SZ'),
+                        end_date.strftime('%Y-%m-%dT%H:%M:%SZ')
+                    ]
+                )
+                expressions.append(date_expression)
+            
+            # Create query config
+            query_config = None
+            
+            if expressions:
+                # Create query filter
+                if len(expressions) == 1:
+                    query_filter = ExecutionRecordQueryConfigQueryFilter(
+                        expression=expressions[0]
+                    )
+                else:
+                    grouping_expression = ExecutionRecordGroupingExpression(
+                        operator="and",
+                        nested_expression=expressions
+                    )
+                    query_filter = ExecutionRecordQueryConfigQueryFilter(
+                        expression=grouping_expression
+                    )
+                
+                # Create sort configuration
+                sort_field = SortField(
+                    field_name="executionTime",
+                    sort_order="DESC"
+                )
+                query_sort = QuerySort(sort_field=[sort_field])
+                
+                query_config = ExecutionRecordQueryConfig(
+                    query_filter=query_filter,
+                    query_sort=query_sort
+                )
+            else:
+                # No filters, just sorting
+                sort_field = SortField(
+                    field_name="executionTime",
+                    sort_order="DESC"
+                )
+                query_sort = QuerySort(sort_field=[sort_field])
+                query_config = ExecutionRecordQueryConfig(
+                    query_sort=query_sort
+                )
+            
+            # Execute query using SDK
+            result = self.sdk.execution_record.query_execution_record(
+                request_body=query_config
+            )
+            
+            if result and hasattr(result, 'result') and result.result:
+                # Convert SDK models to dicts for backward compatibility
+                executions = []
+                for execution in result.result:
+                    execution_dict = {
+                        'executionId': execution.execution_id,
+                        'status': execution.status,
+                        'processName': getattr(execution, 'process_name', 'Unknown'),
+                        'processId': getattr(execution, 'process_id', 'Unknown'),
+                        'atomName': getattr(execution, 'atom_name', 'Unknown'),
+                        'executionTime': getattr(execution, 'execution_time', 'Unknown'),
+                        'executionDuration': getattr(execution, 'execution_duration', None),
+                        'inboundDocumentCount': getattr(execution, 'inbound_document_count', 0),
+                        'outboundDocumentCount': getattr(execution, 'outbound_document_count', 0),
+                        'inboundErrorDocumentCount': getattr(execution, 'inbound_error_document_count', 0),
+                        'error': getattr(execution, 'error', None)
+                    }
+                    executions.append(execution_dict)
                 
                 # Apply limit if specified
                 if limit and len(executions) > limit:
@@ -146,12 +195,11 @@ class ExecutionSummaryAnalyzer:
                 
                 return executions
             else:
-                print(f"❌ Error querying executions: {response.status_code}")
-                print(f"Response: {response.text}")
+                print("No execution records found matching criteria")
                 return []
                 
-        except requests.exceptions.RequestException as e:
-            print(f"❌ Request failed: {str(e)}")
+        except Exception as e:
+            print(f"❌ Failed to query executions: {e}")
             return []
 
     def extract_duration_ms(self, duration: Any) -> int:
