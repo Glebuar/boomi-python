@@ -40,4 +40,5 @@ CLAUDE.md
 
 # Test files (keep only committed tests)
 test_*.py
-*_test.py
+*_test.pyartifacts/
+test_artifacts/
