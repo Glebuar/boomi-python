@@ -72,40 +72,27 @@ class ProcessScheduleManager:
         print("\n🔍 Querying all process schedules...")
         
         try:
-            # Query all schedules using SDK with empty query config
-            from src.boomi.models import ProcessSchedulesQueryConfig
+            # Due to SDK model issues, fall back to direct API call for now
+            # TODO: Fix ProcessSchedulesQueryConfig model requirements
+            import requests
+            from requests.auth import HTTPBasicAuth
             
-            # Empty query config to get all schedules
-            query_config = ProcessSchedulesQueryConfig()
+            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/ProcessSchedules/query"
+            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
+            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
             
-            result = self.sdk.process_schedules.query_process_schedules(request_body=query_config)
+            # Empty query body to get all schedules
+            response = requests.post(url, json={}, auth=auth, headers=headers)
             
-            if hasattr(result, 'result') and result.result:
-                schedules = []
-                for schedule in result.result:
-                    # Convert SDK model to dict for backward compatibility
-                    schedule_dict = {
-                        'id': schedule.id_,
-                        'processId': schedule.process_id,
-                        'atomId': schedule.atom_id,
-                        'Schedule': [{
-                            'minutes': s.minutes,
-                            'hours': s.hours,
-                            'daysOfMonth': s.days_of_month,
-                            'months': s.months,
-                            'daysOfWeek': s.days_of_week
-                        } for s in schedule.schedule] if schedule.schedule else [],
-                        'Retry': {
-                            'maxRetry': schedule.retry.max_retry if schedule.retry else 5
-                        }
-                    }
-                    schedules.append(schedule_dict)
+            if response.status_code == 200:
+                result_data = response.json()
+                schedules = result_data.get('result', [])
+                total_count = result_data.get('numberOfResults', len(schedules))
                 
-                total_count = getattr(result, 'number_of_results', len(schedules))
                 print(f"✅ Found {total_count} process schedule(s)")
                 return schedules
             else:
-                print("✅ No schedules found")
+                print(f"❌ Failed to query schedules: HTTP {response.status_code}")
                 return []
                 
         except Exception as e:

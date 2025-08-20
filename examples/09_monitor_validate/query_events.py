@@ -108,10 +108,9 @@ class EventQueryManager:
                 EventSimpleExpression,
                 EventSimpleExpressionOperator,
                 EventSimpleExpressionProperty,
-                EventGroupingExpression,
-                QuerySort,
-                SortField
+                EventGroupingExpression
             )
+            from boomi.models.execution_record_query_config import SortField, QuerySort
             
             expressions = []
             

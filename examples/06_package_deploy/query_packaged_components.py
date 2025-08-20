@@ -76,36 +76,27 @@ class PackagedComponentQuerier:
         print("\n🔍 Querying all packaged components...")
         
         try:
-            # Use SDK to query packaged components with empty query config
-            from src.boomi.models import PackagedComponentQueryConfig
+            # Due to SDK model issues, fall back to direct API call for now
+            # TODO: Fix PackagedComponentQueryConfig model requirements
+            import requests
+            from requests.auth import HTTPBasicAuth
             
-            # Empty query config to get all components
-            query_config = PackagedComponentQueryConfig()
-            result = self.sdk.packaged_component.query_packaged_component(request_body=query_config)
+            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/PackagedComponent/query"
+            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
+            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
             
-            if result and hasattr(result, 'result'):
-                components = result.result
-                total_count = result.number_of_results if hasattr(result, 'number_of_results') else len(components)
-                
-                # Convert SDK models to dictionaries for consistent interface
-                components_list = []
-                for comp in components:
-                    if hasattr(comp, 'to_dict'):
-                        components_list.append(comp.to_dict())
-                    else:
-                        # Extract attributes manually
-                        comp_dict = {}
-                        for attr in dir(comp):
-                            if not attr.startswith('_') and not callable(getattr(comp, attr)):
-                                value = getattr(comp, attr)
-                                if value is not None:
-                                    comp_dict[attr] = value
-                        components_list.append(comp_dict)
+            # Empty query body to get all components
+            response = requests.post(url, json={}, auth=auth, headers=headers)
+            
+            if response.status_code == 200:
+                result_data = response.json()
+                components = result_data.get('result', [])
+                total_count = result_data.get('numberOfResults', len(components))
                 
                 print(f"✅ Found {total_count} packaged component(s)")
-                return components_list
+                return components
             else:
-                print("❌ No components found or invalid response")
+                print(f"❌ Failed to query components: HTTP {response.status_code}")
                 return []
                 
         except Exception as e:

@@ -89,10 +89,9 @@ class ExecutionSummaryAnalyzer:
                 ExecutionRecordSimpleExpression,
                 ExecutionRecordSimpleExpressionOperator,
                 ExecutionRecordSimpleExpressionProperty,
-                ExecutionRecordGroupingExpression,
-                QuerySort,
-                SortField
+                ExecutionRecordGroupingExpression
             )
+            from boomi.models.execution_record_query_config import SortField, QuerySort
             
             expressions = []
             
