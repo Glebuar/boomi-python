@@ -63,30 +63,34 @@ class PackagedComponentManager:
         print(f"\n🔍 Retrieving packaged component: {package_id}")
         
         try:
-            # Use direct HTTP call to avoid SDK model mapping issues
-            import requests
-            from requests.auth import HTTPBasicAuth
+            # Use SDK to get packaged component
+            component = self.sdk.packaged_component.get_packaged_component(id_=package_id)
             
-            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/PackagedComponent/{package_id}"
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
-            
-            response = requests.get(url, auth=auth, headers=headers)
-            
-            if response.status_code == 200:
-                component_data = response.json()
+            if component:
                 print("✅ Packaged component found")
-                return component_data
-            elif response.status_code == 404:
-                print("❌ Packaged component not found")
-                return None
+                # Convert SDK model to dict for consistent interface
+                if hasattr(component, 'to_dict'):
+                    return component.to_dict()
+                else:
+                    # Extract attributes manually
+                    component_dict = {}
+                    for attr in dir(component):
+                        if not attr.startswith('_') and not callable(getattr(component, attr)):
+                            value = getattr(component, attr)
+                            if value is not None:
+                                component_dict[attr] = value
+                    return component_dict
             else:
-                print(f"❌ Failed to retrieve packaged component: HTTP {response.status_code}")
+                print("❌ Packaged component not found")
                 return None
                 
         except Exception as e:
-            print(f"❌ Failed to retrieve packaged component: {e}")
-            return None
+            if hasattr(e, 'status') and e.status == 404:
+                print("❌ Packaged component not found")
+                return None
+            else:
+                print(f"❌ Failed to retrieve packaged component: {e}")
+                return None
     
     def display_component_info(self, component: dict) -> None:
         """Display detailed information about the packaged component"""

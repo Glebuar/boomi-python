@@ -72,30 +72,40 @@ class DeployedPackageQuerier:
         print("✅ SDK initialized successfully")
     
     def query_all_deployed_packages(self) -> List[Dict[str, Any]]:
-        """Query all deployed packages using direct API call"""
+        """Query all deployed packages using SDK"""
         print("\n🔍 Querying all deployed packages...")
         
         try:
-            # Use direct HTTP call to avoid SDK model mapping issues
-            import requests
-            from requests.auth import HTTPBasicAuth
+            # Use SDK to query deployed packages with empty query config
+            from src.boomi.models import DeployedPackageQueryConfig
             
-            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/DeployedPackage/query"
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
+            # Empty query config to get all deployed packages
+            query_config = DeployedPackageQueryConfig()
+            result = self.sdk.deployed_package.query_deployed_package(request_body=query_config)
             
-            # Empty query body to get all deployed packages
-            response = requests.post(url, json={}, auth=auth, headers=headers)
-            
-            if response.status_code == 200:
-                result_data = response.json()
-                packages = result_data.get('result', [])
-                total_count = result_data.get('numberOfResults', len(packages))
+            if result and hasattr(result, 'result'):
+                packages = result.result
+                total_count = result.number_of_results if hasattr(result, 'number_of_results') else len(packages)
+                
+                # Convert SDK models to dictionaries for consistent interface
+                packages_list = []
+                for pkg in packages:
+                    if hasattr(pkg, 'to_dict'):
+                        packages_list.append(pkg.to_dict())
+                    else:
+                        # Extract attributes manually
+                        pkg_dict = {}
+                        for attr in dir(pkg):
+                            if not attr.startswith('_') and not callable(getattr(pkg, attr)):
+                                value = getattr(pkg, attr)
+                                if value is not None:
+                                    pkg_dict[attr] = value
+                        packages_list.append(pkg_dict)
                 
                 print(f"✅ Found {total_count} deployed package(s)")
-                return packages
+                return packages_list
             else:
-                print(f"❌ Failed to query deployed packages: HTTP {response.status_code}")
+                print("❌ No packages found or invalid response")
                 return []
                 
         except Exception as e:
