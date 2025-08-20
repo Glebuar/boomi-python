@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ExecutionLogModel>
+<LogEvent level="INFO" time="2025-08-17T23:16:53Z" shapename="initializing..." shapetype="initializing..." shapelabel="" shapeextendedinfo="">
+<Message>Executing Process Test Process - Log Execution</Message>
+</LogEvent>
+<LogEvent level="INFO" time="2025-08-17T23:16:53Z" shapename="shape1" shapetype="Start" shapelabel="" shapeextendedinfo="NoData">
+<Message>Executing Start Shape</Message>
+</LogEvent>
+<LogEvent level="INFO" time="2025-08-17T23:16:53Z" shapename="shape1" shapetype="Start" shapelabel="" shapeextendedinfo="NoData">
+<Message>1 document(s) found for processing.</Message>
+</LogEvent>
+<LogEvent level="INFO" time="2025-08-17T23:16:53Z" shapename="shape1" shapetype="Start" shapelabel="" shapeextendedinfo="NoData">
+<Message>Shape executed successfully in 88 ms.</Message>
+</LogEvent>
+<LogEvent level="INFO" time="2025-08-17T23:16:54Z" shapename="shape3" shapetype="Notify" shapelabel="Log execution information" shapeextendedinfo="">
+<Message>Executing Notify Shape with 1 document(s).</Message>
+</LogEvent>
+<LogEvent level="INFO" time="2025-08-17T23:16:54Z" shapename="shape3" shapetype="Notify" shapelabel="Log execution information" shapeextendedinfo="">
+<Message>: Runtime Name: aksusprodtest01-atom-cloud
+Process Name: Test Process - Log Execution
+Execution ID: execution-81a24e09-1a5e-490f-a3ae-5b642b5f19c6-2025.08.17
+Current Date/Time: 2025-08-17T23:16:54</Message>
+</LogEvent>
+<LogEvent level="INFO" time="2025-08-17T23:16:54Z" shapename="shape3" shapetype="Notify" shapelabel="Log execution information" shapeextendedinfo="">
+<Message>Shape executed successfully in 21 ms.</Message>
+</LogEvent>
+<LogEvent level="INFO" time="2025-08-17T23:16:54Z" shapename="shape4" shapetype="Stop" shapelabel="" shapeextendedinfo="continuing process">
+<Message>Executing Stop Shape with 1 document(s).</Message>
+</LogEvent>
+<LogEvent level="INFO" time="2025-08-17T23:16:54Z" shapename="shape4" shapetype="Stop" shapelabel="" shapeextendedinfo="continuing process">
+<Message>Shape executed successfully in 0 ms.</Message>
+</LogEvent>
+<LogEvent level="INFO" time="2025-08-17T23:16:54Z" shapename="cleanup..." shapetype="cleanup..." shapelabel="" shapeextendedinfo="">
+<Message>Process execution completed normally.</Message>
+</LogEvent>
+</ExecutionLogModel>

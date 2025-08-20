@@ -1,0 +1,224 @@
+Aug 20, 2025 5:23:59 AM GMT INFO    [com.boomi.component.ComponentFactory loadFactory] Loading Component Factory from directory ****/component
+Aug 20, 2025 5:23:59 AM GMT INFO    [com.boomi.component.ComponentFactory loadFactory] Loading Component Factory from directory ****/certificate
+Aug 20, 2025 5:23:59 AM GMT INFO    [com.boomi.component.ComponentFactory loadFactory] Loading Component Factory from directory ****/processroute
+Aug 20, 2025 5:23:59 AM GMT INFO    [com.boomi.component.ComponentFactory loadFactory] Loading Component Factory from directory ****/customlibrary
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-embedded-db.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-documenthandler-zip.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-documenthandler-xslttransform.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-documenthandler-searchreplace.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-documenthandler-scripting.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-documenthandler-pgp.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-documenthandler-mime.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-documenthandler-encoding.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-documenthandler-datasplit.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-documenthandler-convertflatfile.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-documenthandler-combine.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-documentcache-impl.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-documentcache-api.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-document-impl.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-document-api.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-dataparser-xml.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-dataparser-json.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-dataparser-flatfile.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-dataparser-edi.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-dataparser-db.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-dataparser-base.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-dataparser-api.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-crossref.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-core.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-connector.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-connector-api.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-config.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-component.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-cloudlet.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launcher.DirectoryClassLoader copyFile] Ignoring non-classpath URL ****/container-cloudlet-jgroups3.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launcher.DirectoryClassLoader copyFile] Ignoring non-classpath URL ****/container-cloudlet-jgroups3-6.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-bounds.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-bouncycastle-latest.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launcher.DirectoryClassLoader copyFile] Ignoring non-classpath URL ****/container-bouncycastle-1.45.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-api.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/container-api-management-api.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/connector-sdk-model.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/connector-sdk-internal-api.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/connector-sdk-api.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/commons-logging.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/commons-lang3.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/commons-lang.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/commons-codec.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/common-webservices-model.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/common-util.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/common-sdk.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/common-pgp.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/common-lite.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/com.noelios.restlet.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/com.noelios.restlet.ext.net.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/checker-qual.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/caffeine.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/boomi-util.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/boomi-synccache.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/boomi-security.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/boomi-restlet-util.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/boomi-regex.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/boomi-queue.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/boomi-oauth.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/boomi-mime.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/boomi-logging.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/boomi-log4j-api.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/boomi-json-util.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/boomi-jetty-util.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/boomi-jaxb-wrapper.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/boomi-changedata.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launcher.DirectoryClassLoader copyFile] Ignoring non-classpath URL ****/bcutil-jdk15to18.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/bcprov-jdk16-1.45.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launcher.DirectoryClassLoader copyFile] Ignoring non-classpath URL ****/bcprov-jdk15to18.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launcher.DirectoryClassLoader copyFile] Ignoring non-classpath URL ****/bcpkix-jdk15to18.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/bcpg-jdk16-1.45.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launcher.DirectoryClassLoader copyFile] Ignoring non-classpath URL ****/bcpg-jdk15to18.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/bcmail-jdk16-1.45.boomi1.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launcher.DirectoryClassLoader copyFile] Ignoring non-classpath URL ****/bcmail-jdk15to18.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/activation.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launchutil.LogUtil fine] Found classpath URL: ****/FastInfoset.jar
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.launcher.DirectoryClassLoader copyFile] Ignoring non-classpath URL ****/.nfsd0a864cff326150b000004cc
+Aug 20, 2025 5:23:59 AM GMT INFO    [com.boomi.container.plugin.BasePluginManager updateLoadedServer] Starting Plugin service 'Extended Security Support' (EXTENDED_SECURITY)
+Aug 20, 2025 5:23:59 AM GMT INFO    [com.boomi.util.LogUtil doLog] Starting Extended Security Service with Bouncy Castle version: 1.45
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.container.plugin.BasePluginService setStatus] Plugin EXTENDED_SECURITY moved from INITIALIZING to RUNNING
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.util.LogUtil doLog] Container does not appear to have Plugin service 'Shared HTTP Server' (SHARED_HTTP_SERVER) support
+Aug 20, 2025 5:23:59 AM GMT INFO    [com.boomi.util.LogUtil doLog] Completed setting up services
+Aug 20, 2025 5:23:59 AM GMT INFO    [com.boomi.container.config.ContainerConfig setStatus] Container status changed from INITIALIZING to RUNNING
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.execution.forker.ProcessExecutionRunner executeImpl] Executing task ExecutionTaskConfig psrisksand-U7OGUC.JN9UN6, proc: 186bc687-95b9-43f2-b64a-c86355ac8cf2, id: execution-2b7b650b-30f1-4bbd-a13e-60bbf576cc5c-2025.08.20(dir: processes/186bc687-95b9-43f2-b64a-c86355ac8cf2, source: USER)
+Aug 20, 2025 5:23:59 AM GMT INFO    [com.boomi.component.ComponentFactory loadFactory] Loading Component Factory from directory ****/186bc687-95b9-43f2-b64a-c86355ac8cf2
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.component.ComponentFactory findComponentIds] Found 1 component files in /mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/processes/186bc687-95b9-43f2-b64a-c86355ac8cf2
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.component.ComponentFactory addComponents] Adding [processes/186bc687-95b9-43f2-b64a-c86355ac8cf2] components [186bc687-95b9-43f2-b64a-c86355ac8cf2]
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.util.LogUtil doLog] Attempting to load component metadata for 186bc687-95b9-43f2-b64a-c86355ac8cf2
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.component.ComponentFactory getReadableComponentFile] Loading component from ****/186bc687-95b9-43f2-b64a-c86355ac8cf2.xml
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.component.ComponentFactory indexComponents] Adding component 186bc687-95b9-43f2-b64a-c86355ac8cf2, type process
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.execution.ExecutionManager submit] Setting the top level execution id to use atom classloader as its parent classloader for execution execution-2b7b650b-30f1-4bbd-a13e-60bbf576cc5c-2025.08.20
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.util.LogUtil doLog] Attempting to create component entry for 186bc687-95b9-43f2-b64a-c86355ac8cf2
+Aug 20, 2025 5:23:59 AM GMT FINE    [com.boomi.component.ComponentFactory getReadableComponentFile] Loading component from ****/186bc687-95b9-43f2-b64a-c86355ac8cf2.xml
+Aug 20, 2025 5:23:59 AM GMT INFO    [com.boomi.util.LogUtil doLog] Detection and replacement of null class loader is enabled
+Aug 20, 2025 5:23:59 AM GMT WARNING [javax.xml.bind.ContextFinder getDeprecatedSystemProperty] Using non-standard property: javax.xml.bind.context.factory. Property javax.xml.bind.JAXBContextFactory should be used instead.
+Aug 20, 2025 5:24:00 AM GMT FINE    [com.boomi.util.LogUtil doLog] Attempting to unmarshall component object using context com.boomi.model.process
+Aug 20, 2025 5:24:00 AM GMT WARNING [javax.xml.bind.ContextFinder getDeprecatedSystemProperty] Using non-standard property: javax.xml.bind.context.factory. Property javax.xml.bind.JAXBContextFactory should be used instead.
+Aug 20, 2025 5:24:00 AM GMT FINE    [com.boomi.execution.ThreadedExecutionForker executeFuture] Executing process ExecutionTask[execution-2b7b650b-30f1-4bbd-a13e-60bbf576cc5c-2025.08.20] 186bc687-95b9-43f2-b64a-c86355ac8cf2(processes/186bc687-95b9-43f2-b64a-c86355ac8cf2)
+Aug 20, 2025 5:24:00 AM GMT WARNING [javax.xml.bind.ContextFinder getDeprecatedSystemProperty] Using non-standard property: javax.xml.bind.context.factory. Property javax.xml.bind.JAXBContextFactory should be used instead.
+Aug 20, 2025 5:24:01 AM GMT WARNING [javax.xml.bind.ContextFinder getDeprecatedSystemProperty] Using non-standard property: javax.xml.bind.context.factory. Property javax.xml.bind.JAXBContextFactory should be used instead.
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.util.PermissionUtil dumpPermissions] Permissions for java.security.AccessControlContext@6e1e5a9a
+ProtectionDomain  (null <no signer certificates>)
+ null
+ <no principals>
+ java.security.Permissions@5a2658fe (
+ (unresolved com.boomi.security.RemoteSocketPermission * connect,resolve)
+ (unresolved com.boomi.security.RemoteSocketPermission * connect,resolve)
+ (unresolved groovy.security.GroovyCodeSourcePermission /groovy/script null)
+ (unresolved groovy.security.GroovyCodeSourcePermission /groovy/script null)
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/doccache/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/counter/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/cached_scripts/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/message/-" "read,write")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/tmp/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/controlid/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/-" "read")
+ ("java.io.FilePermission" "/opt/boomi/local/accounts/psrisksand-U7OGUC.JN9UN6/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/" "read")
+ ("java.io.FilePermission" "/groovy/script" "read")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/tmpdata/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/work/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/execution/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/auth/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/sequence/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/data/-" "read,write,delete")
+ ("java.lang.RuntimePermission" "accessClassInPackAug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.util.PermissionUtil dumpPermissions] Permissions for java.security.AccessControlContext@6e1e5a9a
+ProtectionDomain  (null <no signer certificates>)
+ null
+ <no principals>
+ java.security.Permissions@5a2658fe (
+ (unresolved com.boomi.security.RemoteSocketPermission * connect,resolve)
+ (unresolved com.boomi.security.RemoteSocketPermission * connect,resolve)
+ (unresolved groovy.security.GroovyCodeSourcePermission /groovy/script null)
+ (unresolved groovy.security.GroovyCodeSourcePermission /groovy/script null)
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/doccache/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/counter/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/cached_scripts/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/message/-" "read,write")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/tmp/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/controlid/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/-" "read")
+ ("java.io.FilePermission" "/opt/boomi/local/accounts/psrisksand-U7OGUC.JN9UN6/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/" "read")
+ ("java.io.FilePermission" "/groovy/script" "read")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/tmpdata/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/work/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/execution/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/auth/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/sequence/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/data/-" "read,write,delete")
+ ("java.lang.RuntimePermission" "accessClassInPackage.com.apple.*")
+ ("java.lang.RuntimePermission" "getenv.MICRONAUT_CONFIG_FILES")
+ ("java.lang.RuntimePermission" "instantiateClassLoader")
+ ("java.lang.RuntimePermission" "accessClassInPackage.com.sun.security.sasl.util")
+ ("java.lang.RuntimePermission" "accessDeclaredMembers")
+ ("java.lang.RuntimePermission" "setContextClassLoader")
+ ("java.lang.RuntimePermission" "accessClassInPackage.sun.reflect")
+ ("java.lang.RuntimePermission" "getenv.MICRONAUT_ENVIRONMENTS")
+ ("java.lang.RuntimePermission" "accessClassInPackage.com.sun.security.sasl")
+ ("java.lang.RuntimePermission" "accessClassInPackage.sun.security.krb5")
+ ("java.lang.RuntimePermission" "accessClassInPackage.com.sun.beans.*")
+ ("java.lang.RuntimePermission" "accessClassInPackage.sun.security.util")
+ ("java.lang.RuntimePermission" "accessClassInPackage.com.sun.org.apache.*")
+ ("java.lang.RuntimePermission" "accessClassInPackage.com.sun.java.swing.plaf.*")
+ ("java.lang.RuntimePermission" "modifyThread")
+ ("java.lang.RuntimePermission" "accessClassInPackage.com.sun.script.groovy")
+ ("java.lang.RuntimePermission" "accessClassInPackage.com.sun.beans")
+ ("java.lang.RuntimePermission" "accessClassInPackage.sun.util.calendar")
+ ("java.util.PropertyPermission" "net.snowflake.client.jdbc.internal.apache.commons.logging.LogFactory" "write")
+ ("java.util.PropertyPermission" "micronaut.classloader.logging" "write")
+ ("java.util.PropertyPermission" "*" "read")
+ ("javax.net.ssl.SSLPermission" "*")
+ ("java.util.logging.LoggingPermission" "control")
+ ("java.net.NetPermission" "getResponseCache")
+ ("java.net.NetPermission" "getCookieHandler")
+ ("java.net.NetPermission" "getProxySelector")
+)
+
+: java.security.Permissions@467013aa (
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/doccache/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/counter/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/cached_scripts/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/message/-" "read,write")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/controlid/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/tmp/-" "read,write,delete")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/-" "read")
+ ("java.io.FilePermission" "/mnt/boomi/Cloud_aksusprodtest01_atom_cloud/accounts/psrisksand-U7OGUC.JN9UN6/" "read")
+ ("java.io.FilePermission" "/opt/boomi/local/accounts/psrisksand-U7OGUC.JN9UN6/-" "read,write,delete")
+ ("java.io.FilePermission" "/groovy/script" "read")
+ ("java.io.FilePermission" "/mnt/boomi/CloAug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.store.persist.FilePersistence openStream] Attempting to open output stream, id: 2025.08.20_61f0300e9d95ccf3, type: DATA
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.store.persist.FilePersistence openStream] Attempting to open output stream, id: 2025.08.20_61f0300e9d95ccf3, type: META
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.store.persist.FilePersistence share] Sharing datastore 2025.08.20_61f0300e9d95ccf3
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.store.persist.FilePersistence loadStream] Attempting to load stream, id: 2025.08.20_61f0300e9d95ccf3, type: DATA
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.store.persist.FilePersistence loadStream] Attempting to load stream, id: 2025.08.20_61f0300e9d95ccf3, type: META
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.process.shape.NotifyShape execute] The Notify title=
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.process.shape.NotifyShape execute] Notify Level = INFO
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.store.persist.FilePersistence openStream] Attempting to open output stream, id: 2025.08.20_b3aa247b0ac9f862, type: DATA
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.store.persist.FilePersistence openStream] Attempting to open output stream, id: 2025.08.20_b3aa247b0ac9f862, type: META
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.store.persist.FilePersistence loadStream] Attempting to load stream, id: 2025.08.20_b3aa247b0ac9f862, type: DATA
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.store.persist.FilePersistence loadStream] Attempting to load stream, id: 2025.08.20_b3aa247b0ac9f862, type: META
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.store.persist.FilePersistence delete] Attempting to delete store, id: 2025.08.20_b3aa247b0ac9f862
+Aug 20, 2025 5:24:02 AM GMT FINE    [com.boomi.process.ProcessExecution call] Finalizing process execution: ProcessGraph[execution-2b7b650b-30f1-4bbd-a13e-60bbf576cc5c-2025.08.20]
+Aug 20, 2025 5:24:02 AM GMT WARNING [javax.xml.bind.ContextFinder getDeprecatedSystemProperty] Using non-standard property: javax.xml.bind.context.factory. Property javax.xml.bind.JAXBContextFactory should be used instead.
+Aug 20, 2025 5:24:02 AM GMT INFO    [com.boomi.execution.forker.ProcessExecutionRunner finishTask] Finished executing task ExecutionTaskConfig psrisksand-U7OGUC.JN9UN6, proc: 186bc687-95b9-43f2-b64a-c86355ac8cf2, id: execution-2b7b650b-30f1-4bbd-a13e-60bbf576cc5c-2025.08.20(dir: processes/186bc687-95b9-43f2-b64a-c86355ac8cf2, source: USER)
+Aug 20, 2025 5:24:02 AM GMT INFO    [com.boomi.container.config.ContainerConfig setStatus] Container status changed from RUNNING to STOPPING: Process is complete
+Aug 20, 2025 5:24:02 AM GMT INFO    [com.boomi.container.config.ContainerConfig setStatus] Container status changed from STOPPING to STOPPED: Process is complete
+g 20, 2025 5:24:01 AM GMT FINE    [com.boomi.store.persist.FilePersistence loadStream] Attempting to load stream, id: 2025.08.20_61f0300e9d95ccf3, type: DATA
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.store.persist.FilePersistence loadStream] Attempting to load stream, id: 2025.08.20_61f0300e9d95ccf3, type: META
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.process.shape.NotifyShape execute] The Notify title=
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.process.shape.NotifyShape execute] Notify Level = INFO
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.store.persist.FilePersistence openStream] Attempting to open output stream, id: 2025.08.20_b3aa247b0ac9f862, type: DATA
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.store.persist.FilePersistence openStream] Attempting to open output stream, id: 2025.08.20_b3aa247b0ac9f862, type: META
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.store.persist.FilePersistence loadStream] Attempting to load stream, id: 2025.08.20_b3aa247b0ac9f862, type: DATA
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.store.persist.FilePersistence loadStream] Attempting to load stream, id: 2025.08.20_b3aa247b0ac9f862, type: META
+Aug 20, 2025 5:24:01 AM GMT FINE    [com.boomi.store.persist.FilePersistence delete] Attempting to delete store, id: 2025.08.20_b3aa247b0ac9f862
+Aug 20, 2025 5:24:02 AM GMT FINE    [com.boomi.process.ProcessExecution call] Finalizing process execution: ProcessGraph[execution-2b7b650b-30f1-4bbd-a13e-60bbf576cc5c-2025.08.20]
+Aug 20, 2025 5:24:02 AM GMT WARNING [javax.xml.bind.ContextFinder getDeprecatedSystemProperty] Using non-standard property: javax.xml.bind.context.factory. Property javax.xml.bind.JAXBContextFactory should be used instead.
+Aug 20, 2025 5:24:02 AM GMT INFO    [com.boomi.execution.forker.ProcessExecutionRunner finishTask] Finished executing task ExecutionTaskConfig psrisksand-U7OGUC.JN9UN6, proc: 186bc687-95b9-43f2-b64a-c86355ac8cf2, id: execution-2b7b650b-30f1-4bbd-a13e-60bbf576cc5c-2025.08.20(dir: processes/186bc687-95b9-43f2-b64a-c86355ac8cf2, source: USER)
+Aug 20, 2025 5:24:02 AM GMT INFO    [com.boomi.container.config.ContainerConfig setStatus] Container status changed from RUNNING to STOPPING: Process is complete
+Aug 20, 2025 5:24:02 AM GMT INFO    [com.boomi.container.config.ContainerConfig setStatus] Container status changed from STOPPING to STOPPED: Process is complete
