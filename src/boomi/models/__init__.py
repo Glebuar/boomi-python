@@ -404,6 +404,7 @@ from .execution_record_query_config import (
     ExecutionRecordQueryConfig,
     ExecutionRecordQueryConfigQueryFilter,
     QuerySort,
+    SortField,
 )
 from .execution_record_query_response import ExecutionRecordQueryResponse
 from .execution_request import ExecutionRequest

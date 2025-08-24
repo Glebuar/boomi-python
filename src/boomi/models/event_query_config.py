@@ -1,5 +1,6 @@
 
 from __future__ import annotations
+from typing import Optional
 from .utils.json_map import JsonMap
 from .utils.base_model import BaseModel
 from .event_expression import EventExpression, EventExpressionGuard
@@ -29,17 +30,17 @@ class EventQueryConfigQueryFilter(BaseModel):
 class EventQueryConfig(BaseModel):
     """EventQueryConfig
 
-    :param query_filter: query_filter
-    :type query_filter: EventQueryConfigQueryFilter
+    :param query_filter: query_filter (optional)
+    :type query_filter: Optional[EventQueryConfigQueryFilter]
     """
 
-    def __init__(self, query_filter: EventQueryConfigQueryFilter, **kwargs):
+    def __init__(self, query_filter: Optional[EventQueryConfigQueryFilter] = None, **kwargs):
         """EventQueryConfig
 
-        :param query_filter: query_filter
-        :type query_filter: EventQueryConfigQueryFilter
+        :param query_filter: query_filter (optional)
+        :type query_filter: Optional[EventQueryConfigQueryFilter]
         """
         self.query_filter = self._define_object(
             query_filter, EventQueryConfigQueryFilter
-        )
+        ) if query_filter is not None else None
         self._kwargs = kwargs

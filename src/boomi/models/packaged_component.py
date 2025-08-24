@@ -48,14 +48,14 @@ class PackagedComponent(BaseModel):
 
     def __init__(
         self,
-        branch_name: str,
         component_id: str,
         component_type: str,
+        package_version: str,
+        package_id: str,
         created_by: str,
         created_date: str,
-        notes: str,
-        package_id: str,
-        package_version: str,
+        branch_name: str = SENTINEL,
+        notes: str = SENTINEL,
         component_version: int = SENTINEL,
         deleted: bool = SENTINEL,
         fully_publicly_consumable: bool = SENTINEL,
@@ -89,7 +89,8 @@ class PackagedComponent(BaseModel):
         :param shareable: \(For processes and API Service components only\) Identifies whether you can share the packaged component in the **Process Library** or as part of an integration pack.   \>**Note:** You cannot share processes that contain **Process Route** components in the **Process Library** or as part of an integration pack., defaults to None
         :type shareable: bool, optional
         """
-        self.branch_name = branch_name
+        if branch_name is not SENTINEL:
+            self.branch_name = branch_name
         self.component_id = component_id
         self.component_type = component_type
         if component_version is not SENTINEL:
@@ -100,7 +101,8 @@ class PackagedComponent(BaseModel):
             self.deleted = deleted
         if fully_publicly_consumable is not SENTINEL:
             self.fully_publicly_consumable = fully_publicly_consumable
-        self.notes = notes
+        if notes is not SENTINEL:
+            self.notes = notes
         self.package_id = package_id
         self.package_version = package_version
         if shareable is not SENTINEL:

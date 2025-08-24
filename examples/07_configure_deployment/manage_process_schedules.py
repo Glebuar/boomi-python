@@ -52,6 +52,7 @@ from typing import List, Dict, Optional, Any
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from src.boomi import Boomi
+from src.boomi.models import ProcessSchedulesQueryConfig
 
 
 class ProcessScheduleManager:
@@ -72,27 +73,23 @@ class ProcessScheduleManager:
         print("\n🔍 Querying all process schedules...")
         
         try:
-            # Due to SDK model issues, fall back to direct API call for now
-            # TODO: Fix ProcessSchedulesQueryConfig model requirements
-            import requests
-            from requests.auth import HTTPBasicAuth
+            # Create empty query config to get all schedules
+            query_config = ProcessSchedulesQueryConfig()
             
-            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/ProcessSchedules/query"
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
+            # Query using SDK
+            result = self.sdk.process_schedules.query_process_schedules(
+                request_body=query_config
+            )
             
-            # Empty query body to get all schedules
-            response = requests.post(url, json={}, auth=auth, headers=headers)
-            
-            if response.status_code == 200:
-                result_data = response.json()
-                schedules = result_data.get('result', [])
-                total_count = result_data.get('numberOfResults', len(schedules))
+            if hasattr(result, 'result') and result.result:
+                schedules = result.result
+                total_count = result.number_of_results if hasattr(result, 'number_of_results') else len(schedules)
                 
                 print(f"✅ Found {total_count} process schedule(s)")
-                return schedules
+                # Convert model objects to dicts for backward compatibility
+                return [sched.to_dict() if hasattr(sched, 'to_dict') else sched for sched in schedules]
             else:
-                print(f"❌ Failed to query schedules: HTTP {response.status_code}")
+                print("✅ No process schedules found")
                 return []
                 
         except Exception as e:
