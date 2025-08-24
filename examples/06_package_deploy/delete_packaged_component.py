@@ -59,34 +59,20 @@ class PackagedComponentManager:
         print("✅ SDK initialized successfully")
     
     def get_packaged_component(self, package_id: str) -> Optional[dict]:
-        """Get packaged component details by ID"""
+        """Get packaged component details by ID using SDK"""
         print(f"\n🔍 Retrieving packaged component: {package_id}")
         
         try:
-            # Due to SDK model mapping issues, fall back to direct API call for now
-            # TODO: Fix SDK PackagedComponent model mapping
-            import requests
-            from requests.auth import HTTPBasicAuth
+            result = self.sdk.packaged_component.get_packaged_component(id_=package_id)
+            print("✅ Packaged component found")
             
-            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/PackagedComponent/{package_id}"
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
-            
-            response = requests.get(url, auth=auth, headers=headers)
-            
-            if response.status_code == 200:
-                component_data = response.json()
-                print("✅ Packaged component found")
-                return component_data
-            elif response.status_code == 404:
-                print("❌ Packaged component not found")
-                return None
-            else:
-                print(f"❌ Failed to retrieve packaged component: HTTP {response.status_code}")
-                return None
+            # Convert PackagedComponent object to dict for consistent interface
+            return self._extract_component_dict(result)
                 
         except Exception as e:
             print(f"❌ Failed to retrieve packaged component: {e}")
+            if hasattr(e, 'status') and e.status == 404:
+                print("   Component not found or not accessible")
             return None
     
     def display_component_info(self, component: dict) -> None:
@@ -94,18 +80,18 @@ class PackagedComponentManager:
         print("\n📋 Packaged Component Details:")
         print("=" * 60)
         
-        # Extract data from JSON response
-        package_id = component.get('packageId', 'N/A')
-        package_version = component.get('packageVersion', 'N/A')
-        component_id = component.get('componentId', 'N/A')
-        component_version = component.get('componentVersion', 'N/A')
-        component_type = component.get('componentType', 'N/A')
-        created_date = component.get('createdDate', 'N/A')
-        created_by = component.get('createdBy', 'N/A')
+        # Extract data from SDK model (using snake_case field names)
+        package_id = component.get('package_id', 'N/A')
+        package_version = component.get('package_version', 'N/A')
+        component_id = component.get('component_id', 'N/A')
+        component_version = component.get('component_version', 'N/A')
+        component_type = component.get('component_type', 'N/A')
+        created_date = component.get('created_date', 'N/A')
+        created_by = component.get('created_by', 'N/A')
         deleted = component.get('deleted', False)
         shareable = component.get('shareable', False)
         notes = component.get('notes', 'None')
-        branch_name = component.get('branchName', 'N/A')
+        branch_name = component.get('branch_name', 'N/A')
         
         print(f"📦 Package ID: {package_id}")
         print(f"🏷️  Package Version: {package_version}")
@@ -205,12 +191,26 @@ class PackagedComponentManager:
         print("To restore this deleted packaged component:")
         print("1. Use the CREATE endpoint with the following data:")
         
-        print(f"   • packageId: {component.get('packageId', 'N/A')}")
-        print(f"   • componentId: {component.get('componentId', 'N/A')}")
-        print(f"   • packageVersion: {component.get('packageVersion', 'N/A')}")
+        print(f"   • packageId: {component.get('package_id', 'N/A')}")
+        print(f"   • componentId: {component.get('component_id', 'N/A')}")
+        print(f"   • packageVersion: {component.get('package_version', 'N/A')}")
         
         print("2. Or use the create_packaged_component.py example")
         print("3. Specify the exact packageId, componentId, and packageVersion")
+    
+    def _extract_component_dict(self, component) -> dict:
+        """Extract dictionary from SDK model object"""
+        if hasattr(component, 'to_dict'):
+            return component.to_dict()
+        else:
+            # Extract attributes manually
+            comp_dict = {}
+            for attr in dir(component):
+                if not attr.startswith('_') and not callable(getattr(component, attr)):
+                    value = getattr(component, attr)
+                    if value is not None:
+                        comp_dict[attr] = value
+            return comp_dict
 
 
 def main():
