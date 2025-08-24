@@ -238,8 +238,7 @@ class ProcessExecutor:
         """Find recent execution by pattern matching using SDK"""
         try:
             # Import SDK models
-            from src.boomi.models import ExecutionRecordQueryConfig
-            from src.boomi.models.execution_record_query_config import SortField, QuerySort
+            from src.boomi.models import ExecutionRecordQueryConfig, SortField, QuerySort
             
             # Create sort configuration to get recent executions
             sort_field = SortField(
@@ -370,9 +369,10 @@ class ProcessExecutor:
                 ExecutionRecordQueryConfigQueryFilter,
                 ExecutionRecordSimpleExpression,
                 ExecutionRecordSimpleExpressionOperator,
-                ExecutionRecordSimpleExpressionProperty
+                ExecutionRecordSimpleExpressionProperty,
+                SortField,
+                QuerySort
             )
-            from src.boomi.models.execution_record_query_config import SortField, QuerySort
             
             # Create query expression for the specific process ID
             query_expression = ExecutionRecordSimpleExpression(

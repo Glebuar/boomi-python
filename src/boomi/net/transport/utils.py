@@ -77,10 +77,10 @@ def _remove_namespaces(obj):
 
 
 def _extract_component_data(parsed_dict):
-    """Extract Component or QueryResult data from root wrapper and normalize attribute keys.
+    """Extract API response data from root wrapper and normalize attribute keys.
     
     Handles API responses by:
-    1. Extracting data from 'Component' or 'QueryResult' root elements
+    1. Extracting data from root elements (Component, QueryResult, PackagedComponent, etc.)
     2. Converting '@attributeName' keys to 'attributeName' 
     3. Preserving nested structure for object, encryptedValues, result, etc.
     
@@ -111,6 +111,17 @@ def _extract_component_data(parsed_dict):
         log_download_data = parsed_dict['LogDownload']
         if isinstance(log_download_data, dict):
             return _normalize_attribute_keys(log_download_data)
+    
+    # Generic handling for other model types (PackagedComponent, Environment, etc.)
+    # If the dict has a single key that looks like a model name (PascalCase),
+    # extract its content and normalize
+    if len(parsed_dict) == 1:
+        root_key = list(parsed_dict.keys())[0]
+        # Check if it looks like a model name (starts with uppercase)
+        if root_key and root_key[0].isupper():
+            inner_data = parsed_dict[root_key]
+            if isinstance(inner_data, dict):
+                return _normalize_attribute_keys(inner_data)
     
     # For other responses, return as-is
     return parsed_dict

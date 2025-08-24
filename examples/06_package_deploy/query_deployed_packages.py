@@ -56,6 +56,7 @@ from collections import defaultdict
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from src.boomi import Boomi
+from src.boomi.models import DeployedPackageQueryConfig
 
 
 class DeployedPackageQuerier:
@@ -76,27 +77,23 @@ class DeployedPackageQuerier:
         print("\n🔍 Querying all deployed packages...")
         
         try:
-            # Due to SDK model issues, fall back to direct API call for now
-            # TODO: Fix DeployedPackageQueryConfig model requirements
-            import requests
-            from requests.auth import HTTPBasicAuth
+            # Create empty query config to get all deployed packages
+            query_config = DeployedPackageQueryConfig()
             
-            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/DeployedPackage/query"
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
+            # Query using SDK
+            result = self.sdk.deployed_package.query_deployed_package(
+                request_body=query_config
+            )
             
-            # Empty query body to get all deployed packages
-            response = requests.post(url, json={}, auth=auth, headers=headers)
-            
-            if response.status_code == 200:
-                result_data = response.json()
-                packages = result_data.get('result', [])
-                total_count = result_data.get('numberOfResults', len(packages))
+            if hasattr(result, 'result') and result.result:
+                packages = result.result
+                total_count = result.number_of_results if hasattr(result, 'number_of_results') else len(packages)
                 
                 print(f"✅ Found {total_count} deployed package(s)")
-                return packages
+                # Convert model objects to dicts for backward compatibility
+                return [pkg.to_dict() if hasattr(pkg, 'to_dict') else pkg for pkg in packages]
             else:
-                print(f"❌ Failed to query deployed packages: HTTP {response.status_code}")
+                print("✅ No deployed packages found")
                 return []
                 
         except Exception as e:

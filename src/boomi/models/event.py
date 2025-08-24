@@ -91,26 +91,26 @@ class Event(BaseModel):
         account_id: str,
         atom_id: str,
         atom_name: str,
-        classification: str,
-        end_time: str,
-        environment: str,
-        error: str,
-        error_type: str,
-        errored_step_label: str,
-        errored_step_type: str,
         event_date: str,
         event_id: str,
         event_level: str,
         event_type: str,
-        execution_id: str,
-        process_id: str,
-        process_name: str,
         record_date: str,
-        start_time: str,
-        status: str,
-        title: str,
-        top_level_process_id: str,
-        update_date: str,
+        classification: str = SENTINEL,
+        end_time: str = SENTINEL,
+        environment: str = SENTINEL,
+        error: str = SENTINEL,
+        error_type: str = SENTINEL,
+        errored_step_label: str = SENTINEL,
+        errored_step_type: str = SENTINEL,
+        execution_id: str = SENTINEL,
+        process_id: str = SENTINEL,
+        process_name: str = SENTINEL,
+        start_time: str = SENTINEL,
+        status: str = SENTINEL,
+        title: str = SENTINEL,
+        top_level_process_id: str = SENTINEL,
+        update_date: str = SENTINEL,
         error_document_count: int = SENTINEL,
         inbound_document_count: int = SENTINEL,
         outbound_document_count: int = SENTINEL,
@@ -174,30 +174,45 @@ class Event(BaseModel):
         self.account_id = account_id
         self.atom_id = atom_id
         self.atom_name = atom_name
-        self.classification = classification
-        self.end_time = end_time
-        self.environment = environment
-        self.error = error
+        if classification is not SENTINEL:
+            self.classification = classification
+        if end_time is not SENTINEL:
+            self.end_time = end_time
+        if environment is not SENTINEL:
+            self.environment = environment
+        if error is not SENTINEL:
+            self.error = error
         if error_document_count is not SENTINEL:
             self.error_document_count = error_document_count
-        self.error_type = error_type
-        self.errored_step_label = errored_step_label
-        self.errored_step_type = errored_step_type
+        if error_type is not SENTINEL:
+            self.error_type = error_type
+        if errored_step_label is not SENTINEL:
+            self.errored_step_label = errored_step_label
+        if errored_step_type is not SENTINEL:
+            self.errored_step_type = errored_step_type
         self.event_date = event_date
         self.event_id = event_id
         self.event_level = event_level
         self.event_type = event_type
-        self.execution_id = execution_id
+        if execution_id is not SENTINEL:
+            self.execution_id = execution_id
         if inbound_document_count is not SENTINEL:
             self.inbound_document_count = inbound_document_count
         if outbound_document_count is not SENTINEL:
             self.outbound_document_count = outbound_document_count
-        self.process_id = process_id
-        self.process_name = process_name
+        if process_id is not SENTINEL:
+            self.process_id = process_id
+        if process_name is not SENTINEL:
+            self.process_name = process_name
         self.record_date = record_date
-        self.start_time = start_time
-        self.status = status
-        self.title = title
-        self.top_level_process_id = top_level_process_id
-        self.update_date = update_date
+        if start_time is not SENTINEL:
+            self.start_time = start_time
+        if status is not SENTINEL:
+            self.status = status
+        if title is not SENTINEL:
+            self.title = title
+        if top_level_process_id is not SENTINEL:
+            self.top_level_process_id = top_level_process_id
+        if update_date is not SENTINEL:
+            self.update_date = update_date
         self._kwargs = kwargs

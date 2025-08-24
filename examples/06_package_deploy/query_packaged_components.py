@@ -56,6 +56,7 @@ from typing import List, Dict, Optional, Any
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from src.boomi import Boomi
+from src.boomi.models import PackagedComponentQueryConfig
 
 
 class PackagedComponentQuerier:
@@ -71,32 +72,43 @@ class PackagedComponentQuerier:
         )
         print("✅ SDK initialized successfully")
     
+    def _model_to_dict(self, obj) -> Dict[str, Any]:
+        """Convert model object to dictionary"""
+        if obj is None:
+            return {}
+        
+        # Get all non-private, non-method attributes
+        result = {}
+        for attr_name in dir(obj):
+            if not attr_name.startswith('_') and not callable(getattr(obj, attr_name, None)):
+                try:
+                    result[attr_name] = getattr(obj, attr_name)
+                except:
+                    pass
+        return result
+    
     def query_all_packaged_components(self) -> List[Dict[str, Any]]:
         """Query all packaged components using SDK"""
         print("\n🔍 Querying all packaged components...")
         
         try:
-            # Due to SDK model issues, fall back to direct API call for now
-            # TODO: Fix PackagedComponentQueryConfig model requirements
-            import requests
-            from requests.auth import HTTPBasicAuth
+            # Create empty query config to get all components
+            query_config = PackagedComponentQueryConfig()
             
-            url = f"https://api.boomi.com/api/rest/v1/{os.getenv('BOOMI_ACCOUNT')}/PackagedComponent/query"
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-            headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
+            # Query using SDK
+            result = self.sdk.packaged_component.query_packaged_component(
+                request_body=query_config
+            )
             
-            # Empty query body to get all components
-            response = requests.post(url, json={}, auth=auth, headers=headers)
-            
-            if response.status_code == 200:
-                result_data = response.json()
-                components = result_data.get('result', [])
-                total_count = result_data.get('numberOfResults', len(components))
+            if hasattr(result, 'result') and result.result:
+                components = result.result
+                total_count = result.number_of_results if hasattr(result, 'number_of_results') else len(components)
                 
                 print(f"✅ Found {total_count} packaged component(s)")
-                return components
+                # Convert model objects to dicts for backward compatibility
+                return [self._model_to_dict(comp) for comp in components]
             else:
-                print(f"❌ Failed to query components: HTTP {response.status_code}")
+                print("✅ No packaged components found")
                 return []
                 
         except Exception as e:
