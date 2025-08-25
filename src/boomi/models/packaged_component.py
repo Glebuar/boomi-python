@@ -51,9 +51,9 @@ class PackagedComponent(BaseModel):
         component_id: str,
         component_type: str,
         package_version: str,
-        package_id: str,
-        created_by: str,
-        created_date: str,
+        package_id: str = SENTINEL,
+        created_by: str = SENTINEL,
+        created_date: str = SENTINEL,
         branch_name: str = SENTINEL,
         notes: str = SENTINEL,
         component_version: int = SENTINEL,
@@ -95,15 +95,18 @@ class PackagedComponent(BaseModel):
         self.component_type = component_type
         if component_version is not SENTINEL:
             self.component_version = component_version
-        self.created_by = created_by
-        self.created_date = created_date
+        if created_by is not SENTINEL:
+            self.created_by = created_by
+        if created_date is not SENTINEL:
+            self.created_date = created_date
         if deleted is not SENTINEL:
             self.deleted = deleted
         if fully_publicly_consumable is not SENTINEL:
             self.fully_publicly_consumable = fully_publicly_consumable
         if notes is not SENTINEL:
             self.notes = notes
-        self.package_id = package_id
+        if package_id is not SENTINEL:
+            self.package_id = package_id
         self.package_version = package_version
         if shareable is not SENTINEL:
             self.shareable = shareable
