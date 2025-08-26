@@ -43,5 +43,5 @@ class ConnectorDocumentService(BaseService):
         if content == "application/json":
             return ConnectorDocumentDownload._unmap(response)
         if content == "application/xml":
-            return ConnectorDocument._unmap(parse_xml_to_dict(response))
+            return ConnectorDocumentDownload._unmap(parse_xml_to_dict(response))
         raise ApiError("Error on deserializing the response.", status, response)

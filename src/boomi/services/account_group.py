@@ -26,6 +26,12 @@ class AccountGroupService(BaseService):
 
         :param request_body: The request body., defaults to None
         :type request_body: AccountGroup, optional
+        
+        .. note::
+           While the request_body parameter is technically optional, the AccountGroup object
+           must have a 'name' field set for the API call to succeed. Creating an AccountGroup
+           without a name will result in an API error.
+        
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
