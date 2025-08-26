@@ -38,15 +38,34 @@ Usage:
 
 import os
 import sys
-sys.path.insert(0, '../../src')
-from boomi import Boomi
+from typing import Optional
 
-# Load environment variables
+# Add parent directory to path for imports  
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+# Load environment variables from .env file if available
 try:
     from dotenv import load_dotenv
-    load_dotenv('../../.env')
+    load_dotenv()
 except ImportError:
-    pass
+    pass  # dotenv is optional
+
+from src.boomi import Boomi
+
+
+def validate_environment() -> tuple[str, str, str]:
+    """Validate required environment variables and return credentials"""
+    account_id = os.getenv("BOOMI_ACCOUNT")
+    username = os.getenv("BOOMI_USER") 
+    password = os.getenv("BOOMI_SECRET")
+    
+    if not all([account_id, username, password]):
+        print("❌ Error: Missing required environment variables")
+        print("   Please set: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET")
+        print("   You can also create a .env file with these variables")
+        sys.exit(1)
+    
+    return account_id, username, password
 
 def format_date(date_str):
     """Format ISO date string to readable format"""
@@ -202,15 +221,8 @@ def print_raw_response_structure(result):
 def get_component(component_id, version=None, detailed=False, xml_only=False):
     """Retrieve and display component with specified options"""
     
-    # Check for required environment variables
-    account_id = os.getenv("BOOMI_ACCOUNT")
-    username = os.getenv("BOOMI_USER") 
-    password = os.getenv("BOOMI_SECRET")
-    
-    if not all([account_id, username, password]):
-        print("❌ Error: Missing required environment variables")
-        print("   Please set: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET")
-        return False
+    # Validate environment variables
+    account_id, username, password = validate_environment()
     
     if not xml_only:
         print(f"🏢 Account: {account_id}")
@@ -221,13 +233,19 @@ def get_component(component_id, version=None, detailed=False, xml_only=False):
         else:
             print(f"📌 Version: Latest")
     
-    # Initialize the Boomi SDK
-    sdk = Boomi(
-        account_id=account_id,
-        username=username, 
-        password=password,
-        timeout=30000
-    )
+    # Initialize SDK
+    try:
+        sdk = Boomi(
+            account_id=account_id,
+            username=username,
+            password=password,
+            timeout=30000
+        )
+        if not xml_only:
+            print("✅ SDK initialized successfully")
+    except Exception as e:
+        print(f"❌ Failed to initialize SDK: {e}")
+        return False
     
     if not xml_only:
         print(f"\n🔍 Retrieving component...")
