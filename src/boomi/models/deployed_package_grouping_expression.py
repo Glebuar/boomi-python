@@ -59,6 +59,8 @@ class DeployedPackageGroupingExpression(BaseModel):
         :type operator: DeployedPackageGroupingExpressionOperator
         """
         if nested_expression is not SENTINEL:
+            # Import at runtime to avoid circular imports
+            from .deployed_package_expression import DeployedPackageExpression
             self.nested_expression = self._define_list(
                 nested_expression, DeployedPackageExpression
             )
