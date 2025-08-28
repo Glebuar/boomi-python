@@ -278,11 +278,15 @@ class ArtifactDownloader:
         print(f"⬇️ Downloading artifacts to {output_path}")
         
         try:
-            import requests
-            from requests.auth import HTTPBasicAuth
+            import urllib.request
+            import urllib.error
+            import base64
             import time
             
-            auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
+            # Create basic auth header
+            username = os.getenv('BOOMI_USER')
+            password = os.getenv('BOOMI_SECRET')
+            credentials = base64.b64encode(f"{username}:{password}".encode()).decode()
             
             # Create output directory if it doesn't exist
             os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -293,36 +297,41 @@ class ArtifactDownloader:
                     print(f"   Retry {attempt}/{max_retries-1} in {retry_delay} seconds...")
                     time.sleep(retry_delay)
                 
-                response = requests.get(download_url, auth=auth, stream=True)
+                # Create request with authentication
+                request = urllib.request.Request(download_url)
+                request.add_header('Authorization', f'Basic {credentials}')
                 
-                if response.status_code == 200:
-                    total_size = int(response.headers.get('content-length', 0))
-                    
-                    with open(output_path, 'wb') as f:
-                        downloaded = 0
-                        for chunk in response.iter_content(chunk_size=8192):
-                            if chunk:
+                try:
+                    with urllib.request.urlopen(request) as response:
+                        total_size = int(response.headers.get('Content-Length', 0))
+                        
+                        with open(output_path, 'wb') as f:
+                            downloaded = 0
+                            chunk_size = 8192
+                            while True:
+                                chunk = response.read(chunk_size)
+                                if not chunk:
+                                    break
                                 f.write(chunk)
                                 downloaded += len(chunk)
                                 if total_size > 0:
                                     percent = (downloaded / total_size) * 100
                                     print(f"   Progress: {percent:.1f}% ({downloaded}/{total_size} bytes)", end='\r')
-                    
-                    print(f"\n✅ Downloaded {downloaded} bytes successfully")
-                    return True
-                    
-                elif response.status_code == 202:
-                    print(f"   Artifacts still being prepared... (attempt {attempt+1})")
-                    continue
-                    
-                elif response.status_code == 404:
-                    print("❌ Download URL expired or not found")
-                    return False
-                    
-                else:
-                    print(f"❌ Download failed: HTTP {response.status_code}")
-                    if attempt == max_retries - 1:  # Last attempt
+                        
+                        print(f"\n✅ Downloaded {downloaded} bytes successfully")
+                        return True
+                        
+                except urllib.error.HTTPError as e:
+                    if e.code == 202:
+                        print(f"   Artifacts still being prepared... (attempt {attempt+1})")
+                        continue
+                    elif e.code == 404:
+                        print("❌ Download URL expired or not found")
                         return False
+                    else:
+                        print(f"❌ Download failed: HTTP {e.code}")
+                        if attempt == max_retries - 1:  # Last attempt
+                            return False
             
             print("❌ Download failed after all retries")
             return False

@@ -48,8 +48,9 @@ Required SDK Components:
 import os
 import sys
 import argparse
-import requests
-from requests.auth import HTTPBasicAuth
+import urllib.request
+import urllib.error
+import base64
 import time
 from datetime import datetime
 from pathlib import Path
@@ -151,8 +152,8 @@ class ProcessLogDownloader:
         
         print(f"📥 Downloading log content from: {download_url}")
         
-        # Use same authentication as SDK
-        auth = HTTPBasicAuth(self.username, self.password)
+        # Create basic auth header
+        credentials = base64.b64encode(f"{self.username}:{self.password}".encode()).decode()
         
         for attempt in range(max_retries):
             if attempt > 0:
@@ -160,19 +161,26 @@ class ProcessLogDownloader:
                 time.sleep(retry_delay)
             
             try:
-                response = requests.get(download_url, auth=auth, timeout=30)
+                # Create request with authentication
+                request = urllib.request.Request(download_url)
+                request.add_header('Authorization', f'Basic {credentials}')
                 
-                if response.status_code == 200:
-                    print(f"✅ Log download successful ({len(response.text)} characters)")
-                    return True, response.text
-                elif response.status_code == 202:
+                with urllib.request.urlopen(request, timeout=30) as response:
+                    log_content = response.read().decode('utf-8')
+                    print(f"✅ Log download successful ({len(log_content)} characters)")
+                    return True, log_content
+                    
+            except urllib.error.HTTPError as e:
+                if e.code == 202:
                     print(f"   ⏳ Log still being prepared... (attempt {attempt+1})")
                     continue
                 else:
-                    print(f"❌ Download failed with status {response.status_code}: {response.text[:200]}")
-                    return False, f"HTTP {response.status_code}: {response.text[:200]}"
+                    error_content = e.read().decode('utf-8', errors='ignore')[:200] if e.fp else ""
+                    print(f"❌ Download failed with status {e.code}: {error_content}")
+                    if attempt == max_retries - 1:
+                        return False, f"HTTP {e.code}: {error_content}"
                     
-            except requests.RequestException as e:
+            except Exception as e:
                 print(f"❌ Request failed on attempt {attempt+1}: {str(e)}")
                 if attempt == max_retries - 1:
                     return False, f"All attempts failed. Last error: {str(e)}"

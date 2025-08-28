@@ -297,19 +297,29 @@ class ErrorAnalyzer:
                 download_url = result.url
                 print(f"✅ Log download URL obtained")
                 
-                # Download the actual log content
-                import requests
-                from requests.auth import HTTPBasicAuth
+                # Download the actual log content using built-in urllib
+                import urllib.request
+                import base64
                 
-                auth = HTTPBasicAuth(os.getenv('BOOMI_USER'), os.getenv('BOOMI_SECRET'))
-                response = requests.get(download_url, auth=auth)
+                # Create basic auth header
+                username = os.getenv('BOOMI_USER')
+                password = os.getenv('BOOMI_SECRET')
+                credentials = base64.b64encode(f"{username}:{password}".encode()).decode()
                 
-                if response.status_code == 200:
-                    log_content = response.text
-                    print(f"✅ Downloaded {len(log_content)} characters of log data")
-                    return log_content
-                else:
-                    print(f"❌ Failed to download logs: HTTP {response.status_code}")
+                # Create request with authentication
+                request = urllib.request.Request(download_url)
+                request.add_header('Authorization', f'Basic {credentials}')
+                
+                try:
+                    with urllib.request.urlopen(request) as response:
+                        log_content = response.read().decode('utf-8')
+                        print(f"✅ Downloaded {len(log_content)} characters of log data")
+                        return log_content
+                except urllib.error.HTTPError as e:
+                    print(f"❌ Failed to download logs: HTTP {e.code}")
+                    return None
+                except Exception as e:
+                    print(f"❌ Failed to download logs: {e}")
                     return None
             else:
                 print("❌ Failed to get log download URL")

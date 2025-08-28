@@ -1,30 +1,433 @@
 #!/usr/bin/env python3
 """
-🚧 TODO: IMPLEMENT - Async Operations Management
+Async Operations Management - Handle long-running asynchronous operations
 
-This example demonstrates how to work with asynchronous operations.
+This example demonstrates how to work with Boomi's asynchronous operations,
+which are used for long-running tasks that might timeout in synchronous calls.
+It shows how to initiate async operations, poll for completion, and retrieve results.
 
-Features to implement:
-- Start long-running async operations
-- Poll operation status with token
-- Retrieve async operation results
-- Handle async timeouts and errors
+Features:
+- Start async operations for various services
+- Poll operation status with configurable intervals
+- Retrieve and process async operation results
+- Handle timeouts and errors gracefully
+- Support for multiple async operation types
+
+Supported Operations:
+- AtomCounters - Get atom performance counters
+- AtomDiskSpace - Get atom disk usage information
+- ListQueues - List atom message queues
+- AtomStatus - Get atom runtime status
+- Many other async operations
 
 Requirements:
 - Set environment variables: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET
 
 Usage:
-    python async_operations.py --operation AtomCounters --atom-id ATOM_ID --poll-interval 5
+    python async_operations.py [options]
     
-Required Endpoints:
-- async_* endpoints - Various async operations
-- async_*_response_{token} - Get async results
+Examples:
+    # Get atom counters asynchronously
+    python async_operations.py --operation atom_counters --atom-id ATOM_ID
+    
+    # Get disk space with custom polling
+    python async_operations.py --operation atom_disk_space --atom-id ATOM_ID --poll-interval 3 --timeout 60
+    
+    # List queues asynchronously
+    python async_operations.py --operation list_queues --atom-id ATOM_ID
+    
+    # Get atom status
+    python async_operations.py --operation atom_status --atom-id ATOM_ID
 """
 
-print("🚧 TODO: This example needs to be implemented")
-print("📋 Purpose: Handle long-running asynchronous operations")
-print("🎯 Priority: Medium - Important for performance")
-print("📊 Complexity: High - Async coordination and polling")
-print("⏱️ Estimated time: 4-5 hours")
-print("")
-print("⚠️ Missing functionality: Cannot handle async operations efficiently")
+import os
+import sys
+import argparse
+import time
+from typing import Optional, Any, Dict
+from datetime import datetime, timedelta
+
+# Import Boomi SDK
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
+from boomi import Boomi
+from boomi.models import *
+
+
+class AsyncOperationManager:
+    """Manage Boomi async operations"""
+    
+    # Map operation names to SDK methods
+    ASYNC_OPERATIONS = {
+        'atom_counters': {
+            'name': 'Atom Counters',
+            'description': 'Get performance counters for an atom',
+            'requires_atom': True
+        },
+        'atom_disk_space': {
+            'name': 'Atom Disk Space',
+            'description': 'Get disk space usage for an atom',
+            'requires_atom': True
+        },
+        'list_queues': {
+            'name': 'List Queues',
+            'description': 'List message queues on an atom',
+            'requires_atom': True
+        },
+        'atom_status': {
+            'name': 'Atom Status',
+            'description': 'Get runtime status of an atom',
+            'requires_atom': True
+        },
+        'purge_queue': {
+            'name': 'Purge Queue',
+            'description': 'Purge messages from a queue',
+            'requires_atom': True,
+            'requires_queue': True
+        }
+    }
+    
+    def __init__(self):
+        """Initialize SDK and validate environment"""
+        self.account_id = os.getenv('BOOMI_ACCOUNT')
+        self.username = os.getenv('BOOMI_USER')
+        self.password = os.getenv('BOOMI_SECRET')
+        
+        if not all([self.account_id, self.username, self.password]):
+            print("❌ Missing required environment variables: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET")
+            sys.exit(1)
+        
+        # Initialize SDK
+        self.sdk = Boomi(
+            account_id=self.account_id,
+            username=self.username,
+            password=self.password,
+            timeout=30000
+        )
+        
+        print("✅ SDK initialized successfully")
+    
+    def start_async_operation(self, operation: str, atom_id: Optional[str] = None, 
+                            queue_name: Optional[str] = None) -> Optional[str]:
+        """Start an async operation and return the token"""
+        print(f"\n🚀 Starting async operation: {self.ASYNC_OPERATIONS[operation]['name']}")
+        
+        try:
+            token = None
+            
+            if operation == 'atom_counters':
+                result = self.sdk.atom_counters.async_get_atom_counters(id_=atom_id)
+                if hasattr(result, 'async_token'):
+                    token = result.async_token.token
+                    
+            elif operation == 'atom_disk_space':
+                result = self.sdk.atom_disk_space.async_get_atom_disk_space(id_=atom_id)
+                if hasattr(result, 'async_token'):
+                    token = result.async_token.token
+                    
+            elif operation == 'list_queues':
+                result = self.sdk.list_queues.async_get_list_queues(id_=atom_id)
+                if hasattr(result, 'async_token'):
+                    token = result.async_token.token
+                    
+            elif operation == 'atom_status':
+                result = self.sdk.atom_status.async_get_atom_status(id_=atom_id)
+                if hasattr(result, 'async_token'):
+                    token = result.async_token.token
+                    
+            elif operation == 'purge_queue':
+                if not queue_name:
+                    print("❌ Queue name required for purge operation")
+                    return None
+                    
+                # Create purge request
+                purge_request = PurgeQueueRequest(
+                    atom_id=atom_id,
+                    queue_name=queue_name
+                )
+                result = self.sdk.purge_queue.async_execute_purge_queue(
+                    id_=atom_id,
+                    request_body=purge_request
+                )
+                if hasattr(result, 'async_token'):
+                    token = result.async_token.token
+            
+            else:
+                print(f"❌ Unknown operation: {operation}")
+                return None
+            
+            if token:
+                print(f"✅ Async operation started successfully")
+                print(f"   🎫 Token: {token}")
+                return token
+            else:
+                print("❌ Failed to get async token")
+                return None
+                
+        except Exception as e:
+            print(f"❌ Failed to start async operation: {e}")
+            return None
+    
+    def poll_async_result(self, operation: str, token: str, poll_interval: int = 2,
+                         max_attempts: int = 30) -> Optional[Any]:
+        """Poll for async operation result"""
+        print(f"\n⏳ Polling for async result (token: {token[:20]}...)")
+        
+        for attempt in range(max_attempts):
+            if attempt > 0:
+                print(f"   ⏳ Waiting {poll_interval} seconds... (attempt {attempt+1}/{max_attempts})")
+                time.sleep(poll_interval)
+            
+            try:
+                result = None
+                
+                if operation == 'atom_counters':
+                    result = self.sdk.atom_counters.async_token_atom_counters(token=token)
+                    
+                elif operation == 'atom_disk_space':
+                    result = self.sdk.atom_disk_space.async_token_atom_disk_space(token=token)
+                    
+                elif operation == 'list_queues':
+                    result = self.sdk.list_queues.async_token_list_queues(token=token)
+                    
+                elif operation == 'atom_status':
+                    result = self.sdk.atom_status.async_token_atom_status(token=token)
+                    
+                elif operation == 'purge_queue':
+                    result = self.sdk.purge_queue.async_token_purge_queue(token=token)
+                
+                if result:
+                    # Check if we have actual results or still processing
+                    if hasattr(result, 'status') and result.status == 'PROCESSING':
+                        print(f"   ⏳ Still processing...")
+                        continue
+                    else:
+                        print("✅ Async operation completed successfully")
+                        return result
+                        
+            except Exception as e:
+                # Some operations return 202 while still processing
+                if '202' in str(e) or 'still processing' in str(e).lower():
+                    print(f"   ⏳ Still processing...")
+                    continue
+                else:
+                    print(f"❌ Error polling result: {e}")
+                    return None
+        
+        print("❌ Async operation timed out")
+        return None
+    
+    def process_result(self, operation: str, result: Any) -> Dict[str, Any]:
+        """Process and display async operation result"""
+        print(f"\n📊 Processing {self.ASYNC_OPERATIONS[operation]['name']} results")
+        
+        processed = {}
+        
+        try:
+            if operation == 'atom_counters':
+                if hasattr(result, 'counter_group') and result.counter_group:
+                    print("\n📈 Atom Performance Counters:")
+                    for group in result.counter_group:
+                        group_name = getattr(group, 'name', 'Unknown')
+                        print(f"\n   📊 {group_name}:")
+                        
+                        if hasattr(group, 'counter') and group.counter:
+                            for counter in group.counter:
+                                name = getattr(counter, 'name', 'Unknown')
+                                value = getattr(counter, 'value', 0)
+                                print(f"      • {name}: {value}")
+                                processed[f"{group_name}.{name}"] = value
+                                
+            elif operation == 'atom_disk_space':
+                if hasattr(result, 'disk_partition') and result.disk_partition:
+                    print("\n💾 Atom Disk Space Usage:")
+                    for partition in result.disk_partition:
+                        name = getattr(partition, 'name', 'Unknown')
+                        total = getattr(partition, 'total_space', 0)
+                        used = getattr(partition, 'used_space', 0)
+                        free = getattr(partition, 'free_space', 0)
+                        
+                        if total > 0:
+                            usage_pct = (used / total) * 100
+                            print(f"   📁 {name}:")
+                            print(f"      Total: {total:,} bytes")
+                            print(f"      Used:  {used:,} bytes ({usage_pct:.1f}%)")
+                            print(f"      Free:  {free:,} bytes")
+                            
+                            processed[name] = {
+                                'total': total,
+                                'used': used,
+                                'free': free,
+                                'usage_pct': usage_pct
+                            }
+                            
+            elif operation == 'list_queues':
+                if hasattr(result, 'result') and result.result:
+                    print("\n📬 Message Queues:")
+                    for queue_result in result.result:
+                        if hasattr(queue_result, 'queue_record') and queue_result.queue_record:
+                            for queue in queue_result.queue_record:
+                                name = getattr(queue, 'queue_name', 'Unknown')
+                                q_type = getattr(queue, 'queue_type', 'Unknown')
+                                messages = getattr(queue, 'messages_count', 0)
+                                
+                                print(f"   📮 {name} ({q_type})")
+                                print(f"      Messages: {messages}")
+                                
+                                processed[name] = {
+                                    'type': q_type,
+                                    'messages': messages
+                                }
+                                
+            elif operation == 'atom_status':
+                if hasattr(result, 'status'):
+                    status = result.status
+                    print(f"\n🟢 Atom Status: {status}")
+                    processed['status'] = status
+                    
+                    if hasattr(result, 'message'):
+                        print(f"   💬 Message: {result.message}")
+                        processed['message'] = result.message
+                        
+            elif operation == 'purge_queue':
+                if hasattr(result, 'status'):
+                    print(f"\n🗑️ Purge Status: {result.status}")
+                    processed['status'] = result.status
+                    
+                if hasattr(result, 'messages_purged'):
+                    print(f"   📉 Messages Purged: {result.messages_purged}")
+                    processed['messages_purged'] = result.messages_purged
+            
+        except Exception as e:
+            print(f"❌ Error processing result: {e}")
+        
+        return processed
+    
+    def run_async_workflow(self, operation: str, atom_id: Optional[str] = None,
+                          queue_name: Optional[str] = None, poll_interval: int = 2,
+                          timeout: int = 60) -> bool:
+        """Run complete async workflow: start, poll, process"""
+        print(f"\n🔄 Running async workflow for: {self.ASYNC_OPERATIONS[operation]['name']}")
+        print(f"   ⏱️ Timeout: {timeout} seconds")
+        print(f"   🔄 Poll interval: {poll_interval} seconds")
+        
+        # Validate requirements
+        op_info = self.ASYNC_OPERATIONS[operation]
+        if op_info.get('requires_atom') and not atom_id:
+            print("❌ Atom ID required for this operation")
+            return False
+            
+        if op_info.get('requires_queue') and not queue_name:
+            print("❌ Queue name required for this operation")
+            return False
+        
+        # Start async operation
+        token = self.start_async_operation(operation, atom_id, queue_name)
+        if not token:
+            print("❌ Failed to start async operation")
+            return False
+        
+        # Poll for result
+        max_attempts = timeout // poll_interval
+        result = self.poll_async_result(operation, token, poll_interval, max_attempts)
+        if not result:
+            print("❌ Failed to get async result")
+            return False
+        
+        # Process and display result
+        processed = self.process_result(operation, result)
+        
+        print(f"\n✅ Async operation completed successfully")
+        print(f"   📊 Processed {len(processed)} result item(s)")
+        
+        return True
+    
+    def show_operations(self):
+        """Display available async operations"""
+        print("\n📋 Available Async Operations:")
+        print("=" * 60)
+        
+        for key, info in self.ASYNC_OPERATIONS.items():
+            print(f"\n   🔹 {key}")
+            print(f"      Name: {info['name']}")
+            print(f"      Description: {info['description']}")
+            
+            requirements = []
+            if info.get('requires_atom'):
+                requirements.append('atom-id')
+            if info.get('requires_queue'):
+                requirements.append('queue-name')
+            if requirements:
+                print(f"      Required: {', '.join(requirements)}")
+        
+        print("\n💡 Use --operation parameter to specify operation")
+        print("   Example: --operation atom_counters --atom-id ATOM_ID")
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description='Manage Boomi async operations',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+    # Get atom counters
+    python async_operations.py --operation atom_counters --atom-id ATOM_ID
+    
+    # Get disk space with custom polling
+    python async_operations.py --operation atom_disk_space --atom-id ATOM_ID --poll-interval 3
+    
+    # List queues
+    python async_operations.py --operation list_queues --atom-id ATOM_ID
+    
+    # Get atom status
+    python async_operations.py --operation atom_status --atom-id ATOM_ID
+    
+    # Show available operations
+    python async_operations.py --list-operations
+        """
+    )
+    
+    parser.add_argument('--operation',
+                       choices=list(AsyncOperationManager.ASYNC_OPERATIONS.keys()),
+                       help='Async operation to execute')
+    parser.add_argument('--atom-id', metavar='ID',
+                       help='Atom ID for operations that require it')
+    parser.add_argument('--queue-name', metavar='NAME',
+                       help='Queue name for queue operations')
+    parser.add_argument('--poll-interval', type=int, default=2,
+                       help='Polling interval in seconds (default: 2)')
+    parser.add_argument('--timeout', type=int, default=60,
+                       help='Operation timeout in seconds (default: 60)')
+    parser.add_argument('--list-operations', action='store_true',
+                       help='Show available async operations')
+    
+    args = parser.parse_args()
+    
+    # Initialize manager
+    manager = AsyncOperationManager()
+    
+    print("\n⚡ Boomi Async Operations Manager")
+    print("=" * 60)
+    
+    # Execute requested operation
+    if args.list_operations:
+        manager.show_operations()
+    
+    elif args.operation:
+        success = manager.run_async_workflow(
+            operation=args.operation,
+            atom_id=args.atom_id,
+            queue_name=args.queue_name,
+            poll_interval=args.poll_interval,
+            timeout=args.timeout
+        )
+        
+        if not success:
+            sys.exit(1)
+    
+    else:
+        parser.print_help()
+        print("\n💡 Use --help for more examples")
+
+
+if __name__ == "__main__":
+    main()
