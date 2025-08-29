@@ -42,6 +42,9 @@ CLAUDE.md
 test_*.py
 *_test.py
 
+# Template files (for local development only)
+examples/_template_*.py
+
 # Runtime artifacts and logs
 artifacts/
 logs/
