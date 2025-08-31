@@ -10,10 +10,25 @@ export BOOMI_ACCOUNT="your-account-id"
 export BOOMI_USER="your-username" 
 export BOOMI_SECRET="your-password"
 
+# Run examples directly (no parameters needed!)
+PYTHONPATH=src python examples/01_discover_analyze/analyze_dependencies.py
+PYTHONPATH=src python examples/02_create_components/clone_component.py
+PYTHONPATH=src python examples/04_environment_setup/get_environment.py
+
 # Run a basic example
 cd examples/12_utilities
 PYTHONPATH=../../src python sample.py
 ```
+
+### 🆕 NEW: Default Parameters
+
+**All major examples now include default parameters** - run them instantly without arguments!
+
+- **Component Operations**: Default to component `112b4efe-b173-4258-9492-613ead7d52ce` (XML Example Test)
+- **Environment Operations**: Default to development environment `74851c30-98b2-4a6f-838b-61eee5627b13`
+- **Runtime Operations**: Default to Azure runtime `2d4d5da4-0dfe-41f8-914b-f5f5120ad90a`
+
+**⚠️ Important**: Default IDs are from the `ps-risk-sand` test account. Replace with your own resource IDs for production use.
 
 ## 📁 CI/CD Lifecycle Organization
 
@@ -22,17 +37,18 @@ Examples are organized by integration development lifecycle stages:
 ### **01_discover_analyze/** - Find & Analyze Components
 - `list_all_components.py` - List all components with metadata ✅
 - `query_process_components.py` - Query specific component types ✅  
-- `find_where_used.py` - Find components that use a specific component ✅
-- `find_what_uses.py` - Find what a component uses ✅
+- `find_where_used.py` - Find components that use a specific component ✅ 🆕 **DEFAULT PARAMS**
+- `find_what_uses.py` - Find what a component uses ✅ 🆕 **DEFAULT PARAMS**
+- `analyze_dependencies.py` - Analyze component dependencies ✅ 🆕 **DEFAULT PARAMS**
 - `folder_structure.py` - Analyze folder structure ✅
 - `manage_folders.py` - Organize components with folders 🚧
 
 ### **02_create_components/** - Create & Modify Components
-- `create_process_component.py` - Create new processes ✅
+- `create_process_component.py` - Create new processes ✅ 🔧 **FIXED**
 - `get_component.py` - Retrieve component details ✅
 - `update_component.py` - Update existing components ✅
 - `update_component_xml.py` - Update with raw XML ✅
-- `clone_component.py` - Clone/copy components 🚧
+- `clone_component.py` - Clone/copy components ✅ 🆕 **DEFAULT PARAMS**
 - `delete_component.py` - Safe component deletion 🚧
 
 ### **03_build_integration/** - Build Integration from Components
@@ -43,17 +59,17 @@ Examples are organized by integration development lifecycle stages:
 
 ### **04_environment_setup/** - Environment Configuration
 - `create_environment.py` - Create new environments ✅
-- `get_environment.py` - Retrieve environment details ✅
+- `get_environment.py` - Retrieve environment details ✅ 🆕 **DEFAULT PARAMS**
 - `list_environments.py` - List all environments ✅
 - `update_environment.py` - Update environment settings ✅
 - `delete_environment.py` - Delete environments ✅
-- `query_environments.py` - Query environments with filters ✅
+- `query_environments.py` - Query environments with filters ✅ 🔧 **FIXED**
 - `manage_roles.py` - Manage user roles and permissions 🚧
 
 ### **05_runtime_setup/** - Runtime (Atom) Management
 - `list_runtimes.py` - List available runtimes ✅
 - `get_runtime.py` - Get runtime details ✅
-- `get_runtime_status.py` - Check runtime status ✅
+- `get_runtime_status.py` - Check runtime status ✅ 🆕 **DEFAULT PARAMS**
 - `update_runtime.py` - Update runtime configuration ✅
 - `delete_runtime.py` - Delete runtimes ✅
 - `create_installer_token.py` - Generate installer tokens ✅
@@ -69,17 +85,17 @@ Examples are organized by integration development lifecycle stages:
 - `create_deployed_package.py` - Deploy packages 🚨
 - `get_packaged_component.py` - Get package details 🚧
 - `query_packaged_components.py` - Query packages 🚧
-- `query_deployed_packages.py` - Query deployments 🚧
+- `query_deployed_packages.py` - Query deployments ✅ 🔧 **FIXED**
 - `promote_package_to_environment.py` - Promote between environments 🚧
 - `create_deployment.py` - Create deployment objects 🚧
 - `manage_integration_packs.py` - Manage integration packs 🚧
 
 ### **07_configure_deployment/** - Configure Deployment Settings
-- `get_environment_extensions.py` - Get environment extensions ✅
+- `get_environment_extensions.py` - Get environment extensions ✅ 🔧 **FIXED**
 - `query_environment_extensions.py` - Query extensions ✅
 - `update_environment_extensions.py` - Update extensions ✅
 - `get_environment_simple.py` - Get basic environment info ✅
-- `manage_process_schedules.py` - Configure process schedules 🚧
+- `manage_process_schedules.py` - Configure process schedules ✅
 
 ### **08_execute_test/** - Execute & Test Processes
 - `execution_records.py` - Query execution records ✅
@@ -92,8 +108,9 @@ Examples are organized by integration development lifecycle stages:
 - `download_process_log.py` - Download execution logs 🚨
 - `poll_execution_status.py` - Monitor execution progress 🚨
 - `get_execution_summary.py` - Get execution summaries 🚧
-- `query_audit_logs.py` - Query audit logs 🚧
+- `query_audit_logs.py` - Query audit logs ✅
 - `query_events.py` - Query system events 🚧
+- `monitor_throughput.py` - Monitor throughput metrics ✅ 🆕 **DEFAULT PARAMS**
 
 ### **10_version_compare/** - Version Control & Comparison
 - `compare_component_versions.py` - Compare component versions ✅
@@ -115,6 +132,8 @@ Examples are organized by integration development lifecycle stages:
 - 🚨 **Critical TODO** - Must implement (pipeline blocker)
 - 🚧 **TODO** - Planned for implementation
 - 📋 **Documentation** - Usage guides and references
+- 🔧 **FIXED** - Recently resolved runtime errors
+- 🆕 **DEFAULT PARAMS** - Now runs without command-line arguments
 
 ## 🔧 Usage Patterns
 
