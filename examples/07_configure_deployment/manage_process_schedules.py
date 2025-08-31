@@ -86,8 +86,8 @@ class ProcessScheduleManager:
                 total_count = result.number_of_results if hasattr(result, 'number_of_results') else len(schedules)
                 
                 print(f"✅ Found {total_count} process schedule(s)")
-                # Convert model objects to dicts for backward compatibility
-                return [sched.to_dict() if hasattr(sched, 'to_dict') else sched for sched in schedules]
+                # Return the schedule objects directly
+                return schedules
             else:
                 print("✅ No process schedules found")
                 return []
@@ -291,18 +291,18 @@ class ProcessScheduleManager:
         atom_counts = {}
         
         for schedule in schedules:
-            has_schedules = schedule.get('Schedule', [])
+            has_schedules = getattr(schedule, 'schedule', [])
             if has_schedules:
                 active_count += 1
             else:
                 inactive_count += 1
             
             # Count by process
-            process_id = schedule.get('processId', 'Unknown')
+            process_id = getattr(schedule, 'process_id', 'Unknown')
             process_counts[process_id] = process_counts.get(process_id, 0) + 1
             
             # Count by atom
-            atom_id = schedule.get('atomId', 'Unknown')
+            atom_id = getattr(schedule, 'atom_id', 'Unknown')
             atom_counts[atom_id] = atom_counts.get(atom_id, 0) + 1
         
         print(f"📦 Total Schedule Objects: {len(schedules)}")

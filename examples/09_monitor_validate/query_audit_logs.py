@@ -177,11 +177,11 @@ class AuditLogAnalyzer:
                     log_dict = {
                         'userId': getattr(log_entry, 'user_id', 'Unknown'),
                         'action': getattr(log_entry, 'action', 'Unknown'),
-                        'type': getattr(log_entry, 'type', 'Unknown'),
+                        'type': getattr(log_entry, 'type_', 'Unknown'),
                         'level': getattr(log_entry, 'level', 'Unknown'),
                         'modifier': getattr(log_entry, 'modifier', 'Unknown'),
                         'source': getattr(log_entry, 'source', 'Unknown'),
-                        'date': getattr(log_entry, 'date', ''),
+                        'date': getattr(log_entry, 'date_', ''),
                         'containerId': getattr(log_entry, 'container_id', 'N/A'),
                         'accountId': getattr(log_entry, 'account_id', 'N/A')
                     }
@@ -351,7 +351,15 @@ class AuditLogAnalyzer:
         summary = analysis.get("summary", {})
         
         print(f"📊 Total Entries: {summary.get('total_entries', 0)}")
-        print(f"📅 Date Range: {analysis['date_range']['earliest'][:10]} to {analysis['date_range']['latest'][:10]}")
+        
+        earliest = analysis['date_range'].get('earliest', 'N/A')
+        latest = analysis['date_range'].get('latest', 'N/A')
+        if earliest and earliest != 'N/A':
+            earliest = earliest[:10]
+        if latest and latest != 'N/A':
+            latest = latest[:10]
+        print(f"📅 Date Range: {earliest} to {latest}")
+        
         print(f"👥 Unique Users: {summary.get('unique_users', 0)}")
         
         most_active_user = summary.get('most_active_user', ('N/A', 0))

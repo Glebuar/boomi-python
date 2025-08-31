@@ -38,9 +38,9 @@ def main():
     
     print("🔍 Querying available atoms/runtimes...")
     
-    # Query atoms containing "ATOM" in type
+    # Query atoms with type equal to "ATOM"
     simple_expression = AtomSimpleExpression(
-        operator=AtomSimpleExpressionOperator.CONTAINS,
+        operator=AtomSimpleExpressionOperator.EQUALS,
         property=AtomSimpleExpressionProperty.TYPE,
         argument=["ATOM"]
     )
@@ -57,10 +57,10 @@ def main():
     if atoms:
         print(f"✅ Found {len(atoms)} atom(s):")
         for i, atom in enumerate(atoms, 1):
-            atom_id = atom.get('@id', 'N/A')
-            atom_name = atom.get('@name', 'N/A')
-            atom_type = atom.get('@type', 'N/A')
-            atom_status = atom.get('@status', 'N/A')
+            atom_id = getattr(atom, 'id_', 'N/A')
+            atom_name = getattr(atom, 'name', 'N/A')
+            atom_type = getattr(atom, 'type_', 'N/A')
+            atom_status = getattr(atom, 'status', 'N/A')
             
             print(f"{i:2}. {atom_name}")
             print(f"    ID: {atom_id}")
