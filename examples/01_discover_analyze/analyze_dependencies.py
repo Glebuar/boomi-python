@@ -123,19 +123,24 @@ class DependencyAnalyzer:
             )
             
             components = []
-            if hasattr(result, 'references') and result.references:
-                for ref in result.references:
-                    component_info = {
-                        'component_id': getattr(ref, 'parent_component_id', 'N/A'),
-                        'component_name': f"Parent Component {getattr(ref, 'parent_component_id', 'N/A')}",
-                        'component_type': getattr(ref, 'type_', 'N/A'),
-                        'reference_type': getattr(ref, 'type_', 'N/A'),
-                        'reference_count': 1
-                    }
-                    components.append(component_info)
-                    
-                    # Add to cache
-                    self.component_cache[component_info['component_id']] = component_info
+            # SDK is now fixed - access result.result for ComponentReference objects
+            if hasattr(result, 'result') and result.result:
+                for component_ref in result.result:
+                    if hasattr(component_ref, 'references') and component_ref.references:
+                        # SDK fix now properly handles single reference as dict
+                        for ref in component_ref.references:
+                            component_info = {
+                                'component_id': getattr(ref, 'parent_component_id', 'N/A'),
+                                'component_name': f"Parent Component {getattr(ref, 'parent_component_id', 'N/A')}",
+                                'component_type': getattr(ref, 'type_', 'N/A'),
+                                'reference_type': getattr(ref, 'type_', 'N/A'),
+                                'reference_count': 1,
+                                'parent_version': getattr(ref, 'parent_version', 'N/A')
+                            }
+                            components.append(component_info)
+                            
+                            # Add to cache
+                            self.component_cache[component_info['component_id']] = component_info
             
             # Cache the result
             self.dependency_cache[cache_key] = components
@@ -178,19 +183,25 @@ class DependencyAnalyzer:
             )
             
             components = []
-            if hasattr(result, 'references') and result.references:
-                for ref in result.references:
-                    component_info = {
-                        'component_id': getattr(ref, 'component_id', 'N/A'),
-                        'component_name': f"Component {getattr(ref, 'component_id', 'N/A')}",
-                        'component_type': getattr(ref, 'type_', 'N/A'),
-                        'reference_type': getattr(ref, 'type_', 'N/A'),
-                        'reference_count': 1
-                    }
-                    components.append(component_info)
-                    
-                    # Add to cache
-                    self.component_cache[component_info['component_id']] = component_info
+            # SDK is now fixed - access result.result for ComponentReference objects
+            if hasattr(result, 'result') and result.result:
+                for component_ref in result.result:
+                    if hasattr(component_ref, 'references') and component_ref.references:
+                        # SDK fix now properly handles single reference as dict
+                        for ref in component_ref.references:
+                            component_info = {
+                                'component_id': getattr(ref, 'component_id', 'N/A'),
+                                'component_name': f"Component {getattr(ref, 'component_id', 'N/A')}",
+                                'component_type': getattr(ref, 'type_', 'N/A'),
+                                'reference_type': getattr(ref, 'type_', 'N/A'),
+                                'reference_count': 1,
+                                'parent_component_id': getattr(ref, 'parent_component_id', 'N/A'),
+                                'parent_version': getattr(ref, 'parent_version', 'N/A')
+                            }
+                            components.append(component_info)
+                            
+                            # Add to cache
+                            self.component_cache[component_info['component_id']] = component_info
             
             # Cache the result
             self.dependency_cache[cache_key] = components

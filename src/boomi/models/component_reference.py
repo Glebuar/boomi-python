@@ -22,5 +22,14 @@ class ComponentReference(BaseModel):
         :type references: List[References], optional
         """
         if references is not SENTINEL:
-            self.references = self._define_list(references, References)
+            # Handle both single reference (dict) and multiple references (list)
+            if isinstance(references, dict):
+                # Single reference from XML attributes - wrap in list
+                self.references = self._define_list([references], References)
+            elif isinstance(references, list):
+                # Multiple references - normal case
+                self.references = self._define_list(references, References)
+            else:
+                # Fallback to original behavior
+                self.references = self._define_list(references, References)
         self._kwargs = kwargs
