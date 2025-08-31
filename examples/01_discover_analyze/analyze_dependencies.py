@@ -19,11 +19,20 @@ Requirements:
 - Set environment variables: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET
 - Appropriate permissions to read components and references
 
+IMPORTANT: Default Component IDs
+---------------------------------
+This example includes hardcoded component IDs for demonstration purposes.
+These are actual components from a test account that have real dependencies:
+- 0864f99a-917f-457d-abc6-2762c0bb9b88: "Boomi Hiring to HR Employee Details Map" (2 dependencies)
+- a2a93fdc-682a-475d-afe5-aaac8a33df63: "[Intapp Walls] Create Client" (1 dependency)
+
+**REPLACE THESE WITH YOUR OWN COMPONENT IDs FOR PRODUCTION USE**
+
 Usage:
     # Find what uses a component
     python analyze_dependencies.py COMPONENT_ID --what-uses
     
-    # Find what a component uses
+    # Find what a component uses (requires parentVersion)
     python analyze_dependencies.py COMPONENT_ID --what-it-uses
     
     # Build full dependency graph
@@ -38,10 +47,21 @@ Usage:
     # Batch analysis
     python analyze_dependencies.py --batch "comp1,comp2,comp3" --what-uses
 
-Examples:
-    python analyze_dependencies.py 112b4efe-b173-4258-9492-613ead7d52ce --what-uses
-    python analyze_dependencies.py 112b4efe-b173-4258-9492-613ead7d52ce --full-graph --depth 3
-    python analyze_dependencies.py --batch "comp1,comp2,comp3" --impact-analysis
+Examples with Real Components (from test account):
+    # Component with 2 dependencies
+    python analyze_dependencies.py 0864f99a-917f-457d-abc6-2762c0bb9b88 --what-uses
+    
+    # Component with 1 dependency
+    python analyze_dependencies.py a2a93fdc-682a-475d-afe5-aaac8a33df63 --what-uses
+    
+    # Full dependency graph
+    python analyze_dependencies.py 0864f99a-917f-457d-abc6-2762c0bb9b88 --full-graph --depth 3
+    
+    # Impact analysis for deletion
+    python analyze_dependencies.py 0864f99a-917f-457d-abc6-2762c0bb9b88 --impact-analysis --change-type delete
+    
+    # Batch analysis
+    python analyze_dependencies.py --batch "0864f99a-917f-457d-abc6-2762c0bb9b88,a2a93fdc-682a-475d-afe5-aaac8a33df63" --what-uses
 """
 
 import os
@@ -543,9 +563,13 @@ Examples:
     
     # Validate arguments - use default component ID if none provided
     if not args.component_id and not args.batch:
-        args.component_id = "112b4efe-b173-4258-9492-613ead7d52ce"  # XML Example Test component
+        # Default component with actual dependencies for demonstration
+        # This is "Boomi Hiring to HR Employee Details Map" which has 2 parent components
+        args.component_id = "0864f99a-917f-457d-abc6-2762c0bb9b88"
         print(f"ℹ️ No component_id provided, using default: {args.component_id}")
-        print("💡 To use a different component, run: python analyze_dependencies.py YOUR_COMPONENT_ID --what-uses")
+        print("   (Boomi Hiring to HR Employee Details Map - has 2 dependencies)")
+        print("💡 IMPORTANT: Replace this component ID with your own component ID for production use")
+        print("   Example: python analyze_dependencies.py YOUR_COMPONENT_ID --what-uses")
     
     # Set default operation if none specified
     if not any([args.what_uses, args.what_it_uses, args.full_graph, args.impact_analysis]):
