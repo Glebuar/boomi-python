@@ -296,7 +296,7 @@ def main():
     print()
     
     try:
-        # Get environment ID from arguments or prompt user
+        # Get environment ID from arguments or use default environment
         if len(sys.argv) > 1:
             environment_id = sys.argv[1]
             print(f"📍 Using provided environment ID: {environment_id}")
@@ -304,7 +304,13 @@ def main():
             print("💡 Usage: python3 get_environment_extensions.py <environment_id>")
             print()
             print("   You can find environment IDs using list_environments.py")
-            environment_id = input("Enter environment ID: ").strip()
+            print("   Example environment IDs:")
+            print("   • 74851c30-98b2-4a6f-838b-61eee5627b13 (Development)")
+            print("   • 134de320-ccae-4d1a-96fa-6b0df7b13748 (Production)")
+            
+            # Try to use default environment for demo purposes
+            environment_id = "74851c30-98b2-4a6f-838b-61eee5627b13"  # Development environment
+            print(f"\n🔄 Using default Development environment: {environment_id}")
             
             if not environment_id:
                 print("❌ No environment ID provided")

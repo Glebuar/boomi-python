@@ -8,13 +8,10 @@ This version doesn't require external XML files and shows the complete workflow.
 """
 
 import os
-from dotenv import load_dotenv
 import sys
 sys.path.insert(0, '../src')
 
 from boomi import Boomi
-
-load_dotenv()
 
 # Simple process XML definition (inline for easier distribution)
 SIMPLE_PROCESS_XML = '''<Component xmlns="http://api.platform.boomi.com/"

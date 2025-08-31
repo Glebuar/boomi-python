@@ -19,7 +19,13 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
 
 from boomi import Boomi
-from boomi.models import EnvironmentQueryConfig
+from boomi.models import (
+    EnvironmentQueryConfig,
+    EnvironmentQueryConfigQueryFilter,
+    EnvironmentSimpleExpression,
+    EnvironmentSimpleExpressionOperator,
+    EnvironmentSimpleExpressionProperty
+)
 
 def main():
     # Initialize SDK
@@ -32,18 +38,50 @@ def main():
     
     print("🔍 Querying available environments...")
     
-    # Query all environments
-    query_config = EnvironmentQueryConfig()
-    query_response = sdk.environment.query_environment(query_config)
+    all_environments = []
     
-    # Process results
-    environments = []
-    if hasattr(query_response, 'result') and query_response.result:
-        environments = query_response.result if isinstance(query_response.result, list) else [query_response.result]
+    # Query TEST environments
+    try:
+        simple_expression = EnvironmentSimpleExpression(
+            operator=EnvironmentSimpleExpressionOperator.EQUALS,
+            property=EnvironmentSimpleExpressionProperty.CLASSIFICATION,
+            argument=["TEST"]
+        )
+        
+        query_filter = EnvironmentQueryConfigQueryFilter(expression=simple_expression)
+        query_config = EnvironmentQueryConfig(query_filter=query_filter)
+        query_response = sdk.environment.query_environment(query_config)
+        
+        if hasattr(query_response, 'result') and query_response.result:
+            test_envs = query_response.result if isinstance(query_response.result, list) else [query_response.result]
+            all_environments.extend(test_envs)
+            print(f"✅ Found {len(test_envs)} TEST environment(s)")
+    except Exception as e:
+        print(f"⚠️ Error querying TEST environments: {e}")
     
-    if environments:
-        print(f"✅ Found {len(environments)} environment(s):")
-        for i, env in enumerate(environments, 1):
+    # Query PROD environments
+    try:
+        simple_expression = EnvironmentSimpleExpression(
+            operator=EnvironmentSimpleExpressionOperator.EQUALS,
+            property=EnvironmentSimpleExpressionProperty.CLASSIFICATION,
+            argument=["PROD"]
+        )
+        
+        query_filter = EnvironmentQueryConfigQueryFilter(expression=simple_expression)
+        query_config = EnvironmentQueryConfig(query_filter=query_filter)
+        query_response = sdk.environment.query_environment(query_config)
+        
+        if hasattr(query_response, 'result') and query_response.result:
+            prod_envs = query_response.result if isinstance(query_response.result, list) else [query_response.result]
+            all_environments.extend(prod_envs)
+            print(f"✅ Found {len(prod_envs)} PROD environment(s)")
+    except Exception as e:
+        print(f"⚠️ Error querying PROD environments: {e}")
+    
+    # Display results
+    if all_environments:
+        print(f"\n📋 Total environments found: {len(all_environments)}")
+        for i, env in enumerate(all_environments, 1):
             env_id = getattr(env, 'id_', 'N/A')
             env_name = getattr(env, 'name', 'N/A')
             env_class = getattr(env, 'classification', 'N/A')

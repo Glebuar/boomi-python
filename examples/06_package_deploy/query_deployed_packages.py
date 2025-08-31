@@ -72,6 +72,23 @@ class DeployedPackageQuerier:
         )
         print("✅ SDK initialized successfully")
     
+    def _model_to_dict(self, model_obj) -> Dict[str, Any]:
+        """Convert a model object to a dictionary for easier processing"""
+        if hasattr(model_obj, '__dict__'):
+            # Convert the model object to dict using its attributes
+            result = {}
+            for key, value in vars(model_obj).items():
+                if not key.startswith('_') and value is not None:
+                    # Handle enum values
+                    if hasattr(value, 'value'):
+                        result[key] = value.value
+                    else:
+                        result[key] = value
+            return result
+        else:
+            # Fallback if it's already a dict or other type
+            return model_obj if isinstance(model_obj, dict) else {}
+    
     def query_all_deployed_packages(self) -> List[Dict[str, Any]]:
         """Query all deployed packages using SDK"""
         print("\n🔍 Querying all deployed packages...")
@@ -90,8 +107,8 @@ class DeployedPackageQuerier:
                 total_count = result.number_of_results if hasattr(result, 'number_of_results') else len(packages)
                 
                 print(f"✅ Found {total_count} deployed package(s)")
-                # Convert model objects to dicts for backward compatibility
-                return [pkg.to_dict() if hasattr(pkg, 'to_dict') else pkg for pkg in packages]
+                # Convert model objects to dicts for processing
+                return [self._model_to_dict(pkg) for pkg in packages]
             else:
                 print("✅ No deployed packages found")
                 return []
