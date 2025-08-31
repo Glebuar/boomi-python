@@ -530,9 +530,17 @@ Examples:
     
     args = parser.parse_args()
     
-    # Validate arguments
+    # Validate arguments - use default component ID if none provided
     if not args.component_id and not args.batch:
-        parser.error("Either component_id or --batch must be specified")
+        args.component_id = "112b4efe-b173-4258-9492-613ead7d52ce"  # XML Example Test component
+        print(f"ℹ️ No component_id provided, using default: {args.component_id}")
+        print("💡 To use a different component, run: python analyze_dependencies.py YOUR_COMPONENT_ID --what-uses")
+    
+    # Set default operation if none specified
+    if not any([args.what_uses, args.what_it_uses, args.full_graph, args.impact_analysis]):
+        args.what_uses = True
+        print("ℹ️ No operation specified, using default: --what-uses")
+        print("💡 Available operations: --what-uses, --what-it-uses, --full-graph, --impact-analysis")
     
     # Validate environment variables
     if not all([os.getenv("BOOMI_ACCOUNT"), os.getenv("BOOMI_USER"), os.getenv("BOOMI_SECRET")]):

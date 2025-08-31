@@ -28,11 +28,12 @@ from boomi.models import (
 )
 
 def main():
-    if len(sys.argv) != 2:
-        print("Usage: python find_what_uses_single.py COMPONENT_ID")
-        sys.exit(1)
-    
-    component_id = sys.argv[1]
+    if len(sys.argv) > 1:
+        component_id = sys.argv[1]
+    else:
+        component_id = "112b4efe-b173-4258-9492-613ead7d52ce"  # XML Example Test component
+        print(f"ℹ️ No component_id provided, using default: {component_id}")
+        print("💡 To use a different component, run: python find_what_uses.py YOUR_COMPONENT_ID")
     
     # Initialize SDK
     sdk = Boomi(

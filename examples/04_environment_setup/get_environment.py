@@ -56,12 +56,11 @@ def validate_environment() -> tuple[str, str, str]:
 def main():
     """Main execution function"""
     if len(sys.argv) != 2:
-        print("❌ Error: Environment ID is required")
-        print("Usage: python get_environment.py ENVIRONMENT_ID")
-        print("Example: python get_environment.py 74851c30-98b2-4a6f-838b-61eee5627b13")
-        sys.exit(1)
-    
-    environment_id = sys.argv[1]
+        environment_id = "74851c30-98b2-4a6f-838b-61eee5627b13"  # Development environment
+        print(f"ℹ️ No environment_id provided, using default: {environment_id}")
+        print("💡 To use a different environment, run: python get_environment.py YOUR_ENV_ID")
+    else:
+        environment_id = sys.argv[1]
     
     print("🚀 Boomi SDK Example: Get Environment")
     print("=" * 45)

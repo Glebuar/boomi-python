@@ -515,11 +515,12 @@ Examples:
     
     args = parser.parse_args()
     
-    # Validate arguments
+    # Validate arguments - use default operation if none specified
     if not any([args.get_metrics, args.analyze, args.capacity, 
                 args.patterns, args.full_report]):
-        parser.print_help()
-        return 1
+        args.get_metrics = True
+        print("ℹ️ No operation specified, using default: --get-metrics")
+        print("💡 Available operations: --get-metrics, --analyze, --capacity, --patterns, --full-report")
     
     try:
         monitor = ThroughputMonitor(verbose=args.verbose)

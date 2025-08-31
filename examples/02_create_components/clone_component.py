@@ -302,7 +302,31 @@ Examples:
                 sys.exit(1)
         
         else:
-            if not args.list:
+            # Use defaults if no parameters provided
+            if not args.list and not args.source_id and not args.new_name:
+                args.source_id = "112b4efe-b173-4258-9492-613ead7d52ce"  # XML Example Test component
+                args.new_name = "Cloned XML Example Test (Demo)"
+                print(f"ℹ️ No parameters provided, using defaults:")
+                print(f"   Source ID: {args.source_id}")
+                print(f"   New Name: {args.new_name}")
+                print("💡 To clone a different component, run: python clone_component.py SOURCE_ID 'New Name'")
+                
+                new_id = cloner.clone_component(
+                    source_id=args.source_id,
+                    new_name=args.new_name,
+                    folder_id=args.folder,
+                    description=args.description or "Cloned component for demonstration purposes"
+                )
+                
+                if new_id:
+                    print(f"\n✅ Successfully cloned component")
+                    print(f"   Original: {args.source_id}")
+                    print(f"   Clone: {new_id}")
+                    print(f"\n💡 You can now find '{args.new_name}' in your Boomi account")
+                else:
+                    print(f"\n❌ Failed to clone component")
+                    sys.exit(1)
+            elif not args.list:
                 parser.print_help()
                 print("\n💡 Use --list to see available components")
     

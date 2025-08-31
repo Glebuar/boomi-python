@@ -215,16 +215,11 @@ def find_where_used(component_id, component_type=None):
 def main():
     """Main entry point"""
     if len(sys.argv) < 2:
-        print("❌ Error: Component ID is required")
-        print("\nUsage:")
-        print(f"  {sys.argv[0]} COMPONENT_ID [--type TYPE]")
-        print("\nExamples:")
-        print(f"  {sys.argv[0]} 112b4efe-b173-4258-9492-613ead7d52ce")
-        print(f"  {sys.argv[0]} 112b4efe-b173-4258-9492-613ead7d52ce --type process")
-        print("\n💡 Use list_all_components.py to find component IDs")
-        return
-    
-    component_id = sys.argv[1]
+        component_id = "112b4efe-b173-4258-9492-613ead7d52ce"  # XML Example Test component
+        print(f"ℹ️ No component_id provided, using default: {component_id}")
+        print("💡 To use a different component, run: python find_where_used.py YOUR_COMPONENT_ID")
+    else:
+        component_id = sys.argv[1]
     component_type = None
     
     # Parse --type argument

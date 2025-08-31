@@ -22,10 +22,11 @@ from boomi import Boomi
 
 def main():
     if len(sys.argv) != 2:
-        print("Usage: python get_runtime_status_single.py RUNTIME_ID")
-        sys.exit(1)
-    
-    runtime_id = sys.argv[1]
+        runtime_id = "2d4d5da4-0dfe-41f8-914b-f5f5120ad90a"  # US Test AZURE AKS runtime
+        print(f"ℹ️ No runtime_id provided, using default: {runtime_id}")
+        print("💡 To use a different runtime, run: python get_runtime_status.py YOUR_RUNTIME_ID")
+    else:
+        runtime_id = sys.argv[1]
     
     # Initialize SDK
     sdk = Boomi(
