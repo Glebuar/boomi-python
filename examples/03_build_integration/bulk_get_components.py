@@ -44,8 +44,8 @@ try:
 except ImportError:
     pass  # dotenv is optional
 
-from src.boomi import Boomi
-from src.boomi.models import ComponentBulkRequest, ComponentBulkRequestType, BulkId
+from boomi import Boomi
+from boomi.models import ComponentBulkRequest, ComponentBulkRequestType, BulkId
 
 
 def validate_environment() -> tuple[str, str, str]:
@@ -171,11 +171,25 @@ def print_component_info(component_data: Dict, index: int):
 
 def main():
     """Main execution function"""
-    if len(sys.argv) < 2:
-        print("❌ Error: Missing component ID arguments")
+    if len(sys.argv) < 2 or '--help' in sys.argv or '-h' in sys.argv:
+        print("Boomi SDK Example: Bulk Get Components")
+        print("=" * 40)
+        print("This example demonstrates bulk component retrieval.")
+        print()
         print("Usage: python bulk_get_components.py COMPONENT_ID1 [COMPONENT_ID2] [...]")
-        print("Example: python bulk_get_components.py 112b4efe-b173-4258-9492-613ead7d52ce")
-        sys.exit(1)
+        print()
+        print("Arguments:")
+        print("  COMPONENT_IDs    One or more component IDs to retrieve (max 5)")
+        print()
+        print("Examples:")
+        print("  python bulk_get_components.py 112b4efe-b173-4258-9492-613ead7d52ce")
+        print("  python bulk_get_components.py 112b4efe-b173-4258-9492-613ead7d52ce 458d7f8d-2fd2-468d-a3d8-9a1e0f14ac6e")
+        print()
+        print("Environment Variables:")
+        print("  BOOMI_ACCOUNT    Your Boomi account ID")
+        print("  BOOMI_USER       Your Boomi username")
+        print("  BOOMI_SECRET     Your Boomi API token/password")
+        sys.exit(0)
         
     component_ids = sys.argv[1:]
     
