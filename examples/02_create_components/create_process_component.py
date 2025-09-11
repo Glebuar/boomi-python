@@ -9,7 +9,7 @@ This version doesn't require external XML files and shows the complete workflow.
 
 import os
 import sys
-sys.path.insert(0, '../src')
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
 
 from boomi import Boomi
 
