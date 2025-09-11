@@ -36,9 +36,9 @@ import xml.etree.ElementTree as ET
 from typing import Optional
 
 # Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
 
-from src.boomi import Boomi
+from boomi import Boomi
 
 
 class ComponentCloner:
@@ -201,7 +201,7 @@ class ComponentCloner:
         print(f"\n📋 Listing recent components...")
         
         try:
-            from src.boomi.models import (
+            from boomi.models import (
                 ComponentMetadataQueryConfig,
                 ComponentMetadataQueryConfigQueryFilter,
                 ComponentMetadataSimpleExpression,
