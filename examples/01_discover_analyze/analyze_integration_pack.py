@@ -65,8 +65,22 @@ class IntegrationPackAnalyzer:
             if self.verbose:
                 print("\n📦 Listing integration packs...")
             
-            # Query integration packs
-            query_config = IntegrationPackQueryConfig()
+            # Query all integration packs - create a simple expression that matches all
+            from boomi.models import IntegrationPackQueryConfigQueryFilter
+            
+            # Create a simple query that returns all packs (ID is not null)
+            simple_expression = IntegrationPackSimpleExpression(
+                operator=IntegrationPackSimpleExpressionOperator.ISNOTNULL,
+                property=IntegrationPackSimpleExpressionProperty.ID,
+                argument=[]
+            )
+            
+            query_filter = IntegrationPackQueryConfigQueryFilter(
+                expression=simple_expression
+            )
+            
+            # Query integration packs with proper filter
+            query_config = IntegrationPackQueryConfig(query_filter=query_filter)
             result = self.sdk.integration_pack.query_integration_pack(request_body=query_config)
             
             packs = []
@@ -341,8 +355,11 @@ Examples:
                 print(f"   ID: {pack['id']}")
                 print(f"   Version: {pack['version']}")
                 print(f"   Vendor: {pack['vendor']}")
-                print(f"   Description: {pack['description'][:100]}..." 
-                      if len(pack['description']) > 100 else f"   Description: {pack['description']}")
+                description = pack.get('description', 'N/A')
+                if description and description != 'N/A' and len(description) > 100:
+                    print(f"   Description: {description[:100]}...")
+                else:
+                    print(f"   Description: {description}")
     
     elif args.analyze:
         analysis = analyzer.analyze_pack(args.analyze)
