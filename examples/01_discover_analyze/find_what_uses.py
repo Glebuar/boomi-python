@@ -8,7 +8,7 @@ Requirements:
 - Set environment variables: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET
 
 Usage:
-    python find_what_uses_single.py COMPONENT_ID
+    python find_what_uses.py COMPONENT_ID
 
 Endpoint:
 - component_reference.query_component_reference
@@ -31,9 +31,10 @@ def main():
     if len(sys.argv) > 1:
         component_id = sys.argv[1]
     else:
-        component_id = "112b4efe-b173-4258-9492-613ead7d52ce"  # XML Example Test component
+        component_id = "0864f99a-917f-457d-abc6-2762c0bb9b88"  # Test Date Data Map component
         print(f"ℹ️ No component_id provided, using default: {component_id}")
         print("💡 To use a different component, run: python find_what_uses.py YOUR_COMPONENT_ID")
+        print("💡 IMPORTANT: Replace this component ID with your own component ID for production use")
     
     # Initialize SDK
     sdk = Boomi(
@@ -49,7 +50,7 @@ def main():
         # Query for components that reference this component
         simple_expression = ComponentReferenceSimpleExpression(
             operator=ComponentReferenceSimpleExpressionOperator.EQUALS,
-            property=ComponentReferenceSimpleExpressionProperty.TO_COMPONENT_ID,
+            property=ComponentReferenceSimpleExpressionProperty.COMPONENTID,
             argument=[component_id]
         )
         
@@ -60,17 +61,24 @@ def main():
         result = sdk.component_reference.query_component_reference(request_body=query_config)
         
         # Process results
-        references = []
+        component_references = []
         if hasattr(result, 'result') and result.result:
-            references = result.result if isinstance(result.result, list) else [result.result]
+            component_references = result.result if isinstance(result.result, list) else [result.result]
         
-        if references:
-            print(f"✅ Found {len(references)} component(s) that use this component:")
-            for i, ref in enumerate(references, 1):
-                from_comp_id = getattr(ref, 'from_component_id', 'N/A')
-                to_comp_id = getattr(ref, 'to_component_id', 'N/A')
+        # Extract all references from the ComponentReference objects
+        all_references = []
+        for comp_ref in component_references:
+            if hasattr(comp_ref, 'references') and comp_ref.references:
+                all_references.extend(comp_ref.references)
+        
+        if all_references:
+            print(f"✅ Found {len(all_references)} component(s) that use this component:")
+            for i, ref in enumerate(all_references, 1):
+                parent_comp_id = getattr(ref, 'parent_component_id', 'N/A')
+                used_comp_id = getattr(ref, 'component_id', 'N/A')
+                ref_type = getattr(ref, 'type_', 'N/A')
                 
-                print(f"{i:2}. Component {from_comp_id} uses {to_comp_id}")
+                print(f"{i:2}. Component {parent_comp_id} uses {used_comp_id} (type: {ref_type})")
         else:
             print("❌ No components found that use this component")
             
