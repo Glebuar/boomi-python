@@ -347,7 +347,7 @@ class ComponentManager:
                 'name': ComponentMetadataSimpleExpressionProperty.NAME,
                 'type': ComponentMetadataSimpleExpressionProperty.TYPE,
                 'id': ComponentMetadataSimpleExpressionProperty.COMPONENTID,
-                'folder': ComponentMetadataSimpleExpressionProperty.FOLDERFULLPATH
+                'folder': ComponentMetadataSimpleExpressionProperty.FOLDERNAME
             }
             
             # Map operators
