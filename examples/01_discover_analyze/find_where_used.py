@@ -26,8 +26,8 @@ Usage:
     --type TYPE     Filter by component type (process, connector, profile, etc.)
     
     Examples:
-    python find_where_used.py 112b4efe-b173-4258-9492-613ead7d52ce
-    python find_where_used.py 112b4efe-b173-4258-9492-613ead7d52ce --type process
+    python find_where_used.py 0864f99a-917f-457d-abc6-2762c0bb9b88
+    python find_where_used.py 0864f99a-917f-457d-abc6-2762c0bb9b88 --type process
 """
 
 import os
@@ -59,13 +59,10 @@ def format_date(date_str):
 
 def print_reference_details(reference, index):
     """Print reference information"""
-    print(f"   {index:2d}. Parent Component: {getattr(reference, 'parent_component_name', 'N/A')}")
-    print(f"       Parent ID: {getattr(reference, 'parent_component_id', 'N/A')}")
-    print(f"       Parent Type: {getattr(reference, 'parent_type', 'N/A')}")
+    print(f"   {index:2d}. Parent Component ID: {getattr(reference, 'parent_component_id', 'N/A')}")
     print(f"       Parent Version: {getattr(reference, 'parent_version', 'N/A')}")
-    print(f"       Referenced Component: {getattr(reference, 'component_name', 'N/A')}")
-    print(f"       Referenced ID: {getattr(reference, 'component_id', 'N/A')}")
-    print(f"       Referenced Type: {getattr(reference, 'type_', 'N/A')}")
+    print(f"       Referenced Component ID: {getattr(reference, 'component_id', 'N/A')}")
+    print(f"       Reference Type: {getattr(reference, 'type_', 'N/A')}")
     print()
 
 def find_where_used(component_id, component_type=None):
@@ -137,21 +134,16 @@ def find_where_used(component_id, component_type=None):
         print("✅ Query executed successfully!")
         print(f"📊 Response type: {type(result).__name__}")
         
-        # Handle response - check if it's wrapped in _kwargs
+        # Handle response - extract ComponentReference objects first
+        component_references = []
+        if hasattr(result, 'result') and result.result:
+            component_references = result.result if isinstance(result.result, list) else [result.result]
+        
+        # Extract all references from the ComponentReference objects
         references = []
-        if hasattr(result, '_kwargs') and result._kwargs:
-            if 'ComponentReference' in result._kwargs:
-                ref_data = result._kwargs['ComponentReference']
-                references = ref_data if isinstance(ref_data, list) else [ref_data]
-            elif 'ComponentReferenceQueryResponse' in result._kwargs:
-                query_response = result._kwargs['ComponentReferenceQueryResponse']
-                if isinstance(query_response, dict) and 'ComponentReference' in query_response:
-                    ref_data = query_response['ComponentReference']
-                    references = ref_data if isinstance(ref_data, list) else [ref_data]
-        elif hasattr(result, 'result'):
-            references = result.result if isinstance(result.result, list) else [result.result]
-        elif isinstance(result, list):
-            references = result
+        for comp_ref in component_references:
+            if hasattr(comp_ref, 'references') and comp_ref.references:
+                references.extend(comp_ref.references)
         
         if references:
             print(f"✅ Found {len(references)} component reference(s)")
@@ -168,16 +160,16 @@ def find_where_used(component_id, component_type=None):
             print("=" * 80)
             print(f"  • Total references found: {len(references)}")
             
-            # Count by parent type
-            parent_types = {}
+            # Count by reference type
+            reference_types = {}
             for ref in references:
-                parent_type = getattr(ref, 'parent_type', 'Unknown')
-                parent_types[parent_type] = parent_types.get(parent_type, 0) + 1
+                ref_type = getattr(ref, 'type_', 'Unknown')
+                reference_types[ref_type] = reference_types.get(ref_type, 0) + 1
             
-            if parent_types:
-                print(f"  • Parent component types:")
-                for ptype, count in sorted(parent_types.items()):
-                    print(f"     • {ptype}: {count}")
+            if reference_types:
+                print(f"  • Reference types:")
+                for ref_type, count in sorted(reference_types.items()):
+                    print(f"     • {ref_type}: {count}")
             
             print(f"\n💡 Impact Analysis:")
             print(f"  • {len(references)} component(s) depend on the target component")
@@ -215,9 +207,10 @@ def find_where_used(component_id, component_type=None):
 def main():
     """Main entry point"""
     if len(sys.argv) < 2:
-        component_id = "112b4efe-b173-4258-9492-613ead7d52ce"  # XML Example Test component
+        component_id = "0864f99a-917f-457d-abc6-2762c0bb9b88"  # Test Date Data Map component
         print(f"ℹ️ No component_id provided, using default: {component_id}")
         print("💡 To use a different component, run: python find_where_used.py YOUR_COMPONENT_ID")
+        print("💡 IMPORTANT: Replace this component ID with your own component ID for production use")
     else:
         component_id = sys.argv[1]
     component_type = None
