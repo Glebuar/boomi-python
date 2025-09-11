@@ -17,11 +17,12 @@ from datetime import datetime
 import xml.etree.ElementTree as ET
 
 # Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
 
 from boomi import Boomi
 from boomi.models import (
     ComponentMetadataQueryConfig,
+    ComponentMetadataQueryConfigQueryFilter,
     ComponentMetadataSimpleExpression,
     ComponentMetadataSimpleExpressionOperator,
     ComponentMetadataSimpleExpressionProperty
@@ -125,9 +126,8 @@ class ComponentDeleter:
                 argument=[component_id]
             )
             
-            query_config = ComponentMetadataQueryConfig(
-                query_filter={'expression': query_expression}
-            )
+            query_filter = ComponentMetadataQueryConfigQueryFilter(expression=query_expression)
+            query_config = ComponentMetadataQueryConfig(query_filter=query_filter)
             
             result = self.sdk.component_metadata.query_component_metadata(
                 request_body=query_config
@@ -228,24 +228,30 @@ class ComponentDeleter:
         deleted = []
         
         try:
-            # Query all components
-            query_config = ComponentMetadataQueryConfig()
+            # Query for deleted components
+            query_expression = ComponentMetadataSimpleExpression(
+                operator=ComponentMetadataSimpleExpressionOperator.EQUALS,
+                property=ComponentMetadataSimpleExpressionProperty.DELETED,
+                argument=["true"]
+            )
+            
+            query_filter = ComponentMetadataQueryConfigQueryFilter(expression=query_expression)
+            query_config = ComponentMetadataQueryConfig(query_filter=query_filter)
             result = self.sdk.component_metadata.query_component_metadata(
                 request_body=query_config
             )
             
             if result and hasattr(result, 'result') and result.result:
                 for comp in result.result:
-                    if hasattr(comp, 'deleted') and comp.deleted:
-                        deleted.append({
-                            'id': getattr(comp, 'id_', 'N/A'),
-                            'name': getattr(comp, 'name', 'N/A'),
-                            'type': getattr(comp, 'type', 'N/A'),
-                            'deleted_date': getattr(comp, 'modified_date', 'N/A')
-                        })
-                        
-                        if len(deleted) >= limit:
-                            break
+                    deleted.append({
+                        'id': getattr(comp, 'component_id', 'N/A'),
+                        'name': getattr(comp, 'name', 'N/A'),
+                        'type': getattr(comp, 'type_', 'N/A'),
+                        'deleted_date': getattr(comp, 'modified_date', 'N/A')
+                    })
+                    
+                    if len(deleted) >= limit:
+                        break
             
             print(f"   Found {len(deleted)} deleted component(s)")
             
