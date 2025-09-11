@@ -41,10 +41,10 @@ import argparse
 from typing import Optional, List
 
 # Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
 
-from src.boomi import Boomi
-from src.boomi.models import (
+from boomi import Boomi
+from boomi.models import (
     Folder,
     FolderQueryConfig,
     FolderQueryConfigQueryFilter,
@@ -230,7 +230,7 @@ class FolderManager:
         
         # Query sub-folders
         print("\n📂 Sub-folders:")
-        self._list_subfolders(target_folder.id_)
+        self._list_subfolders(target_folder)
     
     def _list_components_in_folder(self, folder_id: str) -> None:
         """List all components in a folder"""
@@ -248,31 +248,35 @@ class FolderManager:
             
             if hasattr(result, 'result') and result.result:
                 for comp in result.result:
-                    print(f"   📄 {comp.name} ({comp.type})")
+                    print(f"   📄 {comp.name} ({comp.type_})")
             else:
                 print("   (No components in this folder)")
         except Exception as e:
             print(f"   ⚠️ Could not query components: {e}")
     
-    def _list_subfolders(self, parent_id: str) -> None:
+    def _list_subfolders(self, parent_folder: Folder) -> None:
         """List all sub-folders of a parent folder"""
-        query_expression = FolderSimpleExpression(
-            operator=FolderSimpleExpressionOperator.EQUALS,
-            property=FolderSimpleExpressionProperty.PARENTID,
-            argument=[parent_id]
-        )
-        
-        query_filter = FolderQueryConfigQueryFilter(expression=query_expression)
-        query_config = FolderQueryConfig(query_filter=query_filter)
-        
-        result = self.sdk.folder.query_folder(request_body=query_config)
-        
-        if hasattr(result, 'result') and result.result:
-            active_folders = [f for f in result.result if not f.deleted]
-            for folder in active_folders:
-                print(f"   📁 {folder.name}")
-        else:
-            print("   (No sub-folders)")
+        try:
+            # Use parentName property instead of parentId (API limitation with parentId)
+            query_expression = FolderSimpleExpression(
+                operator=FolderSimpleExpressionOperator.EQUALS,
+                property=FolderSimpleExpressionProperty.PARENTNAME,
+                argument=[parent_folder.name]
+            )
+            
+            query_filter = FolderQueryConfigQueryFilter(expression=query_expression)
+            query_config = FolderQueryConfig(query_filter=query_filter)
+            
+            result = self.sdk.folder.query_folder(request_body=query_config)
+            
+            if hasattr(result, 'result') and result.result:
+                active_folders = [f for f in result.result if not f.deleted]
+                for folder in active_folders:
+                    print(f"   📁 {folder.name}")
+            else:
+                print("   (No sub-folders)")
+        except Exception as e:
+            print(f"   ⚠️ Could not query sub-folders: {e}")
     
     def move_component_to_folder(self, component_id: str, folder_id: str) -> bool:
         """Move a component to a different folder"""
