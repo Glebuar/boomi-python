@@ -17,6 +17,7 @@ Features:
 Requirements:
 - Set environment variables: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET
 - Appropriate permissions to manage branches
+- Branch functionality enabled (typically Enterprise accounts only)
 
 Usage:
     # List all branches
@@ -52,7 +53,7 @@ from datetime import datetime
 from typing import Optional, List, Dict, Any
 
 # Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
 
 # Load environment variables from .env file if available
 try:
@@ -61,8 +62,8 @@ try:
 except ImportError:
     pass  # dotenv is optional
 
-from src.boomi import Boomi
-from src.boomi.models import (
+from boomi import Boomi
+from boomi.models import (
     Branch,
     BranchQueryConfig,
     BranchQueryConfigQueryFilter,
@@ -120,7 +121,13 @@ class BranchManager:
             return branches
             
         except Exception as e:
-            print(f"❌ Failed to list branches: {e}")
+            error_msg = str(e)
+            if "400" in error_msg:
+                print(f"❌ Failed to list branches: Branch API not available")
+                print("💡 Note: Branch functionality may not be enabled for this account type")
+                print("   Branches are typically available in Enterprise accounts with Git integration")
+            else:
+                print(f"❌ Failed to list branches: {e}")
             return []
     
     def create_branch(self, name: str, description: Optional[str] = None,
@@ -157,7 +164,12 @@ class BranchManager:
                 return None
                 
         except Exception as e:
-            print(f"❌ Failed to create branch: {e}")
+            error_msg = str(e)
+            if "400" in error_msg:
+                print(f"❌ Failed to create branch: Branch API not available")
+                print("💡 Note: Branch functionality may not be enabled for this account type")
+            else:
+                print(f"❌ Failed to create branch: {e}")
             if self.verbose:
                 import traceback
                 traceback.print_exc()
@@ -188,7 +200,12 @@ class BranchManager:
                 return None
                 
         except Exception as e:
-            print(f"❌ Failed to get branch: {e}")
+            error_msg = str(e)
+            if "400" in error_msg:
+                print(f"❌ Failed to get branch: Branch API not available")
+                print("💡 Note: Branch functionality may not be enabled for this account type")
+            else:
+                print(f"❌ Failed to get branch: {e}")
             return None
     
     def query_branches(self, name_pattern: Optional[str] = None,
@@ -221,7 +238,7 @@ class BranchManager:
             
             # Create query config
             if expressions:
-                from src.boomi.models import BranchGroupingExpression, BranchGroupingExpressionOperator
+                from boomi.models import BranchGroupingExpression, BranchGroupingExpressionOperator
                 
                 if len(expressions) == 1:
                     query_filter = BranchQueryConfigQueryFilter(expression=expressions[0])
