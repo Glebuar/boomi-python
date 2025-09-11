@@ -26,6 +26,12 @@ import time
 def main():
     if len(sys.argv) != 2:
         print("Usage: python update_component.py COMPONENT_ID")
+        print("\nThis script updates a component's description with a timestamp.")
+        print("The component must exist and be accessible with your credentials.")
+        print("\nExample:")
+        print("  python update_component.py 112b4efe-b173-4258-9492-613ead7d52ce")
+        print("\nRequired environment variables:")
+        print("  BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET")
         sys.exit(1)
     
     component_id = sys.argv[1]
@@ -54,20 +60,17 @@ def main():
         # The component object contains the XML structure
         # For this example, we'll just update the description in the XML
         
-        # Get the XML content from the component
-        xml_content = None
-        if hasattr(component, 'object_') and component.object_:
-            xml_content = component.object_
-        elif hasattr(component, 'xml') and component.xml:
-            xml_content = component.xml
-        else:
-            # Try to get raw response
-            print("❌ Component doesn't have accessible XML structure")
+        # Get the full component XML using the to_xml() method
+        try:
+            full_xml = component.to_xml()
+            print(f"   Retrieved full component XML ({len(full_xml)} chars)")
+        except Exception as e:
+            print(f"❌ Failed to get component XML: {e}")
             return
         
         # Parse and modify the XML
         try:
-            root = ET.fromstring(xml_content)
+            root = ET.fromstring(full_xml)
             
             # Update the description attribute
             current_desc = root.get('description', '')
