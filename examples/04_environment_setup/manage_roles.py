@@ -28,8 +28,8 @@ Usage:
     # Delete a role
     python manage_roles.py --delete ROLE_ID
     
-    # Query roles by name
-    python manage_roles.py --query "Developer"
+    # Query role by exact name
+    python manage_roles.py --query "System Admin"
 
 Examples:
     python manage_roles.py --list
@@ -45,8 +45,15 @@ from typing import Optional, List
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from src.boomi import Boomi
-from src.boomi.models import (
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
+
+from boomi import Boomi
+from boomi.models import (
     Role,
     RoleQueryConfig,
     RoleQueryConfigQueryFilter,
@@ -74,16 +81,10 @@ class RoleManager:
     def list_all_roles(self) -> List[Role]:
         """List all roles in the account"""
         print("\n👥 Listing all roles...")
-        
+
         try:
-            # Query all roles - create simple expression to get all
-            query_expression = RoleSimpleExpression(
-                operator=RoleSimpleExpressionOperator.ISNOTNULL,
-                property=RoleSimpleExpressionProperty.NAME,
-                argument=[]
-            )
-            
-            query_filter = RoleQueryConfigQueryFilter(expression=query_expression)
+            # Query all roles - use None expression to get all
+            query_filter = RoleQueryConfigQueryFilter(expression=None)
             query_config = RoleQueryConfig(query_filter=query_filter)
             
             result = self.sdk.role.query_role(request_body=query_config)
@@ -199,15 +200,15 @@ class RoleManager:
             return False
     
     def query_roles_by_name(self, name_pattern: str) -> List[Role]:
-        """Query roles by name pattern"""
-        print(f"\n🔍 Searching for roles matching: {name_pattern}")
-        
+        """Query roles by exact name"""
+        print(f"\n🔍 Searching for roles with exact name: {name_pattern}")
+
         try:
-            # Query for roles with name pattern
+            # Query for roles with exact name match
             query_expression = RoleSimpleExpression(
-                operator=RoleSimpleExpressionOperator.LIKE,
+                operator=RoleSimpleExpressionOperator.EQUALS,
                 property=RoleSimpleExpressionProperty.NAME,
-                argument=[f"%{name_pattern}%"]
+                argument=[name_pattern]
             )
             
             query_filter = RoleQueryConfigQueryFilter(expression=query_expression)
@@ -283,8 +284,8 @@ Examples:
                        help='Comma-separated list of privileges (e.g., "BUILD,EXECUTE,API")')
     parser.add_argument('--delete', metavar='ROLE_ID',
                        help='Delete role by ID')
-    parser.add_argument('--query', metavar='PATTERN',
-                       help='Search for roles by name pattern')
+    parser.add_argument('--query', metavar='NAME',
+                       help='Search for role by exact name')
     parser.add_argument('--privileges-help', action='store_true',
                        help='Show common privileges and their purposes')
     
