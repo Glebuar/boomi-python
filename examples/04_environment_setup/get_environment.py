@@ -35,7 +35,7 @@ try:
 except ImportError:
     pass  # dotenv is optional
 
-from src.boomi import Boomi
+from boomi import Boomi
 
 
 def validate_environment() -> tuple[str, str, str]:
@@ -120,17 +120,25 @@ def main():
         print("\n✅ Environment details retrieved successfully!")
             
     except Exception as e:
-        print(f"❌ Error retrieving environment: {e}")
-        
-        # Provide helpful troubleshooting hints
         error_msg = str(e)
-        if "404" in error_msg or "not found" in error_msg.lower():
-            print("🔍 Environment not found - check the environment ID")
-        elif "403" in error_msg:
-            print("🔍 Permission issue - check your API credentials and account permissions")
-        elif "401" in error_msg:
-            print("🔍 Authentication failed - verify your credentials")
+
+        # Check for status code in exception
+        if hasattr(e, 'status'):
+            status_code = e.status
+            print(f"❌ Error retrieving environment: HTTP {status_code}")
+
+            if status_code == 400:
+                print("🔍 Bad request - environment ID may be invalid or malformed")
+            elif status_code == 404:
+                print("🔍 Environment not found - check the environment ID")
+            elif status_code == 403:
+                print("🔍 Permission issue - check your API credentials and account permissions")
+            elif status_code == 401:
+                print("🔍 Authentication failed - verify your credentials")
+            else:
+                print(f"🔍 {error_msg}")
         else:
+            print(f"❌ Error retrieving environment: {error_msg}")
             print("🔍 Check network connectivity and API endpoint availability")
             
         import traceback
