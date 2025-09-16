@@ -19,6 +19,13 @@ import os
 import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
 
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
+
 from boomi import Boomi
 
 def main():
@@ -48,18 +55,27 @@ def main():
     try:
         # Perform the deletion
         sdk.environment.delete_environment(id_=environment_id)
-        
+
         print("✅ Environment deleted successfully!")
-        
+
     except Exception as e:
-        print(f"❌ Error deleting environment: {str(e)}")
+        error_msg = str(e)
         if hasattr(e, 'status'):
-            if e.status == 403:
+            status_code = e.status
+            print(f"❌ Error deleting environment: HTTP {status_code}")
+
+            if status_code == 400:
+                print("   Bad request - environment ID may be invalid")
+            elif status_code == 403:
                 print("   Permission denied - check if your account can delete environments")
-            elif e.status == 404:
+            elif status_code == 404:
                 print("   Environment not found - it may have already been deleted")
-            elif e.status == 409:
+            elif status_code == 409:
                 print("   Conflict - environment may have attached runtimes or deployed components")
+            else:
+                print(f"   {error_msg}")
+        else:
+            print(f"❌ Error deleting environment: {error_msg}")
 
 if __name__ == "__main__":
     main()
