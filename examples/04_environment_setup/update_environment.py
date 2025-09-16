@@ -9,7 +9,7 @@ Requirements:
 - Set environment variables: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET
 
 Usage:
-    python update_environment_single.py ENVIRONMENT_ID NEW_NAME
+    python update_environment.py ENVIRONMENT_ID NEW_NAME
 
 Endpoint:
 - environment.update_environment
@@ -17,14 +17,31 @@ Endpoint:
 
 import os
 import sys
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
+from pathlib import Path
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
+
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    # If dotenv is not available, try to load .env manually
+    env_file = Path(__file__).parent.parent.parent / '.env'
+    if env_file.exists():
+        with open(env_file, 'r') as f:
+            for line in f:
+                if '=' in line and not line.startswith('#'):
+                    key, value = line.strip().split('=', 1)
+                    os.environ[key] = value.strip('"')
 
 from boomi import Boomi
 from boomi.models import Environment as EnvironmentModel
 
 def main():
     if len(sys.argv) != 3:
-        print("Usage: python update_environment_single.py ENVIRONMENT_ID NEW_NAME")
+        print("Usage: python update_environment.py ENVIRONMENT_ID NEW_NAME")
         sys.exit(1)
     
     environment_id = sys.argv[1]
@@ -43,9 +60,17 @@ def main():
     print(f"   New Name: {new_name}")
     
     try:
-        # Create the update request (only name can be updated)
-        update_request = EnvironmentModel(name=new_name)
-        
+        # First, get the current environment to preserve its classification
+        print(f"📋 Fetching current environment details...")
+        current_env = sdk.environment.get_environment(id_=environment_id)
+
+        # API requires all fields including ID and classification
+        update_request = EnvironmentModel(
+            id_=environment_id,
+            name=new_name,
+            classification=current_env.classification
+        )
+
         # Make the API call
         updated_environment = sdk.environment.update_environment(
             id_=environment_id,
@@ -53,17 +78,15 @@ def main():
         )
         
         print("✅ Environment updated successfully!")
-        
-        # Parse the response
-        if hasattr(updated_environment, '_kwargs') and 'Environment' in updated_environment._kwargs:
-            env_data = updated_environment._kwargs['Environment']
-            
-            print(f"  🆔 ID: {env_data.get('@id', 'N/A')}")
-            print(f"  📛 Name: {env_data.get('@name', 'N/A')}")
-            print(f"  🏷️  Classification: {env_data.get('@classification', 'N/A')}")
-            
+
+        # Parse the response - use modern SDK response format
+        if hasattr(updated_environment, 'name'):
+            print(f"  🆔 ID: {getattr(updated_environment, 'id_', 'N/A')}")
+            print(f"  📛 Name: {getattr(updated_environment, 'name', 'N/A')}")
+            print(f"  🏷️  Classification: {getattr(updated_environment, 'classification', 'N/A')}")
+
             # Verify the name was actually changed
-            if env_data.get('@name') == new_name:
+            if updated_environment.name == new_name:
                 print("✅ Name update verified!")
             else:
                 print("⚠️  Warning: Name may not have been updated as expected")
