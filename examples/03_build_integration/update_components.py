@@ -18,6 +18,13 @@ import os
 import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
 
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
+
 from boomi import Boomi
 
 def main():
@@ -41,19 +48,36 @@ def main():
     
     for i, component_id in enumerate(component_ids, 1):
         print(f"\n{i}/{len(component_ids)}. Updating component: {component_id}")
-        
+
         try:
-            # Basic XML content for testing - in practice, provide actual XML
-            xml_content = f"<test>Batch updated component {i}</test>"
-            
+            # First, get the existing component XML
+            print(f"   📥 Retrieving component...")
+            xml_content = sdk.component.get_component_raw(component_id=component_id)
+
+            # Parse and modify the XML (add/update description)
+            import xml.etree.ElementTree as ET
+            root = ET.fromstring(xml_content)
+
+            # Add or update description
+            ns = {'ns0': 'http://api.platform.boomi.com/'}
+            desc_elem = root.find('ns0:description', ns)
+            if desc_elem is None:
+                desc_elem = ET.SubElement(root, '{http://api.platform.boomi.com/}description')
+            desc_elem.text = f'Batch updated via SDK example - Component {i}'
+
+            # Convert back to string
+            updated_xml = ET.tostring(root, encoding='unicode')
+
+            # Update the component
+            print(f"   📤 Updating component...")
             result = sdk.component.update_component(
-                component_id=component_id, 
-                request_body=xml_content
+                component_id=component_id,
+                request_body=updated_xml
             )
-            
-            print(f"   ✅ Success")
+
+            print(f"   ✅ Success - Version: {result.version}")
             success_count += 1
-            
+
         except Exception as e:
             print(f"   ❌ Error: {str(e)}")
     
