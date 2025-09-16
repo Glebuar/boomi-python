@@ -27,6 +27,13 @@ import sys
 # Add the src directory to the path to import the SDK
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
 
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
+
 from boomi import Boomi
 from boomi.models import (
     EnvironmentQueryConfig,
@@ -38,22 +45,21 @@ from boomi.models import (
 
 def list_all_environments(sdk):
     """List all environments in the account."""
-    
+
     print("🔍 Querying all environments in the account...")
-    
+
     try:
-        # Create a query to get all TEST environments
-        # We use TEST classification because it's more common to have test environments
+        # Create a query to get ALL environments using IS_NOT_NULL on ID
         simple_expression = EnvironmentSimpleExpression(
-            operator=EnvironmentSimpleExpressionOperator.CONTAINS,
-            property=EnvironmentSimpleExpressionProperty.CLASSIFICATION,
-            argument=["TEST"]
+            operator=EnvironmentSimpleExpressionOperator.ISNOTNULL,
+            property=EnvironmentSimpleExpressionProperty.ID,
+            argument=[]
         )
-        
+
         query_filter = EnvironmentQueryConfigQueryFilter(expression=simple_expression)
         query_config = EnvironmentQueryConfig(query_filter=query_filter)
         query_response = sdk.environment.query_environment(query_config)
-        
+
         # Parse the response - use modern SDK response format
         environments = []
         if hasattr(query_response, 'result') and query_response.result:
@@ -63,45 +69,13 @@ def list_all_environments(sdk):
                 environments = result_data
             else:
                 environments = [result_data]
-        
+
         return environments
-        
+
     except Exception as e:
-        print(f"❌ Error querying TEST environments: {str(e)}")
+        print(f"❌ Error querying environments: {str(e)}")
         return []
 
-def list_prod_environments(sdk):
-    """List all PROD environments in the account."""
-    
-    print("🔍 Querying PROD environments...")
-    
-    try:
-        # Query PROD environments
-        simple_expression = EnvironmentSimpleExpression(
-            operator=EnvironmentSimpleExpressionOperator.EQUALS,
-            property=EnvironmentSimpleExpressionProperty.CLASSIFICATION,
-            argument=["PROD"]
-        )
-        
-        query_filter = EnvironmentQueryConfigQueryFilter(expression=simple_expression)
-        query_config = EnvironmentQueryConfig(query_filter=query_filter)
-        query_response = sdk.environment.query_environment(query_config)
-        
-        # Parse the response - use modern SDK response format
-        environments = []
-        if hasattr(query_response, 'result') and query_response.result:
-            # Direct access to result attribute (modern SDK format)
-            result_data = query_response.result
-            if isinstance(result_data, list):
-                environments = result_data
-            else:
-                environments = [result_data]
-        
-        return environments
-        
-    except Exception as e:
-        print(f"❌ Error querying PROD environments: {str(e)}")
-        return []
 
 def display_environments(environments, env_type):
     """Display environment information in a formatted way."""
@@ -157,21 +131,38 @@ def main():
     print()
     
     try:
-        # Query TEST environments
-        test_environments = list_all_environments(sdk)
+        # Query ALL environments
+        all_environments = list_all_environments(sdk)
+
+        # Categorize environments by classification
+        test_environments = []
+        prod_environments = []
+        other_environments = []
+
+        for env in all_environments:
+            classification = getattr(env, 'classification', 'UNKNOWN')
+            if classification == 'TEST':
+                test_environments.append(env)
+            elif classification == 'PROD':
+                prod_environments.append(env)
+            else:
+                other_environments.append(env)
+
+        # Display environments by type
         display_environments(test_environments, "TEST")
-        
-        # Query PROD environments  
-        prod_environments = list_prod_environments(sdk)
         display_environments(prod_environments, "PROD")
+        if other_environments:
+            display_environments(other_environments, "OTHER")
         
         # Summary
-        total_environments = len(test_environments) + len(prod_environments)
+        total_environments = len(all_environments)
         print("=" * 80)
         print(f"📊 Summary:")
         print(f"   Total environments: {total_environments}")
         print(f"   TEST environments: {len(test_environments)}")
         print(f"   PROD environments: {len(prod_environments)}")
+        if other_environments:
+            print(f"   OTHER environments: {len(other_environments)}")
         
         if total_environments > 0:
             print(f"\n💡 Tips:")
