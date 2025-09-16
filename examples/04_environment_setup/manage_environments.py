@@ -240,20 +240,31 @@ class EnvironmentManager:
         """
         Update an environment's name.
         Note: Only the name can be updated - classification is immutable.
-        
+
         Args:
             environment_id: Environment ID to update
             new_name: New environment name
-            
+
         Returns:
             Updated environment object or None if failed
         """
         try:
             print(f"🔄 Updating environment: {environment_id}")
             print(f"   New name: {new_name}")
-            
-            update_request = EnvironmentModel(name=new_name)
-            
+
+            # Get current environment to get the classification
+            current_env = self.get_environment(environment_id)
+            if not current_env:
+                print("   Failed to get current environment details")
+                return None
+
+            # API requires all fields including ID and classification
+            update_request = EnvironmentModel(
+                id_=environment_id,
+                name=new_name,
+                classification=current_env.classification
+            )
+
             updated_environment = self.sdk.environment.update_environment(
                 id_=environment_id,
                 request_body=update_request
