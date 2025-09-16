@@ -16,7 +16,24 @@ Endpoint:
 
 import os
 import sys
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
+from pathlib import Path
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
+
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    # If dotenv is not available, try to load .env manually
+    env_file = Path(__file__).parent.parent.parent / '.env'
+    if env_file.exists():
+        with open(env_file, 'r') as f:
+            for line in f:
+                if '=' in line and not line.startswith('#'):
+                    key, value = line.strip().split('=', 1)
+                    os.environ[key] = value.strip('"')
 
 from boomi import Boomi
 from boomi.models import (
