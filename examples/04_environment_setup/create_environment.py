@@ -19,6 +19,13 @@ import sys
 import datetime
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
 
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
+
 from boomi import Boomi
 from boomi.models import Environment as EnvironmentModel, EnvironmentClassification
 
@@ -49,18 +56,13 @@ def main():
         )
         
         created_environment = sdk.environment.create_environment(new_environment)
-        
+
         print("✅ Environment created successfully!")
-        
-        # Parse the response
-        if hasattr(created_environment, '_kwargs') and 'Environment' in created_environment._kwargs:
-            env_data = created_environment._kwargs['Environment']
-            
-            print(f"  🆔 ID: {env_data.get('@id', 'N/A')}")
-            print(f"  📛 Name: {env_data.get('@name', 'N/A')}")
-            print(f"  🏷️  Classification: {env_data.get('@classification', 'N/A')}")
-        else:
-            print("⚠️  Unexpected response format")
+
+        # Display the created environment details
+        print(f"  🆔 ID: {created_environment.id_}")
+        print(f"  📛 Name: {created_environment.name}")
+        print(f"  🏷️  Classification: {created_environment.classification}")
             
     except Exception as e:
         print(f"❌ Error creating environment: {str(e)}")
