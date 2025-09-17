@@ -25,6 +25,13 @@ from pathlib import Path
 # Add the src directory to the path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
+
 from boomi import Boomi
 from boomi.models import (
     JavaUpgrade,
