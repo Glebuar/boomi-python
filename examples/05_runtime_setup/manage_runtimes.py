@@ -27,7 +27,15 @@ from datetime import datetime
 from typing import Dict, List, Optional, Any
 
 # Add src to Python path for SDK imports
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
+
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
 
 from boomi import Boomi
 from boomi.models import (
