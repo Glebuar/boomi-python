@@ -32,9 +32,17 @@ This creates a token for installing a new ATOM that expires in 60 minutes.
 import os
 import sys
 from datetime import datetime, timedelta
+from pathlib import Path
 
-# Add the src directory to the path to import the SDK
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
+
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
 
 from boomi import Boomi
 from boomi.models import InstallerToken, InstallType
@@ -95,22 +103,22 @@ def create_installer_token(sdk, install_type, duration_minutes):
         
         print("✅ Installer token created successfully!")
         
-        # Parse the response
-        token_data = None
-        if hasattr(result, '_kwargs') and 'InstallerToken' in result._kwargs:
+        # Parse the response - use modern SDK response format
+        if hasattr(result, 'token'):
+            # Direct object access (modern SDK format)
+            display_token_details(result)
+            show_installation_instructions(result)
+            return result
+        elif hasattr(result, '_kwargs') and 'InstallerToken' in result._kwargs:
             token_data = result._kwargs['InstallerToken']
-        elif hasattr(result, '_kwargs'):
-            token_data = result._kwargs
-        elif hasattr(result, 'token'):
-            # Direct object access
-            token_data = result
-        
-        if token_data:
             display_token_details(token_data)
             show_installation_instructions(token_data)
             return token_data
         else:
             print("⚠️  Unexpected response format")
+            # Debug output
+            if hasattr(result, '__dict__'):
+                print(f"   Available attributes: {[attr for attr in dir(result) if not attr.startswith('_')]}")
             if hasattr(result, '_kwargs'):
                 print(f"   Raw response: {result._kwargs}")
             return None
