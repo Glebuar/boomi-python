@@ -16,7 +16,17 @@ Endpoint:
 
 import os
 import sys
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
+from pathlib import Path
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
+
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
 
 from boomi import Boomi
 from boomi.models import EnvironmentAtomAttachment
@@ -54,16 +64,17 @@ def main():
         )
         
         print("✅ Attachment created successfully!")
-        
-        # Parse the response
-        if hasattr(created_attachment, '_kwargs') and 'EnvironmentAtomAttachment' in created_attachment._kwargs:
-            attachment_data = created_attachment._kwargs['EnvironmentAtomAttachment']
-            
-            print(f"  🆔 Attachment ID: {attachment_data.get('@id', 'N/A')}")
-            print(f"  🤖 Atom ID: {attachment_data.get('@atomId', 'N/A')}")
-            print(f"  🌍 Environment ID: {attachment_data.get('@environmentId', 'N/A')}")
+
+        # Parse the response - use modern SDK response format
+        if hasattr(created_attachment, 'atom_id'):
+            print(f"  🆔 Attachment ID: {getattr(created_attachment, 'id_', 'N/A')}")
+            print(f"  🤖 Atom ID: {getattr(created_attachment, 'atom_id', 'N/A')}")
+            print(f"  🌍 Environment ID: {getattr(created_attachment, 'environment_id', 'N/A')}")
         else:
             print("⚠️  Unexpected response format")
+            # Debug: show available attributes
+            if hasattr(created_attachment, '__dict__'):
+                print(f"  Available attributes: {[attr for attr in dir(created_attachment) if not attr.startswith('_')]}")
             
     except Exception as e:
         print(f"❌ Error creating attachment: {str(e)}")
