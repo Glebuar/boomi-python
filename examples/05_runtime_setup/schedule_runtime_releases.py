@@ -2,15 +2,19 @@
 """
 Runtime Release Schedule Management
 
-This example demonstrates how to manage runtime release schedules including:
-- Viewing scheduled releases
-- Creating new release schedules
-- Updating release windows
-- Managing maintenance windows
-- Coordinating multi-atom releases
+This example demonstrates how to manage runtime release schedules.
 
-The Runtime Release Schedule API helps you plan and coordinate runtime updates
-across your Atom infrastructure with minimal disruption.
+NOTE: The RuntimeReleaseSchedule API is for scheduling regular Boomi runtime updates,
+not for scheduling specific version releases. It allows you to control when your
+runtimes receive Boomi platform updates (FIRST week, LAST week, or NEVER).
+
+Features demonstrated:
+- Get a specific schedule by ID
+- Create a new update schedule for a runtime
+- Update an existing schedule
+- Delete a schedule
+
+The API does not provide a list/query endpoint, so you need to know schedule IDs.
 """
 
 import os
@@ -24,13 +28,18 @@ from pathlib import Path
 # Add the src directory to the path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
+
 from boomi import Boomi
 from boomi.models import (
     RuntimeReleaseSchedule,
-    RuntimeReleaseScheduleQueryConfig,
-    RuntimeReleaseScheduleSimpleExpression,
-    RuntimeReleaseScheduleSimpleExpressionOperator,
-    RuntimeReleaseScheduleQueryConfigQueryFilter
+    RuntimeReleaseScheduleBulkRequest,
+    RuntimeReleaseScheduleBulkRequestType
 )
 
 
@@ -70,55 +79,39 @@ class RuntimeReleaseManager:
     
     def list_schedules(self, atom_id: Optional[str] = None, limit: int = 100) -> List[RuntimeReleaseSchedule]:
         """List runtime release schedules
-        
+
+        Note: The RuntimeReleaseSchedule API doesn't have a query endpoint.
+        This is a placeholder that would normally retrieve schedules.
+        In production, you might need to track schedule IDs separately.
+
         Args:
             atom_id: Optional Atom ID to filter schedules
             limit: Maximum number of schedules to return
-            
+
         Returns:
             List of runtime release schedules
         """
         try:
-            self._log("Querying runtime release schedules")
-            
-            # Build query filter if atom_id provided
-            if atom_id:
-                self._log(f"Filtering by Atom ID: {atom_id}")
-                simple_expression = RuntimeReleaseScheduleSimpleExpression(
-                    operator=RuntimeReleaseScheduleSimpleExpressionOperator.EQUALS,
-                    property="atomId",
-                    argument=[atom_id]
-                )
-                query_filter = RuntimeReleaseScheduleQueryConfigQueryFilter(
-                    expression=simple_expression
-                )
-                query_config = RuntimeReleaseScheduleQueryConfig(query_filter=query_filter)
-            else:
-                # Query all schedules
-                simple_expression = RuntimeReleaseScheduleSimpleExpression(
-                    operator=RuntimeReleaseScheduleSimpleExpressionOperator.ISNOTNULL,
-                    property="id",
-                    argument=[]
-                )
-                query_filter = RuntimeReleaseScheduleQueryConfigQueryFilter(
-                    expression=simple_expression
-                )
-                query_config = RuntimeReleaseScheduleQueryConfig(query_filter=query_filter)
-            
-            result = self.sdk.runtime_release_schedule.query_runtime_release_schedule(
-                request_body=query_config
-            )
-            
-            if hasattr(result, 'result') and result.result:
-                schedules = result.result[:limit]
-                self._log(f"Found {len(schedules)} release schedule(s)")
-                return schedules
-            else:
-                self._log("No release schedules found")
-                return []
-                
+            self._log("Note: RuntimeReleaseSchedule API doesn't have a query/list endpoint")
+            self._log("To use this API, you need to know schedule IDs in advance")
+
+            # In a real implementation, you might:
+            # 1. Store schedule IDs in a database or file
+            # 2. Use the bulk API to check multiple known IDs
+            # 3. Integrate with another system that tracks schedules
+
+            print("\n⚠️ The RuntimeReleaseSchedule API doesn't provide a list/query endpoint.")
+            print("Available operations:")
+            print("  - get_runtime_release_schedule(id) - Get a specific schedule by ID")
+            print("  - create_runtime_release_schedule() - Create a new schedule")
+            print("  - update_runtime_release_schedule(id) - Update an existing schedule")
+            print("  - delete_runtime_release_schedule(id) - Delete a schedule")
+            print("  - bulk_runtime_release_schedule() - Bulk operations on schedules")
+
+            return []
+
         except Exception as e:
-            self._log(f"Error listing release schedules: {e}", "ERROR")
+            self._log(f"Error in list_schedules: {e}", "ERROR")
             if self.verbose:
                 import traceback
                 traceback.print_exc()
@@ -142,31 +135,34 @@ class RuntimeReleaseManager:
             self._log(f"Error getting release schedule: {e}", "ERROR")
             return None
     
-    def create_schedule(self, atom_id: str, release_version: str, 
-                       scheduled_time: datetime, maintenance_window: int = 60,
-                       description: str = "") -> Optional[RuntimeReleaseSchedule]:
-        """Create a new runtime release schedule
-        
+    def create_schedule(self, atom_id: str, schedule_type: str = "NEVER",
+                       day_of_week: str = "SUNDAY", hour: int = 3,
+                       time_zone: str = "UTC") -> Optional[RuntimeReleaseSchedule]:
+        """Create a new runtime update schedule
+
         Args:
-            atom_id: Atom ID for the release
-            release_version: Target release version
-            scheduled_time: Scheduled release time
-            maintenance_window: Maintenance window in minutes
-            description: Optional description
-            
+            atom_id: Atom ID for the schedule
+            schedule_type: When to receive updates (FIRST, LAST, NEVER)
+            day_of_week: Day for updates (e.g., SUNDAY, MONDAY)
+            hour: Hour of day for updates (0-23)
+            time_zone: Timezone for the schedule
+
         Returns:
             Created RuntimeReleaseSchedule or None if failed
         """
         try:
-            self._log(f"Creating release schedule for Atom {atom_id}")
-            
-            # Create schedule object
+            self._log(f"Creating update schedule for Atom {atom_id}")
+
+            # Import the ScheduleType enum
+            from boomi.models.runtime_release_schedule import ScheduleType
+
+            # Create schedule object with correct fields
             schedule = RuntimeReleaseSchedule(
                 atom_id=atom_id,
-                release_version=release_version,
-                scheduled_date_time=scheduled_time.isoformat(),
-                maintenance_window_minutes=maintenance_window,
-                description=description or f"Release {release_version} for Atom {atom_id}"
+                day_of_week=day_of_week,
+                schedule_type=ScheduleType[schedule_type],
+                time_zone=time_zone,
+                hour_of_day=hour if schedule_type != "NEVER" else None
             )
             
             # Create the schedule
