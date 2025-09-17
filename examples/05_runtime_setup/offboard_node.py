@@ -25,6 +25,13 @@ from pathlib import Path
 # Add the src directory to the path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
+
 from boomi import Boomi
 from boomi.models import (
     NodeOffboard,
@@ -296,21 +303,37 @@ class NodeOffboardManager:
             
             # Execute offboarding
             self._log("Executing node offboarding")
-            
-            offboard_request = NodeOffboard(
-                node_id=node_id,
-                force=force
-            )
-            
-            offboard_result = self.sdk.node_offboard.create_node_offboard(
-                request_body=offboard_request
-            )
-            
-            result['success'] = True
-            result['message'] = f"Successfully initiated node offboarding for {node_id}"
-            result['details']['offboard_id'] = getattr(offboard_result, 'id_', 'N/A')
-            result['details']['status'] = getattr(offboard_result, 'status', 'N/A')
-            
+
+            # Get node info to determine if it's part of a cluster
+            node_info = self.get_node_info(node_id)
+
+            # For node offboarding, we need the cluster/cloud ID
+            # Since this is a cloud node, we need to handle differently
+            # The NodeOffboard API is specifically for removing nodes from clusters
+            # For standalone nodes, we would use the delete_atom API instead
+
+            if node_info.get('is_cluster_member') and node_info.get('cluster_id'):
+                # Node is part of a cluster - use NodeOffboard API
+                offboard_request = NodeOffboard(
+                    atom_id=node_info['cluster_id'],  # The cluster ID
+                    node_id=[node_id]  # List of nodes to offboard
+                )
+
+                offboard_result = self.sdk.node_offboard.create_node_offboard(
+                    request_body=offboard_request
+                )
+
+                result['success'] = True
+                result['message'] = f"Successfully initiated node offboarding from cluster for {node_id}"
+                result['details']['offboard_id'] = getattr(offboard_result, 'id_', 'N/A')
+                result['details']['status'] = getattr(offboard_result, 'status', 'N/A')
+            else:
+                # Standalone node - would typically use atom deletion
+                # But for safety, we'll just indicate this
+                result['message'] = "Node is not part of a cluster. For standalone nodes, use atom deletion instead."
+                result['details']['note'] = "NodeOffboard API is specifically for removing nodes from clusters"
+                self._log(result['message'], "WARNING")
+
             self._log(result['message'])
             
         except Exception as e:
