@@ -9,7 +9,7 @@ Requirements:
 - Set environment variables: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET
 
 Usage:
-    python delete_atom.py ATOM_ID
+    python delete_runtime.py ATOM_ID
 
 Endpoint:
 - atom.delete_atom
@@ -17,13 +17,23 @@ Endpoint:
 
 import os
 import sys
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
+from pathlib import Path
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
+
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
 
 from boomi import Boomi
 
 def main():
     if len(sys.argv) != 2:
-        print("Usage: python delete_atom.py ATOM_ID")
+        print("Usage: python delete_runtime.py ATOM_ID")
         sys.exit(1)
     
     atom_id = sys.argv[1]
@@ -54,7 +64,9 @@ def main():
     except Exception as e:
         print(f"❌ Error deleting atom: {str(e)}")
         if hasattr(e, 'status'):
-            if e.status == 403:
+            if e.status == 400:
+                print("   Bad request - atom may not exist or ID is invalid")
+            elif e.status == 403:
                 print("   Permission denied - check if your account can delete atoms")
             elif e.status == 404:
                 print("   Atom not found - it may have already been deleted")
