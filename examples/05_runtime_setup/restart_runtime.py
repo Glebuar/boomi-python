@@ -53,7 +53,8 @@ from datetime import datetime, timedelta
 from typing import Optional, List, Dict, Any
 
 # Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
 # Load environment variables from .env file if available
 try:
@@ -62,8 +63,8 @@ try:
 except ImportError:
     pass  # dotenv is optional
 
-from src.boomi import Boomi
-from src.boomi.models import (
+from boomi import Boomi
+from boomi.models import (
     AtomQueryConfig,
     AtomQueryConfigQueryFilter,
     AtomSimpleExpression,
@@ -81,6 +82,7 @@ from src.boomi.models import (
     EnvironmentAtomAttachmentQueryConfig,
     EnvironmentAtomAttachmentQueryConfigQueryFilter,
     EnvironmentAtomAttachmentSimpleExpression,
+    RuntimeRestartRequest,
     EnvironmentAtomAttachmentSimpleExpressionOperator,
     EnvironmentAtomAttachmentSimpleExpressionProperty
 )
@@ -202,28 +204,40 @@ class RuntimeRestartManager:
                         print("   Timeout waiting for executions")
                         return False
         
-        # Perform restart
-        # Note: The actual restart API endpoint varies by Boomi implementation
-        # This is a simplified example showing the pattern
+        # Perform restart using the SDK
         try:
             print("   Initiating restart...")
-            
-            # In a real implementation, you would call the appropriate
-            # Boomi API endpoint for restart. This might be:
-            # - Update atom status
-            # - Send restart command
-            # - Trigger maintenance mode
-            
-            # For demonstration, we'll show the pattern
+
             if self.verbose:
                 print("   Sending restart command...")
-            
-            # Simulate restart command
-            # In reality, this would be an API call like:
-            # self.sdk.atom.restart_atom(id_=atom_id)
-            # or updating atom status/properties
-            
-            print("   ✅ Restart command sent")
+
+            # Use the RuntimeRestartRequest API
+            restart_request = RuntimeRestartRequest(
+                runtime_id=atom_id,
+                message=f"Restart initiated via SDK - {'forced' if force else 'graceful'}"
+            )
+
+            # Call the restart API
+            try:
+                result = self.sdk.runtime_restart_request.create_runtime_restart_request(
+                    request_body=restart_request
+                )
+
+                # Handle response - it might be a RuntimeRestartRequest object or a message string
+                if result:
+                    if hasattr(result, 'message'):
+                        print(f"   ✅ {result.message}")
+                    else:
+                        print("   ✅ Restart command sent successfully")
+                else:
+                    print("   ⚠️ Restart command sent but no confirmation received")
+            except Exception as api_error:
+                # Check if it's a cloud runtime error
+                if "400" in str(api_error):
+                    print("   ❌ Cannot restart Cloud runtimes via API")
+                    print("   Cloud runtimes are managed by Boomi and restart automatically")
+                    return False
+                raise
             
             if wait:
                 print("   Waiting for runtime to come back online...")
