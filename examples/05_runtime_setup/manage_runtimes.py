@@ -206,19 +206,24 @@ class RuntimeManager:
         print(f"🔄 Updating runtime: {runtime_id}")
         
         try:
-            # Create update object with only specified fields
-            update_data = {}
+            # Get current atom to preserve required fields
+            current_atom = self.sdk.atom.get_atom(id_=runtime_id)
+
+            # Create update object with required fields
+            update_data = {
+                'id_': runtime_id,  # Required field
+                'name': name if name else current_atom.name,
+                'purge_history_days': getattr(current_atom, 'purge_history_days', 30),
+                'purge_immediate': getattr(current_atom, 'purge_immediate', False),
+                'force_restart_time': getattr(current_atom, 'force_restart_time', 0)
+            }
+
             if name:
-                update_data['name'] = name
                 print(f"   Setting name to: {name}")
             if description:
-                update_data['description'] = description
-                print(f"   Setting description to: {description}")
-            
-            if not update_data:
-                print("⚠️ No updates specified")
-                return False
-            
+                # Note: description is not an updatable field for Atoms
+                print(f"   ⚠️ Description cannot be updated for Atoms")
+
             # Create Atom update object
             runtime_update = Atom(**update_data)
             
