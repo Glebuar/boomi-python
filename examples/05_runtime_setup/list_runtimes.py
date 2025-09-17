@@ -25,9 +25,17 @@ Features:
 import os
 import sys
 from datetime import datetime
+from pathlib import Path
 
-# Add the src directory to the path to import the SDK
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
+
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
 
 from boomi import Boomi
 from boomi.models import (
