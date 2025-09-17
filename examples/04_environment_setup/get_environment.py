@@ -25,8 +25,9 @@ import os
 import sys
 from typing import Optional
 
-# Add parent directory to path for imports  
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+# Add parent directory to path for imports
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
 # Load environment variables from .env file if available
 try:
