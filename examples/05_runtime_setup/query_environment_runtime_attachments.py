@@ -16,7 +16,17 @@ Endpoint:
 
 import os
 import sys
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
+from pathlib import Path
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
+
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
 
 from boomi import Boomi
 from boomi.models import (
@@ -42,7 +52,7 @@ def main():
         # Query all attachments - filter by environment ID contains any character
         simple_expression = EnvironmentAtomAttachmentSimpleExpression(
             operator=EnvironmentAtomAttachmentSimpleExpressionOperator.CONTAINS,
-            property=EnvironmentAtomAttachmentSimpleExpressionProperty.ENVIRONMENT_ID,
+            property=EnvironmentAtomAttachmentSimpleExpressionProperty.ENVIRONMENTID,
             argument=[""]
         )
         
