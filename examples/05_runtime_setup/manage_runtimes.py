@@ -274,7 +274,9 @@ class RuntimeManager:
         except Exception as e:
             print(f"❌ Error deleting runtime: {e}")
             if hasattr(e, 'status'):
-                if e.status == 403:
+                if e.status == 400:
+                    print("   Bad request - runtime ID may be invalid or not exist")
+                elif e.status == 403:
                     print("   Permission denied - check account permissions")
                 elif e.status == 404:
                     print("   Runtime not found - may already be deleted")
