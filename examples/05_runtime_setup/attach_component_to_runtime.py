@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Create Component Atom Attachment
+Attach Component to Runtime
 
-This example demonstrates how to attach a component directly to an atom/runtime.
+This example demonstrates how to attach a component directly to a runtime (Atom/Molecule/Cloud).
 
 NOTE: This API only works for accounts that do NOT use environments.
 For accounts with environments, use ComponentEnvironmentAttachment instead.
@@ -12,7 +12,7 @@ Requirements:
 - Account must not use environments
 
 Usage:
-    python attach_component_to_atom.py COMPONENT_ID ATOM_ID
+    python attach_component_to_runtime.py COMPONENT_ID RUNTIME_ID
 
 Endpoint:
 - component_atom_attachment.create_component_atom_attachment
@@ -37,11 +37,11 @@ from boomi.models import ComponentAtomAttachment
 
 def main():
     if len(sys.argv) != 3:
-        print("Usage: python create_component_atom_attachment.py COMPONENT_ID ATOM_ID")
+        print("Usage: python attach_component_to_runtime.py COMPONENT_ID RUNTIME_ID")
         sys.exit(1)
-    
+
     component_id = sys.argv[1]
-    atom_id = sys.argv[2]
+    runtime_id = sys.argv[2]
     
     # Initialize SDK
     sdk = Boomi(
@@ -51,36 +51,36 @@ def main():
         timeout=30000,
     )
     
-    print(f"🔗 Creating component-atom attachment...")
+    print(f"🔗 Creating component-runtime attachment...")
     print(f"   Component ID: {component_id}")
-    print(f"   Atom ID: {atom_id}")
-    
+    print(f"   Runtime ID: {runtime_id}")
+
     try:
         # Create the attachment
         attachment_request = ComponentAtomAttachment(
             component_id=component_id,
-            atom_id=atom_id
+            atom_id=runtime_id  # The API still calls it atom_id
         )
-        
+
         result = sdk.component_atom_attachment.create_component_atom_attachment(
             attachment_request
         )
-        
-        print("✅ Component attached to atom successfully!")
+
+        print("✅ Component attached to runtime successfully!")
         print(f"   Attachment result: {result}")
         
     except Exception as e:
         print(f"❌ Error creating attachment: {str(e)}")
         if hasattr(e, 'status'):
             if e.status == 409:
-                print("   Component may already be attached to this atom")
+                print("   Component may already be attached to this runtime")
             elif e.status == 400:
                 error_msg = str(e)
                 if "uses environments" in error_msg:
                     print("   ⚠️ This account uses environments.")
                     print("   Use ComponentEnvironmentAttachment API instead")
                 else:
-                    print("   Invalid request - check component and atom IDs")
+                    print("   Invalid request - check component and runtime IDs")
 
 if __name__ == "__main__":
     main()
