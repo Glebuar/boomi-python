@@ -8,7 +8,7 @@ Requirements:
 - Set environment variables: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET
 
 Usage:
-    python create_component_environment_attachment.py COMPONENT_ID ENVIRONMENT_ID
+    python attach_component_to_environment.py COMPONENT_ID ENVIRONMENT_ID
 
 Endpoint:
 - component_environment_attachment.create_component_environment_attachment
@@ -16,14 +16,24 @@ Endpoint:
 
 import os
 import sys
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
+from pathlib import Path
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
+
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
 
 from boomi import Boomi
 from boomi.models import ComponentEnvironmentAttachment
 
 def main():
     if len(sys.argv) != 3:
-        print("Usage: python create_component_environment_attachment.py COMPONENT_ID ENVIRONMENT_ID")
+        print("Usage: python attach_component_to_environment.py COMPONENT_ID ENVIRONMENT_ID")
         sys.exit(1)
     
     component_id = sys.argv[1]
