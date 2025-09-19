@@ -8,7 +8,6 @@ The legacy Deployment API is deprecated - this example uses the recommended appr
 
 Features:
 - Deploy packaged components to environments
-- Deploy components directly (auto-package and deploy)
 - Configure listener status (running/paused)
 - Query existing deployments
 - Bulk deployment operations
@@ -17,16 +16,13 @@ Features:
 Requirements:
 - Set environment variables: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET
 - DEPLOYMENT privilege required
-- Valid package ID or component ID
+- Valid package ID
 - Valid environment ID
 
 Usage:
     # Deploy existing packaged component
     python create_deployment.py --package-id PACKAGE_ID --environment-id ENV_ID
-    
-    # Deploy component directly (auto-package)
-    python create_deployment.py --component-id COMP_ID --environment-id ENV_ID
-    
+
     # Deploy with listener paused
     python create_deployment.py --package-id PACKAGE_ID --environment-id ENV_ID --listener-status PAUSED
     
@@ -38,7 +34,6 @@ Usage:
 
 Examples:
     python create_deployment.py --package-id "91682a5d-5554-4754-9330-553563d58f75" --environment-id "74851c30-98b2-4a6f-838b-61eee5627b13"
-    python create_deployment.py --component-id "112b4efe-b173-4258-9492-613ead7d52ce" --environment-id "74851c30-98b2-4a6f-838b-61eee5627b13" --notes "Direct deployment from SDK"
     python create_deployment.py --query --environment-id "74851c30-98b2-4a6f-838b-61eee5627b13"
 """
 
@@ -131,52 +126,6 @@ class DeploymentManager:
             print(f"❌ Package deployment failed: {e}")
             return None
     
-    def deploy_component(self, component_id: str, environment_id: str,
-                        listener_status: Optional[str] = None,
-                        notes: Optional[str] = None) -> Optional[Dict[str, Any]]:
-        """Deploy a component directly (auto-package and deploy)"""
-        print(f"\n🔧 Deploying component {component_id} directly to environment {environment_id}")
-        print("   ℹ️ This will auto-package the component and deploy it")
-        
-        try:
-            # Create deployment request with component ID
-            deployed_package = DeployedPackage(
-                component_id=component_id,
-                environment_id=environment_id
-            )
-            
-            # Add listener status if specified
-            if listener_status:
-                deployed_package.listener_status = listener_status.upper()
-                print(f"   📢 Listener status: {listener_status.upper()}")
-            
-            # Add notes if specified
-            if notes:
-                deployed_package.notes = notes
-                print(f"   📝 Notes: {notes}")
-            
-            # Execute deployment
-            result = self.sdk.deployed_package.create_deployed_package(request_body=deployed_package)
-            
-            if result:
-                deployment_info = self._extract_deployment_info(result)
-                print(f"✅ Component deployed successfully!")
-                print(f"   🆔 Deployment ID: {deployment_info.get('id', 'N/A')}")
-                print(f"   🔧 Component ID: {deployment_info.get('component_id', 'N/A')}")
-                print(f"   📦 Auto-created Package ID: {deployment_info.get('package_id', 'N/A')}")
-                print(f"   🌍 Environment: {deployment_info.get('environment_id', 'N/A')}")
-                print(f"   📅 Deployed: {deployment_info.get('deployed_date', 'N/A')}")
-                if deployment_info.get('listener_status'):
-                    print(f"   📢 Listener Status: {deployment_info.get('listener_status')}")
-                
-                return deployment_info
-            else:
-                print("❌ Deployment failed: No result returned")
-                return None
-                
-        except Exception as e:
-            print(f"❌ Component deployment failed: {e}")
-            return None
     
     def query_deployments(self, environment_id: Optional[str] = None,
                          package_id: Optional[str] = None,
@@ -361,7 +310,6 @@ def main():
         epilog='''
 Examples:
   %(prog)s --package-id "pkg-123" --environment-id "env-456"              # Deploy package
-  %(prog)s --component-id "comp-789" --environment-id "env-456"           # Deploy component
   %(prog)s --package-id "pkg-123" --environment-id "env-456" --listener-status PAUSED  # Deploy paused
   %(prog)s --query --environment-id "env-456"                             # Query deployments
   %(prog)s --get-deployment "deployment-123"                              # Get specific deployment
@@ -369,7 +317,6 @@ Examples:
 
 Deployment Methods:
   • Package deployment: Deploy existing packaged component
-  • Component deployment: Auto-package component and deploy
   • Listener control: Deploy with RUNNING or PAUSED status
   
 Notes:
@@ -383,8 +330,6 @@ Notes:
     operation_group = parser.add_mutually_exclusive_group(required=True)
     operation_group.add_argument('--package-id', metavar='ID',
                                 help='Deploy existing packaged component')
-    operation_group.add_argument('--component-id', metavar='ID',
-                                help='Deploy component directly (auto-package)')
     operation_group.add_argument('--query', action='store_true',
                                 help='Query existing deployments')
     operation_group.add_argument('--query-all', action='store_true',
@@ -424,7 +369,7 @@ Notes:
         sys.exit(1)
     
     # Validate required arguments for deployment operations
-    if (args.package_id or args.component_id) and not args.environment_id:
+    if args.package_id and not args.environment_id:
         print("❌ --environment-id is required for deployment operations")
         sys.exit(1)
     
@@ -446,16 +391,6 @@ Notes:
             if result and args.summary:
                 manager.display_deployment_summary(result)
         
-        elif args.component_id:
-            # Deploy component directly
-            result = manager.deploy_component(
-                args.component_id,
-                args.environment_id,
-                args.listener_status,
-                args.notes
-            )
-            if result and args.summary:
-                manager.display_deployment_summary(result)
         
         elif args.query or args.query_all:
             # Query deployments
