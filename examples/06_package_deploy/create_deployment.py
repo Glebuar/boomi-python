@@ -50,10 +50,18 @@ from datetime import datetime
 from typing import List, Dict, Optional, Any
 
 # Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from src.boomi import Boomi
-from src.boomi.models import (
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
+
+from boomi import Boomi
+from boomi.models import (
     DeployedPackage,
     DeployedPackageQueryConfig,
     DeployedPackageQueryConfigQueryFilter,
