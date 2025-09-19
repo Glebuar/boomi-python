@@ -2,13 +2,17 @@
 """
 Create Component Atom Attachment
 
-This example demonstrates how to attach a component to an atom/runtime.
+This example demonstrates how to attach a component directly to an atom/runtime.
+
+NOTE: This API only works for accounts that do NOT use environments.
+For accounts with environments, use ComponentEnvironmentAttachment instead.
 
 Requirements:
 - Set environment variables: BOOMI_ACCOUNT, BOOMI_USER, BOOMI_SECRET
+- Account must not use environments
 
 Usage:
-    python create_component_atom_attachment.py COMPONENT_ID ATOM_ID
+    python attach_component_to_atom.py COMPONENT_ID ATOM_ID
 
 Endpoint:
 - component_atom_attachment.create_component_atom_attachment
@@ -16,7 +20,17 @@ Endpoint:
 
 import os
 import sys
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
+from pathlib import Path
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
+
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
 
 from boomi import Boomi
 from boomi.models import ComponentAtomAttachment
@@ -60,6 +74,13 @@ def main():
         if hasattr(e, 'status'):
             if e.status == 409:
                 print("   Component may already be attached to this atom")
+            elif e.status == 400:
+                error_msg = str(e)
+                if "uses environments" in error_msg:
+                    print("   ⚠️ This account uses environments.")
+                    print("   Use ComponentEnvironmentAttachment API instead")
+                else:
+                    print("   Invalid request - check component and atom IDs")
 
 if __name__ == "__main__":
     main()
