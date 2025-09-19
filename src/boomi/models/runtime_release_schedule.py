@@ -55,10 +55,10 @@ class RuntimeReleaseSchedule(BaseModel):
 
     def __init__(
         self,
-        atom_id: str,
-        day_of_week: str,
-        schedule_type: ScheduleType,
-        time_zone: str,
+        atom_id: str = SENTINEL,
+        day_of_week: str = SENTINEL,
+        schedule_type: ScheduleType = SENTINEL,
+        time_zone: str = SENTINEL,
         hour_of_day: int = SENTINEL,
         **kwargs
     ):
@@ -67,20 +67,24 @@ class RuntimeReleaseSchedule(BaseModel):
         :param atom_id: The ID of the container for which you want to set a schedule.
         :type atom_id: str
         :param day_of_week: The day of the week that you want to receive updates on the Runtime, Runtime cluster, or Runtime cloud. \<br /\> 1. Required if scheduleType is set to FIRST or LAST
-        :type day_of_week: str
+        :type day_of_week: str, optional
         :param hour_of_day: The hour of the day that you want to receive updates on the Runtime, Runtime cluster, or Runtime cloud. 1. Must be between 0-23\<br /\> 2. Required if scheduleType is set to FIRST or LAST, defaults to None
         :type hour_of_day: int, optional
         :param schedule_type: Required. Determines whether you want to receive the updates when available, and if so, whether you receive them in the first or second \(last\) week they are available prior to the .-   FIRST - Update within the first week that updates are available\<br /\> 1. LAST - Update within the second week that updates are available\<br /\>2. NEVER - Update with the
         :type schedule_type: ScheduleType
         :param time_zone: The time zone of your set schedule. \<br /\>1. Must be a [valid time zone](/api/platformapi#section/Introduction/Valid-time-zones) \<br /\>2. Required if scheduleType is set to FIRST or LAST
-        :type time_zone: str
+        :type time_zone: str, optional
         """
-        self.atom_id = atom_id
-        self.day_of_week = day_of_week
+        if atom_id is not SENTINEL:
+            self.atom_id = atom_id
+        if day_of_week is not SENTINEL:
+            self.day_of_week = day_of_week
         if hour_of_day is not SENTINEL:
             self.hour_of_day = hour_of_day
-        self.schedule_type = self._enum_matching(
-            schedule_type, ScheduleType.list(), "schedule_type"
-        )
-        self.time_zone = time_zone
+        if schedule_type is not SENTINEL:
+            self.schedule_type = self._enum_matching(
+                schedule_type, ScheduleType.list(), "schedule_type"
+            )
+        if time_zone is not SENTINEL:
+            self.time_zone = time_zone
         self._kwargs = kwargs
