@@ -51,12 +51,20 @@ import json
 from datetime import datetime
 from typing import List, Dict, Optional, Any
 from collections import defaultdict
+from pathlib import Path
 
 # Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from src.boomi import Boomi
-from src.boomi.models import DeployedPackageQueryConfig
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
+
+from boomi import Boomi
+from boomi.models import DeployedPackageQueryConfig
 
 
 class DeployedPackageQuerier:
@@ -75,6 +83,14 @@ class DeployedPackageQuerier:
     def _model_to_dict(self, model_obj) -> Dict[str, Any]:
         """Convert a model object to a dictionary for easier processing"""
         if hasattr(model_obj, '__dict__'):
+            # Helper function to convert string booleans to actual booleans (SDK bug workaround)
+            def str_to_bool(value):
+                if isinstance(value, bool):
+                    return value
+                if isinstance(value, str):
+                    return value.lower() in ('true', '1', 'yes', 'on')
+                return bool(value)
+
             # Convert the model object to dict using its attributes
             result = {}
             for key, value in vars(model_obj).items():
@@ -82,6 +98,9 @@ class DeployedPackageQuerier:
                     # Handle enum values
                     if hasattr(value, 'value'):
                         result[key] = value.value
+                    # Convert boolean string fields
+                    elif key in ['active'] and isinstance(value, str):
+                        result[key] = str_to_bool(value)
                     else:
                         result[key] = value
             return result
@@ -94,8 +113,23 @@ class DeployedPackageQuerier:
         print("\n🔍 Querying all deployed packages...")
         
         try:
-            # Create empty query config to get all deployed packages
-            query_config = DeployedPackageQueryConfig()
+            # Create query config to get all deployed packages
+            from boomi.models import (
+                DeployedPackageQueryConfigQueryFilter,
+                DeployedPackageSimpleExpression,
+                DeployedPackageSimpleExpressionOperator,
+                DeployedPackageSimpleExpressionProperty
+            )
+
+            # Use ISNOTNULL to get all packages with package IDs
+            expression = DeployedPackageSimpleExpression(
+                operator=DeployedPackageSimpleExpressionOperator.ISNOTNULL,
+                property=DeployedPackageSimpleExpressionProperty.PACKAGEID,
+                argument=[]
+            )
+
+            query_filter = DeployedPackageQueryConfigQueryFilter(expression=expression)
+            query_config = DeployedPackageQueryConfig(query_filter=query_filter)
             
             # Query using SDK
             result = self.sdk.deployed_package.query_deployed_package(
@@ -128,19 +162,19 @@ class DeployedPackageQuerier:
         
         if environment_id:
             print(f"🔍 Filtering by environment ID: {environment_id}")
-            filtered = [p for p in filtered if p.get('environmentId', '') == environment_id]
-        
+            filtered = [p for p in filtered if p.get('environment_id', '') == environment_id]
+
         if component_type:
             print(f"🔍 Filtering by component type: {component_type}")
-            filtered = [p for p in filtered if p.get('componentType', '').lower() == component_type.lower()]
-        
+            filtered = [p for p in filtered if p.get('component_type', '').lower() == component_type.lower()]
+
         if active_only:
             print(f"🔍 Filtering to active deployments only")
             filtered = [p for p in filtered if p.get('active', False)]
-        
+
         if deployed_by:
             print(f"🔍 Filtering by deployed by: {deployed_by}")
-            filtered = [p for p in filtered if deployed_by.lower() in p.get('deployedBy', '').lower()]
+            filtered = [p for p in filtered if deployed_by.lower() in p.get('deployed_by', '').lower()]
         
         print(f"📊 Filter results: {len(filtered)} package(s) match criteria")
         return filtered
@@ -163,25 +197,25 @@ class DeployedPackageQuerier:
         
         for pkg in packages:
             # Environment counts
-            env_id = pkg.get('environmentId', 'Unknown')
+            env_id = pkg.get('environment_id', 'Unknown')
             env_counts[env_id] = env_counts.get(env_id, 0) + 1
-            
+
             # Type counts
-            comp_type = pkg.get('componentType', 'Unknown')
+            comp_type = pkg.get('component_type', 'Unknown')
             type_counts[comp_type] = type_counts.get(comp_type, 0) + 1
-            
+
             # Status counts
             if pkg.get('active', False):
                 status_counts['active'] += 1
             else:
                 status_counts['inactive'] += 1
-            
+
             # Deployer counts
-            deployer = pkg.get('deployedBy', 'Unknown')
+            deployer = pkg.get('deployed_by', 'Unknown')
             deployer_counts[deployer] = deployer_counts.get(deployer, 0) + 1
-            
+
             # Branch counts
-            branch = pkg.get('branchName', 'Unknown')
+            branch = pkg.get('branch_name', 'Unknown')
             branch_counts[branch] = branch_counts.get(branch, 0) + 1
         
         print(f"📦 Total Deployments: {len(packages)}")
@@ -218,18 +252,18 @@ class DeployedPackageQuerier:
         print("=" * 120)
         
         for i, pkg in enumerate(packages[:limit], 1):
-            deployment_id = pkg.get('deploymentId', 'N/A')
-            package_id = pkg.get('packageId', 'N/A')
-            package_version = pkg.get('packageVersion', 'N/A')
-            component_id = pkg.get('componentId', 'N/A')
-            component_type = pkg.get('componentType', 'N/A')
-            environment_id = pkg.get('environmentId', 'N/A')
-            deployed_date = pkg.get('deployedDate', 'N/A')
-            deployed_by = pkg.get('deployedBy', 'N/A')
+            deployment_id = pkg.get('deployment_id', 'N/A')
+            package_id = pkg.get('package_id', 'N/A')
+            package_version = pkg.get('package_version', 'N/A')
+            component_id = pkg.get('component_id', 'N/A')
+            component_type = pkg.get('component_type', 'N/A')
+            environment_id = pkg.get('environment_id', 'N/A')
+            deployed_date = pkg.get('deployed_date', 'N/A')
+            deployed_by = pkg.get('deployed_by', 'N/A')
             active = pkg.get('active', False)
             version = pkg.get('version', 'N/A')
             notes = pkg.get('notes', '')
-            branch_name = pkg.get('branchName', 'N/A')
+            branch_name = pkg.get('branch_name', 'N/A')
             
             # Status indicators
             status_icon = "✅" if active else "⏸️"
@@ -269,16 +303,16 @@ class DeployedPackageQuerier:
         groups = defaultdict(list)
         for pkg in packages:
             if group_by == 'environment':
-                key = pkg.get('environmentId', 'Unknown')
+                key = pkg.get('environment_id', 'Unknown')
             elif group_by == 'component':
-                key = pkg.get('componentId', 'Unknown')
+                key = pkg.get('component_id', 'Unknown')
             elif group_by == 'type':
-                key = pkg.get('componentType', 'Unknown')
+                key = pkg.get('component_type', 'Unknown')
             elif group_by == 'deployer':
-                key = pkg.get('deployedBy', 'Unknown')
+                key = pkg.get('deployed_by', 'Unknown')
             else:
                 key = 'All'
-            
+
             groups[key].append(pkg)
         
         # Display groups
@@ -293,13 +327,13 @@ class DeployedPackageQuerier:
             print(f"   📊 Total: {len(group_packages)} | ✅ Active: {active_count} | ⏸️ Inactive: {inactive_count}")
             
             # Show latest deployments for this group
-            sorted_packages = sorted(group_packages, 
-                                   key=lambda x: x.get('deployedDate', ''), 
+            sorted_packages = sorted(group_packages,
+                                   key=lambda x: x.get('deployed_date', ''),
                                    reverse=True)
-            
+
             for i, pkg in enumerate(sorted_packages[:3], 1):
-                package_version = pkg.get('packageVersion', 'N/A')
-                deployed_date = pkg.get('deployedDate', 'N/A')
+                package_version = pkg.get('package_version', 'N/A')
+                deployed_date = pkg.get('deployed_date', 'N/A')
                 status = "ACTIVE" if pkg.get('active', False) else "INACTIVE"
                 print(f"     {i}. {package_version} - {status} ({self._format_date(deployed_date)})")
             
