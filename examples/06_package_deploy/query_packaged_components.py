@@ -51,12 +51,20 @@ import argparse
 import json
 from datetime import datetime
 from typing import List, Dict, Optional, Any
+from pathlib import Path
 
 # Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from src.boomi import Boomi
-from src.boomi.models import PackagedComponentQueryConfig
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
+
+from boomi import Boomi
+from boomi.models import PackagedComponentQueryConfig
 
 
 class PackagedComponentQuerier:
@@ -76,13 +84,26 @@ class PackagedComponentQuerier:
         """Convert model object to dictionary"""
         if obj is None:
             return {}
-        
+
+        # Helper function to convert string booleans to actual booleans (SDK bug workaround)
+        def str_to_bool(value):
+            if isinstance(value, bool):
+                return value
+            if isinstance(value, str):
+                return value.lower() in ('true', '1', 'yes', 'on')
+            return bool(value)
+
         # Get all non-private, non-method attributes
         result = {}
         for attr_name in dir(obj):
             if not attr_name.startswith('_') and not callable(getattr(obj, attr_name, None)):
                 try:
-                    result[attr_name] = getattr(obj, attr_name)
+                    value = getattr(obj, attr_name)
+                    # Convert boolean string fields
+                    if attr_name in ['deleted', 'shareable', 'fully_publicly_consumable'] and isinstance(value, str):
+                        result[attr_name] = str_to_bool(value)
+                    else:
+                        result[attr_name] = value
                 except:
                     pass
         return result
@@ -92,8 +113,22 @@ class PackagedComponentQuerier:
         print("\n🔍 Querying all packaged components...")
         
         try:
-            # Create empty query config to get all components
-            query_config = PackagedComponentQueryConfig()
+            # Create query config to get all packaged components
+            from boomi.models import (
+                PackagedComponentQueryConfigQueryFilter,
+                PackagedComponentSimpleExpression,
+                PackagedComponentSimpleExpressionOperator
+            )
+
+            # Use ISNOTNULL to get all packages with component IDs
+            expression = PackagedComponentSimpleExpression(
+                operator=PackagedComponentSimpleExpressionOperator.ISNOTNULL,
+                property="componentId",
+                argument=[]
+            )
+
+            query_filter = PackagedComponentQueryConfigQueryFilter(expression=expression)
+            query_config = PackagedComponentQueryConfig(query_filter=query_filter)
             
             # Query using SDK
             result = self.sdk.packaged_component.query_packaged_component(
@@ -126,15 +161,15 @@ class PackagedComponentQuerier:
         
         if component_type:
             print(f"🔍 Filtering by component type: {component_type}")
-            filtered = [c for c in filtered if c.get('componentType', '').lower() == component_type.lower()]
-        
+            filtered = [c for c in filtered if c.get('component_type', '').lower() == component_type.lower()]
+
         if author:
             print(f"🔍 Filtering by author: {author}")
-            filtered = [c for c in filtered if author.lower() in c.get('createdBy', '').lower()]
-        
+            filtered = [c for c in filtered if author.lower() in c.get('created_by', '').lower()]
+
         if component_id:
             print(f"🔍 Filtering by component ID: {component_id}")
-            filtered = [c for c in filtered if c.get('componentId', '') == component_id]
+            filtered = [c for c in filtered if c.get('component_id', '') == component_id]
         
         if active_only:
             print(f"🔍 Filtering to active (non-deleted) components only")
@@ -160,21 +195,21 @@ class PackagedComponentQuerier:
         
         for comp in components:
             # Type counts
-            comp_type = comp.get('componentType', 'Unknown')
+            comp_type = comp.get('component_type', 'Unknown')
             type_counts[comp_type] = type_counts.get(comp_type, 0) + 1
-            
+
             # Status counts
             if comp.get('deleted', False):
                 status_counts['deleted'] += 1
             else:
                 status_counts['active'] += 1
-            
+
             # Author counts
-            author = comp.get('createdBy', 'Unknown')
+            author = comp.get('created_by', 'Unknown')
             author_counts[author] = author_counts.get(author, 0) + 1
-            
+
             # Branch counts
-            branch = comp.get('branchName', 'Unknown')
+            branch = comp.get('branch_name', 'Unknown')
             branch_counts[branch] = branch_counts.get(branch, 0) + 1
         
         print(f"📦 Total Components: {len(components)}")
@@ -204,15 +239,15 @@ class PackagedComponentQuerier:
         print("=" * 100)
         
         for i, comp in enumerate(components[:limit], 1):
-            package_id = comp.get('packageId', 'N/A')
-            package_version = comp.get('packageVersion', 'N/A')
-            component_id = comp.get('componentId', 'N/A')
-            component_type = comp.get('componentType', 'N/A')
-            created_date = comp.get('createdDate', 'N/A')
-            created_by = comp.get('createdBy', 'N/A')
+            package_id = comp.get('package_id', 'N/A')
+            package_version = comp.get('package_version', 'N/A')
+            component_id = comp.get('component_id', 'N/A')
+            component_type = comp.get('component_type', 'N/A')
+            created_date = comp.get('created_date', 'N/A')
+            created_by = comp.get('created_by', 'N/A')
             deleted = comp.get('deleted', False)
             shareable = comp.get('shareable', False)
-            branch_name = comp.get('branchName', 'N/A')
+            branch_name = comp.get('branch_name', 'N/A')
             notes = comp.get('notes', '')
             
             # Status indicators
