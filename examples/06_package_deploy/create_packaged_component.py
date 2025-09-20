@@ -38,11 +38,19 @@ import argparse
 import json
 from datetime import datetime
 from typing import Optional, Dict, Any
+from pathlib import Path
 
 # Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from src.boomi import Boomi
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
+
+from boomi import Boomi
 
 
 class PackagedComponentCreator:
@@ -93,7 +101,7 @@ class PackagedComponentCreator:
         print(f"\n📦 Creating packaged component via SDK...")
         
         try:
-            from src.boomi.models import PackagedComponent
+            from boomi.models import PackagedComponent
             
             # Create packaged component - auto-generated fields use SENTINEL (will be omitted from request)
             packaged_component = PackagedComponent(
