@@ -37,12 +37,20 @@ import os
 import sys
 import argparse
 from typing import Optional
+from pathlib import Path
 
 # Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from src.boomi import Boomi
-from src.boomi.models import PackagedComponent
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
+
+from boomi import Boomi
+from boomi.models import PackagedComponent
 
 
 class PackagedComponentManager:
