@@ -16,7 +16,17 @@ Endpoint:
 
 import os
 import sys
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src'))
+from pathlib import Path
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
+
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
 
 from boomi import Boomi
 from boomi.models import (
@@ -49,19 +59,26 @@ def main():
             # Query attachments for specific component
             simple_expression = ComponentEnvironmentAttachmentSimpleExpression(
                 operator=ComponentEnvironmentAttachmentSimpleExpressionOperator.EQUALS,
-                property=ComponentEnvironmentAttachmentSimpleExpressionProperty.COMPONENT_ID,
+                property=ComponentEnvironmentAttachmentSimpleExpressionProperty.COMPONENTID,
                 argument=[component_id]
             )
             query_filter = ComponentEnvironmentAttachmentQueryConfigQueryFilter(expression=simple_expression)
             query_config = ComponentEnvironmentAttachmentQueryConfig(query_filter=query_filter)
             print(f"   Filtering by component ID: {component_id}")
         else:
-            # Query all attachments
-            query_config = ComponentEnvironmentAttachmentQueryConfig()
+            # Query all attachments - need to provide a filter even for all results
+            # Use a simple filter that should match all (like environment ID not equals empty)
+            simple_expression = ComponentEnvironmentAttachmentSimpleExpression(
+                operator=ComponentEnvironmentAttachmentSimpleExpressionOperator.ISNOTNULL,
+                property=ComponentEnvironmentAttachmentSimpleExpressionProperty.ENVIRONMENTID,
+                argument=[]
+            )
+            query_filter = ComponentEnvironmentAttachmentQueryConfigQueryFilter(expression=simple_expression)
+            query_config = ComponentEnvironmentAttachmentQueryConfig(query_filter=query_filter)
         
         # Query component environment attachments
         result = sdk.component_environment_attachment.query_component_environment_attachment(
-            query_config
+            request_body=query_config
         )
         
         # Process results
