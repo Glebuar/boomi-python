@@ -46,7 +46,8 @@ from datetime import datetime
 from typing import List, Dict, Optional, Any
 
 # Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
 # Load environment variables from .env file if available
 try:
@@ -55,8 +56,8 @@ try:
 except ImportError:
     pass  # dotenv is optional
 
-from src.boomi import Boomi
-from src.boomi.models import (
+from boomi import Boomi
+from boomi.models import (
     PackagedComponent,
     PackagedComponentQueryConfig,
     PackagedComponentQueryConfigQueryFilter,
@@ -112,6 +113,14 @@ class PackageInspector:
             
             if package:
                 # Extract package information
+                # Helper function to convert string booleans to actual booleans (SDK bug workaround)
+                def str_to_bool(value):
+                    if isinstance(value, bool):
+                        return value
+                    if isinstance(value, str):
+                        return value.lower() in ('true', '1', 'yes', 'on')
+                    return bool(value)
+
                 package_info = {
                     'package_id': getattr(package, 'package_id', package_id),
                     'component_id': getattr(package, 'component_id', 'N/A'),
@@ -120,9 +129,9 @@ class PackageInspector:
                     'component_version': getattr(package, 'component_version', 'N/A'),
                     'created_date': getattr(package, 'created_date', 'N/A'),
                     'created_by': getattr(package, 'created_by', 'N/A'),
-                    'deleted': getattr(package, 'deleted', False),
-                    'shareable': getattr(package, 'shareable', False),
-                    'fully_publicly_consumable': getattr(package, 'fully_publicly_consumable', False),
+                    'deleted': str_to_bool(getattr(package, 'deleted', False)),
+                    'shareable': str_to_bool(getattr(package, 'shareable', False)),
+                    'fully_publicly_consumable': str_to_bool(getattr(package, 'fully_publicly_consumable', False)),
                     'branch_name': getattr(package, 'branch_name', 'N/A'),
                     'notes': getattr(package, 'notes', '')
                 }
@@ -186,6 +195,14 @@ class PackageInspector:
             
             versions = []
             if hasattr(result, 'result') and result.result:
+                # Helper function to convert string booleans to actual booleans (SDK bug workaround)
+                def str_to_bool(value):
+                    if isinstance(value, bool):
+                        return value
+                    if isinstance(value, str):
+                        return value.lower() in ('true', '1', 'yes', 'on')
+                    return bool(value)
+
                 for pkg in result.result:
                     versions.append({
                         'package_id': getattr(pkg, 'package_id', 'N/A'),
@@ -193,7 +210,7 @@ class PackageInspector:
                         'component_version': getattr(pkg, 'component_version', 'N/A'),
                         'created_date': getattr(pkg, 'created_date', 'N/A'),
                         'created_by': getattr(pkg, 'created_by', 'N/A'),
-                        'deleted': getattr(pkg, 'deleted', False),
+                        'deleted': str_to_bool(getattr(pkg, 'deleted', False)),
                         'branch_name': getattr(pkg, 'branch_name', 'N/A')
                     })
                 

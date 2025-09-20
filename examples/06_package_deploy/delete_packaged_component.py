@@ -110,12 +110,23 @@ class PackagedComponentManager:
         print(f"👤 Created By: {created_by}")
         print(f"🌿 Branch: {branch_name}")
         
+        # Convert string booleans to actual booleans (SDK bug workaround)
+        def str_to_bool(value):
+            if isinstance(value, bool):
+                return value
+            if isinstance(value, str):
+                return value.lower() in ('true', '1', 'yes', 'on')
+            return bool(value)
+
+        deleted_bool = str_to_bool(deleted)
+        shareable_bool = str_to_bool(shareable)
+
         # Status indicators
-        status_icon = "🗑️" if deleted else "✅"
-        print(f"{status_icon} Status: {'DELETED' if deleted else 'ACTIVE'}")
-        
-        share_icon = "🌐" if shareable else "🔒"
-        print(f"{share_icon} Shareable: {'Yes' if shareable else 'No'}")
+        status_icon = "🗑️" if deleted_bool else "✅"
+        print(f"{status_icon} Status: {'DELETED' if deleted_bool else 'ACTIVE'}")
+
+        share_icon = "🌐" if shareable_bool else "🔒"
+        print(f"{share_icon} Shareable: {'Yes' if shareable_bool else 'No'}")
         
         if notes and notes != 'None':
             print(f"📝 Notes: {notes}")
@@ -143,8 +154,16 @@ class PackagedComponentManager:
         print("   • Deleted components can be restored using CREATE operation")
         print("   • You cannot delete components that are currently deployed")
         
-        # Check if already deleted
-        if component.get('deleted', False):
+        # Check if already deleted (with SDK bug workaround)
+        def str_to_bool(value):
+            if isinstance(value, bool):
+                return value
+            if isinstance(value, str):
+                return value.lower() in ('true', '1', 'yes', 'on')
+            return bool(value)
+
+        is_deleted = str_to_bool(component.get('deleted', False))
+        if is_deleted:
             print("   • Component is already marked as deleted")
             confirm_text = input("\nProceed with deletion anyway? Type 'DELETE' to confirm: ").strip()
         else:
@@ -165,7 +184,16 @@ class PackagedComponentManager:
             updated_component = self.get_packaged_component(package_id)
             
             if updated_component:
-                if updated_component.get('deleted', False):
+                # Check deletion status with SDK bug workaround
+                def str_to_bool(value):
+                    if isinstance(value, bool):
+                        return value
+                    if isinstance(value, str):
+                        return value.lower() in ('true', '1', 'yes', 'on')
+                    return bool(value)
+
+                is_deleted = str_to_bool(updated_component.get('deleted', False))
+                if is_deleted:
                     print("✅ Deletion verified - component is marked as deleted")
                 else:
                     print("⚠️  Component still shows as active")
