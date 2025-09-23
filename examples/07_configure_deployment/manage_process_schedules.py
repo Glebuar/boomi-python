@@ -49,10 +49,10 @@ from datetime import datetime
 from typing import List, Dict, Optional, Any
 
 # Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) + "/src")
 
-from src.boomi import Boomi
-from src.boomi.models import ProcessSchedulesQueryConfig
+from boomi import Boomi
+from boomi.models import ProcessSchedulesQueryConfig
 
 
 class ProcessScheduleManager:
@@ -158,7 +158,7 @@ class ProcessScheduleManager:
             schedule_id = base64.b64encode(f"CPS{atom_id}:{process_id}".encode()).decode()
             
             # Import SDK models
-            from src.boomi.models import ProcessSchedules, Schedule, ScheduleRetry
+            from boomi.models import ProcessSchedules, Schedule, ScheduleRetry
             
             # Create schedule object
             schedule = Schedule(
@@ -224,7 +224,7 @@ class ProcessScheduleManager:
             schedule_id = base64.b64encode(f"CPS{atom_id}:{process_id}".encode()).decode()
             
             # Import SDK models
-            from src.boomi.models import ProcessSchedules, ScheduleRetry
+            from boomi.models import ProcessSchedules, ScheduleRetry
             
             # Create retry object
             retry = ScheduleRetry(
@@ -328,17 +328,28 @@ class ProcessScheduleManager:
         if not schedules:
             print("📋 No schedules to display")
             return
-        
+
         print(f"\n📋 Detailed Schedule List (showing {min(limit, len(schedules))} of {len(schedules)}):")
         print("=" * 120)
-        
+
         for i, schedule in enumerate(schedules[:limit], 1):
-            schedule_id = schedule.get('id', 'N/A')
-            process_id = schedule.get('processId', 'N/A')
-            atom_id = schedule.get('atomId', 'N/A')
-            schedules_list = schedule.get('Schedule', [])
-            retry_config = schedule.get('Retry', {})
-            max_retry = retry_config.get('maxRetry', 'N/A')
+            # Handle SDK model objects
+            if hasattr(schedule, 'id_'):
+                # It's an SDK model object
+                schedule_id = getattr(schedule, 'id_', 'N/A')
+                process_id = getattr(schedule, 'process_id', 'N/A')
+                atom_id = getattr(schedule, 'atom_id', 'N/A')
+                schedules_list = getattr(schedule, 'schedule', [])
+                retry_obj = getattr(schedule, 'retry', None)
+                max_retry = retry_obj.max_retry if retry_obj else 'N/A'
+            else:
+                # It's a dictionary
+                schedule_id = schedule.get('id', 'N/A')
+                process_id = schedule.get('processId', 'N/A')
+                atom_id = schedule.get('atomId', 'N/A')
+                schedules_list = schedule.get('Schedule', [])
+                retry_config = schedule.get('Retry', {})
+                max_retry = retry_config.get('maxRetry', 'N/A')
             
             # Status
             status = "ACTIVE" if schedules_list else "INACTIVE"
@@ -353,11 +364,19 @@ class ProcessScheduleManager:
             if schedules_list:
                 print(f"     📅 Active Schedules ({len(schedules_list)}):")
                 for j, sched in enumerate(schedules_list, 1):
-                    minutes = sched.get('minutes', '*')
-                    hours = sched.get('hours', '*')
-                    days_month = sched.get('daysOfMonth', '*')
-                    months = sched.get('months', '*')
-                    days_week = sched.get('daysOfWeek', '*')
+                    # Handle SDK model objects for schedule items
+                    if hasattr(sched, 'minutes'):
+                        minutes = getattr(sched, 'minutes', '*')
+                        hours = getattr(sched, 'hours', '*')
+                        days_month = getattr(sched, 'days_of_month', '*')
+                        months = getattr(sched, 'months', '*')
+                        days_week = getattr(sched, 'days_of_week', '*')
+                    else:
+                        minutes = sched.get('minutes', '*')
+                        hours = sched.get('hours', '*')
+                        days_month = sched.get('daysOfMonth', '*')
+                        months = sched.get('months', '*')
+                        days_week = sched.get('daysOfWeek', '*')
                     
                     cron_expr = f"{minutes} {hours} {days_month} {months} {days_week}"
                     description = self._describe_schedule(sched)
@@ -483,6 +502,14 @@ class ProcessScheduleManager:
 
 def main():
     """Main entry point"""
+
+    # DEFAULT IDs FOR TESTING - REPLACE WITH YOUR ACTUAL IDs
+    # These are example IDs that may work in a test environment
+    # You MUST replace these with your actual Process and Atom IDs
+    DEFAULT_PROCESS_ID = "6841b8e2-755e-4ab1-bd31-fcfc9bf7893d"  # Replace with your Process ID
+    DEFAULT_ATOM_ID = "3456789a-bcde-f012-3456-789abcdef012"  # Replace with your Atom ID
+    DEFAULT_SCHEDULE_ID = "9876543a-bcde-f012-3456-789abcdef012"  # Replace with your Schedule ID
+
     parser = argparse.ArgumentParser(
         description='Manage Boomi process execution schedules',
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -490,9 +517,15 @@ def main():
 Examples:
   %(prog)s --list                                     # List all schedules
   %(prog)s --get --process-id "proc-123" --atom-id "atom-456"  # Get specific schedule
+  %(prog)s --get  # Uses default IDs
   %(prog)s --update --process-id "proc-123" --atom-id "atom-456" --schedule "0 9 * * *"  # Daily at 9 AM
+  %(prog)s --update --schedule "0 9 * * *"  # Uses default IDs
   %(prog)s --update --process-id "proc-123" --atom-id "atom-456" --schedule "*/15 9-17 * * 1-5"  # Business hours
   %(prog)s --clear --process-id "proc-123" --atom-id "atom-456"  # Disable schedule
+  %(prog)s --clear  # Uses default IDs
+
+Note:
+- Default IDs are provided for testing but MUST be replaced with your actual IDs
 
 Schedule Format (Cron):
   minute hour day_of_month month day_of_week
@@ -558,9 +591,15 @@ Common Patterns:
         
         # Operations requiring process and atom IDs
         if args.get or args.update or args.clear:
-            if not args.process_id or not args.atom_id:
-                print("❌ --process-id and --atom-id are required for this operation")
-                sys.exit(1)
+            if not args.process_id:
+                print(f"ℹ️ No --process-id provided, using default: {DEFAULT_PROCESS_ID}")
+                print("⚠️ WARNING: Replace DEFAULT_PROCESS_ID in the script with your actual Process ID")
+                args.process_id = DEFAULT_PROCESS_ID
+
+            if not args.atom_id:
+                print(f"ℹ️ No --atom-id provided, using default: {DEFAULT_ATOM_ID}")
+                print("⚠️ WARNING: Replace DEFAULT_ATOM_ID in the script with your actual Atom ID")
+                args.atom_id = DEFAULT_ATOM_ID
         
         # Update operation
         if args.update:
