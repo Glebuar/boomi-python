@@ -146,14 +146,10 @@ class EnvironmentExtensionsManager:
                 query_config = EnvironmentExtensionsQueryConfig(query_filter=query_filter)
                 print(f"   Filtering by environment ID: {environment_id}")
             else:
-                # Query all environment extensions - need a basic filter
-                expression = EnvironmentExtensionsSimpleExpression(
-                    operator=EnvironmentExtensionsSimpleExpressionOperator.ISNOTNULL,
-                    property=EnvironmentExtensionsSimpleExpressionProperty.ENVIRONMENTID,
-                    argument=[]
-                )
-                query_filter = EnvironmentExtensionsQueryConfigQueryFilter(expression=expression)
-                query_config = EnvironmentExtensionsQueryConfig(query_filter=query_filter)
+                # Query all environment extensions - use a wildcard or specific environment
+                # Note: ISNOTNULL operator doesn't work with this API, need to use specific environment IDs
+                print("   Note: Query requires specific environment ID")
+                return []
             
             response = self.sdk.environment_extensions.query_environment_extensions(query_config)
             
@@ -888,25 +884,26 @@ def main():
         elif args.list:
             print("📋 Environments with Extensions")
             print("-" * 35)
-            
-            extensions = ext_manager.query_environment_extensions()
-            
+
+            # For now, query specific known environments
+            # TODO: Update when API supports listing all environments with extensions
+            print("   Note: Listing all environments with extensions requires iterating through known environments")
+            print("   Use --get ENV_ID to check a specific environment")
+            print()
+
+            # Try to query the development environment as an example
+            dev_env_id = "74851c30-98b2-4a6f-838b-61eee5627b13"
+            print(f"   Example - checking development environment: {dev_env_id}")
+            extensions = ext_manager.query_environment_extensions(dev_env_id)
+
             if extensions:
-                print(f"✅ Found {len(extensions)} environment(s) with extensions:")
-                print("=" * 60)
-                
+                print(f"✅ Found {len(extensions)} extension(s) for this environment:")
                 for i, ext in enumerate(extensions, 1):
                     env_id = getattr(ext, 'environment_id', 'N/A')
                     ext_id = getattr(ext, 'id_', 'N/A')
-                    ext_type = getattr(ext, 'extension_type', 'N/A')
-                    
-                    print(f"{i:2}. 🌍 Environment: {env_id}")
-                    print(f"     Extension ID: {ext_id}")
-                    if ext_type != 'N/A':
-                        print(f"     Extension Type: {ext_type}")
-                    print()
+                    print(f"     {i}. Extension ID: {ext_id}")
             else:
-                print("   No environments with extensions found")
+                print("   No extensions configured for this environment")
         
         elif args.query:
             print(f"🔍 Querying Environment Extensions")
