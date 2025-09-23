@@ -345,24 +345,35 @@ class PersistedPropertiesManager:
 
 def main():
     """Main function to handle command-line arguments"""
+
+    # DEFAULT IDs FOR TESTING - REPLACE WITH YOUR ACTUAL IDs
+    # These are example IDs that may work in a test environment
+    # You MUST replace these with your actual Atom/Runtime and Process IDs
+    DEFAULT_ATOM_ID = "3456789a-bcde-f012-3456-789abcdef012"  # Replace with your Atom/Runtime ID
+    DEFAULT_PROCESS_ID = "6841b8e2-755e-4ab1-bd31-fcfc9bf7893d"  # Replace with your Process ID
+
     parser = argparse.ArgumentParser(
         description="Manage persisted process properties",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
+        epilog=f"""
 Examples:
   # Get properties for an atom/runtime
   %(prog)s --get --atom-id ATOM_ID
+  %(prog)s --get  # Uses default: {DEFAULT_ATOM_ID}
 
   # Update a single property for a process on an atom
   %(prog)s --update --atom-id ATOM_ID --process-id PROCESS_ID --property "timeout" --value "30000"
+  %(prog)s --update --property "timeout" --value "30000"  # Uses defaults
 
   # Bulk update properties for a process on an atom
-  %(prog)s --bulk-update --atom-id ATOM_ID --process-id PROCESS_ID --properties '{"timeout": "30000", "retries": "3"}'
+  %(prog)s --bulk-update --atom-id ATOM_ID --process-id PROCESS_ID --properties '{{"timeout": "30000", "retries": "3"}}'
+  %(prog)s --bulk-update --properties '{{"timeout": "30000", "retries": "3"}}'  # Uses defaults
 
 Note:
 - The Persisted Process Properties API works at the Atom/Runtime level
 - You need the Atom/Runtime ID where the process is deployed
 - Get operations are async and may take a few seconds to complete
+- Default IDs are provided for testing but MUST be replaced with your actual IDs
         """
     )
 
@@ -394,9 +405,16 @@ Note:
         parser.print_help()
         return 1
 
+    # Use default IDs if not provided (for testing)
     if not args.atom_id:
-        print("Error: --atom-id is required")
-        return 1
+        print(f"ℹ️ No --atom-id provided, using default: {DEFAULT_ATOM_ID}")
+        print("⚠️ WARNING: Replace DEFAULT_ATOM_ID in the script with your actual Atom/Runtime ID")
+        args.atom_id = DEFAULT_ATOM_ID
+
+    if (args.update or args.bulk_update) and not args.process_id:
+        print(f"ℹ️ No --process-id provided, using default: {DEFAULT_PROCESS_ID}")
+        print("⚠️ WARNING: Replace DEFAULT_PROCESS_ID in the script with your actual Process ID")
+        args.process_id = DEFAULT_PROCESS_ID
 
     try:
         manager = PersistedPropertiesManager(verbose=args.verbose)
