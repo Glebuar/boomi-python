@@ -536,10 +536,28 @@ def main():
     DEFAULT_PROCESS_ID = "11111111-1111-1111-1111-111111111111"  # Replace with your Process ID
     DEFAULT_ATOM_ID = "22222222-2222-2222-2222-222222222222"  # Replace with your Atom/Runtime ID
 
-    # Note: ProcessSchedules API may return 403 Forbidden if:
-    # - The Process or Atom IDs don't exist
-    # - Your account lacks permission for schedule operations
-    # - The atom is not properly configured for scheduled execution
+    # IMPORTANT: ProcessSchedules API Requirements (from OpenAPI spec):
+    #
+    # PRIVILEGES REQUIRED:
+    # - "Runtime Management" privilege (not just "Runtime Management Read Access")
+    # - "Scheduling" privilege
+    #
+    # PROCESS REQUIREMENTS:
+    # - Process must be deployed to an Atom/Runtime
+    # - Process CANNOT be a listener process (returns 400 Bad Request)
+    # - Process and Atom IDs must exist in your account
+    #
+    # COMMON 403 FORBIDDEN CAUSES:
+    # - Insufficient API privileges (especially common in sandbox accounts)
+    # - Process or Atom IDs don't exist
+    # - Account type restrictions (trial/sandbox accounts often have limited API access)
+    #
+    # HOW TO GET REAL IDs:
+    # 1. Log into Boomi Platform UI
+    # 2. Navigate to "Manage > Atom Management" for Atom IDs
+    # 3. Navigate to "Design > Processes" for Process IDs
+    # 4. Check "Deploy > Deployed Processes" to see active deployments
+    # 5. IDs are visible in URL or properties panel
 
     parser = argparse.ArgumentParser(
         description='Manage Boomi process execution schedules',
@@ -555,8 +573,13 @@ Examples:
   %(prog)s --clear --process-id "proc-123" --atom-id "atom-456"  # Disable schedule
   %(prog)s --clear  # Uses default IDs
 
+OpenAPI Example IDs (for reference):
+  Process ID: 789abcde-f012-3456-789a-bcdef0123456
+  Atom ID:    3456789a-bcde-f0123-4567-89abcdef012
+
 Note:
 - Default IDs are provided for testing but MUST be replaced with your actual IDs
+- Get real IDs from Boomi Platform UI (see comments above for instructions)
 
 Schedule Format (Cron):
   minute hour day_of_month month day_of_week
