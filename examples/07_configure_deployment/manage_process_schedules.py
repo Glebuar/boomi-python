@@ -93,7 +93,13 @@ class ProcessScheduleManager:
                 return []
                 
         except Exception as e:
-            print(f"❌ Failed to query process schedules: {e}")
+            error_msg = str(e)
+            if "403" in error_msg:
+                print("❌ Access denied (403). This may occur if:")
+                print("   - Your account lacks permission for query operations")
+                print("   - The API endpoint is restricted for your account type")
+            else:
+                print(f"❌ Failed to query process schedules: {e}")
             return []
     
     def get_schedule(self, process_id: str, atom_id: str) -> Optional[Dict[str, Any]]:
@@ -135,6 +141,12 @@ class ProcessScheduleManager:
             error_msg = str(e)
             if "404" in error_msg or "Not Found" in error_msg:
                 print("❌ Schedule not found")
+                return None
+            elif "403" in error_msg:
+                print("❌ Access denied (403). This may occur if:")
+                print("   - The Process ID or Atom ID doesn't exist")
+                print("   - Your account lacks permission for schedule operations")
+                print("   - The atom is not properly configured")
                 return None
             else:
                 print(f"❌ Failed to get schedule: {e}")
@@ -211,7 +223,14 @@ class ProcessScheduleManager:
                 return False
                 
         except Exception as e:
-            print(f"❌ Failed to update schedule: {e}")
+            error_msg = str(e)
+            if "403" in error_msg:
+                print("❌ Access denied (403). This may occur if:")
+                print("   - The Process ID or Atom ID doesn't exist")
+                print("   - Your account lacks permission for schedule operations")
+                print("   - The atom is not properly configured")
+            else:
+                print(f"❌ Failed to update schedule: {e}")
             return False
     
     def clear_schedule(self, process_id: str, atom_id: str) -> bool:
@@ -254,7 +273,14 @@ class ProcessScheduleManager:
                 return False
                 
         except Exception as e:
-            print(f"❌ Failed to clear schedule: {e}")
+            error_msg = str(e)
+            if "403" in error_msg:
+                print("❌ Access denied (403). This may occur if:")
+                print("   - The Process ID or Atom ID doesn't exist")
+                print("   - Your account lacks permission for schedule operations")
+                print("   - The atom is not properly configured")
+            else:
+                print(f"❌ Failed to clear schedule: {e}")
             return False
     
     def _parse_cron_expression(self, cron_expr: str) -> Optional[Dict[str, str]]:
@@ -506,9 +532,14 @@ def main():
     # DEFAULT IDs FOR TESTING - REPLACE WITH YOUR ACTUAL IDs
     # These are example IDs that may work in a test environment
     # You MUST replace these with your actual Process and Atom IDs
-    DEFAULT_PROCESS_ID = "6841b8e2-755e-4ab1-bd31-fcfc9bf7893d"  # Replace with your Process ID
-    DEFAULT_ATOM_ID = "3456789a-bcde-f012-3456-789abcdef012"  # Replace with your Atom ID
-    DEFAULT_SCHEDULE_ID = "9876543a-bcde-f012-3456-789abcdef012"  # Replace with your Schedule ID
+    # To find your IDs: Use the Boomi UI or query APIs to get real Process and Atom IDs
+    DEFAULT_PROCESS_ID = "11111111-1111-1111-1111-111111111111"  # Replace with your Process ID
+    DEFAULT_ATOM_ID = "22222222-2222-2222-2222-222222222222"  # Replace with your Atom/Runtime ID
+
+    # Note: ProcessSchedules API may return 403 Forbidden if:
+    # - The Process or Atom IDs don't exist
+    # - Your account lacks permission for schedule operations
+    # - The atom is not properly configured for scheduled execution
 
     parser = argparse.ArgumentParser(
         description='Manage Boomi process execution schedules',
