@@ -121,14 +121,14 @@ class ProcessScheduleManager:
                     'processId': result.process_id,
                     'atomId': result.atom_id,
                     'Schedule': [{
-                        'minutes': s.minutes,
-                        'hours': s.hours,
-                        'daysOfMonth': s.days_of_month,
-                        'months': s.months,
-                        'daysOfWeek': s.days_of_week
-                    } for s in result.schedule] if result.schedule else [],
+                        'minutes': getattr(s, 'minutes', '*'),
+                        'hours': getattr(s, 'hours', '*'),
+                        'daysOfMonth': getattr(s, 'days_of_month', '*'),
+                        'months': getattr(s, 'months', '*'),
+                        'daysOfWeek': getattr(s, 'days_of_week', '*')
+                    } for s in result.schedule] if hasattr(result, 'schedule') and result.schedule else [],
                     'Retry': {
-                        'maxRetry': result.retry.max_retry if result.retry else 5
+                        'maxRetry': result.retry.max_retry if hasattr(result, 'retry') and result.retry else 5
                     }
                 }
                 print("✅ Schedule retrieved successfully")
@@ -178,7 +178,8 @@ class ProcessScheduleManager:
                 hours=schedule_parts['hours'],
                 days_of_month=schedule_parts['day_of_month'],
                 months=schedule_parts['month'],
-                days_of_week=schedule_parts['day_of_week']
+                days_of_week=schedule_parts['day_of_week'],
+                years='*'  # Years field is required by the API
             )
             
             # Create retry object
@@ -447,13 +448,23 @@ class ProcessScheduleManager:
         else:
             print("📅 No active schedules")
     
-    def _describe_schedule(self, schedule: Dict[str, Any]) -> str:
+    def _describe_schedule(self, schedule) -> str:
         """Generate human-readable description of schedule"""
-        minutes = schedule.get('minutes', '*')
-        hours = schedule.get('hours', '*')
-        days_month = schedule.get('daysOfMonth', '*')
-        months = schedule.get('months', '*')
-        days_week = schedule.get('daysOfWeek', '*')
+        # Handle both SDK model objects and dictionaries
+        if hasattr(schedule, 'minutes'):
+            # SDK model object
+            minutes = getattr(schedule, 'minutes', '*')
+            hours = getattr(schedule, 'hours', '*')
+            days_month = getattr(schedule, 'days_of_month', '*')
+            months = getattr(schedule, 'months', '*')
+            days_week = getattr(schedule, 'days_of_week', '*')
+        else:
+            # Dictionary
+            minutes = schedule.get('minutes', '*')
+            hours = schedule.get('hours', '*')
+            days_month = schedule.get('daysOfMonth', '*')
+            months = schedule.get('months', '*')
+            days_week = schedule.get('daysOfWeek', '*')
         
         descriptions = []
         

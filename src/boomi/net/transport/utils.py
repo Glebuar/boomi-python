@@ -111,7 +111,20 @@ def _extract_component_data(parsed_dict):
         log_download_data = parsed_dict['LogDownload']
         if isinstance(log_download_data, dict):
             return _normalize_attribute_keys(log_download_data)
-    
+
+    # Check if this is a ProcessSchedules response
+    elif 'ProcessSchedules' in parsed_dict:
+        process_schedules_data = parsed_dict['ProcessSchedules']
+        if isinstance(process_schedules_data, dict):
+            normalized_data = _normalize_attribute_keys(process_schedules_data)
+
+            # Special handling for ProcessSchedules: ensure 'Schedule' is always a list
+            # The API returns a single dict when there's one schedule, but models expect a list
+            if 'Schedule' in normalized_data and not isinstance(normalized_data['Schedule'], list):
+                normalized_data['Schedule'] = [normalized_data['Schedule']]
+
+            return normalized_data
+
     # Generic handling for other model types (PackagedComponent, Environment, etc.)
     # If the dict has a single key that looks like a model name (PascalCase),
     # extract its content and normalize
@@ -187,7 +200,7 @@ def parse_xml_to_dict(xml_string: str) -> dict:
         # Common Boomi API elements that may appear multiple times
         force_list_elements = [
             'shape', 'property', 'step', 'connection', 'component', 'item',
-            'element', 'field', 'parameter', 'value', 'node', 'entry'
+            'element', 'field', 'parameter', 'value', 'node', 'entry', 'Schedule'
         ]
         # Let xmltodict.parse raise its own errors for malformed XML.
         parsed = xmltodict.parse(xml_string, force_list=force_list_elements)
