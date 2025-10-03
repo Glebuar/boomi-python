@@ -136,12 +136,12 @@ class SharedResourceManager:
         """
         try:
             self._log("Querying shared communication channels")
-            
-            # Query all channels
+
+            # Query all channels - use wildcard to match all names
             simple_expression = SharedCommunicationChannelComponentSimpleExpression(
-                operator=SharedCommunicationChannelComponentSimpleExpressionOperator.ISNOTNULL,
-                property="id",
-                argument=[]
+                operator=SharedCommunicationChannelComponentSimpleExpressionOperator.LIKE,
+                property="name",
+                argument=["%"]  # Wildcard to match any name
             )
             query_filter = SharedCommunicationChannelComponentQueryConfigQueryFilter(
                 expression=simple_expression
@@ -149,11 +149,16 @@ class SharedResourceManager:
             query_config = SharedCommunicationChannelComponentQueryConfig(
                 query_filter=query_filter
             )
-            
+
             result = self.sdk.shared_communication_channel_component.query_shared_communication_channel_component(
                 request_body=query_config
             )
-            
+
+            # Debug: Print result type and content
+            if self.verbose:
+                self._log(f"Result type: {type(result)}")
+                self._log(f"Result content: {result}")
+
             if hasattr(result, 'result') and result.result:
                 channels = result.result[:limit]
                 self._log(f"Found {len(channels)} communication channel(s)")

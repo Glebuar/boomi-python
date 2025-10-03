@@ -225,7 +225,47 @@ class SharedCommunicationChannelComponentService(BaseService):
         if content == "application/json":
             return SharedCommunicationChannelComponentQueryResponse._unmap(response)
         if content == "application/xml":
-            return SharedCommunicationChannelComponentQueryResponse._unmap(response)
+            # For XML responses, parse the XML and convert to dict structure
+            import xml.etree.ElementTree as ET
+            try:
+                root = ET.fromstring(response)
+                # Extract query results from XML
+                result_data = {
+                    'numberOfResults': 0,
+                    'result': []
+                }
+
+                # Get number of results if present
+                num_results = root.get('numberOfResults')
+                if num_results:
+                    result_data['numberOfResults'] = int(num_results)
+
+                # Get query token if present
+                query_token = root.get('queryToken')
+                if query_token:
+                    result_data['queryToken'] = query_token
+
+                # Parse each result element
+                for item in root.findall('.//{http://api.platform.boomi.com/}result'):
+                    channel_data = {}
+                    # Get attributes
+                    for attr, value in item.attrib.items():
+                        channel_data[attr] = value
+                    # Get child elements
+                    for child in item:
+                        tag = child.tag.replace('{http://api.platform.boomi.com/}', '')
+                        channel_data[tag] = child.text
+                    if channel_data:
+                        result_data['result'].append(channel_data)
+
+                result_data['numberOfResults'] = len(result_data['result'])
+                return SharedCommunicationChannelComponentQueryResponse._unmap(result_data)
+            except ET.ParseError:
+                # If XML parsing fails, return empty result
+                return SharedCommunicationChannelComponentQueryResponse._unmap({
+                    'numberOfResults': 0,
+                    'result': []
+                })
         raise ApiError("Error on deserializing the response.", status, response)
 
     @cast_models
@@ -259,5 +299,45 @@ class SharedCommunicationChannelComponentService(BaseService):
         if content == "application/json":
             return SharedCommunicationChannelComponentQueryResponse._unmap(response)
         if content == "application/xml":
-            return SharedCommunicationChannelComponentQueryResponse._unmap(response)
+            # For XML responses, parse the XML and convert to dict structure
+            import xml.etree.ElementTree as ET
+            try:
+                root = ET.fromstring(response)
+                # Extract query results from XML
+                result_data = {
+                    'numberOfResults': 0,
+                    'result': []
+                }
+
+                # Get number of results if present
+                num_results = root.get('numberOfResults')
+                if num_results:
+                    result_data['numberOfResults'] = int(num_results)
+
+                # Get query token if present
+                query_token = root.get('queryToken')
+                if query_token:
+                    result_data['queryToken'] = query_token
+
+                # Parse each result element
+                for item in root.findall('.//{http://api.platform.boomi.com/}result'):
+                    channel_data = {}
+                    # Get attributes
+                    for attr, value in item.attrib.items():
+                        channel_data[attr] = value
+                    # Get child elements
+                    for child in item:
+                        tag = child.tag.replace('{http://api.platform.boomi.com/}', '')
+                        channel_data[tag] = child.text
+                    if channel_data:
+                        result_data['result'].append(channel_data)
+
+                result_data['numberOfResults'] = len(result_data['result'])
+                return SharedCommunicationChannelComponentQueryResponse._unmap(result_data)
+            except ET.ParseError:
+                # If XML parsing fails, return empty result
+                return SharedCommunicationChannelComponentQueryResponse._unmap({
+                    'numberOfResults': 0,
+                    'result': []
+                })
         raise ApiError("Error on deserializing the response.", status, response)
