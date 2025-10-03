@@ -98,12 +98,20 @@ def _extract_component_data(parsed_dict):
         query_result_data = parsed_dict['QueryResult']
         if isinstance(query_result_data, dict):
             normalized_data = _normalize_attribute_keys(query_result_data)
-            
+
             # Special handling for QueryResult: ensure 'result' is always a list
             # The API returns a single dict when there's one result, but models expect a list
             if 'result' in normalized_data and not isinstance(normalized_data['result'], list):
                 normalized_data['result'] = [normalized_data['result']]
-                
+
+            # Special handling for ProcessSchedules in QueryResult
+            # Each ProcessSchedules result may have a Schedule field that needs to be a list
+            if 'result' in normalized_data and isinstance(normalized_data['result'], list):
+                for item in normalized_data['result']:
+                    if isinstance(item, dict) and 'Schedule' in item:
+                        if not isinstance(item['Schedule'], list):
+                            item['Schedule'] = [item['Schedule']]
+
             return normalized_data
     
     # Check if this is a LogDownload response (ExecutionArtifacts)
