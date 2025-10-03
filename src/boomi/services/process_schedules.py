@@ -35,15 +35,21 @@ class ProcessSchedulesService(BaseService):
 
         Validator(str).validate(id_)
 
+        # ProcessSchedules ID is base64-encoded and should not be URL-encoded
+        # when used as a path parameter. The API expects the raw base64 string.
+        from urllib.parse import unquote
+
         serialized_request = (
             Serializer(
                 f"{self.base_url or Environment.DEFAULT.url}/ProcessSchedules/{{id}}",
                 [self.get_access_token(), self.get_basic_auth()],
             )
-            .add_path("id", id_)
             .serialize()
             .set_method("GET")
         )
+
+        # Manually replace the ID in the URL without URL encoding
+        serialized_request.url = serialized_request.url.replace("{id}", id_)
 
         response, status, content = self.send_request(serialized_request)
         if content == "application/json":
@@ -82,16 +88,20 @@ class ProcessSchedulesService(BaseService):
         Validator(ProcessSchedules).is_optional().validate(request_body)
         Validator(str).validate(id_)
 
+        # ProcessSchedules ID is base64-encoded and should not be URL-encoded
+        # when used as a path parameter. The API expects the raw base64 string.
         serialized_request = (
             Serializer(
                 f"{self.base_url or Environment.DEFAULT.url}/ProcessSchedules/{{id}}",
                 [self.get_access_token(), self.get_basic_auth()],
             )
-            .add_path("id", id_)
             .serialize()
             .set_method("POST")
             .set_body(request_body)
         )
+
+        # Manually replace the ID in the URL without URL encoding
+        serialized_request.url = serialized_request.url.replace("{id}", id_)
 
         response, status, content = self.send_request(serialized_request)
         if content == "application/json":
