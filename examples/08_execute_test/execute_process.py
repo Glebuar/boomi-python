@@ -82,7 +82,7 @@ class ProcessExecutor:
             )
             
             # Build dynamic properties if provided
-            dynamic_props = None
+            dynamic_props = ExecutionRequestDynamicProcessProperties()
             if dynamic_properties:
                 print(f"   Adding {len(dynamic_properties)} dynamic properties")
                 dynamic_property_list = [
@@ -92,15 +92,15 @@ class ProcessExecutor:
                 dynamic_props = ExecutionRequestDynamicProcessProperties(
                     dynamic_process_property=dynamic_property_list
                 )
-            
-            # Build process properties if provided  
-            proc_props = None
+
+            # Build process properties if provided
+            proc_props = ExecutionRequestProcessProperties()
             if process_properties:
                 print(f"   Adding process properties for {len(process_properties)} components")
                 # Note: Process properties model might need to be imported separately
                 # For now, we'll handle this in a future iteration
                 proc_props = ExecutionRequestProcessProperties()
-            
+
             # Create execution request
             execution_request = ExecutionRequest(
                 atom_id=atom_id,
@@ -238,18 +238,29 @@ class ProcessExecutor:
         """Find recent execution by pattern matching using SDK"""
         try:
             # Import SDK models
-            from src.boomi.models import ExecutionRecordQueryConfig, SortField, QuerySort
-            
-            # Create sort configuration to get recent executions
-            sort_field = SortField(
-                field_name="executionTime",
-                sort_order="DESC"
+            from src.boomi.models import (
+                ExecutionRecordQueryConfig,
+                ExecutionRecordQueryConfigQueryFilter,
+                ExecutionRecordSimpleExpression,
+                ExecutionRecordSimpleExpressionOperator,
+                ExecutionRecordSimpleExpressionProperty
             )
-            query_sort = QuerySort(sort_field=[sort_field])
-            
-            # Create query config with just sorting (no filter to get all recent)
+
+            # Create a query filter that matches all executions (use LIKE with wildcard)
+            query_expression = ExecutionRecordSimpleExpression(
+                operator=ExecutionRecordSimpleExpressionOperator.LIKE,
+                property=ExecutionRecordSimpleExpressionProperty.EXECUTIONID,
+                argument=["%"]  # Wildcard to match all
+            )
+
+            # Create query filter
+            query_filter = ExecutionRecordQueryConfigQueryFilter(
+                expression=query_expression
+            )
+
+            # Create query config
             query_config = ExecutionRecordQueryConfig(
-                query_sort=query_sort
+                query_filter=query_filter
             )
             
             # Execute query using SDK
