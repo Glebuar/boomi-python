@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "AS2CommunicationOptions": {
+      "$ref": "./AS2CommunicationOptions.json"
+    },
+    "DiskCommunicationOptions": {
+      "$ref": "./DiskCommunicationOptions.json"
+    },
+    "FTPCommunicationOptions": {
+      "$ref": "./FTPCommunicationOptions.json"
+    },
+    "HTTPCommunicationOptions": {
+      "$ref": "./HTTPCommunicationOptions.json"
+    },
+    "MLLPCommunicationOptions": {
+      "$ref": "./MLLPCommunicationOptions.json"
+    },
+    "OFTPCommunicationOptions": {
+      "$ref": "./OFTPCommunicationOptions.json"
+    },
+    "SFTPCommunicationOptions": {
+      "$ref": "./SFTPCommunicationOptions.json"
+    }
+  }
+}

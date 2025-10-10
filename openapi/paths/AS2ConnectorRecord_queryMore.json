@@ -1,0 +1,51 @@
+{
+  "post": {
+    "tags": [
+      "AS2ConnectorRecord"
+    ],
+    "summary": "Retrieves additional results for an AS2ConnectorRecord query",
+    "description": "To learn about using `queryMore`, refer to [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryMoreAS2ConnectorRecord",
+    "requestBody": {
+      "content": {
+        "text/plain": {
+          "schema": {
+            "type": "string"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AS2ConnectorRecordQueryResponse.json"
+            },
+            "example": {
+              "$ref": "./AS2ConnectorRecord_query.json#/post/responses/200/content/application~1json/example"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AS2ConnectorRecordQueryResponse.json"
+            },
+            "example": {
+              "$ref": "./AS2ConnectorRecord_query.json#/post/responses/200/content/application~1xml/example"
+            }
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

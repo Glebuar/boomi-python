@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "ProcessPropertyValue": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./ProcessPropertyValue.json"
+      }
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

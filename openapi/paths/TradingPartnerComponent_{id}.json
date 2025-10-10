@@ -1,0 +1,486 @@
+{
+  "get": {
+    "tags": [
+      "TradingPartnerComponent"
+    ],
+    "summary": "Retrieves an instance of a TradingPartnerComponent object",
+    "description": "The ordinary GET operation returns a single Trading Partner Component object based on the supplied ID. A GET operation specifying the ID of a deleted Trading Partner component retrieves the component. In the component, the deleted field’s value is true.",
+    "operationId": "GetTradingPartnerComponent",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/TradingPartnerComponent.json"
+            },
+            "example": {
+              "@type": "TradingPartnerComponent",
+              "ContactInfo": {
+                "@type": "ContactInfo",
+                "contactName": "Tom Miller",
+                "address1": "127 Comstock Ave.",
+                "address2": "",
+                "city": "Philadelphia",
+                "state": "PA",
+                "postalcode": "19100",
+                "country": "US",
+                "email": "tom@bestwholesaling.biz",
+                "phone": "311 555-3579",
+                "fax": "311 555-9753"
+              },
+              "PartnerInfo": {
+                "@type": "PartnerInfo",
+                "X12PartnerInfo": {
+                  "@type": "X12PartnerInfo",
+                  "X12Options": {
+                    "@type": "X12Options",
+                    "elementDelimiter": {
+                      "@type": "EdiDelimiter",
+                      "delimiterValue": "stardelimited"
+                    },
+                    "segmentTerminator": {
+                      "@type": "EdiSegmentTerminator",
+                      "segmentTerminatorValue": "newline"
+                    },
+                    "filteracknowledgements": false,
+                    "acknowledgementoption": "donotackitem",
+                    "envelopeoption": "groupall",
+                    "rejectDuplicateInterchange": false,
+                    "outboundInterchangeValidation": true,
+                    "outboundValidationOption": "filterError"
+                  },
+                  "X12ControlInfo": {
+                    "@type": "X12ControlInfo",
+                    "ISAControlInfo": {
+                      "@type": "ISAControlInfo",
+                      "interchangeIdQualifier": "X12IDQUAL_01",
+                      "securityInformationQualifier": "X12SECQUAL_00",
+                      "authorizationInformationQualifier": "X12AUTHQUAL_00",
+                      "ackrequested": false,
+                      "testindicator": "P"
+                    },
+                    "GSControlInfo": {
+                      "@type": "GSControlInfo",
+                      "respagencycode": "T"
+                    }
+                  }
+                }
+              },
+              "PartnerCommunication": {
+                "@type": "PartnerCommunication",
+                "FTPCommunicationOptions": {
+                  "@type": "FTPCommunicationOptions",
+                  "FTPSettings": {
+                    "@type": "FTPSettings",
+                    "host": "ftp.bestwholesaling.com",
+                    "port": [
+                      "BigInteger",
+                      1010
+                    ],
+                    "user": "tom.miller",
+                    "FTPSSLOptions": {
+                      "@type": "FTPSSLOptions",
+                      "useClientAuthentication": false,
+                      "sslmode": "none"
+                    },
+                    "useDefaultSettings": false,
+                    "connectionMode": "active"
+                  },
+                  "FTPGetOptions": {
+                    "@type": "FTPGetOptions",
+                    "remoteDirectory": "/usr/local/bestwholesaling/outbox",
+                    "fileToMove": "*.xml",
+                    "maxFileCount": [
+                      "BigInteger",
+                      200
+                    ],
+                    "useDefaultGetOptions": false,
+                    "ftpAction": "actionget",
+                    "transferType": "ascii"
+                  },
+                  "FTPSendOptions": {
+                    "@type": "FTPSendOptions",
+                    "remoteDirectory": "/home/tommiller/new",
+                    "moveToDirectory": "/home/tommiller/inbox",
+                    "useDefaultSendOptions": false,
+                    "ftpAction": "actionputappend",
+                    "transferType": "ascii"
+                  },
+                  "SharedCommunicationChannel": {
+                    "@type": "SharedCommunicationChannel"
+                  },
+                  "CommunicationSetting": "custom"
+                }
+              },
+              "PartnerDocumentTypes": {
+                "@type": "PartnerDocumentTypes",
+                "PartnerDocumentType": [
+                  {
+                    "@type": "PartnerDocumentType",
+                    "typeId": "101",
+                    "profileId": "23456789-abcd-ef01-2345-6789abcdef01",
+                    "use999Ack": false,
+                    "useTA1Ack": false,
+                    "expectAckForOutbound": false,
+                    "validateOutboundTransactionSets": false,
+                    "qualifierValidation": true
+                  },
+                  {
+                    "@type": "PartnerDocumentType",
+                    "typeId": "810",
+                    "profileId": "3456789a-bcde-4012-3456-789abcdef012",
+                    "use999Ack": false,
+                    "useTA1Ack": false,
+                    "expectAckForOutbound": false,
+                    "validateOutboundTransactionSets": false,
+                    "qualifierValidation": true
+                  }
+                ]
+              },
+              "classification": "tradingpartner",
+              "standard": "x12",
+              "componentName": "Best Wholesaling",
+              "componentId": "12345678-9abc-def0-1234-56789abcdef0",
+              "folderName": "Home:TPs",
+              "folderId": 11356
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/TradingPartnerComponent.json"
+            },
+            "example": "<bns:TradingPartnerComponent folderId=\"11356\" folderName=\"Home:TPs\" componentId=\"12345678-9abc-def0-1234-56789abcdef0\" componentName=\"Best Wholesaling\" standard=\"x12\" classification=\"tradingpartner\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n   <bns:ContactInfo>\n      <bns:contactName>Tom Miller</bns:contactName>\n      <bns:address1>127 Comstock Ave.</bns:address1>\n      <bns:address2/>\n      <bns:city>Philadelphia</bns:city>\n      <bns:state>PA</bns:state>\n      <bns:postalcode>19100</bns:postalcode>\n      <bns:country>US</bns:country>\n      <bns:email>tom@bestwholesaling.biz</bns:email>\n      <bns:phone>311 555-3579</bns:phone>\n      <bns:fax>311 555-9753</bns:fax>\n   </bns:ContactInfo>\n   <bns:PartnerInfo>\n      <bns:X12PartnerInfo>\n         <bns:X12Options acknowledgementoption=\"donotackitem\" envelopeoption=\"groupall\" filteracknowledgements=\"false\" rejectDuplicateInterchange=\"false\" outboundInterchangeValidation=\"true\" outboundValidationOption=\"filterError\">\n            <bns:elementDelimiter delimiterValue=\"stardelimited\"/>\n            <bns:segmentTerminator segmentTerminatorValue=\"newline\"/>\n         </bns:X12Options>\n         <bns:X12ControlInfo>\n            <bns:ISAControlInfo testindicator=\"P\" ackrequested=\"false\" authorizationInformationQualifier=\"X12AUTHQUAL_00\" securityInformationQualifier=\"X12SECQUAL_00\" interchangeIdQualifier=\"X12IDQUAL_01\"/>\n            <bns:GSControlInfo respagencycode=\"T\"/>\n         </bns:X12ControlInfo>\n      </bns:X12PartnerInfo>\n   </bns:PartnerInfo>\n   <bns:PartnerCommunication>\n      <bns:FTPCommunicationOptions CommunicationSetting=\"custom\">\n         <bns:SharedCommunicationChannel/> \n         <bns:FTPSettings connectionMode=\"active\" useDefaultSettings=\"false\">\n            <bns:host>ftp.bestwholesaling.com</bns:host>\n            <bns:port>1010</bns:port>\n            <bns:user>tom.miller</bns:user>\n            <bns:FTPSSLOptions sslmode=\"none\" useClientAuthentication=\"false\"/>\n         </bns:FTPSettings>\n         <bns:FTPGetOptions transferType=\"ascii\" ftpAction=\"actionget\" useDefaultGetOptions=\"false\">\n            <bns:remoteDirectory>/usr/local/bestwholesaling/outbox</bns:remoteDirectory>\n            <bns:fileToMove>*.xml</bns:fileToMove>\n            <bns:maxFileCount>200</bns:maxFileCount>\n         </bns:FTPGetOptions>\n         <bns:FTPSendOptions transferType=\"ascii\" ftpAction=\"actionputappend\" useDefaultSendOptions=\"false\">\n            <bns:remoteDirectory>/home/tommiller/new</bns:remoteDirectory>\n            <bns:moveToDirectory>/home/tommiller/inbox</bns:moveToDirectory>\n         </bns:FTPSendOptions>\n      </bns:FTPCommunicationOptions>\n   </bns:PartnerCommunication>\n   <bns:PartnerDocumentTypes>\n      <bns:PartnerDocumentType typeId=\"101\" profileId=\"23456789-abcd-ef01-2345-6789abcdef01\" use999Ack=\"false\" useTA1Ack=\"false\" expectAckForOutbound=\"false\" validateOutboundTransactionSets=\"false\" qualifierValidation=\"true\"/>\n      <bns:PartnerDocumentType typeId=\"810\" profileId=\"3456789a-bcde-4012-3456-789abcdef012\" use999Ack=\"false\" useTA1Ack=\"false\" expectAckForOutbound=\"false\" validateOutboundTransactionSets=\"false\" qualifierValidation=\"true\"/>\n   </bns:PartnerDocumentTypes>\n</bns:TradingPartnerComponent>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "TradingPartnerComponent"
+    ],
+    "summary": "Modifies or updates a TradingPartnerComponent object",
+    "description": "This operation overwrites the Trading Partner Component object with the specified component ID except as described: \n - If the fields are empty, an UPDATE operation specifying the organizationId field populates the ContactInformation fields with the data from the referenced Organization component. However, if those fields have values, they are not overwritten. \n An UPDATE operation specifying the ID of a deleted Trading Partner component restores the component to a non-deleted state, assuming the request is otherwise valid.",
+    "operationId": "UpdateTradingPartnerComponent",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/TradingPartnerComponent.json"
+          },
+          "example": {
+            "PartnerCommunication": {
+              "FTPCommunicationOptions": {
+                "FTPSettings": {
+                  "host": "ftp.bestwholesaling.com",
+                  "port": [
+                    "BigInteger",
+                    1010
+                  ],
+                  "user": "rachel.lewis",
+                  "FTPSSLOptions": {
+                    "useClientAuthentication": false,
+                    "sslmode": "none"
+                  },
+                  "useDefaultSettings": false,
+                  "connectionMode": "active"
+                },
+                "FTPGetOptions": {
+                  "remoteDirectory": "/usr/local/bestwholesaling/outbox",
+                  "fileToMove": "*.xml",
+                  "maxFileCount": [
+                    "BigInteger",
+                    200
+                  ],
+                  "useDefaultGetOptions": false,
+                  "ftpAction": "actionget",
+                  "transferType": "ascii"
+                },
+                "FTPSendOptions": {
+                  "remoteDirectory": "/home/rachellewis/new",
+                  "moveToDirectory": "/home/rachellewis/inbox",
+                  "useDefaultSendOptions": false,
+                  "ftpAction": "actionputappend",
+                  "transferType": "ascii"
+                },
+                "SharedCommunicationChannel": {},
+                "CommunicationSetting": "custom"
+              }
+            },
+            "PartnerInfo": {
+              "X12PartnerInfo": {
+                "X12Options": {
+                  "elementDelimiter": {
+                    "delimiterValue": "stardelimited"
+                  },
+                  "segmentTerminator": {
+                    "segmentTerminatorValue": "newline"
+                  },
+                  "filteracknowledgements": false,
+                  "acknowledgementoption": "donotackitem",
+                  "envelopeoption": "groupall",
+                  "rejectDuplicateInterchange": false,
+                  "outboundInterchangeValidation": true,
+                  "outboundValidationOption": "filterError"
+                },
+                "X12ControlInfo": {
+                  "ISAControlInfo": {
+                    "interchangeIdQualifier": "X12IDQUAL_01",
+                    "securityInformationQualifier": "X12SECQUAL_00",
+                    "authorizationInformationQualifier": "X12AUTHQUAL_00",
+                    "ackrequested": false,
+                    "testindicator": "P"
+                  },
+                  "GSControlInfo": {
+                    "respagencycode": "T"
+                  }
+                }
+              }
+            },
+            "ContactInfo": {
+              "contactName": "Rachel Lewis",
+              "address1": "127 Comstock Ave.",
+              "address2": "",
+              "city": "Philadelphia",
+              "state": "PA",
+              "postalcode": "19100",
+              "country": "US",
+              "email": "rachel@bestwholesaling.biz",
+              "phone": "311 555-2468",
+              "fax": "311 555-8642"
+            },
+            "PartnerDocumentTypes": {
+              "@type": "PartnerDocumentTypes",
+              "PartnerDocumentType": [
+                {
+                  "@type": "PartnerDocumentType",
+                  "typeId": "101",
+                  "profileId": "23456789-abcd-ef01-2345-6789abcdef01",
+                  "use999Ack": false,
+                  "useTA1Ack": false,
+                  "expectAckForOutbound": false,
+                  "validateOutboundTransactionSets": false,
+                  "qualifierValidation": true
+                },
+                {
+                  "@type": "PartnerDocumentType",
+                  "typeId": "810",
+                  "profileId": "3456789a-bcde-4012-3456-789abcdef012",
+                  "use999Ack": false,
+                  "useTA1Ack": false,
+                  "expectAckForOutbound": false,
+                  "validateOutboundTransactionSets": false,
+                  "qualifierValidation": true
+                }
+              ]
+            },
+            "classification": "tradingpartner",
+            "standard": "x12",
+            "componentName": "Best Wholesaling",
+            "componentId": "12345678-9abc-def0-1234-56789abcdef0",
+            "folderName": "Home:TPs",
+            "folderId": 11356
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/TradingPartnerComponent.json"
+          },
+          "example": "<bns:TradingPartnerComponent folderId=\"11356\" folderName=\"Home:TPs\" componentId=\"12345678-9abc-def0-1234-56789abcdef0\" componentName=\"Best Wholesaling\" standard=\"x12\" classification=\"tradingpartner\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n       <bns:ContactInfo>\n          <bns:contactName>Rachel Lewis</bns:contactName>\n          <bns:address1>127 Comstock Ave.</bns:address1>\n          <bns:address2/>\n          <bns:city>Philadelphia</bns:city>\n          <bns:state>PA</bns:state>\n          <bns:postalcode>19100</bns:postalcode>\n          <bns:country>US</bns:country>\n          <bns:email>rachel@bestwholesaling.biz</bns:email>\n          <bns:phone>311 555-2468</bns:phone>\n          <bns:fax>311 555-8642</bns:fax>\n       </bns:ContactInfo>\n       <bns:PartnerInfo>\n          <bns:X12PartnerInfo>\n             <bns:X12Options envelopeoption=\"groupall\" acknowledgementoption=\"donotackitem\" filteracknowledgements=\"false\" rejectDuplicateInterchange=\"false\" outboundInterchangeValidation=\"true\" outboundValidationOption=\"filterError\">\n                <bns:elementDelimiter delimiterValue=\"stardelimited\"/>\n                <bns:segmentTerminator segmentTerminatorValue=\"newline\"/>\n             </bns:X12Options>\n             <bns:X12ControlInfo>\n                <bns:ISAControlInfo testindicator=\"P\" ackrequested=\"false\" authorizationInformationQualifier=\"X12AUTHQUAL_00\" securityInformationQualifier=\"X12SECQUAL_00\" interchangeIdQualifier=\"X12IDQUAL_01\"/>\n                <bns:GSControlInfo respagencycode=\"T\"/>\n             </bns:X12ControlInfo>\n          </bns:X12PartnerInfo>\n       </bns:PartnerInfo>\n       <bns:PartnerCommunication>\n          <bns:FTPCommunicationOptions CommunicationSetting=\"custom\">\n             <bns:SharedCommunicationChannel/>\n             <bns:FTPSettings connectionMode=\"active\" useDefaultSettings=\"false\">\n                <bns:host>ftp.bestwholesaling.com</bns:host>\n                <bns:port>1010</bns:port>\n                <bns:user>rachel.lewis</bns:user>\n                <bns:FTPSSLOptions sslmode=\"none\" useClientAuthentication=\"false\"/>\n             </bns:FTPSettings>\n             <bns:FTPGetOptions transferType=\"ascii\" ftpAction=\"actionget\" useDefaultGetOptions=\"false\">\n                <bns:remoteDirectory>/usr/local/bestwholesaling/outbox</bns:remoteDirectory>\n                <bns:fileToMove>*.xml</bns:fileToMove>\n                <bns:maxFileCount>200</bns:maxFileCount>\n             </bns:FTPGetOptions>\n             <bns:FTPSendOptions transferType=\"ascii\" ftpAction=\"actionputappend\" useDefaultSendOptions=\"false\">\n                <bns:remoteDirectory>/home/rachellewis/new</bns:remoteDirectory>\n                <bns:moveToDirectory>/home/rachellewis/inbox</bns:moveToDirectory>\n             </bns:FTPSendOptions>\n          </bns:FTPCommunicationOptions>\n       </bns:PartnerCommunication>\n       <bns:PartnerDocumentTypes>\n          <bns:PartnerDocumentType typeId=\"101\" profileId=\"23456789-abcd-ef01-2345-6789abcdef01\" use999Ack=\"false\" useTA1Ack=\"false\" expectAckForOutbound=\"false\" validateOutboundTransactionSets=\"false\" qualifierValidation=\"true\"/>\n          <bns:PartnerDocumentType typeId=\"810\" profileId=\"3456789a-bcde-4012-3456-789abcdef012\" use999Ack=\"false\" useTA1Ack=\"false\" expectAckForOutbound=\"false\" validateOutboundTransactionSets=\"false\" qualifierValidation=\"true\"/>\n       </bns:PartnerDocumentTypes>\n    </bns:TradingPartnerComponent>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/TradingPartnerComponent.json"
+            },
+            "example": {
+              "@type": "TradingPartnerComponent",
+              "folderId": "11356",
+              "folderName": "Home:TPs",
+              "componentId": "12345678-9abc-def0-1234-56789abcdef0",
+              "componentName": "Best Wholesaling",
+              "standard": "x12",
+              "classification": "tradingpartner",
+              "ContactInfo": {
+                "contactName": "Rachel Lewis",
+                "address1": "127 Comstock Ave.",
+                "address2": null,
+                "city": "Philadelphia",
+                "state": "PA",
+                "postalcode": "19100",
+                "country": "US",
+                "email": "rachelbestwholesaling.biz",
+                "phone": "311 555-2468",
+                "fax": "311 555-8642"
+              },
+              "PartnerInfo": {
+                "X12PartnerInfo": {
+                  "X12Options": {
+                    "envelopeoption": "groupall",
+                    "acknowledgementoption": "donotackitem",
+                    "filteracknowledgements": "false",
+                    "rejectDuplicateInterchange": "false",
+                    "outboundInterchangeValidation": "true",
+                    "outboundValidationOption": "filterError",
+                    "elementDelimiter": {
+                      "delimiterValue": "stardelimited"
+                    },
+                    "segmentTerminator": {
+                      "segmentTerminatorValue": "newline"
+                    }
+                  },
+                  "X12ControlInfo": {
+                    "ISAControlInfo": {
+                      "testindicator": "P",
+                      "ackrequested": "false",
+                      "authorizationInformationQualifier": "X12AUTHQUAL_00",
+                      "securityInformationQualifier": "X12SECQUAL_00",
+                      "interchangeIdQualifier": "X12IDQUAL_01"
+                    },
+                    "GSControlInfo": {
+                      "respagencycode": "T"
+                    }
+                  }
+                }
+              },
+              "PartnerCommunication": {
+                "FTPCommunicationOptions": {
+                  "CommunicationSetting": "custom",
+                  "SharedCommunicationChannel": null,
+                  "FTPSettings": {
+                    "connectionMode": "active",
+                    "useDefaultSettings": "false",
+                    "host": "ftp.bestwholesaling.com",
+                    "port": "1010",
+                    "user": "rachel.lewis",
+                    "FTPSSLOptions": {
+                      "sslmode": "none",
+                      "useClientAuthentication": "false"
+                    }
+                  },
+                  "FTPGetOptions": {
+                    "transferType": "ascii",
+                    "ftpAction": "actionget",
+                    "useDefaultGetOptions": "false",
+                    "remoteDirectory": "/usr/local/bestwholesaling/outbox",
+                    "fileToMove": "*.xml",
+                    "maxFileCount": "200"
+                  },
+                  "FTPSendOptions": {
+                    "transferType": "ascii",
+                    "ftpAction": "actionputappend",
+                    "useDefaultSendOptions": "false",
+                    "remoteDirectory": "/home/rachellewis/new",
+                    "moveToDirectory": "/home/rachellewis/inbox"
+                  }
+                }
+              },
+              "PartnerDocumentTypes": {
+                "PartnerDocumentType": [
+                  {
+                    "typeId": "101",
+                    "profileId": "23456789-abcd-ef01-2345-6789abcdef01",
+                    "use999Ack": "false",
+                    "useTA1Ack": "false",
+                    "expectAckForOutbound": "false",
+                    "validateOutboundTransactionSets": "false",
+                    "qualifierValidation": "true"
+                  },
+                  {
+                    "typeId": "810",
+                    "profileId": "3456789a-bcde-4012-3456-789abcdef012",
+                    "use999Ack": "false",
+                    "useTA1Ack": "false",
+                    "expectAckForOutbound": "false",
+                    "validateOutboundTransactionSets": "false",
+                    "qualifierValidation": "true"
+                  }
+                ]
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/TradingPartnerComponent.json"
+            },
+            "example": "<bns:TradingPartnerComponent folderId=\"11356\" folderName=\"Home:TPs\" componentId=\"12345678-9abc-def0-1234-56789abcdef0\" componentName=\"Best Wholesaling\" standard=\"x12\" classification=\"tradingpartner\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n   <bns:ContactInfo>\n      <bns:contactName>Rachel Lewis</bns:contactName>\n      <bns:address1>127 Comstock Ave.</bns:address1>\n      <bns:address2/>\n      <bns:city>Philadelphia</bns:city>\n      <bns:state>PA</bns:state>\n      <bns:postalcode>19100</bns:postalcode>\n      <bns:country>US</bns:country>\n      <bns:email>rachel@bestwholesaling.biz</bns:email>\n      <bns:phone>311 555-2468</bns:phone>\n      <bns:fax>311 555-8642</bns:fax>\n   </bns:ContactInfo>\n   <bns:PartnerInfo>\n      <bns:X12PartnerInfo>\n         <bns:X12Options envelopeoption=\"groupall\" acknowledgementoption=\"donotackitem\" filteracknowledgements=\"false\" rejectDuplicateInterchange=\"false\" outboundInterchangeValidation=\"true\" outboundValidationOption=\"filterError\">\n            <bns:elementDelimiter delimiterValue=\"stardelimited\"/>\n            <bns:segmentTerminator segmentTerminatorValue=\"newline\"/>\n         </bns:X12Options>\n         <bns:X12ControlInfo>\n            <bns:ISAControlInfo testindicator=\"P\" ackrequested=\"false\" authorizationInformationQualifier=\"X12AUTHQUAL_00\" securityInformationQualifier=\"X12SECQUAL_00\" interchangeIdQualifier=\"X12IDQUAL_01\"/>\n            <bns:GSControlInfo respagencycode=\"T\"/>\n         </bns:X12ControlInfo>\n      </bns:X12PartnerInfo>\n   </bns:PartnerInfo>\n   <bns:PartnerCommunication>\n      <bns:FTPCommunicationOptions CommunicationSetting=\"custom\">\n         <bns:SharedCommunicationChannel/>\n         <bns:FTPSettings connectionMode=\"active\" useDefaultSettings=\"false\">\n            <bns:host>ftp.bestwholesaling.com</bns:host>\n            <bns:port>1010</bns:port>\n            <bns:user>rachel.lewis</bns:user>\n            <bns:FTPSSLOptions sslmode=\"none\" useClientAuthentication=\"false\"/>\n         </bns:FTPSettings>\n         <bns:FTPGetOptions transferType=\"ascii\" ftpAction=\"actionget\" useDefaultGetOptions=\"false\">\n            <bns:remoteDirectory>/usr/local/bestwholesaling/outbox</bns:remoteDirectory>\n            <bns:fileToMove>*.xml</bns:fileToMove>\n            <bns:maxFileCount>200</bns:maxFileCount>\n         </bns:FTPGetOptions>\n         <bns:FTPSendOptions transferType=\"ascii\" ftpAction=\"actionputappend\" useDefaultSendOptions=\"false\">\n            <bns:remoteDirectory>/home/rachellewis/new</bns:remoteDirectory>\n            <bns:moveToDirectory>/home/rachellewis/inbox</bns:moveToDirectory>\n         </bns:FTPSendOptions>\n      </bns:FTPCommunicationOptions>\n   </bns:PartnerCommunication>\n   <bns:PartnerDocumentTypes>\n      <bns:PartnerDocumentType typeId=\"101\" profileId=\"23456789-abcd-ef01-2345-6789abcdef01\" use999Ack=\"false\" useTA1Ack=\"false\" expectAckForOutbound=\"false\" validateOutboundTransactionSets=\"false\" qualifierValidation=\"true\"/>\n      <bns:PartnerDocumentType typeId=\"810\" profileId=\"3456789a-bcde-4012-3456-789abcdef012\" use999Ack=\"false\" useTA1Ack=\"false\" expectAckForOutbound=\"false\" validateOutboundTransactionSets=\"false\" qualifierValidation=\"true\"/>\n   </bns:PartnerDocumentTypes>\n</bns:TradingPartnerComponent>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "TradingPartnerComponent"
+    ],
+    "summary": "Deletes a TradingPartnerComponent object",
+    "description": "The DELETE operation deletes the Trading Partner Component object with a specific component ID. \n A DELETE operation specifying the ID of a deleted Trading Partner component returns a false response.",
+    "operationId": "DeleteTradingPartnerComponent",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

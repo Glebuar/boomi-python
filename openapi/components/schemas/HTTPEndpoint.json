@@ -1,0 +1,17 @@
+{
+  "required": [
+    "sslOptions"
+  ],
+  "type": "object",
+  "properties": {
+    "sslOptions": {
+      "$ref": "./HTTPSSLOptions.json"
+    },
+    "url": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

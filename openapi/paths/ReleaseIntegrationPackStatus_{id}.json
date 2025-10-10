@@ -1,0 +1,72 @@
+{
+  "get": {
+    "tags": [
+      "ReleaseIntegrationPackStatus"
+    ],
+    "summary": "Retrieves an instance of a ReleaseIntegrationPackStatus object",
+    "description": "\nTo retrieve the release status of the publisher integration pack, follow these steps:\n \n1. Send a POST request to the ReleaseIntegrationPackStatus object. The response will return a requestId.\n2. Use the requestId returned in Step 1 to make a subsequent call to the ReleaseIntegrationPackStatus object to retrieve detailed information about the released integration pack.\n3. Repeatedly poll the ReleaseIntegrationPackStatus object using the requestId until the details of the released integration pack are available. If the request is still in progress or scheduled, it returns an HTTP 202 status code. When the integration pack is released successfully, the ReleaseIntegrationPackStatus object returns the released details.",
+    "operationId": "GetReleaseIntegrationPackStatus",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID assigned by the system to the integration pack."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ReleaseIntegrationPackStatus.json"
+            },
+            "example": {
+              "@type": "ReleaseIntegrationPackStatus",
+              "ReleasePackagedComponents": {
+                "@type": "ReleasePackagedComponents",
+                "ReleasePackagedComponent": [
+                  {
+                    "@type": "ReleasePackagedComponent",
+                    "componentId": "bb8b6c9d-9c39-4309-b07f-cdd96d201b27",
+                    "releasedVersion": "1.0"
+                  },
+                  {
+                    "@type": "ReleasePackagedComponent",
+                    "componentId": "9d05717c-4dfe-4d5f-8e60-9196a6f78ef9",
+                    "releasedVersion": "1.0"
+                  }
+                ]
+              },
+              "responseStatusCode": 200,
+              "integrationPackId": "d7c16f5d-3311-417e-a149-3c55436f7d8d",
+              "name": "perf testing ipack",
+              "installationType": "MULTI",
+              "releaseSchedule": "IMMEDIATELY",
+              "requestId": "release-dcfbfd2c-09d9-492d-9965-bbd9ab8f2ffc",
+              "releaseStatus": "SUCCESS"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ReleaseIntegrationPackStatus.json"
+            },
+            "example": "<bns:ReleaseIntegrationPackStatus xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" integrationPackId=\"cd17f866-c247-4c54-a1a1-ea8f8f863456\" name=\"test integration pack\" installationType=\"SINGLE\" releaseSchedule=\"IMMEDIATELY\" requestId=\"release-110b23f4-567a-8d90-1234-56789e64576r\" releaseStatus=\"IN_PROGRESS\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

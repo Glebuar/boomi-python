@@ -1,0 +1,55 @@
+{
+  "get": {
+    "tags": [
+      "AtomDiskSpace"
+    ],
+    "summary": "Retrieves an AtomDiskSpace object by identifier",
+    "description": "The GET operation returns the current disk usage state of the given Runtime cloud attachment. \n The initial GET operation returns a token for the specified Runtime cloud attachment. Subsequent GET operations return status code 202 (while the request is in progress) based on the returned token. \n This first request is required to retrieve the authenticating token, which is used in a subsequent GET request. \n >**Note:** `accountId` must always refer to the account ID of the parent Runtime cloud and not that of the attachment.",
+    "operationId": "AsyncGetAtomDiskSpace",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "ID of the Runtime cloud attachment."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AsyncOperationTokenResult.json"
+            },
+            "example": {
+              "@type": "AsyncOperationTokenResult",
+              "asyncToken": {
+                "@type": "AsyncToken",
+                "token": "AtomDiskSpace-12b08345-ab6a-7b0f-8a91-2e34dec567a8"
+              },
+              "responseStatusCode": 202
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AsyncOperationTokenResult.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:AsyncOperationTokenResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" responseStatusCode=\"202\">\n    <bns:asyncToken token=\"AtomDiskSpace-12b08345-ab6a-7b0f-8a91-2e34dec567a8\"/>\n</bns:AsyncOperationTokenResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

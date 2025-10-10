@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "CommunicationSetting": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "default",
+        "custom",
+        "component"
+      ]
+    },
+    "OFTPConnectionSettings": {
+      "$ref": "./OFTPConnectionSettings.json"
+    },
+    "OFTPGetOptions": {
+      "$ref": "./OFTPGetOptions.json"
+    },
+    "OFTPSendOptions": {
+      "$ref": "./OFTPSendOptions.json"
+    },
+    "OFTPServerListenOptions": {
+      "$ref": "./OFTPListenOptions.json"
+    },
+    "SharedCommunicationChannel": {
+      "$ref": "./SharedCommunicationChannel.json"
+    }
+  }
+}

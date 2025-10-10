@@ -1,0 +1,48 @@
+{
+  "required": [
+    "clientSSLCertificate",
+    "sslCertificate",
+    "url"
+  ],
+  "type": "object",
+  "properties": {
+    "AuthSettings": {
+      "$ref": "./AS2BasicAuthInfo.json"
+    },
+    "authenticationType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "NONE",
+        "BASIC"
+      ]
+    },
+    "clientSSLCertificate": {
+      "$ref": "./PrivateCertificate.json"
+    },
+    "sslCertificate": {
+      "$ref": "./PublicCertificate.json"
+    },
+    "url": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "useDefaultSettings": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "verifyHostname": {
+      "type": "boolean",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "default": false
+    }
+  }
+}

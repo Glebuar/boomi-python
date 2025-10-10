@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "crossReference": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./CrossReference.json"
+      }
+    }
+  }
+}

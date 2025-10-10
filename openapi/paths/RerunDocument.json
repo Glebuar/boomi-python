@@ -1,0 +1,68 @@
+{
+  "post": {
+    "tags": [
+      "RerunDocument"
+    ],
+    "summary": "Creates a RerunDocument object",
+    "description": "Allows you to reprocess one or more documents from a previous run.",
+    "operationId": "CreateRerunDocument",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/RerunDocument.json"
+          },
+          "example": {
+            "@type": "RerunDocument",
+            "AllDocuments": {
+              "@type": "AllDocuments",
+              "documentStatus": "ANY"
+            },
+            "originalExecutionId": "execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/RerunDocument.json"
+          },
+          "example": "<RerunDocument originalExecutionId=\"execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01\"\n               xmlns=\"http://api.platform.boomi.com/\">\n    <AllDocuments documentStatus=\"ANY\"/>\n</RerunDocument>\n"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/RerunDocument.json"
+            },
+            "example": {
+              "@type": "RerunDocument",
+              "AllDocuments": {
+                "@type": "AllDocuments",
+                "documentStatus": "ANY"
+              },
+              "originalExecutionId": "execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/RerunDocument.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:RerunDocument xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \n    xmlns:bns=\"http://api.platform.boomi.com/\" originalExecutionId=\"execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01\" \n    requestId=\"executionrecord-1c2bbdc3-f456-78bd-9cee-0f1234cd52ff\" \n    recordUrl=\"http://api.platform.boomi.com/api/rest/v1/account123/ExecutionRecord/async/executionrecord-1c2bbdc3-f456-78bd-9cee-0f1234cd52ff\">\n    <bns:AllDocuments documentStatus=\"ANY\"/>\n</bns:RerunDocument>\n"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

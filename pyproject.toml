@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "boomi"
+version = "1.2.0"
+license = "MIT"
+description = "Python SDK for Boomi Platform API - provides programmatic access to Boomi Enterprise Platform functionality."
+readme = "PyPI_README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "requests>=2.31.0",
+    "python-dotenv>=1.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "python-dotenv>=1.0.0"
+]

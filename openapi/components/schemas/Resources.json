@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "Resource": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./Resource.json"
+      }
+    }
+  },
+  "required": []
+}

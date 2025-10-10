@@ -1,0 +1,64 @@
+{
+  "post": {
+    "tags": [
+      "PublisherIntegrationPack"
+    ],
+    "summary": "Creates a PublisherIntegrationPack object",
+    "description": "Creates a single attachment or multiple attachment integration pack.",
+    "operationId": "CreatePublisherIntegrationPack",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/PublisherIntegrationPack.json"
+          },
+          "example": {
+            "installationType": "SINGLE",
+            "name": "IPACK-JSON",
+            "Description": "Single Ipack"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/PublisherIntegrationPack.json"
+          },
+          "example": "<bns:PublisherIntegrationPack xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" name=\"single_Ipack\" installationType=\"SINGLE\">\n    <bns:Description>first ipack</bns:Description>\n</bns:PublisherIntegrationPack>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PublisherIntegrationPack.json"
+            },
+            "example": {
+              "@type": "PublisherIntegrationPack",
+              "Description": "Single Ipack",
+              "id": "2e8e7a47-eb93-4292-82f9-1b95dc8daa53",
+              "name": "IPACK-JSON",
+              "installationType": "SINGLE"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/PublisherIntegrationPack.json"
+            },
+            "example": "<bns:PublisherIntegrationPack xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" id=\"09805cb6-3075-43a6-af76-cc07deeceb57\" name=\"single_Ipack\" installationType=\"SINGLE\">\n    <bns:Description>first ipack</bns:Description>\n</bns:PublisherIntegrationPack>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

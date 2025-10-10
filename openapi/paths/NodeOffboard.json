@@ -1,0 +1,66 @@
+{
+  "post": {
+    "tags": [
+      "NodeOffboard"
+    ],
+    "summary": "Creates a NodeOffboard object",
+    "description": "Employs a POST method to delete a node. After you successfully perform the POST operation, the nodes status immediately changes to `Deleting` on the Cluster Status panel of the interface.",
+    "operationId": "CreateNodeOffboard",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/NodeOffboard.json"
+          },
+          "example": {
+            "@type": "NodeOffboard",
+            "nodeId": [
+              "node1"
+            ],
+            "atomId": "3456789a-bcde-f012-3456-789abcdef012"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/NodeOffboard.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <api:NodeOffboard xmlns:api=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" atomId=\"3456789a-bcde-f012-3456-789abcdef012\">\n      <api:nodeId>node1</api:nodeId>\n      <api:nodeId>node2</api:nodeId>\n    </api:NodeOffboard>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/NodeOffboard.json"
+            },
+            "example": {
+              "@type": "NodeOffboard",
+              "nodeId": [
+                "node1"
+              ],
+              "atomId": "3456789a-bcde-f012-3456-789abcdef012"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/NodeOffboard.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <api:NodeOffboard xmlns:api=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" atomId=\"3456789a-bcde-f012-3456-789abcdef012\">\n      <api:nodeId>node1</api:nodeId>\n      <api:nodeId>node2</api:nodeId>\n    </api:NodeOffboard>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

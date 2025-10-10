@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the account that processed the documents.",
+      "example": "account-123456"
+    },
+    "atomId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the Runtime that processed the documents.",
+      "example": "3456789a-bcde-f0123-4567-89abcdef012"
+    },
+    "date": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The processing date of the documents. The time zone is UTC±00:00.",
+      "example": "2016-05-14"
+    },
+    "value": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The count of processed documents.",
+      "example": "2844"
+    }
+  }
+}

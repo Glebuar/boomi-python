@@ -1,0 +1,21 @@
+{
+  "required": [
+    "ref1",
+    "ref2"
+  ],
+  "type": "object",
+  "properties": {
+    "ref1": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "ref2": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    }
+  }
+}

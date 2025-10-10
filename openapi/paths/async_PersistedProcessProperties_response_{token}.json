@@ -1,0 +1,73 @@
+{
+  "get": {
+    "tags": [
+      "atom"
+    ],
+    "summary": "Retrieves a PersistedProcessProperties object by identifier",
+    "description": "For a response, use the token from the response in a new request.",
+    "operationId": "AsyncTokenPersistedProcessProperties",
+    "parameters": [
+      {
+        "name": "token",
+        "in": "path",
+        "description": "Takes in the token from a previous call to return a result.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PersistedProcessPropertiesAsyncResponse.json"
+            },
+            "example": {
+              "AsyncOperationResult": {
+                "responseStatusCode": "200",
+                "result": {
+                  "type": "PersistedProcessProperties",
+                  "PersistedProcessProperties": {
+                    "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+                    "processes": {
+                      "processId": "83b8771e-9bab-4395-86aa-7c8149678900",
+                      "PersistedProcessProperties": {
+                        "ProcessProperty": [
+                          {
+                            "name": "processname1",
+                            "value": "value1"
+                          },
+                          {
+                            "name": "processname2",
+                            "value": "value2"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/PersistedProcessPropertiesAsyncResponse.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<AsyncOperationResult responseStatusCode=\"200\">\n  <result type=\"PersistedProcessProperties\">\n        <PersistedProcessProperties>\n                <atomId>3456789a-bcde-f012-3456-789abcdef012</atomId>\n                <processes>\n                    <processId>83b8771e-9bab-4395-86aa-7c8149678900</processId>\n                    <PersistedProcessProperties>\n                        <ProcessProperty>\n                            <name>processname1</name>\n                            <value>value1</value>\n                        </ProcessProperty> \n                        <ProcessProperty> \n                            <name>processname2</name> \n                            <value>value2</value> \n                        </ProcessProperty> \n                    </PersistedProcessProperties> \n            </processes> \n        </PersistedProcessProperties> \n    </result> \n</AsyncOperationResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

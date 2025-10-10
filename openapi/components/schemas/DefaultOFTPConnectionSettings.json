@@ -1,0 +1,60 @@
+{
+  "required": [
+    "myPartnerInfo"
+  ],
+  "type": "object",
+  "properties": {
+    "clientSSLAlias": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "host": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "myPartnerInfo": {
+      "$ref": "./OFTPPartnerInfo.json"
+    },
+    "port": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "sfidciph": {
+      "type": "integer",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "ssidauth": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "tls": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "useClientSSL": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "useGateway": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "post": {
+    "tags": [
+      "Connector"
+    ],
+    "summary": "Queries for a Connector object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryConnector",
+    "requestBody": {
+      "description": " Possible properties include: type, name",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ConnectorQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "Platform Partner API"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "name"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "nestedExpression": [
+                          {
+                            "argument": [
+                              "Platform Partner API"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "name"
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ConnectorQueryConfig.json"
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ConnectorQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "Connector",
+                  "type": "boomipartnerapi",
+                  "name": "Platform Partner API"
+                }
+              ],
+              "numberOfResults": 1
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ConnectorQueryResponse.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?> <bns:QueryResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" numberOfResults=\"5\">\n     <bns:result xsi:type=\"Connector\" type=\"database\" name=\"Database\"/>\n     <bns:result xsi:type=\"Connector\" type=\"disk\" name=\"Disk\"/> \n     \n<bns:result xsi:type=\"Connector\" type=\"http\" name=\"HTTP\"/>\n     <bns:result xsi:type=\"Connector\" type=\"ftp\" name=\"FTP\"/>\n     <bns:result xsi:type=\"Connector\" type=\"greatplains\" name=\"Great Plains\"/>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "post": {
+    "tags": [
+      "MoveQueueRequest"
+    ],
+    "summary": "Creates a MoveQueueRequest object",
+    "description": "Moves messages from one Runtime queue to another. \n\n - You must have the **Runtime Management** privilege to use the Move queue request operation.\n- You can only move messages between queues of the same type. For example, moving queue messages from a point-to-point queue to a *Publish/Subscribe* queue results in an error.\n- Any Runtime queues that you specify in the request must currently exist on the Runtime. For clarification, you cannot create a new endpoint using the CREATE operation.\n- You must supply the *AtomID*, *SourceQueue*, *QueueName*, *DLQ*, and *DestinationQueue* fields in the request.\n- If the operation returns an error, it logs a message in the Runtime, Runtime cluster, or Runtime cloud, but is not sent to the platform.\n- You cannot track move updates directly through this operation. Instead, to see if the action is in progress or complete, use the Queue Management API or the ListQueues API to observe the number of messages in the queue.",
+    "operationId": "CreateMoveQueueRequest",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/MoveQueueRequest.json"
+          },
+          "example": {
+            "AtomId": "Atom_ID",
+            "SourceQueue": {
+              "QueueName": "queue1",
+              "SubscriberName": "SUBSCRIBER_ID",
+              "DLQ": "true"
+            },
+            "DestinationQueue": {
+              "QueueName": "pubsub1",
+              "SubscriberName": "SUBSCRIBER_ID",
+              "DLQ": "false"
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/MoveQueueRequest.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n    <MoveQueueRequest xmlns=\"http://api.platform.boomi.com/\" AtomId=\"${#TestSuite#atomId}\">\n\t    <SourceQueue QueueName=\"PointToPoint_Source\" DLQ=\"false\"/>\n\t    <DestinationQueue QueueName=\"PointToPoint_Destination\" DLQ=\"true\"/>\n    </MoveQueueRequest>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/MoveQueueRequest.json"
+            },
+            "example": {
+              "@type": "QueueMessageResponse",
+              "message": "Request submitted to atom id: <atomId> to move queue messages from <queue_name> to <queue_name>"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/MoveQueueRequest.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:QueueMessageResponse xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \n        xmlns:bns=\"http://api.platform.boomi.com/\" \n        message=\"Request submitted to atom id: (atomId) to move queue messages from (Source QueueName) to (Destination QueueName)\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

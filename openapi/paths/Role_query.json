@@ -1,0 +1,140 @@
+{
+  "post": {
+    "tags": [
+      "Role"
+    ],
+    "summary": "Queries for a Role object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryRole",
+    "requestBody": {
+      "description": " Possible properties include: name, parentId",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/RoleQueryConfig.json"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/RoleQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n        <expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n            <nestedExpression operator=\"EQUALS\" property=\"name\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>myRole</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"EQUALS\" property=\"parentId\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>ca7f37b3-f976-4d06-b885-81520b467a69f</argument>\n            </nestedExpression>\n        </expression>\n    </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"name\">\n      <argument>myRole</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/RoleQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "Role",
+                  "Description": "This is a custom role",
+                  "Privileges": {
+                    "@type": "Privileges",
+                    "Privilege": [
+                      {
+                        "@type": "",
+                        "name": "API"
+                      },
+                      {
+                        "@type": "",
+                        "name": "DEPLOY"
+                      },
+                      {
+                        "@type": "",
+                        "name": "VIEW_RESULT"
+                      }
+                    ]
+                  },
+                  "id": "f73f99fb-bba2-4573-a0fe-e01bb95ebc20",
+                  "accountId": "account-12345",
+                  "name": "Other Role"
+                },
+                {
+                  "@type": "Role",
+                  "Description": " custom role",
+                  "Privileges": {
+                    "@type": "Privileges",
+                    "Privilege": [
+                      {
+                        "@type": "",
+                        "name": "API"
+                      },
+                      {
+                        "@type": "",
+                        "name": "BUILD"
+                      },
+                      {
+                        "@type": "",
+                        "name": "EXECUTE"
+                      }
+                    ]
+                  },
+                  "id": "794f61e2-b483-40cd-81f9-de0f835fee1d",
+                  "accountId": "account-12345",
+                  "name": "testRole",
+                  "parentId": "ca7f37b3-f976-4d06-b885-81520b467a69"
+                },
+                {
+                  "@type": "Role",
+                  "Description": "Another custom role ",
+                  "Privileges": {
+                    "@type": "Privileges",
+                    "Privilege": [
+                      {
+                        "@type": "",
+                        "name": "API"
+                      },
+                      {
+                        "@type": "",
+                        "name": "DEPLOY"
+                      },
+                      {
+                        "@type": "",
+                        "name": "VIEW_RESULT"
+                      }
+                    ]
+                  },
+                  "id": "97e3fd58-4e72-436c-b90c-341fda9d9249",
+                  "accountId": "account-12345",
+                  "name": "Another Role",
+                  "parentId": "ca7f37b3-f976-4d06-b885-81520b467a69f"
+                }
+              ],
+              "numberOfResults": 3
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/RoleQueryResponse.json"
+            },
+            "example": "<bns:QueryResult xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" numberOfResults=\"2\">\n        <bns:result xsi:type=\"Role\" parentId=\"ca7f37b3-f976-4d06-b885-81520b467a69f\" name=\"OtherRole\" accountId=\"accountId-12345\" id=\"939f8472-c279-4b65-93b0-ee56c2881b3e\">\n            <bns:Description>my role description</bns:Description>\n            <bns:Privileges>\n                <bns:Privilege name=\"API\"/>\n                <bns:Privilege name=\"BUILD\"/>\n            </bns:Privileges>\n        </bns:result>\n        <bns:result xsi:type=\"Role\" parentId=\"ca7f37b3-f976-4d06-b885-81520b467a69f\" name=\"OtherRole2\" accountId=\"account-12345\" id=\"dde27095-4ad8-4f90-a632-2686aa28cd82\">\n            <bns:Description>This is a custom role</bns:Description>\n            <bns:Privileges>\n                <bns:Privilege name=\"VIEW_RESULT\"/>\n            </bns:Privileges>\n        </bns:result>\n    </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

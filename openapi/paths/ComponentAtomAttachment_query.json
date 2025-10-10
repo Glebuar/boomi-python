@@ -1,0 +1,119 @@
+{
+  "post": {
+    "tags": [
+      "ComponentAtomAttachment"
+    ],
+    "summary": "Queries for a ComponentAtomAttachment object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryComponentAtomAttachment",
+    "requestBody": {
+      "description": " Possible properties include: atomId, componentId, componentType",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentAtomAttachmentQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "3456789a-bcde-f012-3456-789abcdef012"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "atomId"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "3456789a-bcde-f012-3456-789abcdef012"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "atomId"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentAtomAttachmentQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n        <QueryFilter>\n            <expression operator=\"EQUALS\" property=\"atomId\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>3456789a-bcde-f012-3456-789abcdef012</argument>\n            </expression>\n        </QueryFilter>\n    </QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"atomId\">\n      <argument>3456789a-bcde-f012-3456-789abcdef012</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentAtomAttachmentQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 2,
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "ComponentAtomAttachment",
+                  "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg",
+                  "componentId": "56789abc-def0-1234-5678-9abcdef01234",
+                  "componentType": "process",
+                  "atomId": "3456789a-bcde-f012-3456-789abcdef012"
+                },
+                {
+                  "@type": "ComponentAtomAttachment",
+                  "id": "b0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1HgA",
+                  "componentId": "6789abcd-ef01-2345-6789-abcdef012345",
+                  "atomId": "3456789a-bcde-f012-3456-789abcdef012"
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentAtomAttachmentQueryResponse.json"
+            },
+            "example": "<bns:QueryResult xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" numberOfResults=\"2\">    \n       <bns:result xsi:type=\"ComponentAtomAttachment\" componentType=\"certificate\" atomId=\"3456789a-bcde-f012-34567-89abcdef012\" componentId=\"57a586f1-d395-4e1d-b1d4-198fb5cbf2eb\" id=\"QVRUQUNIX0NPTVBPTkVOVDU3YTU4NmYxLWQzOTUtNGUxZC1iMWQ0LTE5OGZiNWNiZjJlYjo4YmI2Y2U0Mi01MDZhLTRiOGMtYjQ1Yi01ZTdiYzE3MWFmYWE\"/>    \n       <bns:result xsi:type=\"ComponentAtomAttachment\" componentType=\"process\" atomId=\"3456789a-bcde-f012-34567-89abcdef012\" componentId=\"19c84cb0-b389-416e-be71-b221e1017149\" id=\"QVRUQUNIX0NPTVBPTkVOVDE5Yzg0Y2IwLWIzODktNDE2ZS1iZTcxLWIyMjFlMTAxNzE0OTo4YmI2Y2U0Mi01MDZhLTRiOGMtYjQ1Yi01ZTdiYzE3MWFmYWE\"/>\n    </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

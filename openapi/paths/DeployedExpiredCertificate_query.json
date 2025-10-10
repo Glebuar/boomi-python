@@ -1,0 +1,159 @@
+{
+  "post": {
+    "tags": [
+      "DeployedExpiredCertificate"
+    ],
+    "summary": "Queries for a DeployedExpiredCertificate object(s)",
+    "description": "If a QUERY omits an explicit timespan filter — that is, the query does not use `expirationBoundary` in an expression — it applies a default timespan filter using the value of 30 and the LESS_THAN operator. This filter specifies expired certificates and certificates expiring within 30 days. \n\n For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryDeployedExpiredCertificate",
+    "requestBody": {
+      "description": " Possible properties include: containerId, containerName, environmentId, environmentName, expirationBoundary",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/DeployedExpiredCertificateQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "456789a-bcdef-0123-4567-89abcdef0123"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "environmentId"
+                      },
+                      {
+                        "argument": [
+                          "0",
+                          "14"
+                        ],
+                        "operator": "BETWEEN",
+                        "property": "expirationBoundary"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "and",
+                        "nestedExpression": [
+                          {
+                            "argument": [
+                              "456789a-bcdef-0123-4567-89abcdef0123"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "environmentId"
+                          },
+                          {
+                            "argument": [
+                              "0",
+                              "14"
+                            ],
+                            "operator": "BETWEEN",
+                            "property": "expirationBoundary"
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/DeployedExpiredCertificateQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n<QueryFilter>\n<expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n<nestedExpression operator=\"EQUALS\" property=\"environmentId\" xsi:type=\"SimpleExpression\">\n<argument>456789a-bcdef-0123-4567-89abcdef0123</argument>\n</nestedExpression>\n<nestedExpression operator=\"BETWEEN\" property=\"expirationBoundary\" xsi:type=\"SimpleExpression\">\n<argument>0</argument>\n<argument>14</argument>\n</nestedExpression>\n</expression>\n</QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"environmentId\">\n      <argument>456789a-bcdef-0123-4567-89abcdef0123</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/DeployedExpiredCertificateQueryResponse.json"
+            },
+            "example": {
+              "result": [
+                {
+                  "@type": "DeployedExpiredCertificate",
+                  "accountId": "account-123456",
+                  "certificateName": "Southwest X.509",
+                  "certificateId": "6789abcd-ef01-2345-6789-abcdef012345",
+                  "certificateType": "X.509",
+                  "containerId": "23456789-abcd-ef01-2345-6789abcdef01",
+                  "containerName": "southwest",
+                  "environmentName": "prod",
+                  "environmentId": "456789a-bcdef-0123-4567-89abcdef0123",
+                  "location": "Environment",
+                  "expirationDate": "2019-07-11T19:33:23Z"
+                },
+                {
+                  "@type": "DeployedExpiredCertificate",
+                  "accountId": "account-123456",
+                  "certificateName": "Northeast X.509",
+                  "certificateId": "543210fe-dcba-9876-5432-10fedcba987654",
+                  "certificateType": "X.509",
+                  "containerId": "98765432-10fe-dcba-9876-543210fedcba",
+                  "containerName": "northeast",
+                  "environmentName": "prod",
+                  "environmentId": "456789a-bcdef-0123-4567-89abcdef0123",
+                  "location": "Environment",
+                  "expirationDate": "2019-07-24T06:20:34Z"
+                }
+              ],
+              "numberOfResults": 100,
+              "queryToken": "EXAMPLE_QUERY_TOKEN",
+              "@type": "QueryResult"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/DeployedExpiredCertificateQueryResponse.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:QueryResult xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" numberOfResults=\"100\">\n    <bns:queryToken>EXAMPLE_QUERY_TOKEN</bns:queryToken>\n    <bns:result xsi:type=\"DeployedExpiredCertificate\" accountId=\"account-123456\" certificateName=\"Southwest X.509\" certificateId=\"6789abcd-ef01-2345-6789-abcdef012345\" \n         certificateType=\"X.509\" containerId=\"23456789-abcd-ef01-2345-6789abcdef01\" containerName=\"southwest\" environmentName=\"Prod\" environmentId=\"456789a-bcdef-0123-4567-89abcdef0123\" \n         location=\"Environment\" expirationDate=\"2019-07-11T19:33:23Z\"/>\n    <bns:result xsi:type=\"DeployedExpiredCertificate\" accountId=\"account-123456\" certificateName=\"Northeast X.509\" certificateId=\"543210fe-dcba-9876-5432-10fedcba987654\" \n         certificateType=\"X.509\" containerId=\"98765432-10fe-dcba-9876-543210fedcba\" containerName=\"northeast\" environmentName=\"Prod\" environmentId=\"456789a-bcdef-0123-4567-89abcdef0123\" \n         location=\"Environment\" expirationDate=\"2019-07-24T06:20:34Z\"/>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

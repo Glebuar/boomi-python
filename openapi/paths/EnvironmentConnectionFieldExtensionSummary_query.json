@@ -1,0 +1,158 @@
+{
+  "post": {
+    "tags": [
+      "EnvironmentConnectionFieldExtensionSummary"
+    ],
+    "summary": "Queries for an EnvironmentConnectionFieldExtensionSummary object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryEnvironmentConnectionFieldExtensionSummary",
+    "requestBody": {
+      "description": " Possible properties include: environmentId, extensionGroupId, connectionId, fieldId",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentConnectionFieldExtensionSummaryQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "456789ab-cdef-0123-4567-89abcdef0123"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "environmentId"
+                      },
+                      {
+                        "argument": [
+                          "bcdef012-3456-789a-bcde-f0123456789a"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "connectionId"
+                      },
+                      {
+                        "argument": [
+                          "oauthOptions/OAuth2Config/credentials/@accessToken"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "fieldId"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "and",
+                        "nestedExpression": [
+                          {
+                            "argument": [
+                              "456789ab-cdef-0123-4567-89abcdef0123"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "environmentId"
+                          },
+                          {
+                            "argument": [
+                              "bcdef012-3456-789a-bcde-f0123456789a"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "connectionId"
+                          },
+                          {
+                            "argument": [
+                              "oauthOptions/OAuth2Config/credentials/@accessToken"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "fieldId"
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentConnectionFieldExtensionSummaryQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n        <expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n            <nestedExpression operator=\"EQUALS\" property=\"environmentId\" xsi:type=\"SimpleExpression\">\n                <argument>456789ab-cdef-0123-4567-89abcdef0123</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"EQUALS\" property=\"connectionId\" xsi:type=\"SimpleExpression\">\n                <argument>bcdef012-3456-789a-bcde-f0123456789a</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"EQUALS\" property=\"fieldId\" xsi:type=\"SimpleExpression\">\n                <argument>oauthOptions/OAuth2Config/credentials/@accessToken</argument>\n            </nestedExpression>\n        </expression>\n    </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"environmentId\">\n      <argument>456789ab-cdef-0123-4567-89abcdef0123</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentConnectionFieldExtensionSummaryQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 1,
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "EnvironmentConnectionFieldeExtensionSummary",
+                  "enviromentId": "456789ab-cdef-0123-4567-89abcdef0123",
+                  "connectionId": "bcdef012-3456-789a-bcde-f0123456789a",
+                  "extensionGroupId": "",
+                  "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg",
+                  "field": {
+                    "oauth2AuthorizationUrl": "https://accounts.google.com/o/oauth2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar+...&client_id=315699396546-pbq8qpjbnf80vb5gmgv3o210tq9v8bhi.apps.googleusercontent.com",
+                    "componentOverride": false,
+                    "usesEncryption": false,
+                    "encryptedValueSet": false,
+                    "id": "oauthOptions/OAuth2Config/credentials/@accessToken"
+                  }
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentConnectionFieldExtensionSummaryQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"1\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n   <bns:result xsi:type=\"EnvironmentConnectionFieldExtensionSummary\" \n     environmentId=\"456789ab-cdef-0123-4567-89abcdef0123\" processId=\"789abcde-f012-3456-789a-bcdef0123456\" \n     extensionGroupId=\"\" id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\"\n     connectionId=\"bcdef012-3456-789a-bcde-f0123456789a\"> \n      <bns:field oauth2AuthorizationUrl=\"https://accounts.google.com/o/oauth2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar+...&amp;client_id=315699396546-pbq8qpjbnf80vb5gmgv3o210tq9v8bhi.apps.googleusercontent.com\" componentOverride=\"false\" usesEncryption=\"false\" encryptedValueSet=\"false\" id=\"oauthOptions/OAuth2Config/credentials/@accessToken\"/>\n   </bns:result>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

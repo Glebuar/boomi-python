@@ -1,0 +1,33 @@
+{
+  "required": [
+    "Inputs",
+    "Outputs",
+    "Script"
+  ],
+  "type": "object",
+  "properties": {
+    "Inputs": {
+      "$ref": "./ScriptingInputs.json"
+    },
+    "Outputs": {
+      "$ref": "./ScriptingOutputs.json"
+    },
+    "Script": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      }
+    },
+    "language": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "GROOVY",
+        "GROOVY2",
+        "Javascript"
+      ]
+    }
+  }
+}

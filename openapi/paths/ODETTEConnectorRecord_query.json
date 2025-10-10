@@ -1,0 +1,131 @@
+{
+  "post": {
+    "tags": [
+      "ODETTEConnectorRecord"
+    ],
+    "summary": "Queries for an ODETTEConnectorRecord object(s).",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryODETTEConnectorRecord",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ODETTEConnectorRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "execution-7322d483-b661-4102-b49c-4b3d697591d1-2023.02.13"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "executionId"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "execution-7322d483-b661-4102-b49c-4b3d697591d1-2023.02.13"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "executionId"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ODETTEConnectorRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<?xml version=\"1.0\" ?>\n<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n  <QueryFilter>\n    <expression xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" operator=\"EQUALS\" property=\"executionId\" xsi:type=\"SimpleExpression\">\n      <argument>execution-7322d483-b661-4102-b49c-4b3d697591d1-2023.02.13</argument>\n    </expression>\n  </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"executionId\">\n      <argument>execution-7322d483-b661-4102-b49c-4b3d697591d1-2023.02.13</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ODETTEConnectorRecordQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "ODETTEConnectorRecord",
+                  "receiverID": "1111",
+                  "interchangeControlReference": "6",
+                  "messageReferenceNumber": "1",
+                  "interchangeDate": "230213",
+                  "interchangeTime": "1722",
+                  "ackRequested": "",
+                  "outboundValidationStatus": "N/A",
+                  "outboundValidationReport": "",
+                  "account": "boomi-internal",
+                  "executionId": "execution-7322d483-b661-4102-b49c-4b3d697591d1-2023.02.13",
+                  "atomId": "13d6a926-ccff-4eb5-8b60-28ffe33981c9",
+                  "dateProcessed": "2023-02-13T22:22:32Z",
+                  "id": "connector-0f7e5065-5370-4503-a6c5-4636aed057d2",
+                  "actionType": "Send",
+                  "connectorType": "odette",
+                  "connectorName": "Trading Partner",
+                  "operationName": "shape3~e40acd5f-8771-419f-8844-4a15e72c9326",
+                  "documentIndex": 2,
+                  "successful": true,
+                  "size": [
+                    "Long",
+                    30
+                  ]
+                }
+              ],
+              "numberOfResults": 1
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ODETTEConnectorRecordQueryResponse.json"
+            },
+            "example": "<?xml version=\"1.0\" ?>\n<bns:QueryResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" numberOfResults=\"1\">\n  <bns:result xsi:type=\"ODETTEConnectorRecord\">\n    <bns:account>boomi-internal</bns:account>\n    <bns:executionId>execution-7322d483-b661-4102-b49c-4b3d697591d1-2023.02.13</bns:executionId>\n    <bns:atomId>13d6a926-ccff-4eb5-8b60-28ffe33981c9</bns:atomId>\n    <bns:dateProcessed>2023-02-13T22:22:32Z</bns:dateProcessed>\n    <bns:id>connector-0f7e5065-5370-4503-a6c5-4636aed057d2</bns:id>\n    <bns:actionType>Send</bns:actionType>\n    <bns:connectorType>odette</bns:connectorType>\n    <bns:connectorName>Trading Partner</bns:connectorName>\n    <bns:operationName>shape3~e40acd5f-8771-419f-8844-4a15e72c9326</bns:operationName>\n    <bns:documentIndex>2</bns:documentIndex>\n    <bns:successful>true</bns:successful>\n    <bns:size>30</bns:size>\n    <bns:receiverID>1111</bns:receiverID>\n    <bns:interchangeControlReference>6</bns:interchangeControlReference>\n    <bns:messageReferenceNumber>1</bns:messageReferenceNumber>\n    <bns:interchangeDate>230213</bns:interchangeDate>\n    <bns:interchangeTime>1722</bns:interchangeTime>\n    <bns:ackRequested/>\n    <bns:outboundValidationStatus>N/A</bns:outboundValidationStatus>\n    <bns:outboundValidationReport/>\n  </bns:result>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

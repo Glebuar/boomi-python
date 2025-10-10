@@ -1,0 +1,50 @@
+{
+  "post": {
+    "tags": [
+      "ComponentDiffRequest"
+    ],
+    "summary": "Retrieves multiple ComponentDiffRequest objects",
+    "description": "To learn more about `bulk`, refer to [Bulk GET operations](#section/Introduction/Bulk-GET-operations).",
+    "operationId": "BulkComponentDiffRequest",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentDiffRequestBulkRequest.json"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ComponentDiffRequestBulkRequest.json"
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentDiffRequestBulkResponse.json"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ComponentDiffRequestBulkResponse.json"
+            }
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

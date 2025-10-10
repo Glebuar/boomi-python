@@ -1,0 +1,51 @@
+{
+  "post": {
+    "tags": [
+      "Process"
+    ],
+    "summary": "Retrieves additional results for a Process query",
+    "description": "To learn about using `queryMore`, refer to [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryMoreProcess",
+    "requestBody": {
+      "content": {
+        "text/plain": {
+          "schema": {
+            "type": "string"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ProcessQueryResponse.json"
+            },
+            "example": {
+              "$ref": "./Process_query.json#/post/responses/200/content/application~1json/example"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ProcessQueryResponse.json"
+            },
+            "example": {
+              "$ref": "./Process_query.json#/post/responses/200/content/application~1xml/example"
+            }
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

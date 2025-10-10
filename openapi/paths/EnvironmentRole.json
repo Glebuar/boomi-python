@@ -1,0 +1,62 @@
+{
+  "post": {
+    "tags": [
+      "EnvironmentRole"
+    ],
+    "summary": "Creates an EnvironmentRole object",
+    "description": "Associates a role with an environment. You must have the Runtime Management privilege to perform the CREATE operation.",
+    "operationId": "CreateEnvironmentRole",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentRole.json"
+          },
+          "example": {
+            "environmentId": "myEnvironment",
+            "roleId": "userRole"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentRole.json"
+          },
+          "example": "<bns:EnvironmentRole xmlns:bns=\"http://api.platform.boomi.com/\" \n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n        environmentId=\"myEnvironment\"\n        roleId=\"userRole\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentRole.json"
+            },
+            "example": {
+              "@type": "Environment",
+              "id": "456789ab-cdef-0123-4567-89abcdef0123",
+              "name": "My Production Environment",
+              "classification": "PROD"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentRole.json"
+            },
+            "example": "<bns:EnvironmentRole xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" roleId=\"userRole\" environmentId=\"myEnvironment\" id=\"RU5WX1JPTEVkYjg4MTZhZi0xNmMxLTQ1MmEtYjQwNS1lMzZmNGEwMTQ1NjU6MThjZmRjZDctNTUyMS00MWUxLTkzZTItYjgzMTdlMzFkZTY0\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

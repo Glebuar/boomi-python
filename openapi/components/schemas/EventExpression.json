@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./EventSimpleExpression.json"
+    },
+    {
+      "$ref": "./EventGroupingExpression.json"
+    }
+  ]
+}

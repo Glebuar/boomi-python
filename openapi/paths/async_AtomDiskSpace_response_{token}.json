@@ -1,0 +1,67 @@
+{
+  "get": {
+    "tags": [
+      "AtomDiskSpace"
+    ],
+    "summary": "Retrieves an AtomDiskSpace object by token",
+    "description": "Send a second HTTP GET request where accountId is the ID of the authenticating account for the request, and token is the token returned in the initial response. This second request authenticates the retrieval of the Runtime cloud attachments' disk space usage. \n >**Note:** `accountId` must always refer to the account ID of the parent Runtime cloud and not that of the attachment.",
+    "operationId": "AsyncTokenAtomDiskSpace",
+    "parameters": [
+      {
+        "name": "token",
+        "in": "path",
+        "description": "Takes in the token from a previous call to return a result.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AtomDiskSpaceAsyncResponse.json"
+            },
+            "example": {
+              "@type": "AsyncOperationResult",
+              "result": [
+                {
+                  "@type": "AtomDiskSpaceDirectory",
+                  "file": "/var/boomi/Cloud_DockerCloud/accounts/parent-cloud-account-123/doccache",
+                  "rawSize": 21931,
+                  "size": "21 KB"
+                },
+                {
+                  "@type": "AtomDiskSpaceDirectory",
+                  "file": "/var/boomi/Cloud_DockerCloud/accounts/parent-cloud-account-123/tmpdata",
+                  "rawSize": 0,
+                  "size": "0"
+                }
+              ],
+              "responseStatusCode": 200
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AtomDiskSpaceAsyncResponse.json"
+            },
+            "example": {
+              "$ref": "./async_AtomDiskSpace_response_{token}.json#/get/responses/200/content/application~1json/example"
+            }
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

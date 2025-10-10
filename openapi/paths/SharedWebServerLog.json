@@ -1,0 +1,19 @@
+{
+  "post": {
+    "tags": [
+      "SharedWebServerLog"
+    ],
+    "summary": "Download shared web server log",
+    "description": "This API is documented externally. Please visit the following link for full details:",
+    "externalDocs": {
+      "description": "Download shared web server log",
+      "url": "/docs/APIs/PlatformAPI/MissingInOpenAPI/Download_shared_web_server_log"
+    },
+    "responses": {
+      "204": {
+        "description": "Resource deleted",
+        "content": {}
+      }
+    }
+  }
+}

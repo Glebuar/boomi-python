@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "batchSize": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "keyFixToLength": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "keyName": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

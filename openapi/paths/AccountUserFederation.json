@@ -1,0 +1,63 @@
+{
+  "post": {
+    "tags": [
+      "AccountUserFederation"
+    ],
+    "summary": "Creates an AccountUserFederation object",
+    "description": "Enables single sign-on for a specific user under a specific account using a specific federation ID. The user is not visible in the Setup page unless you assign one or more roles to that user.",
+    "operationId": "CreateAccountUserFederation",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AccountUserFederation.json"
+          },
+          "example": {
+            "name": "Test Account",
+            "expirationDate": "2016-02-13T05:00:00Z"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AccountUserFederation.json"
+          },
+          "example": "<bns:AccountUserFederation federationId=\"user123\" userId=\"user123@company.biz\" accountId=\"account-123456\" \nxmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>\n"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountUserFederation.json"
+            },
+            "example": {
+              "@type": "AccountUserFederation",
+              "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts",
+              "accountId": "account-123456",
+              "userId": "user123@company.biz",
+              "federationId": "user123"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountUserFederation.json"
+            },
+            "example": "<bns:AccountUserFederation federationId=\"user123\" userId=\"user123@company.biz\"\naccountId=\"account-123456\" id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts\"\nxmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>\n"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

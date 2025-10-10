@@ -1,0 +1,71 @@
+{
+  "post": {
+    "tags": [
+      "AtomPurge"
+    ],
+    "summary": "Modifies or updates an AtomPurge object",
+    "description": "You can use the Purge Runtime cloud attachment operation to programmatically start the purge process for test and browse components, logs, processed documents, and temporary data for a Runtime Cloud attachment.",
+    "operationId": "UpdateAtomPurge",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The unique ID assigned by the system to the Runtime cloud attachment. The Runtime ID is found in the user interface by navigating to **Manage > Runtime Management** and viewing the Runtime Information panel for a selected Runtime."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AtomPurge.json"
+          },
+          "example": {
+            "id": "3456789a-bcde-f012-3456-789abcdef012",
+            "purgeHistoryDays": 90
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AtomPurge.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<api:AtomPurge xmlns:api=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" atomId=\"3456789a-bcde-f012-3456-789abcdef012\">\n</api:AtomPurge>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AtomPurge.json"
+            },
+            "example": {
+              "@type": "AtomPurge",
+              "atomId": "3456789a-bcde-f012-3456-789abcdef012"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AtomPurge.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:AtomPurge xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" atomId=\"3456789a-bcde-f012-3456-789abcdef012\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

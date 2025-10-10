@@ -1,0 +1,84 @@
+{
+  "get": {
+    "tags": [
+      "Get assignable roles"
+    ],
+    "summary": "",
+    "description": "You can use the Get Assignable Roles operation to retrieve a list of roles that are assignable under a account.",
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Roles.json"
+            },
+            "example": {
+              "@type": "",
+              "Role": [
+                {
+                  "@type": "Role",
+                  "description": "Boomi Default Administrator role.",
+                  "id": "fcb6dd44-0ca8-11e2-a477-1231381987a5",
+                  "accountId": "1",
+                  "name": "Administrator"
+                },
+                {
+                  "@type": "Role",
+                  "description": "Boomi Default Production Support User role.",
+                  "id": "fcb6e3b6-0ca8-11e2-a477-1231381987a5",
+                  "accountId": "1",
+                  "name": "Production Support"
+                },
+                {
+                  "@type": "Role",
+                  "description": "Boomi Default Standard User role.",
+                  "id": "fcb6e2d0-0ca8-11e2-a477-1231381987a5",
+                  "accountId": "1",
+                  "name": "Standard User"
+                },
+                {
+                  "@type": "Role",
+                  "description": "Boomi Default Basic Support User role.",
+                  "id": "fcb6e474-0ca8-11e2-a477-1231381987a5",
+                  "accountId": "1",
+                  "name": "Support"
+                },
+                {
+                  "@type": "Role",
+                  "description": "",
+                  "id": "01234567-89ab-cdef-0123-456789abcdef",
+                  "accountId": "account-123456",
+                  "name": "TestRole",
+                  "parentId": "fcb6e2d0-0ca8-11e2-a477-1231381987a5"
+                },
+                {
+                  "@type": "Role",
+                  "description": "",
+                  "id": "fedcba98-7654-3210-fedc-ba9876543210",
+                  "accountId": "account-123456",
+                  "name": "Test2",
+                  "parentId": "fcb6e2d0-0ca8-11e2-a477-1231381987a5"
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Roles.json"
+            },
+            "example": "<bns:Roles xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <bns:role name=\"Administrator\" accountId=\"1\" id=\"fcb6dd44-0ca8-11e2-a477-1231381987a5\">\n        <bns:description>Boomi Default Administrator role.</bns:description>\n    </bns:role>\n    <bns:role name=\"Production Support\" accountId=\"1\" id=\"fcb6e3b6-0ca8-11e2-a477-1231381987a5\">\n        <bns:description>Boomi Default Production Support User role.</bns:description>\n    </bns:role>\n    <bns:role name=\"Standard User\" accountId=\"1\" id=\"fcb6e2d0-0ca8-11e2-a477-1231381987a5\">\n        <bns:description>Boomi Default Standard User role.</bns:description>\n    </bns:role>\n    <bns:role name=\"Support\" accountId=\"1\" id=\"fcb6e474-0ca8-11e2-a477-1231381987a5\">\n        <bns:description>Boomi Default Basic Support User role.</bns:description>\n    </bns:role>\n    <bns:role parentId=\"fcb6e2d0-0ca8-11e2-a477-1231381987a5\"\n    name=\"TestRole\" accountId=\"account-123456\" id=\"01234567-89ab-cdef-0123-456789abcdef\">\n        <bns:description/>\n    </bns:role>\n    <bns:role parentId=\"fcb6e2d0-0ca8-11e2-a477-1231381987a5\"\n    name=\"Test2\" accountId=\"account-123456\" id=\"fedcba98-7654-3210-fedc-ba9876543210\">\n        <bns:description/>\n    </bns:role>\n</bns:Roles>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

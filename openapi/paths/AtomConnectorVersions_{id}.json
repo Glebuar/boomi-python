@@ -1,0 +1,73 @@
+{
+  "get": {
+    "tags": [
+      "AtomConnectorVersions"
+    ],
+    "summary": "Retrieves an instance of an AtomConnectorVersions object",
+    "description": "Retrieves the properties of connectors used by the Runtime, Runtime cluster, or Runtime cloud with specified ID.",
+    "operationId": "GetAtomConnectorVersions",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ID of the Runtime, Runtime cluster, or Runtime cloud."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AtomConnectorVersions.json"
+            },
+            "example": {
+              "@type": "AtomConnectorVersions",
+              "ConnectorVersion": [
+                {
+                  "@type": "ConnectorVersion",
+                  "name": "Disk",
+                  "version": "16.06.2-20160512.140052-1"
+                },
+                {
+                  "@type": "ConnectorVersion",
+                  "name": "Atom",
+                  "version": "16.06.2-20160511.102900-1"
+                },
+                {
+                  "@type": "ConnectorVersion",
+                  "name": "Platform API",
+                  "version": "16.06.2-20160510.100150-1"
+                },
+                {
+                  "@type": "ConnectorVersion",
+                  "name": "Platform Partner API",
+                  "version": "16.06.2-20160509.150052-2"
+                }
+              ],
+              "id": "3456789a-bcde-f012-3456-789abcdef012"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AtomConnectorVersions.json"
+            },
+            "example": "<bns:AtomConnectorVersions id=\"3456789a-bcde-f012-3456-789abcdef012\" \n    xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <bns:ConnectorVersion version=\"16.06.2-20160511.102900-1\" name=\"Atom\"/>\n    <bns:ConnectorVersion version=\"16.06.2-20160510.100150-1\" name=\"Platform API\"/>\n    <bns:ConnectorVersion version=\"16.06.2-20160509.150052-2\" name=\"Platform Partner API\"/>\n    <bns:ConnectorVersion version=\"16.06.2-20160512.140052-1\" name=\"Disk\"/>\n </bns:AtomConnectorVersions>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "get": {
+    "tags": [
+      "EnvironmentRole"
+    ],
+    "summary": "Retrieves an instance of an EnvironmentRole object",
+    "description": "Returns a single Environment Role object based on the supplied environment role ID.",
+    "operationId": "GetEnvironmentRole",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The Environment Role object you are attempting to get."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentRole.json"
+            },
+            "example": {
+              "@type": "EnvironmentRole",
+              "environmentId": "myEnvironment",
+              "roleId": "userRole"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentRole.json"
+            },
+            "example": "<bns:EnvironmentRole xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" roleId=\"userRole\" environmentId=\"myEnvironment\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "EnvironmentRole"
+    ],
+    "summary": "Deletes an EnvironmentRole object",
+    "description": "Removes the association between a role and an environment. \n\n You must have the Runtime Management privilege to perform the DELETE operation. If you have the Runtime Management privilege, you cannot delete associations between roles and environments.",
+    "operationId": "DeleteEnvironmentRole",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The Environment Role object you are attempting to delete."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

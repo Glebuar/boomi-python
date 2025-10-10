@@ -1,0 +1,32 @@
+{
+  "required": [
+    "AtomId",
+    "DestinationQueue",
+    "SourceQueue"
+  ],
+  "type": "object",
+  "properties": {
+    "AtomId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "\\(Required\\) The Runtime ID that the queue or topic exists under and where you can find it in Runtime Management. You can find the Runtime ID for Runtimes, Runtime clusters, and Runtime clouds in the user interface by navigating to **Manage** \\> **Runtime Management** and viewing the **Runtime Information** panel for a selected container.",
+      "example": "${#TestSuite#atomId}"
+    },
+    "DestinationQueue": {
+      "description": "\\(Required\\) An instance of a generalized queue object indicating the queue from which to send the messages. Contains information describing the desired queue.",
+      "$ref": "./QueueAttributes.json",
+      "example": {
+        "QueueName": "PointToPoint_Destination"
+      }
+    },
+    "SourceQueue": {
+      "$ref": "./QueueAttributes.json",
+      "description": "\\(Required\\) An instance of a generalized queue object indicating the queue from which to obtain the messages. Contains information describing the desired queue.",
+      "example": {
+        "QueueName": "PointToPoint_Source"
+      }
+    }
+  }
+}

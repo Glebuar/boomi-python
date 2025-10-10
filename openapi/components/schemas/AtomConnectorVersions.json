@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "ConnectorVersion": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./ConnectorVersion.json"
+      },
+      "description": "Each pair of `name` and `version` fields represents a connector listed on the **Runtime Management page > Runtime & Connector Versions** tab."
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the Runtime, Runtime cluster, or Runtime cloud.",
+      "example": "3456789a-bcde-f012-3456-789abcdef012"
+    }
+  }
+}

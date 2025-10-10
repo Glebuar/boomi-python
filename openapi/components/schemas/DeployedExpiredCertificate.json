@@ -1,0 +1,94 @@
+{
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the account in which you deployed the certificate.",
+      "example": "account-123456"
+    },
+    "certificateId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the certificate.",
+      "example": "6789abcd-ef01-2345-6789-abcdef012345"
+    },
+    "certificateName": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The name of the certificate.",
+      "example": "Southwest X.509"
+    },
+    "certificateType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The type of the certificate — X.509.",
+      "example": "X.509"
+    },
+    "containerId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the container \\(Runtime, Runtime cluster, or Runtime cloud\\) to which you deployed the certificate.",
+      "example": "23456789-abcd-ef01-2345-6789abcdef01"
+    },
+    "containerName": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The name of the container \\(Runtime, Runtime cluster, or Runtime cloud\\) to which you deployed the certificate.",
+      "example": "southwest"
+    },
+    "environmentId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "If applicable, the ID of the environment in which you deployed the certificate.",
+      "example": "456789a-bcdef-0123-4567-89abcdef0123"
+    },
+    "environmentName": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "If applicable, the environment in which you deployed the certificate.",
+      "example": "Prod"
+    },
+    "expirationDate": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The expiration date and time of the certificate.",
+      "example": "2019-07-11T19:33:23Z"
+    },
+    "location": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The location to which you deployed the certificate — either Process, Environment, Runtime, Shared Web Server, Shared Web Server Authorization, or Shared Web Server User Authorization. Environment is valid only for an environment account; Runtime is valid only for a non-environment account.",
+      "example": "Environment"
+    },
+    "expirationBoundary": {
+      "type": "integer",
+      "xml": {
+        "attribute": true
+      },
+      "description": "sets the boundary for a timespan filter beginning or ending with the current date. The value is the number of days relative to the current date. \n\n For example, use a value of 1 to retrieve certificates that expire today or tomorrow. Use a value of 365 to retrieve certificates that expire within the next 365 days. Use a value of –1 to retrieve certificates that expired yesterday or expire today.",
+      "example": 365
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "get": {
+    "tags": [
+      "Atom"
+    ],
+    "summary": "Retrieves an instance of a Runtime object",
+    "description": "Retrieves the properties of the Runtime, Runtime cluster, or Runtime cloud having the specified ID. \n\n For Runtime clusters and Runtime clouds that are part of a multi-node runtime, the GET operation returns values for the following additional variables:\n\n  - *nodeId*\n  - *hostName*\n  - *status*\n  - *clusterProblem*\n\n  For more information on these variables, see the topic [Cluster Status panel](https://help.boomi.com/docs/Atomsphere/Integration/Integration%20management/r-atm-Cluster_Status_panel_fbdb3645-00e2-4c3c-bba8-bf5fdb0f90f6).",
+    "operationId": "GetAtom",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID for the Runtime, Runtime cluster, or Runtime cloud."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Atom.json"
+            },
+            "example": {
+              "@type": "Atom",
+              "id": "3456789a-bcde-f012-3456-789abcdef012",
+              "name": "My Local Atom",
+              "status": "OFFLINE",
+              "type": "ATOM",
+              "hostName": "WN7X64-11A2BB3",
+              "dateInstalled": "2016-02-05T14:49:21Z",
+              "currentVersion": "17.08.0.0",
+              "purgeHistoryDays": 18,
+              "purgeImmediate": false,
+              "forceRestartTime": 9
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Atom.json"
+            },
+            "example": "<bns:Atom xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \n         forceRestartTime=\"9\" purgeImmediate=\"false\" purgeHistoryDays=\"18\" currentVersion=\"17.08.0.0\" \n         dateInstalled=\"2016-02-05T14:49:21Z\" hostName=\"WN7X64-11A2BB3\" type=\"ATOM\" status=\"OFFLINE\" \n         name=\"My Local Atom\" id=\"3456789a-bcde-f012-3456-789abcdef012\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "Atom"
+    ],
+    "summary": "Modifies or updates a Runtime object",
+    "description": "Updates the Runtime object having the specified ID. You can only update the name, purgeHistoryDays, purgeImmediate, forceRestartTime. You must have the Runtime Management privilege to perform the UPDATE operation. If you have the Runtime Management Read Access privilege, you cannot update an Runtime. \n\n >**Note:** There might be a delay before you see the changes in the Runtime Information panel.",
+    "operationId": "UpdateAtom",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID for the Runtime, Runtime cluster, or Runtime cloud."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/Atom.json"
+          },
+          "example": {
+            "id": "3456789a-bcde-f012-3456-789abcdef012",
+            "purgeHistoryDays": 90
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/Atom.json"
+          },
+          "example": "<bns:Atom id=\"3456789a-bcde-f012-3456-789abcdef012\" purgeHistoryDays=\"90\" \n         xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Atom.json"
+            },
+            "example": {
+              "@type": "Atom",
+              "id": "3456789a-bcde-f012-3456-789abcdef012",
+              "purgeHistoryDays": 90
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Atom.json"
+            },
+            "example": "<bns:Atom xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \n       id=\"3456789a-bcde-f012-3456-789abcdef012\" purgeHistoryDays=\"90\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "Atom"
+    ],
+    "summary": "Deletes a Runtime object",
+    "description": "Deletes the Runtime object with the specified ID. You must have the Runtime Management privilege to perform the DELETE operation. If you have the Runtime Management Read Access privilege, you cannot delete a Runtime.",
+    "operationId": "DeleteAtom",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID for the Runtime, Runtime cluster, or Runtime cloud."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

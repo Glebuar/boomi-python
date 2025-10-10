@@ -1,0 +1,41 @@
+{
+  "required": [
+    "operator",
+    "property"
+  ],
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "./Expression.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "argument": {
+          "type": "array",
+          "xml": {
+            "namespace": "http://api.platform.boomi.com/"
+          },
+          "items": {
+            "type": "string",
+            "xml": {
+              "name": "argument"
+            }
+          }
+        },
+        "operator": {
+          "type": "string",
+          "xml": {
+            "attribute": true
+          }
+        },
+        "property": {
+          "type": "string",
+          "xml": {
+            "attribute": true
+          }
+        }
+      }
+    }
+  ]
+}

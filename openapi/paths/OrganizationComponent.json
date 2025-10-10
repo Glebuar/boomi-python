@@ -1,0 +1,92 @@
+{
+  "post": {
+    "tags": [
+      "OrganizationComponent"
+    ],
+    "summary": "Creates an OrganizationComponent object",
+    "description": "The CREATE operation creates an Organization Component object with the specified component name. \n\n The request body requires the `componentName` field. If you omit the `folderName` field, it requires the `folderId` field — and vice versa. If you omit the `componentID` field, it assigns the value when you create the component. If you omit the `folderID` field, it assigns the value when you create the component. ",
+    "operationId": "CreateOrganizationComponent",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/OrganizationComponent.json"
+          },
+          "example": {
+            "@type": "OrganizationComponent",
+            "OrganizationContactInfo": {
+              "@type": "OrganizationContactInfo",
+              "contactName": "Tom Miller",
+              "address1": "127 Comstock Ave.",
+              "address2": "",
+              "city": "Philadelphia",
+              "state": "PA",
+              "postalcode": "19100",
+              "country": "US",
+              "email": "tom@bestwholesaling.biz",
+              "phone": "311 555-3579",
+              "contactUrl": "https://www.bestwholesaling.biz",
+              "fax": "311 555-9753"
+            },
+            "componentName": "Best Wholesaling",
+            "folderName": "Commercial"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/OrganizationComponent.json"
+          },
+          "example": "<bns:OrganizationComponent xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" componentName=\"Best Wholesaling\" folderName=\"Commercial\">\n<bns:OrganizationContactInfo>\n<bns:contactName>Tom Miller</bns:contactName>\n<bns:address1>127 Comstock Ave.</bns:address1>\n<bns:address2></bns:address2>\n<bns:city>Philadelphia</bns:city>\n<bns:state>PA</bns:state>\n<bns:postalcode>19100</bns:postalcode>\n<bns:country>US</bns:country>\n<bns:email>tom@bestwholesaling.biz</bns:email>\n<bns:phone>311 555-3579</bns:phone>\n<bns:contactUrl>https://www.bestwholesaling.biz</bns:contactUrl>\n<bns:fax>311 555-9753</bns:fax>\n</bns:OrganizationContactInfo>\n</bns:OrganizationComponent>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/OrganizationComponent.json"
+            },
+            "example": {
+              "@type": "OrganizationComponent",
+              "OrganizationContactInfo": {
+                "@type": "OrganizationContactInfo",
+                "contactName": "Tom Miller",
+                "address1": "127 Comstock Ave.",
+                "address2": "",
+                "city": "Philadelphia",
+                "state": "PA",
+                "postalcode": "19100",
+                "country": "US",
+                "email": "tom@bestwholesaling.biz",
+                "phone": "311 555-3579",
+                "contactUrl": "https://www.bestwholesaling.biz",
+                "fax": "311 555-9753"
+              },
+              "componentName": "Best Wholesaling",
+              "componentId": "89abcdef-0123-4567-89ab-cdef01234567",
+              "folderName": "Commercial",
+              "folderId": 11356
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/OrganizationComponent.json"
+            },
+            "example": "<bns:OrganizationComponent xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" componentName=\"Best Wholesaling\" componentId=\"89abcdef-0123-4567-89ab-cdef01234567\" folderName=\"Commercial\" folderId=\"11356\">\n<bns:OrganizationContactInfo>\n<bns:contactName>Tom Miller</bns:contactName>\n<bns:address1>127 Comstock Ave.</bns:address1>\n<bns:address2></bns:address2>\n<bns:city>Philadelphia</bns:city>\n<bns:state>PA</bns:state>\n<bns:postalcode>19100</bns:postalcode>\n<bns:country>US</bns:country>\n<bns:email>tom@bestwholesaling.biz</bns:email>\n<bns:phone>311 555-3579</bns:phone>\n<bns:contactUrl>https://www.bestwholesaling.biz</bns:contactUrl>\n<bns:fax>311 555-9753</bns:fax>\n</bns:OrganizationContactInfo>\n</bns:OrganizationComponent>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,160 @@
+{
+  "post": {
+    "tags": [
+      "AS2ConnectorRecord"
+    ],
+    "summary": "Queries for an AS2ConnectorRecord object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryAS2ConnectorRecord",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AS2ConnectorRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "execution-01234567-89ab-cdef-0123-456789abcdef-2018.07.11"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "executionId"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "execution-01234567-89ab-cdef-0123-456789abcdef-2018.07.11"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "executionId"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AS2ConnectorRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n  <QueryFilter>\n    <expression operator=\"EQUALS\" property=\"executionId\"\n      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n      <argument>execution-01234567-89ab-cdef-0123-456789abcdef-2018.07.11</argument>\n    </expression>\n  </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"executionId\">\n      <argument>execution-01234567-89ab-cdef-0123-456789abcdef-2018.07.11</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AS2ConnectorRecordQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 100,
+              "queryToken": "EXAMPLE_QUERY_TOKEN",
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "AS2ConnectorRecord",
+                  "ackStatus": "Acknowledged",
+                  "as2FromId": "DASHER",
+                  "as2ToId": "DANCER",
+                  "subject": "Sleigh Order 122518",
+                  "messageId": "&lt;976473487.15.1527087239460.JavaMail.dasher@northpole&gt;",
+                  "mdnMessage": "processed",
+                  "contentLength": "484",
+                  "filename": "0000000122518.dat",
+                  "mimetype": "application/octet-stream",
+                  "size": [
+                    "Long",
+                    654
+                  ],
+                  "account": "account-123456",
+                  "executionId": "execution-01234567-89ab-cdef-0123-456789abcdef-2016.07.11",
+                  "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+                  "dateProcessed": "2018-07-11T06:24:12Z",
+                  "id": "connector-abcdef01-2345-6789-abcd-ef0123456789",
+                  "actionType": "Send",
+                  "connectorType": "as2",
+                  "connectorName": "Sample AS2 connection",
+                  "operationName": "Sample AS2 operation",
+                  "documentIndex": 0,
+                  "successful": true
+                },
+                {
+                  "@type": "AS2ConnectorRecord",
+                  "ackStatus": "Acknowledged",
+                  "as2FromId": "DASHER",
+                  "as2ToId": "DANCER",
+                  "subject": "Sleigh Order 122560",
+                  "messageId": "&lt;976473487.15.1527087239502.JavaMail.dasher@northpole&gt;",
+                  "mdnMessage": "processed",
+                  "contentLength": "610",
+                  "filename": "0000000122560.dat",
+                  "mimetype": "application/octet-stream",
+                  "size": [
+                    "Long",
+                    654
+                  ],
+                  "account": "account-123456",
+                  "executionId": "execution-01234567-89ab-cdef-0123-456789abcdef-2018.07.11",
+                  "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+                  "dateProcessed": "2018-07-11T06:25:02Z",
+                  "id": "connector-bcdef012-3456-789a-bcde-f0123456789a",
+                  "actionType": "Send",
+                  "connectorType": "as2",
+                  "connectorName": "Sample AS2 connection",
+                  "operationName": "Sample AS2 operation",
+                  "documentIndex": 49,
+                  "successful": true
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AS2ConnectorRecordQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"100\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n   <bns:queryToken>EXAMPLE_QUERY_TOKEN</bns:queryToken>\n   <bns:result xsi:type=\"AS2ConnectorRecord\">\n      <bns:account>account-123456</bns:account>\n      <bns:executionId>execution-01234567-89ab-cdef-0123-456789abcdef-2018.07.11</bns:executionId>\n      <bns:atomId>3456789a-bcde-f012-3456-789abcdef012</bns:atomId>\n      <bns:dateProcessed>2018-07-11T06:24:12Z</bns:dateProcessed>\n      <bns:id>connector-bcdef012-3456-789a-bcde-f0123456789a</bns:id>\n      <bns:actionType>Send</bns:actionType>\n      <bns:connectorType>as2</bns:connectorType>\n      <bns:connectorName>Sample AS2 Connection</bns:connectorName>\n      <bns:operationName>Sample AS2 Operation</bns:operationName>\n      <bns:documentIndex>0</bns:documentIndex>\n      <bns:successful>true</bns:successful>\n      <bns:size>654</bns:size>\n      <bns:ackStatus>Acknowledged</bns:ackStatus>\n      <bns:as2FromId>DASHER</bns:as2FromId>\n      <bns:as2ToId>DANCER</bns:as2ToId>\n      <bns:subject>Sleigh Order 122518</bns:subject>\n      <bns:messageId>&lt;976473487.15.1527087239460.JavaMail.dasher@northpole&gt;</bns:messageId>\n      <bns:mdnMessage>processed</bns:mdnMessage>\n      <bns:contentLength>484</bns:contentLength>\n      <bns:filename>0000000122518.dat</bns:filename>\n      <bns:mimetype>application/octet-stream</bns:mimetype>\n   </bns:result>\n   <bns:result xsi:type=\"AS2ConnectorRecord\">\n      <bns:account>account-123456</bns:account>\n      <bns:executionId>execution-01234567-89ab-cdef-0123-456789abcdef-2018.07.11</bns:executionId>\n      <bns:atomId>3456789a-bcde-f012-3456-789abcdef012</bns:atomId>\n      <bns:dateProcessed>2018-07-11T06:25:02Z</bns:dateProcessed>\n      <bns:id>connector-bcdef012-3456-789a-bcde-f0123456789a</bns:id>\n      <bns:actionType>Send</bns:actionType>\n      <bns:connectorType>as2</bns:connectorType>\n      <bns:connectorName>Sample AS2 Connection</bns:connectorName>\n      <bns:operationName>Sample AS2 Operation</bns:operationName>\n      <bns:documentIndex>49</bns:documentIndex>\n      <bns:successful>true</bns:successful>\n      <bns:size>654</bns:size>\n      <bns:ackStatus>Acknowledged</bns:ackStatus>\n      <bns:as2FromId>DASHER</bns:as2FromId>\n      <bns:as2ToId>DANCER</bns:as2ToId>\n      <bns:subject>Sleigh Order 122560</bns:subject>\n      <bns:messageId>&lt;976473487.15.1527087239502.JavaMail.dasher@northpole&gt;</bns:messageId>\n      <bns:mdnMessage>processed</bns:mdnMessage>\n      <bns:contentLength>610</bns:contentLength>\n      <bns:filename>0000000122560.dat</bns:filename>\n      <bns:mimetype>application/octet-stream</bns:mimetype>\n   </bns:result>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

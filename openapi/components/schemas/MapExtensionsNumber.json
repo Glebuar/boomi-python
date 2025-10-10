@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "format": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "impliedDecimal": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "signed": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

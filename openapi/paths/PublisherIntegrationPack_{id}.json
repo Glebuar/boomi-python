@@ -1,0 +1,223 @@
+{
+  "get": {
+    "tags": [
+      "PublisherIntegrationPack"
+    ],
+    "summary": "Retrieves an instance of a PublisherIntegrationPack object",
+    "description": "Retrieves the details of the integration pack and packaged components. \nThe standard GET operation retrieves the properties of the integration pack with a specified ID. \nThe bulk GET operation retrieves the properties of the integration packs with the specified IDs to a maximum of 100.",
+    "operationId": "GetPublisherIntegrationPack",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID assigned by the system to the integration pack."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PublisherIntegrationPack.json"
+            },
+            "example": {
+              "@type": "PublisherIntegrationPack",
+              "Description": "",
+              "PublisherPackagedComponents": {
+                "@type": "PublisherPackagedComponents",
+                "PublisherPackagedComponent": [
+                  {
+                    "@type": "PublisherPackagedComponent",
+                    "componentId": "76742659-845c-45e4-bb9f-d63ff998f658",
+                    "componentName": "New Process 4",
+                    "componentType": "process",
+                    "currentVersion": "1.0",
+                    "pendingVersion": "",
+                    "latestVersion": ""
+                  },
+                  {
+                    "@type": "PublisherPackagedComponent",
+                    "componentId": "fa0211d4-d417-4230-b695-c78846c6e83d",
+                    "componentName": "New Process 2",
+                    "componentType": "process",
+                    "currentVersion": "1.0",
+                    "pendingVersion": "",
+                    "latestVersion": ""
+                  }
+                ]
+              },
+              "id": "d7c16f5d-3311-417e-a149-3c55436f7d8d",
+              "name": "perf testing ipack",
+              "installationType": "MULTI"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/PublisherIntegrationPack.json"
+            },
+            "example": "<bns:PublisherIntegrationPack xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" id=\"d7c16f5d-3311-417e-a149-3c55436f7d8d\" name=\"perf testing ipack\" installationType=\"MULTI\">\n    <bns:Description></bns:Description>\n    <bns:PublisherPackagedComponents>\n        <bns:PublisherPackagedComponent componentId=\"a28c3779-d23d-482d-91c1-8e9cb311a017\" componentName=\"New Process 2\" componentType=\"process\" currentVersion=\"1.0\" pendingVersion=\"\" latestVersion=\"\"/>\n        <bns:PublisherPackagedComponent componentId=\"fa0211d4-d417-4230-b695-c78846c6e83d\" componentName=\"New Process 2\" componentType=\"process\" currentVersion=\"1.0\" pendingVersion=\"\" latestVersion=\"\"/>\n    </bns:PublisherPackagedComponents>\n</bns:PublisherIntegrationPack>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "PublisherIntegrationPack"
+    ],
+    "summary": "Modifies or updates a PublisherIntegrationPack object",
+    "description": "The Update operation adds or removes the packaged components from the publisher integration pack. \n It also updates the description field of single and multiple attachment integration packs and the name field only for a single attachment integration pack.\n\n >**Note:** When updating an integration pack, you must include all the packaged components associated with it in the request body. \n If a packaged component is not included, it will be deleted upon updating an integration pack. \n For example, include all packaged components while updating the integration pack name.",
+    "operationId": "UpdatePublisherIntegrationPack",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/PublisherIntegrationPack.json"
+          },
+          "example": {
+            "Description": "description update",
+            "operationType": "ADD",
+            "PublisherPackagedComponents": {
+              "PublisherPackagedComponent": [
+                {
+                  "componentId": "6d7c05f6-cb29-41c7-8bac-b9e57b3b9783"
+                }
+              ]
+            },
+            "id": "e7b60a7c-559a-4904-9a52-d724f2d967b4",
+            "name": "single_Ipack",
+            "installationType": "SINGLE"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/PublisherIntegrationPack.json"
+          },
+          "example": "<bns:PublisherIntegrationPack xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" id=\"e7b60a7c-559a-4904-9a52-d724f2d967b4\" name=\"single_Ipack\" installationType=\"SINGLE\" operationType=\"ADD\">\n    <bns:Description>description update</bns:Description>\n    <bns:PublisherPackagedComponents>\n        <bns:PublisherPackagedComponent componentId=\"b2780aad-f5af-44e8-9b5b-f4823b363284\"/>\n        <bns:PublisherPackagedComponent componentId=\"c7d8653d-81ff-4fcc-b814-49e148fc4024\"/>\n    </bns:PublisherPackagedComponents>\n</bns:PublisherIntegrationPack>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PublisherIntegrationPack.json"
+            },
+            "example": {
+              "@type": "PublisherIntegrationPack",
+              "Description": "description update",
+              "PublisherPackagedComponents": {
+                "@type": "PublisherPackagedComponents",
+                "PublisherPackagedComponent": [
+                  {
+                    "@type": "PublisherPackagedComponent",
+                    "componentId": "6d7c05f6-cb29-41c7-8bac-b9e57b3b9783",
+                    "componentName": "New Process 7",
+                    "componentType": "process",
+                    "currentVersion": "",
+                    "pendingVersion": "1.0",
+                    "latestVersion": ""
+                  },
+                  {
+                    "@type": "PublisherPackagedComponent",
+                    "componentId": "c7d8653d-81ff-4fcc-b814-49e148fc4024",
+                    "componentName": "Cleanse",
+                    "componentType": "process",
+                    "currentVersion": "",
+                    "pendingVersion": "cleanse process",
+                    "latestVersion": ""
+                  },
+                  {
+                    "@type": "PublisherPackagedComponent",
+                    "componentId": "b2780aad-f5af-44e8-9b5b-f4823b363284",
+                    "componentName": "New Process 3",
+                    "componentType": "process",
+                    "currentVersion": "",
+                    "pendingVersion": "test",
+                    "latestVersion": "",
+                    "deleted": true
+                  }
+                ]
+              },
+              "id": "e7b60a7c-559a-4904-9a52-d724f2d967b4",
+              "name": "single_Ipack",
+              "installationType": "SINGLE"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/PublisherIntegrationPack.json"
+            },
+            "example": "<bns:PublisherIntegrationPack xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" id=\"e7b60a7c-559a-4904-9a52-d724f2d967b4\" name=\"single_Ipack\" installationType=\"SINGLE\">\n    <bns:Description>description update</bns:Description>\n    <bns:PublisherPackagedComponents>\n        <bns:PublisherPackagedComponent componentId=\"c7d8653d-81ff-4fcc-b814-49e148fc4024\" componentName=\"Cleanse\" componentType=\"process\" currentVersion=\"\" pendingVersion=\"cleanse process\" latestVersion=\"\"/>\n        <bns:PublisherPackagedComponent componentId=\"b2780aad-f5af-44e8-9b5b-f4823b363284\" componentName=\"New Process 3\" componentType=\"process\" currentVersion=\"\" pendingVersion=\"test\" latestVersion=\"\"/>\n    </bns:PublisherPackagedComponents>\n</bns:PublisherIntegrationPack>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "PublisherIntegrationPack"
+    ],
+    "summary": "Deletes a PublisherIntegrationPack object",
+    "description": "Deletes the publisher integration pack having a specified ID from the requesting account. \nThe deleted integration pack is automatically uninstalled from all accounts where it was installed. \nAny Runtimes or environments attached to the integration pack are also detached.",
+    "operationId": "DeletePublisherIntegrationPack",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique ID assigned by the system to the integration pack."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

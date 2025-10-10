@@ -1,0 +1,19 @@
+{
+  "post": {
+    "tags": [
+      "Worker"
+    ],
+    "summary": "Worker object",
+    "description": "This API is documented externally. Please visit the following link for full details:",
+    "externalDocs": {
+      "description": "Worker object",
+      "url": "/docs/APIs/PlatformAPI/MissingInOpenAPI/Worker"
+    },
+    "responses": {
+      "201": {
+        "description": "Resource created",
+        "content": {}
+      }
+    }
+  }
+}

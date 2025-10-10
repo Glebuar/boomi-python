@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "QueueRecord": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./QueueRecord.json"
+      }
+    }
+  }
+}

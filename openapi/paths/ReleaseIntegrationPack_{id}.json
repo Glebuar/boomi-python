@@ -1,0 +1,85 @@
+{
+  "post": {
+    "tags": [
+      "ReleaseIntegrationPack"
+    ],
+    "summary": "Modifies or updates a ReleaseIntegrationPack object",
+    "description": "Modifies the scheduled release of a publisher integration pack. \n\n > **Note:** The Update operation is only performed when there is an existing scheduled release request for the integration pack.",
+    "operationId": "UpdateReleaseIntegrationPack",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ReleaseIntegrationPack.json"
+          },
+          "example": {
+            "id": "f0f7face-3a9d-48b1-8a32-82b84499cd4e",
+            "name": "Testing Multi",
+            "installationType": "MULTI",
+            "releaseSchedule": "IMMEDIATELY",
+            "ReleasePackagedComponents": {
+              "ReleasePackagedComponent": [
+                {
+                  "componentId": "b420a8ab-8e4e-41b2-93ce-079093a03af2",
+                  "version": "1.0"
+                }
+              ]
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ReleaseIntegrationPack.json"
+          },
+          "example": "<bns:ReleaseIntegrationPack xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" id=\"f0f7face-3a9d-48b1-8a32-82b84499cd4e\" releaseSchedule=\"IMMEDIATELY\">\n    <bns:ReleasePackagedComponents>\n        <bns:ReleasePackagedComponent componentId=\"b420a8ab-8e4e-41b2-93ce-079093a03af2\" version=\"1.0\"/>\n    </bns:ReleasePackagedComponents>\n</bns:ReleaseIntegrationPack>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ReleaseIntegrationPack.json"
+            },
+            "example": {
+              "@type": "ReleaseIntegrationPack",
+              "id": "f0f7face-3a9d-48b1-8a32-82b84499cd4e",
+              "installationType": "MULTI",
+              "name": "Testing Multi",
+              "releaseSchedule": "IMMEDIATELY",
+              "requestId": "release-11031691-dc62-4280-a3b2-dcf7f3521f8a",
+              "releaseStatusUrl": "https://api.boomi.com/api/rest/v1/boomi-8Q78Q1/ReleaseIntegrationPackStatus/release-11031691-dc62-4280-a3b2-dcf7f3521f8a"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ReleaseIntegrationPack.json"
+            },
+            "example": "<bns:ReleaseIntegrationPack xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" id=\"f0f7face-3a9d-48b1-8a32-82b84499cd4e\" installationType=\"MULTI\" name=\"Testing Multi\" releaseSchedule=\"IMMEDIATELY\" requestId=\"release-0d3ad8c1-9906-49f0-a9a5-f1c773826857\" releaseStatusUrl=\"https://api.boomi.com/api/rest/v1/boomi-8Q78Q1/ReleaseIntegrationPackStatus/release-0d3ad8c1-9906-49f0-a9a5-f1c773826857\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "properties": {
+    "X12ControlInfo": {
+      "$ref": "./X12ControlInfo.json"
+    },
+    "X12Options": {
+      "$ref": "./X12Options.json"
+    }
+  }
+}

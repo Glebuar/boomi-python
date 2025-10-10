@@ -1,0 +1,252 @@
+{
+  "get": {
+    "tags": [
+      "ProcessSchedules"
+    ],
+    "summary": "Retrieves an instance of a ProcessSchedules object",
+    "description": "Retrieves the Process Schedules object with a specific conceptual ID. \n\n The ordinary GET operation retrieves the Process Schedules object with a specific conceptual ID. The bulk GET operation retrieves the Process Schedules objects with specific conceptual IDs to a maximum of 100. In addition, you can obtain conceptual IDs from the QUERY operation.",
+    "operationId": "GetProcessSchedules",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The object’s conceptual ID, which is synthesized from the process and Runtime IDs."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ProcessSchedules.json"
+            },
+            "example": {
+              "@type": "ProcessSchedules",
+              "Schedule": [
+                {
+                  "@type": "Schedule",
+                  "minutes": "0-59/15",
+                  "hours": "8-18",
+                  "daysOfWeek": "2,3,4,5,6",
+                  "daysOfMonth": "*",
+                  "months": "*",
+                  "years": "*"
+                },
+                {
+                  "@type": "Schedule",
+                  "minutes": "0-59/15",
+                  "hours": "19-23",
+                  "daysOfWeek": "1",
+                  "daysOfMonth": "*",
+                  "months": "*",
+                  "years": "*"
+                }
+              ],
+              "Retry": {
+                "@type": "ScheduleRetry",
+                "Schedule": [
+                  {
+                    "@type": "Schedule",
+                    "minutes": "0-10/5",
+                    "hours": "19-23",
+                    "daysOfWeek": "7",
+                    "daysOfMonth": "*",
+                    "months": "*",
+                    "years": "*"
+                  },
+                  {
+                    "@type": "Schedule",
+                    "minutes": "0-59/20",
+                    "hours": "8-18",
+                    "daysOfWeek": "2,3,4,5,6",
+                    "daysOfMonth": "*",
+                    "months": "*",
+                    "years": "*"
+                  }
+                ],
+                "maxRetry": 2
+              },
+              "processId": "789abcde-f012-3456-789a-bcdef0123456",
+              "atomId": "3456789a-bcde-f0123-4567-89abcdef012",
+              "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ProcessSchedules.json"
+            },
+            "example": "<bns:ProcessSchedules id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\" \n      atomId=\"3456789a-bcde-f0123-4567-89abcdef012\" processId=\"789abcde-f012-3456-789a-bcdef0123456\" \n      xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n       <bns:Schedule years=\"*\" months=\"*\" daysOfMonth=\"*\" daysOfWeek=\"2,3,4,5,6\" hours=\"8-18\" minutes=\"0-59/15\"/>\n       <bns:Schedule years=\"*\" months=\"*\" daysOfMonth=\"*\" daysOfWeek=\"1\" hours=\"19-23\" minutes=\"0-59/15\"/>\n       <bns:Retry maxRetry=\"5\">\n          <bns:Schedule years=\"*\" months=\"*\" daysOfMonth=\"*\" daysOfWeek=\"7\" hours=\"19-23\" minutes=\"0-10/5\"/>\n          <bns:Schedule years=\"*\" months=\"*\" daysOfMonth=\"*\" daysOfWeek=\"2,3,4,5,6\" hours=\"8-18\" minutes=\"0-59/20\"/>\n       </bns:Retry>\n    </bns:ProcessSchedules>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "ProcessSchedules"
+    ],
+    "summary": "Modifies or updates a ProcessSchedules object",
+    "description": "Clears and updates the process run schedules specified in the Process Schedules object with a specific ID. The body of the request must specify not only the conceptual object ID but also the Runtime and process IDs. You can obtain the object ID from a QUERY operation.\n\nA Process Schedules object exists for every deployed process. If you do not update the schedule, the object is empty and a run schedule is not in effect.\n\n>**Note:** Listener processes cannot be scheduled. If a listener process is referenced, the call will fail with a 400 status code.\n\nYou must have the **Runtime Management** privilege and the **Scheduling** privilege to perform the UPDATE operation. If you have the **Runtime Management Read Access** privilege, you cannot update process run schedules.\n\n>**Note:** After you update run schedules for a process on a Runtime, those schedules appear in the **Scheduling** dialog using the Advanced (cron) syntax.\n\nYou can additionally employ a Bulk UPDATE operation for the Process Schedules object. See related links for more information about performing a Bulk UPDATE operation.",
+    "operationId": "UpdateProcessSchedules",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The object’s conceptual ID, which is synthesized from the process and Runtime IDs."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ProcessSchedules.json"
+          },
+          "example": {
+            "Schedule": [
+              {
+                "minutes": "0-59/15",
+                "hours": "8-18",
+                "daysOfWeek": "2,3,4,5,6",
+                "daysOfMonth": "*",
+                "months": "*",
+                "years": "*"
+              },
+              {
+                "minutes": "0-59/15",
+                "hours": "19-23",
+                "daysOfWeek": "1",
+                "daysOfMonth": "*",
+                "months": "*",
+                "years": "*"
+              }
+            ],
+            "Retry": {
+              "Schedule": [
+                {
+                  "minutes": "0-10/5",
+                  "hours": "19-23",
+                  "daysOfWeek": "7",
+                  "daysOfMonth": "*",
+                  "months": "*",
+                  "years": "*"
+                },
+                {
+                  "minutes": "0-59/20",
+                  "hours": "8-18",
+                  "daysOfWeek": "2,3,4,5,6",
+                  "daysOfMonth": "*",
+                  "months": "*",
+                  "years": "*"
+                }
+              ],
+              "maxRetry": 2
+            },
+            "processId": "789abcde-f012-3456-789a-bcdef0123456",
+            "atomId": "3456789a-bcde-f0123-4567-89abcdef012",
+            "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ProcessSchedules.json"
+          },
+          "example": "<bns:ProcessSchedules id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\"\n      atomId=\"3456789a-bcde-f0123-4567-89abcdef012\" processId=\"789abcde-f012-3456-789a-bcdef0123456\" \n      xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n       <bns:Schedule years=\"*\" months=\"*\" daysOfMonth=\"*\" daysOfWeek=\"2,3,4,5,6\" hours=\"8-18\" minutes=\"0-59/15\"/>\n       <bns:Schedule years=\"*\" months=\"*\" daysOfMonth=\"*\" daysOfWeek=\"1\" hours=\"19-23\" minutes=\"0-59/15\"/>\n       <bns:Retry maxRetry=\"5\">\n          <bns:Schedule years=\"*\" months=\"*\" daysOfMonth=\"*\" daysOfWeek=\"7\" hours=\"19-23\" minutes=\"0-10/5\"/>\n          <bns:Schedule years=\"*\" months=\"*\" daysOfMonth=\"*\" daysOfWeek=\"2,3,4,5,6\" hours=\"8-18\" minutes=\"0-59/20\"/>\n       </bns:Retry>\n    </bns:ProcessSchedules>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ProcessSchedules.json"
+            },
+            "example": {
+              "@type": "ProcessSchedules",
+              "Schedule": [
+                {
+                  "@type": "Schedule",
+                  "minutes": "0-59/15",
+                  "hours": "8-18",
+                  "daysOfWeek": "2,3,4,5,6",
+                  "daysOfMonth": "*",
+                  "months": "*",
+                  "years": "*"
+                },
+                {
+                  "@type": "Schedule",
+                  "minutes": "0-59/15",
+                  "hours": "19-23",
+                  "daysOfWeek": "1",
+                  "daysOfMonth": "*",
+                  "months": "*",
+                  "years": "*"
+                }
+              ],
+              "Retry": {
+                "@type": "ScheduleRetry",
+                "Schedule": [
+                  {
+                    "@type": "Schedule",
+                    "minutes": "0-10/5",
+                    "hours": "19-23",
+                    "daysOfWeek": "7",
+                    "daysOfMonth": "*",
+                    "months": "*",
+                    "years": "*"
+                  },
+                  {
+                    "@type": "Schedule",
+                    "minutes": "0-59/20",
+                    "hours": "8-18",
+                    "daysOfWeek": "2,3,4,5,6",
+                    "daysOfMonth": "*",
+                    "months": "*",
+                    "years": "*"
+                  }
+                ],
+                "maxRetry": 2
+              },
+              "processId": "789abcde-f012-3456-789a-bcdef0123456",
+              "atomId": "3456789a-bcde-f0123-4567-89abcdef012",
+              "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ProcessSchedules.json"
+            },
+            "example": "<bns:ProcessSchedules id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\"\n      atomId=\"3456789a-bcde-f0123-4567-89abcdef012\" processId=\"789abcde-f012-3456-789a-bcdef0123456\" \n      xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n       <bns:Schedule years=\"*\" months=\"*\" daysOfMonth=\"*\" daysOfWeek=\"2,3,4,5,6\" hours=\"8-18\" minutes=\"0-59/15\"/>\n       <bns:Schedule years=\"*\" months=\"*\" daysOfMonth=\"*\" daysOfWeek=\"1\" hours=\"19-23\" minutes=\"0-59/15\"/>\n       <bns:Retry maxRetry=\"5\">\n          <bns:Schedule years=\"*\" months=\"*\" daysOfMonth=\"*\" daysOfWeek=\"7\" hours=\"19-23\" minutes=\"0-10/5\"/>\n          <bns:Schedule years=\"*\" months=\"*\" daysOfMonth=\"*\" daysOfWeek=\"2,3,4,5,6\" hours=\"8-18\" minutes=\"0-59/20\"/>\n       </bns:Retry>\n    </bns:ProcessSchedules>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

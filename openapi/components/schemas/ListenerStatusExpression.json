@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./ListenerStatusSimpleExpression.json"
+    },
+    {
+      "$ref": "./ListenerStatusGroupingExpression.json"
+    }
+  ]
+}

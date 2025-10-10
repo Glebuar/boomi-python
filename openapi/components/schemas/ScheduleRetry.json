@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "Schedule": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./Schedule.json"
+      }
+    },
+    "maxRetry": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "description": "(Retry schedules only) The maximum number of retries. The minimum valid value is 1; the maximum is 5."
+    }
+  }
+}

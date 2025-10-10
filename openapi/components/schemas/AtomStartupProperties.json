@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "Property": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./Property.json"
+      }
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "A unique ID for the Runtime, Runtime cluster, or Runtime cloud. (This API is not applicable for runtimes attached to clouds).",
+      "example": "3456789a-bcde-f012-3456-789abcdef012"
+    }
+  }
+}

@@ -1,0 +1,199 @@
+{
+  "required": [
+    "account",
+    "actionType",
+    "atomId",
+    "connectorName",
+    "connectorType",
+    "customFields",
+    "dateProcessed",
+    "errorMessage",
+    "executionId",
+    "id",
+    "operationName"
+  ],
+  "type": "object",
+  "properties": {
+    "account": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the account this record was run in.",
+      "example": "account-123456"
+    },
+    "ackStatus": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The acknowledgment status — Acknowledged, Acknowledged/Errors, or Not Acknowledged.",
+      "example": "Acknowledged"
+    },
+    "actionType": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The type of action with which this record corresponds — Listen or Send.",
+      "example": "Send"
+    },
+    "as2FromId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The arbitrary identifier that indicates the sender of the message.",
+      "example": "DASHER"
+    },
+    "as2ToId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The arbitrary identifier that indicates the recipient of the message.",
+      "example": "DANCER"
+    },
+    "atomId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the Runtime that processed this record.",
+      "example": "3456789a-bcde-f012-3456-789abcdef012"
+    },
+    "connectorName": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "For an AS2 Client \\(Send\\) operation, the value is the name of the AS2 Client connection component through which the document that corresponds to this record was sent. The value is as2sharedserver Connector for an AS2 Shared Server \\(Listen\\) operation, Trading Partner for an X12 trading partner Send operation, or Start for an X12 trading partner Listen operation.",
+      "example": "Sample AS2 Connection"
+    },
+    "connectorType": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The type of connector to which this record corresponds — as2 for AS2 Client \\(Send\\), as2sharedserver for AS2 Shared Server \\(Listen\\), or x12 for Trading Partner Send or Listen using the X12 standard.",
+      "example": "as2"
+    },
+    "contentLength": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The length of the message in bytes.",
+      "example": "484"
+    },
+    "customFields": {
+      "$ref": "./customFields.json"
+    },
+    "dateProcessed": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The processing date and time of this record.",
+      "example": "2018-07-11T06:24:12Z"
+    },
+    "documentIndex": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The numerical index of this record in the run.",
+      "example": "0"
+    },
+    "errorMessage": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The error message associated with this record if applicable."
+    },
+    "executionId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the run.",
+      "example": "execution-01234567-89ab-cdef-0123-456789abcdef-2018.07.11"
+    },
+    "filename": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The file name of the document that corresponds to this record.",
+      "example": "0000000122518.dat"
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of this record.",
+      "example": "connector-bcdef012-3456-789a-bcde-f0123456789a"
+    },
+    "mdnMessage": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The content of the Message Delivery Notification \\(MDN\\) message — *processed*, *processed/error*, *processed/error:* *authentication-failed*, *processed/error: decompression-failed*, or *processed/error: decryption-failed*. In a Listen action by the AS2 shared server, an MDN message generates automatically. For a Send action, generating an MDN message is an option for the processing AS2 Client operation.",
+      "example": "processed"
+    },
+    "messageId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The arbitrary identifier for the message.",
+      "example": "<976473487.15.1527087239460.JavaMail.dashernorthpole>"
+    },
+    "mimetype": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The MIME type of the message — *text/plain*, *application/binary*, *application/edifact*, *application/octet-stream*, *application/edi-x12*, or *application/xml*",
+      "example": "application/octet-stream"
+    },
+    "operationName": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The name of the operation component that processed this record. The component is an AS2 Client operation in the case of a Send action or an AS2 Shared Server operation in the case of a Listen action.",
+      "example": "Sample AS2 Operation"
+    },
+    "size": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The size, in bytes, of the document that corresponds to this record.",
+      "example": "654"
+    },
+    "subject": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The arbitrary subject name for the message.",
+      "example": "Sleigh Order 122518"
+    },
+    "successful": {
+      "type": "boolean",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Whether the record is a success or error.",
+      "example": "true"
+    }
+  }
+}

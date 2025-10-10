@@ -1,0 +1,15 @@
+{
+  "required": [
+    "EdifactControlInfo",
+    "EdifactOptions"
+  ],
+  "type": "object",
+  "properties": {
+    "EdifactControlInfo": {
+      "$ref": "./EdifactControlInfo.json"
+    },
+    "EdifactOptions": {
+      "$ref": "./EdifactOptions.json"
+    }
+  }
+}

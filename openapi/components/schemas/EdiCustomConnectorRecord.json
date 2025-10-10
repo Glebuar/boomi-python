@@ -1,0 +1,149 @@
+{
+  "required": [
+    "account",
+    "actionType",
+    "atomId",
+    "connectorName",
+    "connectorType",
+    "customFields",
+    "dateProcessed",
+    "errorMessage",
+    "executionId",
+    "id",
+    "operationName"
+  ],
+  "type": "object",
+  "properties": {
+    "account": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the account that ran this record.",
+      "example": "account-123456"
+    },
+    "actionType": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The type of action with which this record corresponds — *Send* for an outbound interchange, *Get* for an inbound interchange using the Disk, FTP, or SFTP communication method, or *Listen* for an inbound interchange using the AS2 or HTTP communication method.",
+      "example": "Listen"
+    },
+    "atomId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the Runtime that processed this record.",
+      "example": "3456789a-bcde-f012-3456-789abcdef012"
+    },
+    "connectorName": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The value is *Trading Partner* for a Custom trading partner Send operation, or *Start* for a Custom trading partner Listen operation.",
+      "example": "Start"
+    },
+    "connectorType": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "*edicustom* is the connector type for any record.",
+      "example": "edicustom"
+    },
+    "customFields": {
+      "$ref": "./customFields.json",
+      "description": "Custom fields based on the fields configured on the **Document Tracking** tab of the **Setup** page. The names of the fields are dependent upon your account setup.",
+      "example": {
+        "customNumber": "13",
+        "customDate": "2019-09-14T10:53:59-0400",
+        "customCharacter": "sample"
+      }
+    },
+    "dateProcessed": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The processing date and time of this record. Format is yyyy-MM-dd'T'HH:mm:ss'Z' \\(for example, 2019-09-14T15:32:00Z\\).",
+      "example": "2019-09-14T06:24:12Z"
+    },
+    "documentIndex": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The numerical index of this record in the execution.",
+      "example": "0"
+    },
+    "errorMessage": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Any error message associated with this record. This field is omitted for a successful interchange."
+    },
+    "executionId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of the run.",
+      "example": "execution-01234567-89ab-cdef-0123-456789abcdef-2019.09.14"
+    },
+    "fromTradingPartner": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The name of the sending trading partner component.",
+      "example": "Best Enterprises"
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The ID of this record.",
+      "example": "connector-abcdef01-2345-6789-abcd-ef0123456789"
+    },
+    "operationName": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The name of the operation component that processed the record.",
+      "example": "Sample Custom Listen Operation"
+    },
+    "size": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The size, in bytes, of the document that corresponds to this record.",
+      "example": "3138"
+    },
+    "successful": {
+      "type": "boolean",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Whether the record is a success or error.",
+      "example": "true"
+    },
+    "toTradingPartner": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "The name of the receiving trading partner component.",
+      "example": "Finest LTD"
+    }
+  }
+}

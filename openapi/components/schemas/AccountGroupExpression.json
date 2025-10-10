@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./AccountGroupSimpleExpression.json"
+    },
+    {
+      "$ref": "./AccountGroupGroupingExpression.json"
+    }
+  ]
+}

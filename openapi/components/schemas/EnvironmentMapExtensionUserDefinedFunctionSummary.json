@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "properties": {
+    "componentId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the component.",
+      "example": "1234b56a-ea78-90f1-beec-2fe23456cb8e"
+    },
+    "createdBy": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The email address of the user who created the component.",
+      "example": "userboomi.com"
+    },
+    "createdDate": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The creation date of the component.",
+      "example": "2022-01-21T02:40:01Z"
+    },
+    "deleted": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      },
+      "description": "Indicates the deletion of a component. A true value indicates a deleted status, whereas a false value indicates an active status.",
+      "example": "false"
+    },
+    "environmentMapExtensionId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The system-generated ID of a environment map extension within a specific environment.",
+      "example": "ZWNlYjg3Y2ItMW..."
+    },
+    "modifiedBy": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The email address of the user who modified the component.",
+      "example": "userboomi.com"
+    },
+    "modifiedDate": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The modification date of the component.",
+      "example": "2022-01-21T02:40:01Z"
+    },
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The user-defined name given to the component.",
+      "example": "My User Defined Function"
+    }
+  }
+}

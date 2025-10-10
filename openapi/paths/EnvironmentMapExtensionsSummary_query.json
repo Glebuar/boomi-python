@@ -1,0 +1,124 @@
+{
+  "post": {
+    "tags": [
+      "EnvironmentMapExtensionsSummary"
+    ],
+    "summary": "Queries for an EnvironmentMapExtensionsSummary object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryEnvironmentMapExtensionsSummary",
+    "requestBody": {
+      "description": " Possible properties include: environmentId, extensionGroupId",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentMapExtensionsSummaryQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "EQUALS",
+                    "property": "environmentId",
+                    "argument": [
+                      "456789ab-cdef-0123-4567-89abcdef0123"
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "EQUALS",
+                        "property": "environmentId",
+                        "argument": [
+                          "456789ab-cdef-0123-4567-89abcdef0123"
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentMapExtensionsSummaryQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n  <QueryFilter>\n     <expression xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" operator=\"EQUALS\" property=\"environmentId\" xsi:type=\"SimpleExpression\">\n        <argument>456789ab-cdef-0123-4567-89abcdef0123</argument>\n     </expression>\n  </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"environmentId\">\n      <argument>456789ab-cdef-0123-4567-89abcdef0123</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentMapExtensionsSummaryQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 1,
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "EnvironmentMapExtensionsSummary",
+                  "enviromentId": "456789ab-cdef-0123-4567-89abcdef0123",
+                  "extensionGroupId": "",
+                  "id": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg",
+                  "processId": "789abcde-f012-3456-789a-bcdef0123456",
+                  "mapId": "01234567890123456789012345",
+                  "name": "Account - Customer",
+                  "DestinationFieldSet": {
+                    "@type": "MapExtensionBrowseData",
+                    "BrowseField": [
+                      {
+                        "@type": "BrowseField",
+                        "name": "password"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentMapExtensionsSummaryQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"1\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n   <bns:result xsi:type=\"EnvironmentMapExtensionsSummary\" name=\"Account - Customer\" mapId=\"01234567890123456789012345\" \n     processId=\"789abcde-f012-3456-789a-bcdef0123456\" \n     id=\"Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg\" \n     extensionGroupId=\"\" environmentId=\"456789ab-cdef-0123-4567-89abcdef0123\">\n     <bns:SourceFieldSet connectionId=\"c04f56dd-0eec-4311-ab7b-1737a1309ae8\">\n        <bns:BrowseField name=\"password\"/>\n     </bns:SourceFieldSet>\n     <bns:DestinationFieldSet connectionId=\"l23e56dd-0ffd-4222-an8b-1737a1309ae8\">\n        <bns:BrowseField name=\"password\"/>\n     </bns:DestinationFieldSet>\n   </bns:result>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

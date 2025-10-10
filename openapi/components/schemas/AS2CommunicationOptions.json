@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "AS2DefaultPartnerSettings": {
+      "$ref": "./AS2SendSettings.json"
+    },
+    "AS2ReceiveOptions": {
+      "$ref": "./AS2ReceiveOptions.json"
+    },
+    "AS2SendOptions": {
+      "$ref": "./AS2SendOptions.json"
+    },
+    "AS2SendSettings": {
+      "$ref": "./AS2SendSettings.json"
+    },
+    "CommunicationSetting": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "default",
+        "custom",
+        "component"
+      ]
+    },
+    "SharedCommunicationChannel": {
+      "$ref": "./SharedCommunicationChannel.json"
+    }
+  }
+}

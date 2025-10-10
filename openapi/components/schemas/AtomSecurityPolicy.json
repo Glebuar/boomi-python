@@ -1,0 +1,24 @@
+{
+  "required": [
+    "privilegeType"
+  ],
+  "type": "object",
+  "properties": {
+    "arguments": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./AtomSecurityPolicyArgumentType.json"
+      }
+    },
+    "privilegeType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "A valid Java runtime permission."
+    }
+  }
+}

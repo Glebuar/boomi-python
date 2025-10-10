@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "properties": {
+    "componentId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the secondary component. The component ID is available in the Revision History dialog, which you can access from the Build page in the service."
+    },
+    "parentComponentId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the primary component that the secondary components reference. You can use this attribute specifically in the QUERY operation. The component ID is available in the Revision History dialog, which you can access from the Build page in the service."
+    },
+    "parentVersion": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The revision number of the primary component. This attribute is used specifically in the QUERY operation. A component's version number is available in the Revision History dialog, which you can access from the Build page in the service."
+    },
+    "type": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The type of reference component. \n - A value of DEPENDENT indicates that the component is included automatically in a process at packaging and deployment time. \n - A value of INDEPENDENT indicates the component is standalone, and you must package and deploy it individually and manually, though you might use it in a process configuration. \n\n For more information on component reference types, see the topic [Component References](https://help.boomi.com/docs/Atomsphere/Integration/Process%20building/int-Component_references_8d7cf9db-2716-4301-b8d8-46eb9f055999).",
+      "enum": [
+        "DEPENDENT",
+        "INDEPENDENT"
+      ]
+    },
+    "branchId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "If specified, the ID of the branch on which you want to query."
+    }
+  }
+}

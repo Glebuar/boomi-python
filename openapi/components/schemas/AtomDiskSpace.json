@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "properties": {
+    "DiskSpaceDirectory": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./AtomDiskSpaceDirectory.json"
+      }
+    },
+    "quotaLimit": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The total amount of disk space available for consumption by this attachment.",
+      "example": "5 GB"
+    },
+    "rawQuotaLimit": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The total number of bytes available for consumption by this attachment.",
+      "example": "536"
+    },
+    "rawTotalSize": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The disk space in bytes that is already consumed by the given attachment.",
+      "example": "53415102"
+    },
+    "totalSize": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The size of disk space already consumed by the given attachment.",
+      "example": "50 MB"
+    }
+  }
+}

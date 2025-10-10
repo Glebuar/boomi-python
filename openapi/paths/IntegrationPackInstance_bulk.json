@@ -1,0 +1,50 @@
+{
+  "post": {
+    "tags": [
+      "IntegrationPackInstance"
+    ],
+    "summary": "Retrieves multiple IntegrationPackInstance objects by identifier",
+    "description": "To learn more about `bulk`, refer to [Bulk GET operations](#section/Introduction/Bulk-GET-operations).",
+    "operationId": "BulkIntegrationPackInstance",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/IntegrationPackInstanceBulkRequest.json"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/IntegrationPackInstanceBulkRequest.json"
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/IntegrationPackInstanceBulkResponse.json"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/IntegrationPackInstanceBulkResponse.json"
+            }
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

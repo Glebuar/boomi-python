@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./EdiCustomConnectorRecordSimpleExpression.json"
+    },
+    {
+      "$ref": "./EdiCustomConnectorRecordGroupingExpression.json"
+    }
+  ]
+}

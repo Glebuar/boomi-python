@@ -1,0 +1,45 @@
+{
+  "post": {
+    "tags": [
+      "ApiUsageCount"
+    ],
+    "summary": "Retrieves additional results for an ApiUsageCount query",
+    "description": "To learn about using `queryMore`, refer to [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryMoreApiUsageCount",
+    "requestBody": {
+      "content": {
+        "text/plain": {
+          "schema": {
+            "type": "string"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ApiUsageCountQueryResponse.json"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ApiUsageCountQueryResponse.json"
+            }
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

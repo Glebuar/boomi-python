@@ -1,0 +1,61 @@
+{
+  "post": {
+    "tags": [
+      "ExecutionArtifacts"
+    ],
+    "summary": "Creates an ExecutionArtifacts object",
+    "description": "Allows you to retrieve a link for downloading detailed information about a given process run. \n - You must have the Runtime Management privilege to perform the CREATE operation. If you have the Runtime Management Read Access privilege, you cannot download execution artifacts. \n - Additionally, as the Cloud owner, you must select the **Enable Download of Execution Artifacts and Worker Logs** property for your account. This property permits you to download process execution data, and you can access it from the Cloud Attachment Quota tab of Manage > Cloud Management. \n - After providing the endpoint and a request body containing the execution ID, the CREATE response returns a download URL that you can open (or copy and paste) in your web browser, which initiates the file download to your local drive. \n To retrieve the download link for file containing a process execution artifacts, \n 1. First create a CREATE (or POST) request to `https://api.boomi.com/api/rest/v1/<accountId>/ExecutionArtifacts` where `accountId` is the ID of the account authenticating the request. \n 2. Populate the request body with the `executionId`, which is the identifier of the given run process.\n 3. Send the request and either open or copy and paste the URL from the response into your web browser.",
+    "operationId": "CreateExecutionArtifacts",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ExecutionArtifacts.json"
+          },
+          "example": {
+            "executionId": "execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ExecutionArtifacts.json"
+          },
+          "example": "<ExecutionArtifacts xmlns=\"http://api.platform.boomi.com/\" executionId=\"execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ExecutionArtifacts.json"
+            },
+            "example": {
+              "@type": "LogDownload",
+              "statusCode": "202",
+              "message": "Beginning download.",
+              "url": "https://api.boomi.com/account/account-123456/api/download/ExecutionArtifacts-89abcdef-0123-4567-89ab-cdef01234567"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ExecutionArtifacts.json"
+            },
+            "example": "<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\">\n   <S:Body>\n      <bns:createResponse xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n         <bns:result xsi:type=\"LogDownload\" statusCode=\"202\" message=\"Beginning download.\" \n             url=\"https://api.boomi.com/account/account-123456/api/download/ExecutionArtifacts-89abcdef-0123-4567-89ab-cdef01234567\"/>\n      </bns:createResponse>\n   </S:Body>\n</S:Envelope>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

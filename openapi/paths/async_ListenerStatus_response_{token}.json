@@ -1,0 +1,60 @@
+{
+  "get": {
+    "tags": [
+      "ListenerStatus"
+    ],
+    "summary": "Retrieves a ListenerStatus object by token",
+    "description": "The ordinary GET operation retrieves async results from the QUERY. Send an HTTP GET where {accountId} is the account that you are authenticating with and {token} is the listener status token returned by your QUERY request. \n >**Note:** For backward compatibility, Boomi continues to support the legacy URL: https://api.boomi.com/api/rest/v1/accountId/ListenerStatus/query/async.",
+    "operationId": "AsyncTokenListenerStatus",
+    "parameters": [
+      {
+        "name": "token",
+        "in": "path",
+        "description": "Takes in the token from a previous call to return a result.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ListenerStatusAsyncResponse.json"
+            },
+            "example": {
+              "@type": "AsyncOperationResult",
+              "result": [
+                {
+                  "@type": "ListenerStatus",
+                  "listenerId": "ea56da44-ea7d-4c80-9866-30556474938e",
+                  "status": "listening",
+                  "connectorType": "wss"
+                }
+              ],
+              "numberOfResults": 1,
+              "responseStatusCode": 200
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ListenerStatusAsyncResponse.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:AsyncOperationResult xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" responseStatusCode=\"200\" numberOfResults=\"1\">\n        <bns:result xsi:type=\"ListenerStatus\" status=\"listening\" listenerId=\"ea56da44-ea7d-4c80-9866-30556474938e\" connectorType=\"wss\"/>\n    </bns:AsyncOperationResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

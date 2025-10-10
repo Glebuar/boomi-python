@@ -1,0 +1,52 @@
+{
+  "required": [
+    "field"
+  ],
+  "type": "object",
+  "properties": {
+    "atomId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the Runtime.",
+      "example": "3456789a-bcde-f0123-4567-89abcdef012"
+    },
+    "connectionId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the connection.",
+      "example": "bcdef012-3456-789a-bcde-f0123456789a"
+    },
+    "extensionGroupId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "If the process is in a multi-install integration pack, this is the ID of the multi-install integration pack, which is the same as the ID of the process.",
+      "example": ""
+    },
+    "field": {
+      "$ref": "./FieldSummary.json",
+      "description": "The extensions template for the OAuth 2.0 accessToken field is a superset of the standard connection field template. There is one additional field: oauth2AuthorizationUrl. The oauth2AuthorizationUrl value is the URL for manually generating the access token."
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the object. This is a conceptual ID synthesized from the IDs of the<br /> -   process<br />-   connection<br /> -   multi-install integration pack \\(extensionGroupId\\), if applicable<br />-   Atom",
+      "example": "Ab0Cd1Ef1Gh3Ij4Kl5Mn6Op7Qr8St9Uv0Wx9Yz8Zy7Xw6Vu5Ts4Rq3Po2Nm1Lk0Ji1Hg"
+    },
+    "processId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the process.",
+      "example": "789abcde-f012-3456-789a-bcdef0123456"
+    }
+  }
+}

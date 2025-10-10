@@ -1,0 +1,172 @@
+{
+  "get": {
+    "tags": [
+      "AccountSSOConfig"
+    ],
+    "summary": "Retrieves an instance of an AccountSSOConfig object",
+    "description": "Returns the Account Single Sign-on Configuration for the supplied account ID.",
+    "operationId": "GetAccountSSOConfig",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountSSOConfig.json"
+            },
+            "example": {
+              "@type": "AccountSSOConfig",
+              "certificate": "LS0...",
+              "accountId": "account-123456",
+              "enabled": true,
+              "idpUrl": "http://www.testsaml.com:8080/openam_954/SSOPOST/metaAlias/idp",
+              "signoutRedirectUrl": "http://www.google.com",
+              "certInfo": "test~~Sun~~OpenSSO~~null~~null~~US~~2018-01-12T19:19:39.000Z",
+              "fedIdFromNameId": false,
+              "nameIdPolicy": "TRANSIENT",
+              "authnContext": "PPT"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountSSOConfig.json"
+            },
+            "example": "<bns:AccountSSOConfig xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" accountId=\"account-123456\" enabled=\"true\" idpUrl=\"http://www.testsaml.com:8080/openam_954/SSOPOST/metaAlias/idp\" signoutRedirectUrl=\"https://www.google.com\" certInfo=\"test~~Sun~~OpenSSO~~null~~null~~US~~2018-01-12T19:19:39.000Z\" fedIdFromNameId=\"false\">\n        <bns:certificate>LS0...</bns:certificate>\n    </bns:AccountSSOConfig>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "AccountSSOConfig"
+    ],
+    "summary": "Modifies or updates an AccountSSOConfig object",
+    "description": "Updates the Account Single Sign-on Configuration for the supplied account ID.",
+    "operationId": "UpdateAccountSSOConfig",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/AccountSSOConfig.json"
+          },
+          "example": {
+            "certificate": "LS0...",
+            "accountId": "account-123456",
+            "enabled": true,
+            "idpUrl": "http://www.testsaml.com:8080/openam_954/SSOPOST/metaAlias/idp",
+            "signoutRedirectUrl": "https://news.google.com",
+            "certInfo": "test~~Sun~~OpenSSO~~null~~null~~US~~2018-01-12T19:19:39.000Z",
+            "fedIdFromNameId": false,
+            "nameIdPolicy": "TRANSIENT",
+            "authnContext": "PPT"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/AccountSSOConfig.json"
+          },
+          "example": "<bns:AccountSSOConfig enabled=\"true\" fedIdFromNameId=\"false\" nameIdPolicy=\"TRANSIENT\" certInfo=\"test~~Sun~~OpenSSO~~null~~null~~US~~2018-01-12T19:19:39.000Z\"\n    idpUrl=\"http://www.testsaml.com:8080/openam_954/SSOPOST/metaAlias/idp\"\n    signoutRedirectUrl=\"https://www.google.com/\" accountId=\"account-123456\" xmlns:bns=\"http://api.platform.boomi.com/\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n       <bns:certificate>LS0...</bns:certificate>\n    </bns:AccountSSOConfig>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AccountSSOConfig.json"
+            },
+            "example": {
+              "@type": "AccountSSOConfig",
+              "certificate": "LS0...",
+              "accountId": "account-123456",
+              "enabled": true,
+              "idpUrl": "http://www.testsaml.com:8080/openam_954/SSOPOST/metaAlias/idp",
+              "signoutRedirectUrl": "https://news.google.com",
+              "certInfo": "test~~Sun~~OpenSSO~~null~~null~~US~~2018-01-12T19:19:39.000Z",
+              "fedIdFromNameId": false,
+              "nameIdPolicy": "TRANSIENT",
+              "authnContext": "PPT"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AccountSSOConfig.json"
+            },
+            "example": "<bns:AccountSSOConfig xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" accountId=\"account-123456\" enabled=\"true\" idpUrl=\"http://www.testsaml.com:8080/openam_954/SSOPOST/metaAlias/idp\" signoutRedirectUrl=\"https://www.google.com/\" certInfo=\"test~~Sun~~OpenSSO~~null~~null~~US~~2018-01-12T19:19:39.000Z\" fedIdFromNameId=\"false\" nameIdPolicy=\"TRANSIENT\" authnContext=\"PPT\">\n        <bns:certificate>LS0...=</bns:certificate>\n    </bns:AccountSSOConfig>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "AccountSSOConfig"
+    ],
+    "summary": "Deletes an AccountSSOConfig object",
+    "description": "Deletes the Account Single Sign-on Configuration for the supplied account ID.",
+    "operationId": "DeleteAccountSSOConfig",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

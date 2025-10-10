@@ -1,0 +1,146 @@
+{
+  "post": {
+    "tags": [
+      "PublisherIntegrationPack"
+    ],
+    "summary": "Queries for a PublisherIntegrationPack object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryPublisherIntegrationPack",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/PublisherIntegrationPackQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "SINGLE"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "installationType"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "SINGLE"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "installationType"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/PublisherIntegrationPackQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n  <QueryFilter>\n    <expression operator=\"EQUALS\" property=\"installationType\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n      <argument>SINGLE</argument>\n    </expression>\n  </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"installationType\">\n      <argument>SINGLE</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PublisherIntegrationPackQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "PublisherIntegrationPack",
+                  "Description": "Ipack description",
+                  "PublisherPackagedComponents": {
+                    "@type": "PublisherPackagedComponents",
+                    "PublisherPackagedComponent": []
+                  },
+                  "id": "664cc077-28a8-42cb-ac6e-1cb131c9e0d0",
+                  "name": "IPACK-JSON",
+                  "installationType": "SINGLE"
+                },
+                {
+                  "@type": "PublisherIntegrationPack",
+                  "Description": "",
+                  "PublisherPackagedComponents": {
+                    "@type": "PublisherPackagedComponents",
+                    "PublisherPackagedComponent": [
+                      {
+                        "@type": "PublisherPackagedComponent",
+                        "componentId": "62f7ffb7-5332-4142-893a-8d40d4742ccf",
+                        "componentName": "Rate Limit Test",
+                        "componentType": "process",
+                        "currentVersion": "",
+                        "pendingVersion": "1.0",
+                        "latestVersion": ""
+                      },
+                      {
+                        "@type": "PublisherPackagedComponent",
+                        "componentId": "bb0dae4f-c8f3-47fa-9dee-c3c484f79f71",
+                        "componentName": "New Process 4",
+                        "componentType": "process",
+                        "currentVersion": "",
+                        "pendingVersion": "3.0",
+                        "latestVersion": ""
+                      }
+                    ]
+                  },
+                  "id": "8b80f83b-9836-49a0-8c72-753131a77bae",
+                  "name": "test single",
+                  "installationType": "SINGLE"
+                }
+              ],
+              "numberOfResults": 2
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/PublisherIntegrationPackQueryResponse.json"
+            },
+            "example": "<bns:QueryResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" numberOfResults=\"2\">\n    <bns:result xsi:type=\"bns:PublisherIntegrationPack\" id=\"664cc077-28a8-42cb-ac6e-1cb131c9e0d0\" name=\"IPACK-JSON\" installationType=\"SINGLE\">\n        <bns:Description>Ipack description</bns:Description>\n        <bns:PublisherPackagedComponents/>\n    </bns:result>\n    <bns:result xsi:type=\"bns:PublisherIntegrationPack\" id=\"8b80f83b-9836-49a0-8c72-753131a77bae\" name=\"test single\" installationType=\"SINGLE\">\n        <bns:Description></bns:Description>\n        <bns:PublisherPackagedComponents>\n            <bns:PublisherPackagedComponent componentId=\"bb0dae4f-c8f3-47fa-9dee-c3c484f79f71\" componentName=\"New Process 4\" componentType=\"process\" currentVersion=\"\" pendingVersion=\"3.0\" latestVersion=\"\"/>\n            <bns:PublisherPackagedComponent componentId=\"62f7ffb7-5332-4142-893a-8d40d4742ccf\" componentName=\"Rate Limit Test\" componentType=\"process\" currentVersion=\"\" pendingVersion=\"1.0\" latestVersion=\"\"/>\n        </bns:PublisherPackagedComponents>\n    </bns:result>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

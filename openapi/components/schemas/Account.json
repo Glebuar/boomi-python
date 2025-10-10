@@ -1,0 +1,99 @@
+{
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the account.",
+      "example": "boomiqa-T7KIDU"
+    },
+    "dateCreated": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The creation date of the account.",
+      "example": "2022-09-02T20:16:28Z"
+    },
+    "expirationDate": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The scheduled expiration date of the account."
+    },
+    "licensing": {
+      "$ref": "./Licensing.json",
+      "description": "Indicates the number of connections used and purchased in each of the connector type and production/test classifications. The classifications include standard, smallBusiness, enterprise, and tradingPartner."
+    },
+    "molecule": {
+      "$ref": "./Molecule.json"
+    },
+    "name": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The name of the account.",
+      "example": "BoomiQA"
+    },
+    "overDeployed": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      },
+      "description": "Indicates the state of an account if one or more additional deployments are made after all available connection licenses have been used for any of the connector class."
+    },
+    "status": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "trial",
+        "active",
+        "suspended",
+        "deleted",
+        "unlimited"
+      ],
+      "description": "The status of the account. The allowed values are active or deleted.",
+      "example": "active"
+    },
+    "suggestionsEnabled": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      },
+      "description": "Identifies whether this account has the Boomi Suggest feature enabled."
+    },
+    "supportAccess": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      },
+      "description": "Identifies whether this account allows support user access.",
+      "example": "true"
+    },
+    "supportLevel": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "standard",
+        "premier"
+      ],
+      "description": "The level of support for this account. The allowed values are standard *or premier.",
+      "example": "standard"
+    },
+    "widgetAccount": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      },
+      "example": "false"
+    }
+  }
+}

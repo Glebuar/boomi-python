@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "statusCode": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The status code as one of the following: \n - 202 — status message: Beginning download. \n- 504 — status message: Runtime is unavailable.",
+      "example": "202"
+    },
+    "message": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The status message.",
+      "example": "Beginning download."
+    },
+    "url": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "(statusCode 202 only) The URL for the download.",
+      "example": "http://localhost:8081/account/account-123456/api/download/AtomLog-89abcdef-0123-4567-89ab-cdef01234567"
+    }
+  }
+}

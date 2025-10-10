@@ -1,0 +1,45 @@
+{
+  "post": {
+    "tags": [
+      "Change listener status"
+    ],
+    "summary": "Update listeners status",
+    "description": "You can use the changeListenerStatus operation to pause, resume, or restart listeners. A successful changeListenerStatus call returns an empty changeListenerStatusResponse to indicate acceptance of the request.",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ChangeListenerStatusRequest.json"
+          },
+          "example": {
+            "ChangeListenerStatusRequest": {
+              "listenerId": "44e26ba5-aaf5-4e97-bc85-3e1c50a52edd",
+              "containerId": "d96ff19e-855d-4fd3-856b-abe2795d0dc5",
+              "action": "pause"
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ChangeListenerStatusRequest.json"
+          },
+          "example": "<ChangeListenerStatusRequest xmlns=\"http://api.platform.boomi.com/\" listenerId=\"44e26ba5-aaf5-4e97-bc85-3e1c50a52edd\" containerId=\"d96ff19e-855d-4fd3-856b-abe2795d0dc5\" action=\"pause\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

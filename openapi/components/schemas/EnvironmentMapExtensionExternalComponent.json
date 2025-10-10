@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "properties": {
+    "componentId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the component. The component ID is available by querying the Component Metadata object.",
+      "example": "1234b56a-ea78-90f1-beec-2fe23456cb8e"
+    },
+    "componentName": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The user-defined name given to the component.",
+      "example": "component1"
+    },
+    "componentType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The type of component. >**Note:** Currently, this object retrieves Cross Reference Table type-components ('crossref') only.",
+      "example": "crossref"
+    },
+    "componentVersion": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "example": "1"
+    },
+    "environmentMapExtensionId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the environment map extension. To find the environmentMapExtensionId, you can first query the [Environment Map Extension object](/api/platformapi#tag/EnvironmentMapExtension) to retrieve a list of all available environment extensions for an account and copy the resultant environment map extension ID.",
+      "example": "ZWNlYjg3Y2ItMWEwNC00MjIwLTgxYW..."
+    }
+  }
+}

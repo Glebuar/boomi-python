@@ -1,0 +1,15 @@
+{
+  "required": [
+    "value"
+  ],
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "An argument value in a Java runtime permission."
+    }
+  }
+}

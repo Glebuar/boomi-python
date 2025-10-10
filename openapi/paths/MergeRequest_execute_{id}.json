@@ -1,0 +1,95 @@
+{
+  "post": {
+    "tags": [
+      "MergeRequest"
+    ],
+    "summary": "Executes an action on a MergeRequest object",
+    "description": "- These are the actions you can choose from when executing a merge request: \n  -  MERGE: Use to start or restart a merge request; the stage must be REVIEWING or FAILED_TO_MERGE \n  -  REVERT: Use to revert a merge request; the stage must be MERGED or DELETED and previousStage is MERGED \n  -  RETRY_DRAFTING: Use when the merge request stage is FAILED_TO_DRAFT or FAILED_TO_REDRAFT \n- If the merge is successful, the `stage` and/or `previousStage` might be in one of the following stages: \n  -  DRAFTING - The merge request is in the queue. \n  -  DRAFTED - The merge request is drafted for review. \n  -  REVIEWING - The merge request is being reviewed. \n  * MERGING - The merge request is being processed. \n  * MERGED - The merge request has successfully completed. \n  * FAILED_TO_MERGE - The merge request failed to merge.",
+    "operationId": "ExecuteMergeRequest",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/MergeRequest.json"
+          },
+          "example": {
+            "id": "TVI6NTQ5",
+            "mergeRequestAction": "MERGE"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/MergeRequest.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:MergeRequest xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" id=\"TVI6NTQ5\" mergeRequestAction=\"MERGE\">\n</bns:MergeRequest>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/MergeRequest.json"
+            },
+            "example": {
+              "@type": "MergeRequest",
+              "id": "TVI6NTQ5",
+              "sourceBranchId": "QjoyMDI1OTk",
+              "sourceBranchName": "branch-1",
+              "destinationBranchId": "QjoyMDI1OTg",
+              "destinationBranchName": "main",
+              "strategy": "OVERRIDE",
+              "stage": "MERGING",
+              "priorityBranch": "DESTINATION",
+              "previousStage": "REVIEWING",
+              "modifiedBy": "anuja.vermaboomi.com",
+              "modifiedDate": "2024-09-24T13:15:27Z",
+              "createdBy": "userboomi.com",
+              "createdDate": "2024-09-24T05:36:59Z",
+              "MergeRequestDetails": {
+                "MergeRequestDetail": {
+                  "componentGuid": "b6fc8152-bfbe-44b7-b96b-4959db06e23a",
+                  "sourceRevision": "2",
+                  "changeType": "ADDED",
+                  "conflict": "false",
+                  "stage": "DRAFTED",
+                  "modifiedBy": "userboomi.com",
+                  "modifiedDate": "2024-09-24T13:15:23Z",
+                  "createdBy": "userboomi.com",
+                  "createdDate": "2024-09-24T13:15:23Z"
+                }
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/MergeRequest.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:MergeRequest xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" id=\"TVI6NTQ5\" sourceBranchId=\"QjoyMDI1OTk\" sourceBranchName=\"branch-1\" destinationBranchId=\"QjoyMDI1OTg\" destinationBranchName=\"main\" strategy=\"OVERRIDE\" stage=\"MERGING\" priorityBranch=\"DESTINATION\" previousStage=\"REVIEWING\" modifiedBy=\"anuja.verma@boomi.com\" modifiedDate=\"2024-09-24T13:15:27Z\" createdBy=\"user@boomi.com\" createdDate=\"2024-09-24T05:36:59Z\">\n  <bns:MergeRequestDetails>\n    <bns:MergeRequestDetail componentGuid=\"b6fc8152-bfbe-44b7-b96b-4959db06e23a\" sourceRevision=\"2\" changeType=\"ADDED\" conflict=\"false\" stage=\"DRAFTED\" modifiedBy=\"user@boomi.com\" modifiedDate=\"2024-09-24T13:15:23Z\" createdBy=\"user@boomi.com\" createdDate=\"2024-09-24T13:15:23Z\"/>\n  </bns:MergeRequestDetails>\n</bns:MergeRequest>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

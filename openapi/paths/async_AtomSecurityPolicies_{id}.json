@@ -1,0 +1,55 @@
+{
+  "get": {
+    "tags": [
+      "AtomSecurityPolicies"
+    ],
+    "summary": "Retrieves an AtomSecurityPolicies object by identifier",
+    "description": "The initial GET operation returns a security policy token for the specified Runtime cloud or Runtime cluster. Subsequent GET operations return status code 202 (while the request is in progress) or the custom contents of a security policy based on the token that was returned. \n\n The GET operation returns only custom runtime permissions that you added to the security policy, not the entire policy file. If you did not update the security policy for a given Runtime cloud or Runtime cluster, the response to a GET operation is empty.",
+    "operationId": "AsyncGetAtomSecurityPolicies",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The runtime (container) id for the applicable runtime (accepts only Runtime cloud cluster and regular runtime cluster types, no basic runtimes or cloud attachments)."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AsyncOperationTokenResult.json"
+            },
+            "example": {
+              "AsyncOperationTokenResult": {
+                "responseStatusCode": "202",
+                "asyncToken": {
+                  "token": "AtomSecurityPolicies-6896e107-b210-454e-8fcf-73684d1e4903"
+                }
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/AsyncOperationTokenResult.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:AsyncOperationTokenResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" responseStatusCode=\"202\">\n    <bns:asyncToken token=\"AtomSecurityPolicies-6896e107-b210-454e-8fcf-73684d1e4903\"/>\n</bns:AsyncOperationTokenResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

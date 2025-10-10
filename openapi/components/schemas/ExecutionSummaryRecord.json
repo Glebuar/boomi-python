@@ -1,0 +1,176 @@
+{
+  "type": "object",
+  "properties": {
+    "accountID": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The account under which the processes ran.",
+      "example": "account-123456"
+    },
+    "atomID": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The component ID of the Runtime on which the processes ran.",
+      "example": "3456789a-bcde-f0123-4567-89abcdef012"
+    },
+    "atomName": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The name of the Runtime on which the runs occurred.",
+      "example": "Desktop Atom"
+    },
+    "elapsedTime": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The aggregate elapsed processing time, in milliseconds, of the runs that occurred.",
+      "example": "32460"
+    },
+    "elapsedVarSum": {
+      "type": "number",
+      "format": "double",
+      "xml": {
+        "attribute": true
+      },
+      "description": "A composite value enabling computation of the standard deviation of elapsed run time for the processes that occurred using the [parallel algorithm](http://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Parallel_algorithm).",
+      "example": "0.0"
+    },
+    "executionCount": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The number of runs that occurred.",
+      "example": "1"
+    },
+    "inboundDocCount": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The aggregate number of processed inbound documents for the runs that occurred.",
+      "example": "1"
+    },
+    "inboundDocSize": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The aggregate size, in bytes, of the processed inbound documents for the runs that occurred.",
+      "example": "222"
+    },
+    "launchElapsedTime": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The aggregate elapsed wait time, in milliseconds, before the start of processing for the runs that occurred.",
+      "example": "30216"
+    },
+    "launcherID": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The API Service component that kicks off the run.<br /> **Note:** The Runtime must have the **API Type** set to **Advanced** on the **Shared Web Server** tab of **Runtime Management** to specify launcherId."
+    },
+    "maxElapsedTime": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The time, in milliseconds, it took for the most time-consuming run that occurred.",
+      "example": "32460"
+    },
+    "outboundDocCount": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The aggregate number of processed outbound documents for the runs that occurred.",
+      "example": "0"
+    },
+    "outboundDocSize": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The aggregate size, in bytes, of the processed outbound documents for the runs that occurred.",
+      "example": "0"
+    },
+    "processID": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The component ID of the processes that ran.",
+      "example": "789abcde-f012-3456-789a-bcdef0123456"
+    },
+    "processName": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The name of the process that was run.",
+      "example": "Initial Load Accounts"
+    },
+    "reportKey": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The web service user that authenticated to make the run request. <br />**Note:** For Runtimes with an Authentication Type of External Provider, the reportKey is the API Key. Otherwise, it is the specified user name.",
+      "example": "userXYZ"
+    },
+    "returnDocCount": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The aggregate number of resulting documents for the runs that occurred.",
+      "example": "1"
+    },
+    "returnDocSize": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The aggregate size, in bytes, of resulting documents for the runs that occurred.",
+      "example": "222"
+    },
+    "status": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The status of the runs. Allowed values include COMPLETE, COMPLETE\\_WARN, ERROR.",
+      "example": "COMPLETE"
+    },
+    "timeBlock": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The start time of the represented time block.",
+      "example": "2016-05-14T15:57:00Z"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "delete": {
+    "tags": [
+      "ProcessAtomAttachment"
+    ],
+    "summary": "Deletes a ProcessAtomAttachment object",
+    "description": "Detaches a process from a Runtime where the attachment is specified by the conceptual Process Atom Attachment object ID.",
+    "operationId": "DeleteProcessAtomAttachment",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

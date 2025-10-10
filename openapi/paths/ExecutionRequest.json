@@ -1,0 +1,111 @@
+{
+  "post": {
+    "tags": [
+      "ExecutionRequest"
+    ],
+    "summary": "Creates an ExecutionRequest object",
+    "description": "Submits the process to run and returns results immediately. The operation does not wait for the run to complete. \n\n - The Execution Request response returns a requestID, which you use to make a subsequent call to the [Execution Record object](/api/platformapi#tag/ExecutionRecord) to retrieve detailed information about the process run.\n- This operation returns an error when the client:\n  -  Fails authentication or does not have the correct permissions\n  -  Supplies an invalid Account ID\n  -  Supplies an invalid Runtime ID\n  -  Attempts to reach a deleted Atom\n  -  Supplies an invalid Process ID\n  -  Missing privileges to run processes on the given Runtime or its associated Environment.",
+    "operationId": "CreateExecutionRequest",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ExecutionRequest.json"
+          },
+          "example": {
+            "@type": "ExecutionRequest",
+            "atomId": "3456789a-bcde-f0123-4567-89abcdef012",
+            "processId": "789abcde-f012-3456-789a-bcdef0123456",
+            "DynamicProcessProperties": {
+              "DynamicProcessProperty": [
+                {
+                  "name": "property1",
+                  "value": "value1"
+                }
+              ]
+            },
+            "ProcessProperties": {
+              "ProcessProperty": [
+                {
+                  "componentId": "456789a-bcde-f0123-4567-89abcdef012",
+                  "ProcessPropertyValue": [
+                    {
+                      "key": "key1",
+                      "value": "property1"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ExecutionRequest.json"
+          },
+          "example": "<ExecutionRequest processId=\"789abcde-f012-3456-789a-bcdef0123456\" atomId=\"3456789a-bcde-f0123-4567-89abcdef012\" xmlns=\"http://api.platform.boomi.com/\">\n    <DynamicProcessProperties>\n        <DynamicProcessProperty name=\"property1\" value=\"value1\"/>\n        <DynamicProcessProperty name=\"property2\" value=\"value2\"/>\n    </DynamicProcessProperties>\n    <ProcessProperties>\n         <ProcessProperty componentId=\"456789a-bcde-f0123-4567-89abcdef012\">\n\t<ProcessPropertyValue key=\"key1\" value=\"value1\"/>\n\t<ProcessPropertyValue key=\"key2\" value=\"value2\"/>\n          </ProcessProperty>\n    </ProcessProperties>\n</ExecutionRequest>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ExecutionRequest.json"
+            },
+            "example": {
+              "@type": "ExecutionRequest",
+              "DynamicProcessProperties": {
+                "@type": "ExecutionRequestDynamicProcessProperties",
+                "DynamicProcessProperty": [
+                  {
+                    "@type": "",
+                    "name": "property1",
+                    "value": "value1"
+                  }
+                ]
+              },
+              "ProcessProperties": {
+                "@type": "ExecutionRequestProcessProperties",
+                "ProcessProperty": [
+                  {
+                    "@type": "",
+                    "ProcessPropertyValue": [
+                      {
+                        "@type": "",
+                        "key": "key1",
+                        "value": "value1"
+                      }
+                    ],
+                    "componentId": "456789a-bcde-f0123-4567-89abcdef012"
+                  }
+                ]
+              },
+              "processId": "789abcde-f012-3456-789a-bcdef0123456",
+              "atomId": "3456789a-bcde-f0123-4567-89abcdef012",
+              "requestId": "executionrecord-110b23f4-567a-8d90-1234-56789e0b123d",
+              "recordUrl": "http://localhost:8081/api/rest/v1/account1234/ExecutionRecord/async/executionrecord-110b23f4-567a-8d90-1234-56789e0b123d"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ExecutionRequest.json"
+            },
+            "example": "<ExecutionRequest requestId=\"executionrecord-110b23f4-567a-8d90-1234-56789e0b123d\" recordUrl=\"https://api.boomi.com/api/rest/v1/account1234/ExecutionRecord/async/executionrecord-110b23f4-567a-8d90-1234-56789e0b123d\" processId=\"789abcde-f012-3456-789a-bcdef0123456\" atomId=\"3456789a-bcde-f0123-4567-89abcdef012\" xmlns=\"http://api.platform.boomi.com/\">\n    <DynamicProcessProperties>\n        <DynamicProcessProperty name=\"property1\" value=\"value1\"/>\n        <DynamicProcessProperty name=\"property2\" value=\"value2\"/>\n    </DynamicProcessProperties>\n    <ProcessProperties>\n         <ProcessProperty componentId=\"456789a-bcde-f0123-4567-89abcdef012\">\n\t<ProcessPropertyValue key=\"key1\" value=\"value1\"/>\n\t<ProcessPropertyValue key=\"key2\" value=\"value2\"/>\n          </ProcessProperty>\n    </ProcessProperties>\n</ExecutionRequest>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

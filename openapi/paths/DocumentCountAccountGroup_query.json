@@ -1,0 +1,147 @@
+{
+  "post": {
+    "tags": [
+      "DocumentCountAccountGroup"
+    ],
+    "summary": "Queries for a DocumentCountAccountGroup object(s)",
+    "description": "- You can use the EQUALS operator only with the `accountGroupId` filter parameter. \n - The authenticating user for a QUERY operation must have the Dashboard privilege. \n\n For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryDocumentCountAccountGroup",
+    "requestBody": {
+      "description": " Possible properties include: accountGroupId, processDate",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/DocumentCountAccountGroupQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "fedcba98-7654-3210-fedc-ba9876543210"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "accountGroupId"
+                      },
+                      {
+                        "argument": [
+                          "2016-05-01",
+                          "2016-08-31"
+                        ],
+                        "operator": "BETWEEN",
+                        "property": "processDate"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "and",
+                        "nestedExpression": [
+                          {
+                            "argument": [
+                              "fedcba98-7654-3210-fedc-ba9876543210"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "accountGroupId"
+                          },
+                          {
+                            "argument": [
+                              "2016-05-01",
+                              "2016-08-31"
+                            ],
+                            "operator": "BETWEEN",
+                            "property": "processDate"
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/DocumentCountAccountGroupQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n        <expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n            <nestedExpression operator=\"EQUALS\" property=\"accountGroupId\" xsi:type=\"SimpleExpression\">\n                <argument>fedcba98-7654-3210-fedc-ba9876543210</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"BETWEEN\" property=\"processDate\" xsi:type=\"SimpleExpression\">\n                <argument>2016-05-01</argument>\n                <argument>2016-08-31</argument>\n            </nestedExpression>\n        </expression>\n    </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"accountGroupId\">\n      <argument>fedcba98-7654-3210-fedc-ba9876543210</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/DocumentCountAccountGroupQueryResponse.json"
+            },
+            "example": {
+              "numberOfResults": 100,
+              "queryToken": "EXAMPLE_QUERY_TOKEN",
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "DocumentCountAccountGroup",
+                  "atomId": "3456789a-bcde-f0123-4567-89abcdef012",
+                  "accountId": "account-123456",
+                  "date": "2016-05-14",
+                  "value": 43133
+                },
+                {
+                  "@type": "DocumentCountAccountGroup",
+                  "atomId": "3456789a-bcde-f0123-4567-89abcdef012",
+                  "accountId": "account-123456",
+                  "date": "2016-08-21",
+                  "value": 2599
+                }
+              ]
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/DocumentCountAccountGroupQueryResponse.json"
+            },
+            "example": "<bns:QueryResult numberOfResults=\"100\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <bns:queryToken>EXAMPLE_QUERY_TOKEN</bns:queryToken>\n    <bns:result xsi:type=\"DocumentCountAccountGroup\" value=\"43133\"\n       date=\"2016-05-14\" accountId=\"account-123456\"\n       atomId=\"3456789a-bcde-f0123-4567-89abcdef012\"/>\n     <bns:result xsi:type=\"DocumentCountAccountGroup\" value=\"2599\"\n        date=\"2016-08-21\" accountId=\"account-123456\"\n        atomId=\"3456789a-bcde-f0123-4567-89abcdef012\"/>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

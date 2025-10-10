@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./OFTP2ConnectorRecordSimpleExpression.json"
+    },
+    {
+      "$ref": "./OFTP2ConnectorRecordGroupingExpression.json"
+    }
+  ]
+}

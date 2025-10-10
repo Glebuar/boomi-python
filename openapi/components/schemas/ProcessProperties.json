@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "ProcessProperty": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./ProcessProperty.json"
+      }
+    }
+  },
+  "description": "The complete list of Persisted Process properties within the specified Runtime, Runtime cluster, or cloud, where the definition of each property is by its name and value.",
+  "xml": {
+    "name": "ProcessProperties",
+    "namespace": "http://api.platform.boomi.com/"
+  }
+}

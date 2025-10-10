@@ -1,0 +1,175 @@
+{
+  "required": [
+    "connectorFields",
+    "errorMessage",
+    "trackedFields"
+  ],
+  "type": "object",
+  "properties": {
+    "account": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "actionType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The type of action the connector performs, for example, GET, SEND, LISTEN, and so on.",
+      "example": "Get"
+    },
+    "atomId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the Runtime in which the process ran. In the case of a Runtime cloud, use the ID of the Cloud attachment and not that of the Cloud itself.",
+      "example": "3456789a-bcde-f012-3456-789abcdef012"
+    },
+    "connectionId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "When sending documents into or out of the Connection component, use this ID.",
+      "example": "1a2c34f5-fbf6-789b-01ea-234a56e7b890"
+    },
+    "connectionName": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "When sending documents into or out of the Connection component, use this user-defined name.",
+      "example": "Runtime API Endpoint: https://boomi.com/api/rest/v1/account123/Atom"
+    },
+    "connectorFields": {
+      "$ref": "./ConnectorFields.json",
+      "description": "Displays all connector-related fields from the connector included in this document."
+    },
+    "connectorType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The internal and unique identifier for the connector type the document was sent into or out of, such as `http`, `ftp`, or `greatplains`.",
+      "example": "http"
+    },
+    "dateProcessed": {
+      "type": "string",
+      "format": "date-time",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The processing date and time of the document.",
+      "example": "2021-02-23T16:44:50Z"
+    },
+    "documentIndex": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "description": "Index of the document within the context of its execution connector \\(starting from 0\\).",
+      "example": "0"
+    },
+    "errorMessage": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "Displays the corresponding error message for an unsuccessful document."
+    },
+    "executionConnectorId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the [Execution Connector object](/api/platformapi#tag/ExecutionConnector). This ID identifies the execution connector of which this document is a part.",
+      "example": "RVhFQ19DT05OZmFsc2U6U2VuZDp0cmFkaW5ncGFydG5l..."
+    },
+    "executionId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the process run.",
+      "example": "execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01"
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The ID of the GenericConnectorRecord. You obtain this ID from querying the GenericConnectorRecord object",
+      "example": "A0BCD0EFIj5kLmNO2P4QRS1tUlvwx1yZDlkNWMwZC01N2MzL..."
+    },
+    "incrementalDocumentIndex": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      },
+      "description": "Index of the document in the context of the overall run \\(starting from 1\\).",
+      "example": "3"
+    },
+    "operationId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "When sending documents into or out of the Operation component, use this ID.",
+      "example": "567b89e1-c234-5678-abff-9f01aee2345a"
+    },
+    "operationName": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "description": "When sending documents into or out of the Operation component, use this user-defined name.",
+      "example": "Get"
+    },
+    "retryable": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      },
+      "description": "If the value is true, this indicates that you can rerun the document using the Rerun Document operation. If the value is false, this indicates that you cannot rerun the document using the Rerun Document operation.",
+      "example": "false"
+    },
+    "size": {
+      "type": "integer",
+      "format": "int64",
+      "xml": {
+        "attribute": true
+      },
+      "description": "The size of the document in kilobytes.",
+      "example": "133"
+    },
+    "startShape": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      },
+      "description": "If the value is true, this indicates the configuration of the Connector or Trading Partner as a **Start** shape in the process run. If the value is false, this indicates that you did not configure the Connector or Trading Partner as a **Start** shape in the process run.",
+      "example": "false"
+    },
+    "status": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "SUCCESS",
+        "ERROR"
+      ],
+      "description": "Indicates whether the document successfully or unsuccessfully ran.",
+      "example": "SUCCESS"
+    },
+    "trackedFields": {
+      "$ref": "./TrackedFields.json",
+      "description": "Displays all the custom tracked fields from this document. To get a list of the available tracked fields, refer to [CustomTrackedField object](#tag/CustomTrackedField)."
+    }
+  }
+}

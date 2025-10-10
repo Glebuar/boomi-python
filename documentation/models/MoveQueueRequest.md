@@ -1,0 +1,10 @@
+# MoveQueueRequest
+
+**Properties**
+
+| Name              | Type            | Required | Description                                                                                                                                                                                                                                                                                                                                           |
+| :---------------- | :-------------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| atom_id           | str             | ✅       | \(Required\) The Runtime ID that the queue or topic exists under and where you can find it in Runtime Management. You can find the Runtime ID for Runtimes, Runtime clusters, and Runtime clouds in the user interface by navigating to **Manage** \\> **Runtime Management** and viewing the **Runtime Information** panel for a selected container. |
+| destination_queue | QueueAttributes | ✅       | \(Required\) An instance of a generalized queue object indicating the queue from which to send or obtain the messages. Contains information describing the desired queue.                                                                                                                                                                             |
+| source_queue      | QueueAttributes | ✅       | \(Required\) An instance of a generalized queue object indicating the queue from which to send or obtain the messages. Contains information describing the desired queue.                                                                                                                                                                             |
+

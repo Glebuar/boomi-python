@@ -1,0 +1,24 @@
+{
+  "required": [
+    "atomId"
+  ],
+  "type": "object",
+  "properties": {
+    "Process": {
+      "type": "array",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "items": {
+        "$ref": "./DeployedProcess.json"
+      }
+    },
+    "atomId": {
+      "type": "string",
+      "xml": {
+        "namespace": "http://api.platform.boomi.com/"
+      },
+      "description": "A unique ID assigned by the system to the Runtime."
+    }
+  }
+}

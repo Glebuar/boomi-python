@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "CommunicationSetting": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "default",
+        "custom",
+        "component"
+      ]
+    },
+    "DiskGetOptions": {
+      "$ref": "./DiskGetOptions.json"
+    },
+    "DiskSendOptions": {
+      "$ref": "./DiskSendOptions.json"
+    },
+    "SharedCommunicationChannel": {
+      "$ref": "./SharedCommunicationChannel.json"
+    }
+  }
+}

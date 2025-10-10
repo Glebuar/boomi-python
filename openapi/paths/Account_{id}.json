@@ -1,0 +1,105 @@
+{
+  "get": {
+    "tags": [
+      "Account"
+    ],
+    "summary": "Retrieves an instance of an Account object",
+    "description": "Retrieves a single Account object using the supplied account ID. This GET operation returns details only for the parent account and does not include any accounts created by the parent account.",
+    "operationId": "GetAccount",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Account.json"
+            },
+            "example": {
+              "@type": "Account",
+              "licensing": {
+                "@type": "",
+                "standard": {
+                  "@type": "License",
+                  "purchased": 1000000,
+                  "used": 60
+                },
+                "smallBusiness": {
+                  "@type": "License",
+                  "purchased": 1000000,
+                  "used": 0
+                },
+                "enterprise": {
+                  "@type": "License",
+                  "purchased": 1000000,
+                  "used": 0
+                },
+                "tradingPartner": {
+                  "@type": "License",
+                  "purchased": 100000,
+                  "used": 3
+                },
+                "standardTest": {
+                  "@type": "License",
+                  "purchased": 1000,
+                  "used": 0
+                },
+                "smallBusinessTest": {
+                  "@type": "License",
+                  "purchased": 1000,
+                  "used": 0
+                },
+                "enterpriseTest": {
+                  "@type": "License",
+                  "purchased": 1000,
+                  "used": 0
+                },
+                "tradingPartnerTest": {
+                  "@type": "License",
+                  "purchased": 1000,
+                  "used": 0
+                }
+              },
+              "molecule": {
+                "@type": "Molecule",
+                "purchased": 10,
+                "used": 0
+              },
+              "accountId": "boomiqa-T7KIDU",
+              "name": "BoomiQA",
+              "status": "active",
+              "dateCreated": "2022-09-02T20:16:28Z",
+              "widgetAccount": false,
+              "supportAccess": true,
+              "supportLevel": "standard",
+              "overDeployed": false
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Account.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n  <bns:Account xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" accountId=\"boomiqa-T7KIDU\" name=\"BoomiQA\" status=\"active\" dateCreated=\"2022-09-02T20:16:28Z\" widgetAccount=\"false\" supportAccess=\"true\" supportLevel=\"standard\" overDeployed=\"false\">\n     <bns:licensing>\n         <bns:standard purchased=\"1000000\" used=\"60\"/>\n         <bns:smallBusiness purchased=\"1000000\" used=\"0\"/>\n         <bns:enterprise purchased=\"1000000\" used=\"0\"/>\n         <bns:tradingPartner purchased=\"100000\" used=\"3\"/>\n         <bns:standardTest purchased=\"1000\" used=\"0\"/>\n         <bns:smallBusinessTest purchased=\"1000\" used=\"0\"/>\n         <bns:enterpriseTest purchased=\"1000\" used=\"0\"/>\n         <bns:tradingPartnerTest purchased=\"1000\" used=\"0\"/>\n     </bns:licensing>\n     <bns:molecule purchased=\"10\" used=\"0\"/>\n  </bns:Account>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

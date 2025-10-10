@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "atomId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "deleted": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "required": [
+    "GatewayPartnerGroup"
+  ],
+  "type": "object",
+  "properties": {
+    "GatewayPartnerGroup": {
+      "$ref": "./OFTPPartnerGroupType.json"
+    },
+    "operation": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "useGateway": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

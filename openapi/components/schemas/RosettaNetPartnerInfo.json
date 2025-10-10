@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "RosettaNetControlInfo": {
+      "$ref": "./RosettaNetControlInfo.json"
+    },
+    "RosettaNetMessageOptions": {
+      "$ref": "./RosettaNetMessageOptions.json"
+    },
+    "RosettaNetOptions": {
+      "$ref": "./RosettaNetOptions.json"
+    }
+  }
+}

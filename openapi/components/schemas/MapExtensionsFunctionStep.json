@@ -1,0 +1,88 @@
+{
+  "required": [
+    "Configuration",
+    "Inputs",
+    "Outputs"
+  ],
+  "type": "object",
+  "properties": {
+    "Configuration": {
+      "$ref": "./MapExtensionsConfiguration.json"
+    },
+    "Inputs": {
+      "$ref": "./MapExtensionsInputs.json"
+    },
+    "Outputs": {
+      "$ref": "./MapExtensionsOutputs.json"
+    },
+    "cacheType": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "None",
+        "ByDocument",
+        "ByMap"
+      ]
+    },
+    "id": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "position": {
+      "type": "integer",
+      "format": "int32",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "type": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "Count",
+        "CurrentDate",
+        "DateFormat",
+        "LeftTrim",
+        "LineItemIncrement",
+        "MathABS",
+        "MathAdd",
+        "MathCeil",
+        "MathDivide",
+        "MathFloor",
+        "MathMultiply",
+        "MathSetPrecision",
+        "MathSubtract",
+        "NumberFormat",
+        "PropertyGet",
+        "PropertySet",
+        "RightTrim",
+        "RunningTotal",
+        "StringAppend",
+        "StringPrepend",
+        "StringRemove",
+        "StringReplace",
+        "StringToLower",
+        "StringToUpper",
+        "Sum",
+        "TrimWhitespace",
+        "StringConcat",
+        "StringSplit",
+        "SequentialValue",
+        "SimpleLookup",
+        "DocumentPropertyGet",
+        "DocumentPropertySet",
+        "CrossRefLookup",
+        "DocumentCacheLookup",
+        "CustomScripting",
+        "UserDefined",
+        "JapaneseCharacterConversion"
+      ]
+    }
+  }
+}

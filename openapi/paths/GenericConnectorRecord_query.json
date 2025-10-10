@@ -1,0 +1,150 @@
+{
+  "post": {
+    "tags": [
+      "GenericConnectorRecord"
+    ],
+    "summary": "Queries for a GenericConnectorRecord object(s)",
+    "description": "- The QUERY operation allows you to view document metadata for all documents in the run. You must query by exactly one `executionId`. \n - You cannot query `connectorFields`. \n\n For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryGenericConnectorRecord",
+    "requestBody": {
+      "description": " Possible properties include: id, executionConnectorId, executionId, connectionId, operationId, actionType, connectorType, atomId, dateProcessed, connectionName, operationName, errorMessage, status, documentIndex, incrementalDocumentIndex, size, startShape, retryable",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/GenericConnectorRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "executionId"
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "executionId"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/GenericConnectorRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n        <expression operator=\"and\" xsi:type=\"GroupingExpression\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n            <nestedExpression operator=\"EQUALS\" property=\"executionId\" xsi:type=\"SimpleExpression\">\n                <argument>execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"EQUALS\" property=\"connectionName\" xsi:type=\"SimpleExpression\">\n                <argument>{conKeyRefs.AtomSphere_BoomiEnterprisePlatform} API Connection</argument>\n            </nestedExpression>\n        </expression>\n    </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"executionId\">\n      <argument>execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/GenericConnectorRecordQueryResponse.json"
+            },
+            "example": {
+              "@type": "GenericConnectorRecord",
+              "trackedFields": {
+                "@type": "TrackedFields",
+                "trackedField": [
+                  {
+                    "@type": "TrackedField",
+                    "name": "My Custom TF",
+                    "value": "tracking value"
+                  },
+                  {
+                    "@type": "TrackedField",
+                    "name": "My Custom 2",
+                    "value": "track custom 2"
+                  }
+                ]
+              },
+              "connectorFields": {
+                "@type": "ConnectorFields",
+                "connectorField": [
+                  {
+                    "@type": "ConnectorField",
+                    "name": "directory",
+                    "value": "/home/user/Downloads/LocalConn"
+                  },
+                  {
+                    "@type": "ConnectorField",
+                    "name": "filename",
+                    "value": "example.txt"
+                  }
+                ]
+              },
+              "id": "A0BCD0EFIj5kLmNO2P4QRS1tUlvwx1yZDlkNWMwZC01N2MzLTQ0MmEtYjVhNS0zM2NiNDM0OTQ0ZjctMjAyMS4wMi4xNzpjb25uZWN0b3ItMTMzN2MyOWYtZDBhZC00Y2Q1LTgxYWEtMjkzNzA2NmJhZTcy",
+              "executionConnectorId": "RVhFQ19DT05OZmFsc2U6R2V0OjVlODAwNTU2LWQ4OGUtNDg3Mi05YTE3LTJmMWNjZGQ3MjgxYzo5ZjY0NDEwZS1jMWY1LTRhZDAtOTM1Zi0yZGFlNGJlOTcwNzc6ZXhlY3V0aW9uLTAxZTgxN2RiLTExNGUtNDQzNi1iOGFmLTc0YjdjZDIxNjg0OS0yMDIxLjAzLjA0",
+              "executionId": "execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01",
+              "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+              "dateProcessed": "2021-03-04T13:40:36Z",
+              "actionType": "Get",
+              "connectorType": "disk",
+              "connectionName": "TestData",
+              "operationName": "Get txt file",
+              "connectionId": "1e234567-d88e-4872-9a17-2f1ccdd7281c",
+              "operationId": "6f78901e-c1f5-4ad0-935f-2dae4be97077",
+              "documentIndex": 3,
+              "incrementalDocumentIndex": 15,
+              "status": "SUCCESS",
+              "startShape": false,
+              "retryable": false,
+              "size": 657
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/GenericConnectorRecordQueryResponse.json"
+            },
+            "example": "<bns:QueryResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" numberOfResults=\"1\">\n       <bns:result xsi:type=\"GenericConnectorRecord\" id=\"A0BCD0EFIj5kLmNO2P4QRS1tUlvwx1yZDlkNWMwZC01N2MzLTQ0MmEtYjVhNS0zM2NiNDM0OTQ0ZjctMjAyMS4wMi4xNzpjb25uZWN0b3ItMTMzN2MyOWYtZDBhZC00Y2Q1LTgxYWEtMjkzNzA2NmJhZTcy\" \n    executionConnectorId=\"RVhFQ19DT05OZmFsc2U6Q1JFQVRFOmY5MTUzNjA2LTZkNDUtNDc4MC04ZDE1LWQ5ODU0ZjJlNWM0OTo5YzlkYTIxYy1mNmQ2LTQ3MDAtOWYxMy04OWU5MTEzM2U4Y2E6ZXhlY3V0aW9uLTAwMDAxMzRmLTViZTUtNDhhNS05ZDRlLWM4MDIzMWFiNjhhYS0yMDIxLjAxLjE5\" \n    executionId=\"execution-3456789a-bcde-f012-3456-789abcdef012-2015.01.01\" \n    atomId=\"3456789a-bcde-f012-3456-789abcdef012\" \n    dateProcessed=\"2021-01-19T20:58:54Z\" \n    actionType=\"CREATE\" connectorType=\"boomiapi\" \n    connectionName=\"Platform API Connection\" \n    operationName=\"Attach Listener\" \n    connectionId=\"b9153606-6c45-4780-8d15-e9854f2f5g49\" \n    operationId=\"a6b69451-c57d-4e5f-87gh-i9f177367jk4\" \n    documentIndex=\"0\" \n    incrementalDocumentIndex=\"2\" \n    status=\"SUCCESS\" \n    startShape=\"false\" \n    retryable=\"false\" \n    size=\"225\"/>\n    </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

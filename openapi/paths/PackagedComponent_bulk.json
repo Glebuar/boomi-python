@@ -1,0 +1,50 @@
+{
+  "post": {
+    "tags": [
+      "PackagedComponent"
+    ],
+    "summary": "Retrieves multiple PackagedComponent objects by identifier",
+    "description": "To learn more about `bulk`, refer to [Bulk GET operations](#section/Introduction/Bulk-GET-operations).",
+    "operationId": "BulkPackagedComponent",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/PackagedComponentBulkRequest.json"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/PackagedComponentBulkRequest.json"
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PackagedComponentBulkResponse.json"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/PackagedComponentBulkResponse.json"
+            }
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

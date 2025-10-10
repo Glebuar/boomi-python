@@ -1,0 +1,28 @@
+{
+  "required": [
+    "clientSSLCertificate"
+  ],
+  "type": "object",
+  "properties": {
+    "clientSSLCertificate": {
+      "$ref": "./PrivateCertificate.json"
+    },
+    "sslmode": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      },
+      "enum": [
+        "none",
+        "explicit",
+        "implicit"
+      ]
+    },
+    "useClientAuthentication": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

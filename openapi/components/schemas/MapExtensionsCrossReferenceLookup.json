@@ -1,0 +1,27 @@
+{
+  "required": [
+    "Inputs",
+    "Outputs"
+  ],
+  "type": "object",
+  "properties": {
+    "Inputs": {
+      "$ref": "./CrossReferenceInputs.json"
+    },
+    "Outputs": {
+      "$ref": "./CrossReferenceOutputs.json"
+    },
+    "lookupTableId": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "skipIfNoInputs": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}

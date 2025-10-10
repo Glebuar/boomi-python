@@ -1,0 +1,255 @@
+{
+  "get": {
+    "tags": [
+      "TradingPartnerProcessingGroup"
+    ],
+    "summary": "Retrieves an instance of a TradingPartnerProcessingGroup object",
+    "description": "The ordinary GET operation returns a single Trading Partner Processing Group object based on the supplied ID. The bulk GET operation returns multiple Trading Partner Processing Group objects based on the supplied IDs, to a maximum of 100. \n A GET operation specifying the ID of a deleted processing group component retrieves the component. In the component, the deleted field’s value is true.",
+    "operationId": "GetTradingPartnerProcessingGroup",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/TradingPartnerProcessingGroup.json"
+            },
+            "example": {
+              "TradingPartnerProcessingGroup": {
+                "componentName": "East Coast partners",
+                "componentId": "3456789a-bcde-f012-34-56789abcdef012",
+                "folderName": "Home:TPs:PGs:Domestic",
+                "folderId": "11669",
+                "TradingPartners": {
+                  "TradingPartner": [
+                    {
+                      "id": "12345678-9abc-def0-1234-56789abcdef0"
+                    },
+                    {
+                      "id": "0fedcba9-8765-4321-0fed-cba987654321"
+                    }
+                  ]
+                },
+                "DocumentRouting": {
+                  "processId": "543210fe-dcba-9876-5432-10fedcba9876",
+                  "StandardRoute": [
+                    {
+                      "standard": "edifact",
+                      "processId": "456789ab-cdef-0123-4567-89abcdef0123",
+                      "DocumentTypeRoute": {
+                        "documentType": "AUTHOR",
+                        "processId": "56789abc-def0-1234-5678-9abcdef01234"
+                      }
+                    },
+                    {
+                      "standard": "x12",
+                      "processId": "3210fedc-ba98-7654-3210-fedcba987654",
+                      "DocumentTypeRoute": {
+                        "documentType": "107",
+                        "processId": "43210fed-cba9-8765-4321-0fedcba98765"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/TradingPartnerProcessingGroup.json"
+            },
+            "example": "<bns:TradingPartnerProcessingGroup componentName=\"East Coast partners\" componentId=\"3456789a-bcde-f012-34-56789abcdef012\" folderName=\"Home:TPs:PGs:Domestic\" folderId=\"11669\">\n       <bns:TradingPartners>\n          <bns:TradingPartner id=\"12345678-9abc-def0-1234-56789abcdef0\"/>\n          <bns:TradingPartner id=\"0fedcba9-8765-4321-0fed-cba987654321\"/>\n       </bns:TradingPartners>\n       <bns:DocumentRouting processId=\"543210fe-dcba-9876-5432-10fedcba9876\">\n          <bns:StandardRoute standard=\"edifact\" processId=\"456789ab-cdef-0123-4567-89abcdef0123\">\n             <bns:DocumentTypeRoute documentType=\"AUTHOR\" processId=\"56789abc-def0-1234-5678-9abcdef01234\"/>\n          </bns:StandardRoute>\n          <bns:StandardRoute standard=\"x12\" processId=\"3210fedc-ba98-7654-3210-fedcba987654\">\n             <bns:DocumentTypeRoute documentType=\"107\" processId=\"43210fed-cba9-8765-4321-0fedcba98765\"/>\n          </bns:StandardRoute>\n       </bns:DocumentRouting>\n</bns:TradingPartnerProcessingGroup>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "TradingPartnerProcessingGroup"
+    ],
+    "summary": "Modifies or updates a TradingPartnerProcessingGroup object",
+    "description": "An UPDATE operation specifying the ID of a deleted processing group component restores the component to a non-deleted state, assuming the request is otherwise valid. It also overwrites the entire processing group component.",
+    "operationId": "UpdateTradingPartnerProcessingGroup",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/TradingPartnerProcessingGroup.json"
+          },
+          "example": {
+            "TradingPartners": {
+              "TradingPartner": [
+                {
+                  "id": "12345678-9abc-def0-1234-56789abcdef0"
+                },
+                {
+                  "id": "0fedcba9-8765-4321-0fed-cba987654321"
+                }
+              ]
+            },
+            "DocumentRouting": {
+              "StandardRoute": [
+                {
+                  "DocumentTypeRoute": [
+                    {
+                      "PartnerRoute": [],
+                      "documentType": "AUTHOR",
+                      "processId": "56789abc-def0-1234-5678-9abcdef01234"
+                    }
+                  ],
+                  "standard": "edifact"
+                },
+                {
+                  "DocumentTypeRoute": [
+                    {
+                      "PartnerRoute": [],
+                      "documentType": "107",
+                      "processId": "43210fed-cba9-8765-4321-0fedcba98765"
+                    }
+                  ],
+                  "standard": "x12"
+                }
+              ],
+              "processId": "543210fe-dcba-9876-5432-10fedcba9876"
+            },
+            "componentName": "Atlantic Seaboard partners",
+            "componentId": "3456789a-bcde-f012-34-56789abcdef012",
+            "folderName": "Home:TPs:PGs:Domestic",
+            "folderId": "11669"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/TradingPartnerProcessingGroup.json"
+          },
+          "example": "<bns:TradingPartnerComponent folderId=\"11356\" folderName=\"Home:TPs\" componentId=\"12345678-9abc-def0-1234-56789abcdef0\" componentName=\"Best Wholesaling\" standard=\"x12\" classification=\"tradingpartner\" xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n   <bns:ContactInfo>\n      <bns:contactName>Rachel Lewis</bns:contactName>\n      <bns:address1>127 Comstock Ave.</bns:address1>\n      <bns:address2/>\n      <bns:city>Philadelphia</bns:city>\n      <bns:state>PA</bns:state>\n      <bns:postalcode>19100</bns:postalcode>\n      <bns:country>US</bns:country>\n      <bns:email>rachel@bestwholesaling.biz</bns:email>\n      <bns:phone>311 555-2468</bns:phone>\n      <bns:fax>311 555-8642</bns:fax>\n   </bns:ContactInfo>\n   <bns:PartnerInfo>\n      <bns:X12PartnerInfo>\n         <bns:X12Options envelopeoption=\"groupall\" acknowledgementoption=\"donotackitem\" filteracknowledgements=\"false\" rejectDuplicateInterchange=\"false\" outboundInterchangeValidation=\"true\" outboundValidationOption=\"filterError\">\n            <bns:elementDelimiter delimiterValue=\"stardelimited\"/>\n            <bns:segmentTerminator segmentTerminatorValue=\"newline\"/>\n         </bns:X12Options>\n         <bns:X12ControlInfo>\n            <bns:ISAControlInfo testindicator=\"P\" ackrequested=\"false\" authorizationInformationQualifier=\"X12AUTHQUAL_00\" securityInformationQualifier=\"X12SECQUAL_00\" interchangeIdQualifier=\"X12IDQUAL_01\"/>\n            <bns:GSControlInfo respagencycode=\"T\"/>\n         </bns:X12ControlInfo>\n      </bns:X12PartnerInfo>\n   </bns:PartnerInfo>\n   <bns:PartnerCommunication>\n      <bns:FTPCommunicationOptions CommunicationSetting=\"custom\">\n         <bns:SharedCommunicationChannel/>\n         <bns:FTPSettings connectionMode=\"active\" useDefaultSettings=\"false\">\n            <bns:host>ftp.bestwholesaling.com</bns:host>\n            <bns:port>1010</bns:port>\n            <bns:user>rachel.lewis</bns:user>\n            <bns:FTPSSLOptions sslmode=\"none\" useClientAuthentication=\"false\"/>\n         </bns:FTPSettings>\n         <bns:FTPGetOptions transferType=\"ascii\" ftpAction=\"actionget\" useDefaultGetOptions=\"false\">\n            <bns:remoteDirectory>/usr/local/bestwholesaling/outbox</bns:remoteDirectory>\n            <bns:fileToMove>*.xml</bns:fileToMove>\n            <bns:maxFileCount>200</bns:maxFileCount>\n         </bns:FTPGetOptions>\n         <bns:FTPSendOptions transferType=\"ascii\" ftpAction=\"actionputappend\" useDefaultSendOptions=\"false\">\n            <bns:remoteDirectory>/home/rachellewis/new</bns:remoteDirectory>\n            <bns:moveToDirectory>/home/rachellewis/inbox</bns:moveToDirectory>\n         </bns:FTPSendOptions>\n      </bns:FTPCommunicationOptions>\n   </bns:PartnerCommunication>\n   <bns:PartnerDocumentTypes>\n      <bns:PartnerDocumentType typeId=\"101\" profileId=\"23456789-abcd-ef01-2345-6789abcdef01\" use999Ack=\"false\" useTA1Ack=\"false\" expectAckForOutbound=\"false\" validateOutboundTransactionSets=\"false\" qualifierValidation=\"true\"/>\n      <bns:PartnerDocumentType typeId=\"810\" profileId=\"3456789a-bcde-4012-3456-789abcdef012\" use999Ack=\"false\" useTA1Ack=\"false\" expectAckForOutbound=\"false\" validateOutboundTransactionSets=\"false\" qualifierValidation=\"true\"/>\n   </bns:PartnerDocumentTypes>\n</bns:TradingPartnerComponent>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/TradingPartnerProcessingGroup.json"
+            },
+            "example": {
+              "@type": "TradingPartnerProcessingGroup",
+              "componentName": "Atlantic Seaboard partners",
+              "componentId": "3456789a-bcde-f012-34-56789abcdef012",
+              "folderName": "Home:TPs:PGs:Domestic",
+              "folderId": "11669",
+              "TradingPartners": {
+                "TradingPartner": [
+                  {
+                    "id": "12345678-9abc-def0-1234-56789abcdef0"
+                  },
+                  {
+                    "id": "0fedcba9-8765-4321-0fed-cba987654321"
+                  }
+                ]
+              },
+              "DocumentRouting": {
+                "processId": "543210fe-dcba-9876-5432-10fedcba9876",
+                "StandardRoute": [
+                  {
+                    "standard": "edifact",
+                    "processId": "456789ab-cdef-0123-4567-89abcdef0123",
+                    "DocumentTypeRoute": {
+                      "documentType": "AUTHOR",
+                      "processId": "56789abc-def0-1234-5678-9abcdef01234"
+                    }
+                  },
+                  {
+                    "standard": "x12",
+                    "processId": "3210fedc-ba98-7654-3210-fedcba987654",
+                    "DocumentTypeRoute": {
+                      "documentType": "107",
+                      "processId": "43210fed-cba9-8765-4321-0fedcba98765"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/TradingPartnerProcessingGroup.json"
+            },
+            "example": "<bns:TradingPartnerProcessingGroup componentName=\"Atlantic Seaboard partners\" componentId=\"3456789a-bcde-f012-34-56789abcdef012\" folderName=\"Home:TPs:PGs:Domestic\" folderId=\"11669\">\n   <bns:TradingPartners>\n      <bns:TradingPartner id=\"12345678-9abc-def0-1234-56789abcdef0\"/>\n      <bns:TradingPartner id=\"0fedcba9-8765-4321-0fed-cba987654321\"/>\n   </bns:TradingPartners>\n   <bns:DocumentRouting processId=\"543210fe-dcba-9876-5432-10fedcba9876\">\n      <bns:StandardRoute standard=\"edifact\" processId=\"456789ab-cdef-0123-4567-89abcdef0123\">\n         <bns:DocumentTypeRoute documentType=\"AUTHOR\" processId=\"56789abc-def0-1234-5678-9abcdef01234\"/>\n      </bns:StandardRoute>\n      <bns:StandardRoute standard=\"x12\" processId=\"3210fedc-ba98-7654-3210-fedcba987654\">\n         <bns:DocumentTypeRoute documentType=\"107\" processId=\"43210fed-cba9-8765-4321-0fedcba98765\"/>\n      </bns:StandardRoute>\n   </bns:DocumentRouting>\n</bns:TradingPartnerProcessingGroup>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "TradingPartnerProcessingGroup"
+    ],
+    "summary": "Deletes a TradingPartnerProcessingGroup object",
+    "description": "A DELETE operation specifying the ID of a deleted processing group component returns a false response. If you deleted the component successfully, the response is \"true\".",
+    "operationId": "DeleteTradingPartnerProcessingGroup",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

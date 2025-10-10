@@ -1,0 +1,99 @@
+{
+  "get": {
+    "tags": [
+      "IntegrationPackInstance"
+    ],
+    "summary": "Retrieves an instance of an IntegrationPackInstance object",
+    "description": "Retrieves the properties of the integration pack instance having the specified ID. \n\n The ordinary GET operation retrieves the properties of the integration pack instance having the specified ID. The bulk GET operation retrieves the properties of the integration pack instances having the specified IDs, to a maximum of 100. You can obtain integration pack instance IDs from the QUERY operation.",
+    "operationId": "GetIntegrationPackInstance",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The integration pack instance ID."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/IntegrationPackInstance.json"
+            },
+            "example": {
+              "@type": "IntegrationPackInstance",
+              "ProcessId": [
+                {
+                  "@type": "ProcessId",
+                  "originalProcessId": "bc407c7d-cacc-48da-a430-c6a4d2835a83",
+                  "wrapperProcessId": "0331193a-2675-4f33-97fc-e050a4fd4eec",
+                  "name": "Domestic Order Intake - INT"
+                },
+                {
+                  "@type": "ProcessId",
+                  "originalProcessId": "f23ce1b1-7440-4535-a534-685a17a41607",
+                  "wrapperProcessId": "ea975f03-592f-49e5-84cb-49f69f75adb4",
+                  "name": "Domestic Order Intake - New Process 3"
+                }
+              ],
+              "integrationPackId": "a3c4917d-9622-4c5f-978c-0f02b5f5457a",
+              "integrationPackOverrideName": "Domestic Order Intake",
+              "id": "SW50ZWdyYXRpb25QYWNrSW5zdGFuY2UyMA"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/IntegrationPackInstance.json"
+            },
+            "example": "<bns:IntegrationPackInstance xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" integrationPackId=\"a3c4917d-9622-4c5f-978c-0f02b5f5457a\" integrationPackOverrideName=\"Domestic Order Intake\" id=\"SW50ZWdyYXRpb25QYWNrSW5zdGFuY2UyMA\">\n       <bns:ProcessId originalProcessId=\"bc407c7d-cacc-48da-a430-c6a4d2835a83\" wrapperProcessId=\"0331193a-2675-4f33-97fc-e050a4fd4eec\" name=\"Domestic Order Intake - INT\"/> \n      </bns:IntegrationPackInstance>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "IntegrationPackInstance"
+    ],
+    "summary": "Deletes an IntegrationPackInstance object",
+    "description": "Uninstalls the integration pack instance having a specified ID from the requesting account. You can obtain this ID from a QUERY operation.",
+    "operationId": "DeleteIntegrationPackInstance",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The integration pack instance ID."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

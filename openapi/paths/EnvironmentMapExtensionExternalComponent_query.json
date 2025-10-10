@@ -1,0 +1,138 @@
+{
+  "post": {
+    "tags": [
+      "EnvironmentMapExtensionExternalComponent"
+    ],
+    "summary": "Queries for an EnvironmentMapExtensionExternalComponent object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryEnvironmentMapExtensionExternalComponent",
+    "requestBody": {
+      "description": " Possible properties include: ACCOUNT_ID, ENVIRONMENT_MAP_EXTENSION_ID, PACKAGED_COMPONENT_UID, COMPONENT_ID, COMPONENT_VERSION, COMPONENT_NAME, COMPONENT_TYPE",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentMapExtensionExternalComponentQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "1234b56a-ea78-90f1-beec-2fe23456cb8e"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "componentId"
+                      },
+                      {
+                        "argument": [
+                          "ZWNlYjg3Y2ItMWEwNC00MjIwLTgxYW..."
+                        ],
+                        "operator": "EQUALS",
+                        "property": "environmentMapExtensionId"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "operator": "and",
+                        "nestedExpression": [
+                          {
+                            "argument": [
+                              "1234b56a-ea78-90f1-beec-2fe23456cb8e"
+                            ],
+                            "operator": "EQUALS",
+                            "property": "componentId"
+                          },
+                          {
+                            "argument": [
+                              "ZWNlYjg3Y2ItMWEwNC00MjIwLTgxYW..."
+                            ],
+                            "operator": "EQUALS",
+                            "property": "environmentMapExtensionId"
+                          }
+                        ]
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/EnvironmentMapExtensionExternalComponentQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n        <expression operator=\"and\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n            <nestedExpression operator=\"EQUALS\" property=\"environmentMapExtensionId\" xsi:type=\"SimpleExpression\">\n                <argument>ZWNlYjg3Y2ItM...</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"EQUALS\" property=\"componentId\" xsi:type=\"SimpleExpression\">\n                <argument>1234b56a-ea78-90f1-beec-2fe23456cb8e</argument>\n            </nestedExpression>\n        </expression>\n    </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"environmentMapExtensionId\">\n      <argument>ZWNlYjg3Y2ItM...</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentMapExtensionExternalComponentQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "EnvironmentMapExtensionExternalComponent",
+                  "environmentMapExtensionId": "ZWNlYjg3Y2ItM...",
+                  "componentId": "1234b56a-ea78-90f1-beec-2fe23456cb8e",
+                  "componentVersion": 1,
+                  "componentType": "crossref",
+                  "componentName": "component1"
+                }
+              ],
+              "numberOfResults": 1
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/EnvironmentMapExtensionExternalComponentQueryResponse.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n    <bns:QueryResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" numberOfResults=\"1\">\n       <bns:result xsi:type=\"EnvironmentMapExtensionExternalComponent\" environmentMapExtensionId=\"ZWNlYjg3Y2ItMWEwNC00MjIwLTgxYW...\" componentId=\"1234b56a-ea78-90f1-beec-2fe23456cb8e\" componentVersion=\"1\" componentType=\"crossref\" componentName=\"component1\"/>\n    </bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

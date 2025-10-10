@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": ""
+    },
+    "name": {
+      "type": "string",
+      "example": ""
+    },
+    "status": {
+      "type": "string",
+      "enum": [],
+      "example": ""
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "example": ""
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "example": ""
+        }
+      }
+    }
+  },
+  "required": [],
+  "oneOf": [
+    {
+      "$ref": "./PublisherIntegrationPackSimpleExpression.json"
+    },
+    {
+      "$ref": "./PublisherIntegrationPackGroupingExpression.json"
+    }
+  ]
+}

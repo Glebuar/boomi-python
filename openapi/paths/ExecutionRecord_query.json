@@ -1,0 +1,238 @@
+{
+  "post": {
+    "tags": [
+      "ExecutionRecord"
+    ],
+    "summary": "Queries for an ExecutionRecord object(s)",
+    "description": "For general information about the structure of QUERY filters, their sample payloads, and how to handle the paged results, refer to [Query filters](#section/Introduction/Query-filters) and [Query paging](#section/Introduction/Query-paging).",
+    "operationId": "QueryExecutionRecord",
+    "requestBody": {
+      "description": " Possible properties include: executionId, originalExecutionId, account, executionTime, status, executionType, processName, processId, atomName, atomId, inboundDocumentCount, outboundDocumentCount, executionDuration, message, reportKey, launcherId, nodeId, recordedDate",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/ExecutionRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "argument": [
+                      "5c94d512-4dfe-404b-b32a-8063259436f7"
+                    ],
+                    "operator": "EQUALS",
+                    "property": "processId"
+                  }
+                },
+                "QuerySort": {
+                  "sortField": [
+                    {
+                      "fieldName": "executionTime",
+                      "sortOrder": "DESC"
+                    }
+                  ]
+                }
+              }
+            },
+            "GroupingExpression": {
+              "value": {
+                "QueryFilter": {
+                  "expression": {
+                    "operator": "and",
+                    "nestedExpression": [
+                      {
+                        "argument": [
+                          "5c94d512-4dfe-404b-b32a-8063259436f7"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "processId"
+                      },
+                      {
+                        "argument": [
+                          "another-value"
+                        ],
+                        "operator": "EQUALS",
+                        "property": "anotherProperty"
+                      }
+                    ]
+                  }
+                },
+                "QuerySort": {
+                  "sortField": [
+                    {
+                      "fieldName": "executionTime",
+                      "sortOrder": "DESC"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/ExecutionRecordQueryConfig.json"
+          },
+          "examples": {
+            "SimpleExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\">\n    <QueryFilter>\n        <expression operator=\"or\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"GroupingExpression\">\n            <nestedExpression operator=\"EQUALS\" property=\"processId\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>7b9087ee-11f4-4df4-9abc-0db3c06e0dd1</argument>\n            </nestedExpression>\n            <nestedExpression operator=\"EQUALS\" property=\"processId\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SimpleExpression\">\n                <argument>10a93d39-3c27-45a8-9abb-c1f0c8925222</argument>\n            </nestedExpression>\n        </expression>\n    </QueryFilter>\n</QueryConfig>"
+            },
+            "GroupingExpression": {
+              "value": "<QueryConfig xmlns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><QueryFilter><expression operator=\"and\" xsi:type=\"GroupingExpression\">\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"processId\">\n      <argument>7b9087ee-11f4-4df4-9abc-0db3c06e0dd1</argument>\n    </nestedExpression>\n    <nestedExpression xsi:type=\"SimpleExpression\" operator=\"EQUALS\" property=\"anotherProperty\">\n      <argument>another-value</argument>\n    </nestedExpression>\n  </expression></QueryFilter></QueryConfig>"
+            }
+          }
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ExecutionRecordQueryResponse.json"
+            },
+            "example": {
+              "@type": "QueryResult",
+              "result": [
+                {
+                  "@type": "ExecutionRecord",
+                  "executionId": "execution-107306ba-a299-46e8-954a-a9ec48f0f11f-2024.09.25",
+                  "account": "Boomi-123",
+                  "executionTime": "2024-09-25T15:41:54Z",
+                  "status": "COMPLETE",
+                  "executionType": "exec_manual",
+                  "processName": "Process Status",
+                  "processId": "5c94d512-4dfe-404b-b32a-8063259436f7",
+                  "atomName": "Biggie",
+                  "atomId": "05362201-cf51-4fef-95eb-ae1f0b8e7273",
+                  "inboundDocumentCount": 1,
+                  "inboundErrorDocumentCount": 0,
+                  "outboundDocumentCount": 0,
+                  "executionDuration": [
+                    "Long",
+                    3832
+                  ],
+                  "inboundDocumentSize": [
+                    "Long",
+                    0
+                  ],
+                  "outboundDocumentSize": [
+                    "Long",
+                    0
+                  ],
+                  "nodeId": "172_16_22_224[execution-107306ba-a299-46e8-954a-a9ec48f0f11f-2024.09.25]",
+                  "recordedDate": "2024-09-25T15:41:58Z"
+                },
+                {
+                  "@type": "ExecutionRecord",
+                  "executionId": "execution-f720abfd-a695-46cd-b343-e800a89079c8-2024.09.25",
+                  "account": "Boomi-123",
+                  "executionTime": "2024-09-25T07:13:27Z",
+                  "status": "COMPLETE",
+                  "executionType": "exec_manual",
+                  "processName": "Process Status",
+                  "processId": "5c94d512-4dfe-404b-b32a-8063259436f7",
+                  "atomName": "Biggie",
+                  "atomId": "05362201-cf51-4fef-95eb-ae1f0b8e7273",
+                  "inboundDocumentCount": 1,
+                  "inboundErrorDocumentCount": 0,
+                  "outboundDocumentCount": 0,
+                  "executionDuration": [
+                    "Long",
+                    4480
+                  ],
+                  "inboundDocumentSize": [
+                    "Long",
+                    0
+                  ],
+                  "outboundDocumentSize": [
+                    "Long",
+                    0
+                  ],
+                  "nodeId": "172_16_22_55[execution-f720abfd-a695-46cd-b343-e800a89079c8-2024.09.25]",
+                  "recordedDate": "2024-09-25T07:13:31Z"
+                },
+                {
+                  "@type": "ExecutionRecord",
+                  "executionId": "execution-f4fc62a3-57c8-49d5-bb00-2b430121e77c-2024.09.25",
+                  "account": "Boomi-123",
+                  "executionTime": "2024-09-25T06:36:03Z",
+                  "status": "COMPLETE",
+                  "executionType": "exec_manual",
+                  "processName": "INT-10962",
+                  "processId": "5c94d512-4dfe-404b-b32a-8063259436f7",
+                  "atomName": "Biggie",
+                  "atomId": "05362201-cf51-4fef-95eb-ae1f0b8e7273",
+                  "inboundDocumentCount": 1,
+                  "inboundErrorDocumentCount": 0,
+                  "outboundDocumentCount": 0,
+                  "executionDuration": [
+                    "Long",
+                    4812
+                  ],
+                  "inboundDocumentSize": [
+                    "Long",
+                    0
+                  ],
+                  "outboundDocumentSize": [
+                    "Long",
+                    0
+                  ],
+                  "nodeId": "172_16_22_55[execution-f4fc62a3-57c8-49d5-bb00-2b430121e77c-2024.09.25]",
+                  "recordedDate": "2024-09-25T06:36:08Z"
+                },
+                {
+                  "@type": "ExecutionRecord",
+                  "executionId": "execution-dc1d980a-c2fa-46fa-9b6d-23023450f058-2024.09.25",
+                  "account": "Boomi-123",
+                  "executionTime": "2024-09-25T06:34:14Z",
+                  "status": "COMPLETE",
+                  "executionType": "exec_manual",
+                  "processName": "Process Status",
+                  "processId": "5c94d512-4dfe-404b-b32a-8063259436f7",
+                  "atomName": "Biggie",
+                  "atomId": "05362201-cf51-4fef-95eb-ae1f0b8e7273",
+                  "inboundDocumentCount": 1,
+                  "inboundErrorDocumentCount": 0,
+                  "outboundDocumentCount": 0,
+                  "executionDuration": [
+                    "Long",
+                    3874
+                  ],
+                  "inboundDocumentSize": [
+                    "Long",
+                    0
+                  ],
+                  "outboundDocumentSize": [
+                    "Long",
+                    0
+                  ],
+                  "nodeId": "172_16_21_144[execution-dc1d980a-c2fa-46fa-9b6d-23023450f058-2024.09.25]",
+                  "recordedDate": "2024-09-25T06:34:18Z"
+                }
+              ],
+              "numberOfResults": 4
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/ExecutionRecordQueryResponse.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<bns:QueryResult xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" numberOfResults=\"100\">\n    <bns:queryToken>EXAMPLE_QUERY_TOKEN</bns:queryToken>\n    <bns:result xsi:type=\"ExecutionRecord\">\n        <bns:executionId>execution-88256f34-f3e1-4903-bdb6-1ba682bb40fe-2023.06.05</bns:executionId>\n        <bns:account>boomi-K189RY</bns:account>\n        <bns:executionTime>2023-06-05T07:15:22Z</bns:executionTime>\n        <bns:status>COMPLETE</bns:status>\n        <bns:executionType>sub_process</bns:executionType>\n        <bns:processName>TestStatusCheck</bns:processName>\n        <bns:processId>7b9087ee-11f4-4df4-9abc-0db3c06e0dd1</bns:processId>\n        <bns:atomName>Biggie</bns:atomName>\n        <bns:atomId>46c0f0b4-3add-40e9-b364-283b4c44f9bf</bns:atomId>\n        <bns:inboundDocumentCount>1</bns:inboundDocumentCount>\n        <bns:inboundErrorDocumentCount>0</bns:inboundErrorDocumentCount>\n        <bns:outboundDocumentCount>0</bns:outboundDocumentCount>\n        <bns:executionDuration>338</bns:executionDuration>\n        <bns:parentExecutionId>execution-c07dbe8d-17f7-4354-8162-c324509d1118-2023.06.05</bns:parentExecutionId>\n        <bns:topLevelExecutionId>execution-c8a905f7-7df0-4840-9720-4eaa1601662c-2023.06.05</bns:topLevelExecutionId>\n        <bns:inboundDocumentSize>0</bns:inboundDocumentSize>\n        <bns:outboundDocumentSize>0</bns:outboundDocumentSize>\n        <bns:nodeId>172_16_22_224[execution-c8a905f7-7df0-4840-9720-4eaa1601662c-2023.06.05]</bns:nodeId>\n    </bns:result>\n    ...\n    <bns:result xsi:type=\"ExecutionRecord\">\n        <bns:executionId>execution-a7d4eda9-28fa-4d11-8275-d55817f5d5aa-2023.07.06</bns:executionId>\n        <bns:account>boomi-K189RY</bns:account>\n        <bns:executionTime>2023-07-06T18:19:12Z</bns:executionTime>\n        <bns:status>COMPLETE</bns:status>\n        <bns:executionType>sub_process</bns:executionType>\n        <bns:processName>Run Test Case Reporting via API</bns:processName>\n        <bns:processId>10a93d39-3c27-45a8-9abb-c1f0c8925222</bns:processId>\n        <bns:atomName>Biggie</bns:atomName>\n        <bns:atomId>46c0f0b4-3add-40e9-b364-283b4c44f9bf</bns:atomId>\n        <bns:inboundDocumentCount>1</bns:inboundDocumentCount>\n        <bns:inboundErrorDocumentCount>0</bns:inboundErrorDocumentCount>\n        <bns:outboundDocumentCount>1</bns:outboundDocumentCount>\n        <bns:executionDuration>95065</bns:executionDuration>\n        <bns:topLevelExecutionId>execution-66630301-0bd9-42ee-92c3-d8d4d896656a-2023.07.06</bns:topLevelExecutionId>\n        <bns:inboundDocumentSize>0</bns:inboundDocumentSize>\n        <bns:outboundDocumentSize>304</bns:outboundDocumentSize>\n        <bns:nodeId>172_16_22_223[execution-66630301-0bd9-42ee-92c3-d8d4d896656a-2023.07.06]</bns:nodeId>\n    </bns:result>\n</bns:QueryResult>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

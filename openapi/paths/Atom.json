@@ -1,0 +1,70 @@
+{
+  "post": {
+    "tags": [
+      "Atom"
+    ],
+    "summary": "Creates a Runtime object",
+    "description": "Creates and attaches a Runtime with the specified name to a specified Runtime cloud owned by the requesting account. This operation cannot be used to create a local Runtime. You must have the Runtime Management privilege to perform the POST operation. \n\n >**Note:** The `createdBy` is a system-generated or read-only field. It cannot be passed in a CREATE request.",
+    "operationId": "CreateAtom",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/Atom.json"
+          },
+          "example": {
+            "cloudId": "23456789-abcd-ef01-2345-6789abcdef01",
+            "name": "Cloud Atom"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/Atom.json"
+          },
+          "example": "<bns:Atom xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n      cloudId=\"23456789-abcd-ef01-2345-6789abcdef01\" name=\"Cloud Atom\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Atom.json"
+            },
+            "example": {
+              "@type": "Atom",
+              "id": "3456789a-bcde-f012-3456-789abcdef012",
+              "cloudId": "23456789-abcd-ef01-2345-6789abcdef01",
+              "name": "Cloud Atom",
+              "status": "ONLINE",
+              "type": "CLOUD",
+              "hostName": "Cloud-WN7X64-9L7K7S2.domain.tld",
+              "dateInstalled": "2016-06-10T16:11:26.749Z",
+              "purgeHistoryDays": 30,
+              "purgeImmediate": false,
+              "forceRestartTime": 0,
+              "instanceId": "account-123456.HP81GZ"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/Atom.json"
+            },
+            "example": "<bns:Atom xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n      instanceId=\"account-123456.HP81GZ\" cloudId=\"23456789-abcd-ef01-2345-6789abcdef01\" forceRestartTime=\"0\"\n      purgeImmediate=\"false\" purgeHistoryDays=\"30\" dateInstalled=\"2016-06-10T16:11:26.749Z\"\n      hostName=\"Cloud-WN7X64-9L7K7S2.domain.tld\" type=\"CLOUD\"\n      status=\"ONLINE\" name=\"Cloud Atom\" id=\"3456789a-bcde-f012-3456-789abcdef012\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

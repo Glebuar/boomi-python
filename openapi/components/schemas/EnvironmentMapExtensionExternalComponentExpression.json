@@ -1,0 +1,10 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./EnvironmentMapExtensionExternalComponentSimpleExpression.json"
+    },
+    {
+      "$ref": "./EnvironmentMapExtensionExternalComponentGroupingExpression.json"
+    }
+  ]
+}

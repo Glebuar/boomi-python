@@ -1,0 +1,188 @@
+{
+  "get": {
+    "tags": [
+      "MergeRequest"
+    ],
+    "summary": "Retrieves an instance of a MergeRequest object",
+    "description": "Retrieve more information about the recently performed merge. \n\n - The `resolution` parameter is generated from the original merge request and specifies either the source branch for the final content for the merge or the destination. It can have the following values:\n\n  -  OVERRIDE: The source branch has taken priority\n  -  KEEP_DESTINATION: The destination branch has taken priority\n - The `changeType` parameter is generated from a branch diff that is performed on merge and can be one of the following values:\n  -  ADDED: A component was added to the source branch\n  -  MODIFIED: A component was modified in the source branch\n  -  DELETED: A component was deleted in the source branch \n\n After performing a merge request between two branches, you can use the merge request’s ID to retrieve more information about the recently performed merge. The following example shows a merge between two branches where something was deleted in the source branch: \n\n Send an HTTP GET to `https://api.boomi.com/api/rest/v1/{accountId}/MergeRequest/{mergeRequestId}` where `{accountId}` is the ID of the authenticating account and `{mergeRequestId}` is the ID of the merge request. \n\n You can also use the GET operation to view a user's current working branch: \n\n Send an HTTP GET to `https://api.boomi.com/api/rest/v1/{accountId}/UserAccountProperty/defaultWorkingBranch` where the `{accountId}` is the ID of the account for which you want to view the working branch.",
+    "operationId": "GetMergeRequest",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "ID of the merge request."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/MergeRequest.json"
+            },
+            "example": {
+              "UserAccountProperty": {
+                "propertyName": "defaultWorkingBranch",
+                "propertyValue": "QjoyMDI1OTk"
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/MergeRequest.json"
+            },
+            "example": "<bns:MergeRequest id=\"TVI6NTA0\" sourceBranchId=\"QjoyMDI1OTk\" sourceBranchName=\"branch-1\" destinationBranchId=\"QjoyMDI1OTg\" destinationBranchName=\"main\" strategy=\"CONFLICT_RESOLVE\" stage=\"MERGED\" priorityBranch=\"SOURCE\" previousStage=\"MERGING\" modifiedBy=\"boomitester1+api@gmail.com\" modifiedDate=\"2024-09-12T13:13:22Z\" createdBy=\"boomitester1+api@gmail.com\" createdDate=\"2024-09-12T13:13:18Z\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "MergeRequest"
+    ],
+    "summary": "Modifies or updates a MergeRequest object",
+    "operationId": "UpdateMergeRequest",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "ID of the merge request."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/MergeRequest.json"
+          },
+          "example": {
+            "id": "TVI6NjY3",
+            "strategy": "CONFLICT_RESOLVE",
+            "MergeRequestDetails": {
+              "MergeRequestDetail": {
+                "componentGuid": "50e9d4f5-fea6-4ab0-91b1-d8b683ede8c0",
+                "resolution": "KEEP_DESTINATION"
+              }
+            }
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/MergeRequest.json"
+          },
+          "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><bns:MergeRequest xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" id=\"TVI6NjY3\" strategy=\"CONFLICT_RESOLVE\"><bns:MergeRequestDetails><bns:MergeRequestDetail componentGuid=\"50e9d4f5-fea6-4ab0-91b1-d8b683ede8c0\" resolution=\"KEEP_DESTINATION\"/></bns:MergeRequestDetails></bns:MergeRequest>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/MergeRequest.json"
+            },
+            "example": {
+              "@type": "MergeRequest",
+              "id": "TVI6NjY3",
+              "sourceBranchId": "QjoxNTc",
+              "sourceBranchName": "feature-1",
+              "destinationBranchId": "Qjo4",
+              "destinationBranchName": "main",
+              "strategy": "CONFLICT_RESOLVE",
+              "stage": "REVIEWING",
+              "priorityBranch": "SOURCE",
+              "previousStage": "REVIEWING",
+              "modifiedBy": "userboomi.com",
+              "modifiedDate": "2024-09-12T13:35:58Z",
+              "createdBy": "userboomi.com",
+              "createdDate": "2024-09-12T13:35:17Z",
+              "lockedBy": "userboomi.com",
+              "lockedDate": "2024-09-12T13:35:57Z",
+              "lockNonce": "3891734813466242810",
+              "MergeRequestDetails": {
+                "MergeRequestDetail": {
+                  "componentGuid": "50e9d4f5-fea6-4ab0-91b1-d8b683ede8c0",
+                  "sourceRevision": "8",
+                  "destinationRevision": "7",
+                  "changeType": "MODIFIED",
+                  "conflict": "true",
+                  "resolution": "KEEP_DESTINATION",
+                  "stage": "DRAFTED",
+                  "modifiedBy": "userboomi.com",
+                  "modifiedDate": "2024-09-12T13:35:58Z",
+                  "createdBy": "userboomi.com",
+                  "createdDate": "2024-09-12T13:35:18Z"
+                }
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/MergeRequest.json"
+            },
+            "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><bns:MergeRequest xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bns=\"http://api.platform.boomi.com/\" id=\"TVI6NjY3\" sourceBranchId=\"QjoxNTc\" sourceBranchName=\"feature-1\" destinationBranchId=\"Qjo4\" destinationBranchName=\"main\" strategy=\"CONFLICT_RESOLVE\" stage=\"REVIEWING\" priorityBranch=\"SOURCE\" previousStage=\"REVIEWING\" modifiedBy=\"user@boomi.com\" modifiedDate=\"2024-09-12T13:35:58Z\" createdBy=\"user@boomi.com\" createdDate=\"2024-09-12T13:35:17Z\" lockedBy=\"user@boomi.com\" lockedDate=\"2024-09-12T13:35:57Z\" lockNonce=\"3891734813466242810\"><bns:MergeRequestDetails><bns:MergeRequestDetail componentGuid=\"50e9d4f5-fea6-4ab0-91b1-d8b683ede8c0\" sourceRevision=\"8\" destinationRevision=\"7\" changeType=\"MODIFIED\" conflict=\"true\" resolution=\"KEEP_DESTINATION\" stage=\"DRAFTED\" modifiedBy=\"user@boomi.com\" modifiedDate=\"2024-09-12T13:35:58Z\" createdBy=\"user@boomi.com\" createdDate=\"2024-09-12T13:35:18Z\"/></bns:MergeRequestDetails></bns:MergeRequest>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "delete": {
+    "tags": [
+      "MergeRequest"
+    ],
+    "summary": "Deletes a MergeRequest object",
+    "description": "- There are three actions you can choose from when executing a merge request: \n -  MERGE: Use to start or restart a merge request; the `stage` must be REVIEWING or FAILED_TO_MERGE \n -  REVERT: Use to revert a merge request; the `stage` must be MERGED or DELETED and `previousStage` is MERGED \n -  RETRY_DRAFTING: Use when the merge request `stage` is FAILED_TO_DRAFT or FAILED_TO_REDRAFT \n - If the merge is successful, the `stage` and/or `previousStage` might be in one of the following stages:\n -  DRAFTING: The merge request is in the queue.\n-  DRAFTED: The merge request is drafted for review.\n-  REVIEWING: The merge request is being reviewed.\n-  MERGING: The merge request is being processed.\n-  MERGED: The merge request has successfully completed.\n-  FAILED_TO_MERGE: The merge request failed to merge.\n-  NOT_EXIST: No previous merge request has been submitted. This stage is typically returned in the `previousStage` parameter.",
+    "operationId": "DeleteMergeRequest",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response."
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

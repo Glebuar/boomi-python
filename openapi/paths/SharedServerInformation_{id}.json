@@ -1,0 +1,135 @@
+{
+  "get": {
+    "tags": [
+      "SharedServerInformation"
+    ],
+    "summary": "Retrieves an instance of a SharedServerInformation object",
+    "description": "Retrieve Shared Server Information records for a specific single Runtime ID. \n\n You can retrieve Shared Server Information records only by an ordinary GET operation specifying a single Runtime ID or a bulk GET operation with a maximum of 100 Runtime IDs. This option is because the object ID for the Shared Server Information is not available currently (except by requesting the information from services). Therefore, this operation does not return the Shared Server Information object auth field.",
+    "operationId": "GetSharedServerInformation",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ID of the Runtime that is hosting the shared web server."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/SharedServerInformation.json"
+            },
+            "example": {
+              "@type": "SharedServerInformation",
+              "apiType": "basic",
+              "url": "http://system.sub.domain.tld:9090",
+              "overrideUrl": false,
+              "authToken": "bcdef012-3456-789a-bcde-f0123456789a",
+              "httpPort": 9090,
+              "httpsPort": 9093,
+              "minAuth": "basic",
+              "internalHost": "127.0.0.1",
+              "externalHost": "",
+              "externalHttpPort": 0,
+              "externalHttpsPort": 0,
+              "maxThreads": 250,
+              "checkForwardedHeaders": false,
+              "atomId": "3456789a-bcde-f012-3456-789abcdef012",
+              "sslCertificateId": "6789abcd-ef01-2345-6789-abcdef012345"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/SharedServerInformation.json"
+            },
+            "example": "<bns:SharedServerInformation sslCertificateId=\"6789abcd-ef01-2345-6789-abcdef012345\" \n         atomId=\"3456789a-bcde-f012-3456-789abcdef012\" checkForwardedHeaders=\"false\" maxThreads=\"250\" \n         externalHttpsPort=\"0\" externalHttpPort=\"0\" externalHost=\"\" internalHost=\"127.0.0.1\" \n         minAuth=\"basic\" httpsPort=\"9093\" httpPort=\"9090\"\n         authToken=\"bcdef012-3456-789a-bcde-f0123456789a\" overrideUrl=\"false\" \n         url=\"http://system.sub.domain.tld:9090\" apiType=\"basic\" xmlns:bns=\"http://api.platform.boomi.com/\" \n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  },
+  "post": {
+    "tags": [
+      "SharedServerInformation"
+    ],
+    "summary": "Modifies or updates a SharedServerInformation object",
+    "description": "Updates a Shared Server Information object based on the supplied Runtime ID. \n\n - The UPDATE operation updates a Shared Server Information object based on the supplied Runtime ID. To clear a field, set the attribute corresponding to that field to an empty string. \n\n You must have the Runtime Management privilege to perform the UPDATE operation. If you have the Runtime Management Read Access privilege, you cannot update shared server information. \n\n It is not possible to set authToken through this operation. This operation generates a token if it requires authentication, but a token does not currently exist. The new authToken appears in the response. \n - If you specify sslCertificateId, the certificate must be accessible by the account making the request. \n -If you do not configure the Authentication Type and Ports, using the Shared Server Information object to update only the API Type of a Runtime fails. If you are the owner of a Runtime, Runtime cluster, or Runtime cloud, you must update the API Type, Authentication Type, and HTTP Port or HTTPS Port through the Shared Server Information object for the API to succeed. Runtime cloud attachments cannot update the HTTP Port or HTTPS Port. \n - If you configure the Authentication Type and Ports, you can use the Shared Server Information object to update only the API Type of a Runtime. \n - This API does not support the configuration of multiple authentication types on a Runtime.",
+    "operationId": "UpdateSharedServerInformation",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ID of the Runtime that is hosting the shared web server."
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/SharedServerInformation.json"
+          },
+          "example": {
+            "maxThreads": 100,
+            "atomId": "3456789a-bcde-f012-3456-789abcdef012"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "$ref": "../components/schemas/SharedServerInformation.json"
+          },
+          "example": "<bns:SharedServerInformation atomId=\"3456789a-bcde-f012-3456-789abcdef012\" maxThreads=\"100\" \n         xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+        }
+      },
+      "required": false
+    },
+    "responses": {
+      "200": {
+        "description": "Successful request and response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/SharedServerInformation.json"
+            },
+            "example": {
+              "@type": "SharedServerInformation",
+              "maxThreads": 100,
+              "atomId": "3456789a-bcde-f012-3456-789abcdef012"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "../components/schemas/SharedServerInformation.json"
+            },
+            "example": "<bns:SharedServerInformation atomId=\"3456789a-bcde-f012-3456-789abcdef012\" maxThreads=\"100\" \n     xmlns:bns=\"http://api.platform.boomi.com/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>"
+          }
+        }
+      },
+      "403": {
+        "$ref": "../components/responses/403.json"
+      }
+    },
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ]
+  }
+}

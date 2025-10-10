@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "isSet": {
+      "type": "boolean",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "path": {
+      "type": "string",
+      "xml": {
+        "attribute": true
+      }
+    }
+  }
+}
